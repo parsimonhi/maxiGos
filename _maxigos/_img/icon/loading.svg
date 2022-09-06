@@ -1,0 +1,10 @@
+<svg xmlns='http://www.w3.org/2000/svg' fill='rgb(255,0,0)' viewBox='0 0 1000 1000' height='1000' width='1000'>
+<circle cx='217' cy='217' r='90'/>
+<circle cx='500' cy='100' r='90'/>
+<circle cx='783' cy='217' r='90'/>
+<circle cx='900' cy='500' r='90'/>
+<circle cx='783' cy='783' r='90'/>
+<circle cx='500' cy='900' r='90'/>
+<circle cx='217' cy='783' r='90'/>
+<circle cx='100' cy='500' r='90'/>
+</svg>

@@ -1,0 +1,685 @@
+.mxTatamiTheme
+{
+	--gobanMaxWidth:30em;
+	text-align:left;
+}
+/* general */
+.mxTatamiTheme div::-moz-focus-inner,
+.mxTatamiTheme button::-moz-focus-inner,
+.mxTatamiTheme input[type=text]::-moz-focus-inner,
+.mxTatamiTheme a::-moz-focus-inner {padding:0;border:0;}
+.mxTatamiTheme div:focus,
+.mxTatamiTheme button:focus,
+.mxTatamiTheme input[type=text]:focus,
+.mxTatamiTheme a:focus {outline:none;}
+.mxTatamiTheme button,
+.mxTatamiTheme input[type=button],
+.mxTatamiTheme textarea {-webkit-appearance:none;-moz-appearance:none;}
+.mxTatamiTheme text {cursor:default;}
+.mxTatamiTheme button {cursor:pointer;}
+.mxTatamiTheme input[type=text][disabled],
+.mxTatamiTheme button[disabled] {cursor:default;}
+/* font */
+.mxTatamiTheme
+{
+	font-family:sans-serif;
+}
+.mxTatamiTheme svg
+{
+	font-family:arial,sans-serif;
+}
+.mxTatamiTheme button
+{
+	font-family:sans-serif;
+}
+/* layout */
+.mxTatamiTheme
+{
+	max-width:calc(var(--gobanMaxWidth) * 54.5 / 30);
+	background:#f3f3f3;
+	margin:0 auto;
+}
+.mxTatamiTheme .mxVersionDiv {display:none;}
+/* common */
+.mxTatamiTheme h1
+{
+	font-size:1em;
+	font-weight:bold;
+	margin:0 0 0.125em 0;
+}
+.mxTatamiTheme .mxInnerGobanDiv
+{
+	/* avoid bad touch effect on mobile */
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
+	user-select:none;
+	margin:0 auto;
+	position:relative;
+}
+.mxTatamiTheme .mxGobanParentDiv
+{
+	margin:0 auto;
+	background-image:url(data:image/jpg;base64,/9j/4AAQSkZJRgABAQEASABIAAD//gAcQ3JlYXRlZCB3aXRoIEdJTVAgb24gYSBNYWP/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wgARCAA8ABQDAREAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAwUAAQQCB//EABgBAQEBAQEAAAAAAAAAAAAAAAABAgUG/9oADAMBAAIQAxAAAAH2XynVlYTRFDilISGYrzedxTmupKrHR9Jk5pYWcQShQrj/xAAiEAACAQMEAgMAAAAAAAAAAAABAgMAERIEFCEjEyIxMkL/2gAIAQEAAQUCP2VbGaJnFmwlDKkEZvbrdchBMqUQfKmVarMV+lAWpdOXoLw49NKnPwLBjvttWPZGtTqCP//EABQRAQAAAAAAAAAAAAAAAAAAAED/2gAIAQMBAT8BR//EABgRAAMBAQAAAAAAAAAAAAAAAAABERAw/9oACAECAQE/AZkIImLpdYj/xAAuEAABAgIFCgcAAAAAAAAAAAABAAIDERIhYXKiIjFBQlGCkbLBwjNScYOhsdH/2gAIAQEABj8CnaThkmWOYOAUOWhsihd71FsbEOJRb/RbndNOtpjiVEJ1nTTr55FD9YZw1qFLyKlvYZJlhZ8BMlqtkUK9Hen16InMFGytfoFLZ+0kRtJHGtZvEy1vHkTPb+lCuL//xAAlEAACAQEIAgMBAAAAAAAAAAABEQAhMUFhcZGhscGB8FHR4fH/2gAIAQEAAT8hzHNVvBYiDmA7lRy0sWLLlWCakeKNooBYHiiGWYAo0QCoNwBY1hpEH+VPAjs3fJAdQsWF4/UYSI7BTlARqpepjDB6PbKuoHslcwWNGpMufF/XaWb16kRisEL4QWjNZUPjR+kLiRRTyNOooK0oWdAlIySTfOePW4RuZ//aAAwDAQACAAMAAAAQL7skT+bfoDxr/8QAGBEBAAMBAAAAAAAAAAAAAAAAEQABIBD/2gAIAQMBAT8Q0cIYqupHf//EABkRAAMBAQEAAAAAAAAAAAAAAAABESEQMf/aAAgBAgEBPxCaRLwhjeFJaUxvBOL3j9JvZg1ohGBuui48H//EACEQAQACAQQDAQEBAAAAAAAAAAEAETEhUYGhQXGxkcHw/9oACAEBAAE/EAaLQDrsfsH8gStFiYFEnkuoYNbuo0Qi6ObIIAIEHKX3cANQAX293MIFpbumdQcyk/ZP05iLAoZ4poVIUu18GvYlZqjNcq+CB0KCr8hnQRHWBQ+wMjGgRGG1eH3KCVRG37GUs1lt8Z/HMIrbEqngNqvmCJs3VWP8XzFkNJp3T8iRNtBLsovxxKEFhnYB0Zn4Uy4FN4b9wazh2Wqar+s12tFr4s/s/9k=);
+	text-align:center;
+	position:relative;
+	border:2px solid rgba(220,200,150,0.5);
+	padding:0.5em;
+}
+.mxTatamiTheme.mxBasicConfig .mxGobanParentDiv,
+.mxTatamiTheme.mxCommentConfig .mxGobanParentDiv,
+.mxTatamiTheme.mxGameConfig .mxGobanParentDiv,
+.mxTatamiTheme.mxTreeConfig .mxGobanParentDiv
+{
+	min-height:calc(var(--gobanMaxWidth) * 3 / 5);
+	/* to center the goban vertically *
+	/* if it is less hight than bowl */
+	display:flex;
+	flex-direction:column;
+}
+.mxTatamiTheme .mxGobanDiv
+{
+	max-width:var(--gobanMaxWidth);
+	/* need width:100% otherwise goban width becomes null */
+	width:100%;
+	margin:auto;
+}
+.mxTatamiTheme .mxInnerGobanDiv
+{
+	box-shadow:0 8px 8px #963;
+}
+.mxTatamiTheme.mxIn3d .mxGobanDiv
+{
+	padding-bottom:0.5em;
+	padding-bottom:8px;
+}
+.mxTatamiTheme.mxIn3d .mxGobanDiv.mxUnder .mxInnerGobanDiv
+{
+	box-shadow:none;
+}
+.mxTatamiTheme.mxIn2d .mxInnerGobanDiv
+{
+	border:1px solid #dfc997;
+	box-shadow:1px 0 8px #dfc997;
+	box-shadow:-1px 0 8px #dfc997;
+	box-shadow:0 1px 8px #dfc997;
+	box-shadow:0 -1px 8px #dfc997;
+}
+.mxTatamiTheme.mxIn3d .mxInnerGobanDiv[data-maxigos-disabled] {box-shadow:none;}
+.mxTatamiTheme .mxGobanDiv svg
+{
+	display:block;
+	width:100%;
+	height:100%;
+	pointer-events:none;
+}
+.mxTatamiTheme .mxGobanDiv svg .mxWholeRect
+{
+	/* better to set background-color here if mgosImage.js? */
+	fill:#ecbe69;
+}
+.mxTatamiTheme .mxGobanDiv svg.mxAnimatedGobanSvg
+{
+	position:absolute;
+	top:0;
+	left:0;
+	pointer-events:none;
+}
+.mxTatamiTheme text.mxOnBlack.mxLabel,
+.mxTatamiTheme text.mxOnBlack.mxVariation
+{
+	fill:#fff;
+	stroke:#fff;
+}
+.mxTatamiTheme text.mxOnWhite.mxLabel,
+.mxTatamiTheme text.mxOnWhite.mxVariation,
+.mxTatamiTheme text.mxOnEmpty.mxLabel,
+.mxTatamiTheme text.mxOnEmpty.mxVariation
+{
+	fill:#000;
+	stroke:#000;
+}
+.mxTatamiTheme text.mxVariation.mxOnFocus
+{
+	fill:#f00;
+	stroke:#f00;
+}
+.mxTatamiTheme rect.mxVariation.mxOnFocus
+{
+	stroke:none;
+}
+.mxTatamiTheme .mxMarkOnLast
+{
+	fill:#f00;
+	stroke:#f00;
+}
+.mxTatamiTheme .mxFocusMark
+{
+	fill:none;
+	stroke:#f00;
+	stroke-width:2px;
+}
+.mxTatamiTheme .mxP:not(:first-child)
+{
+	padding-top:0.5em;
+}
+/* comment and tree */
+.mxTatamiTheme.mxCommentConfig .mxCommentDiv,
+.mxTatamiTheme.mxTreeConfig .mxCommentDiv,
+.mxTatamiTheme.mxTreeConfig .mxTreeDiv
+{
+	height:7em;
+	border:1px solid #ccc;
+	padding:0.25em;
+	margin:0 0.5em;
+	background:#fff;
+	overflow:auto;
+	resize:vertical;
+}
+.mxTatamiTheme.mxTreeConfig .mxTreeDiv
+{
+	margin-top:0.25em;
+}
+.mxTatamiTheme.mxTreeConfig .mxTreeDiv svg .mxFocus
+{
+	fill:#f00;
+	opacity:1;
+}
+.mxTatamiTheme.mxCommentConfig .mxOptionParentDiv,
+.mxTatamiTheme.mxReplayConfig .mxOptionParentDiv,
+.mxTatamiTheme.mxTreeConfig .mxOptionParentDiv
+{
+	text-align:center;
+}
+.mxTatamiTheme.mxCommentConfig .mxOptionParentDiv>div,
+.mxTatamiTheme.mxReplayConfig .mxOptionParentDiv>div,
+.mxTatamiTheme.mxTreeConfig .mxOptionParentDiv>div
+{
+	display:inline-block;
+}
+.mxTatamiTheme.mxTreeConfig .mxTreeDiv
+{
+	resize:vertical;
+	user-select:none;
+	max-height:42em;
+}
+/* diagram */
+.mxTatamiTheme.mxDiagramConfig .mxNotSeenDiv
+{
+	max-width:var(--gobanMaxWidth);
+	margin:0 auto;
+}
+.mxTatamiTheme .mxInnerNotSeenDiv:not(:empty)
+{
+	margin:0auto;
+	padding:0.5em 0;
+}
+.mxTatamiTheme .mxInnerNotSeenDiv
+{
+	margin:0 auto;
+}
+.mxTatamiTheme .mxNotSeenSvg
+{
+	width:100%;
+	height:100%;
+	display:block;
+}
+/* game */
+.mxTatamiTheme.mxGameConfig .mxHeaderContentDiv
+{
+	padding:0.5em;
+}
+.mxTatamiTheme.mxGameConfig .mxHeaderContentDiv:empty
+{
+	display:none;
+}
+/* problem */
+.mxTatamiTheme.mxProblemConfig
+{
+	padding-top:0.5em;
+}
+.mxTatamiTheme.mxProblemConfig .mxCartoucheDiv .mxShortHeaderDiv
+{
+	display:none;
+}
+.mxTatamiTheme.mxProblemConfig .mxCommentDiv
+{
+	margin:0 auto 0.5em auto;
+	text-align:center;
+	border:1px solid transparent;
+}
+.mxTatamiTheme.mxProblemConfig .mxCommentContentDiv
+{
+	display:inline-block;
+	text-align:justify;
+}
+/* buttons */
+.mxTatamiTheme .mxOptionParentDiv {user-select:none;}
+.mxTatamiTheme button[disabled] {opacity:0.3;}
+.mxTatamiTheme .mxGBoxDiv button,
+.mxTatamiTheme.mxCommentConfig .mxOptionParentDiv button,
+.mxTatamiTheme.mxReplayConfig .mxOptionParentDiv button,
+.mxTatamiTheme.mxTreeConfig .mxOptionParentDiv button
+{
+	font-size:1em;
+	border:1px solid #ccc;
+	background:#fff;
+	color:#000;
+	margin:0.5em 0.125em;
+	padding:0 0.75em;
+	height:1.75em;
+	line-height:1.75em;
+	white-space:nowrap;
+	text-decoration:none;
+}
+.mxTatamiTheme .mxGBoxDiv button
+{
+	margin:0 0.125em;
+}
+.mxTatamiTheme .mxGBoxDiv button:focus,
+.mxTatamiTheme.mxCommentConfig .mxOptionParentDiv button:focus,
+.mxTatamiTheme.mxReplayConfig .mxOptionParentDiv button:focus,
+.mxTatamiTheme.mxTreeConfig .mxOptionParentDiv button:focus,
+.mxTatamiTheme input[type=text]:focus
+{
+	border:1px solid #000;
+}
+.mxTatamiTheme input[type=text]
+{
+	text-align:center;
+}
+/* cartouche */
+.mxTatamiTheme .mxGobanParentDiv
+{
+	position:relative;
+}
+.mxTatamiTheme .mxCartoucheDiv .mxShortHeaderDiv
+{
+	display:inline-block;
+	background:#fff;
+	padding:0.5em;
+	min-width:40%;
+}
+.mxTatamiTheme .mxCartoucheDiv:first-of-type .mxShortHeaderDiv
+{
+	margin-bottom:0.5em;
+}
+.mxTatamiTheme .mxCartoucheDiv:last-of-type .mxShortHeaderDiv
+{
+	margin-top:0.5em;
+}
+.mxTatamiTheme.mxIn3d .mxCartoucheDiv .mxShortHeaderDiv
+{
+	box-shadow: 0em 0.1em 0.1em #963;
+}
+.mxTatamiTheme.mxIn2d .mxCartoucheDiv .mxShortHeaderDiv
+{
+	border:1px solid #dfc997;
+	box-shadow:1px 0 0.5em #dfc997;
+	box-shadow:-1px 0 0.5em #dfc997;
+}
+.mxTatamiTheme .mxCartoucheDiv .mxShortHeaderDiv .mxBlack
+{
+	/* force in2d style */
+	fill:#000;
+	stroke:#000;
+}
+.mxTatamiTheme .mxCartoucheDiv .mxShortHeaderDiv .mxWhite
+{
+	/* force in2d style */
+	fill:#fff;
+	stroke:#000;
+}
+.mxTatamiTheme .mxPlayerStoneDiv,
+.mxTatamiTheme .mxPlayerDiv,
+.mxTatamiTheme .mxRankDiv
+{
+	display:inline-block;
+}
+.mxTatamiTheme .mxPlayerStoneDiv
+{
+	width:0.75em;
+}
+.mxTatamiTheme .mxPlayerStoneDiv svg
+{
+	width:100%;
+	height:100%;
+}
+.mxTatamiTheme .mxPlayerDiv
+{
+	margin-left:0.25em;
+	margin-right:0.25em;
+}
+.mxTatamiTheme .mxRankLabelSpan
+{
+	display:none;
+}
+.mxTatamiTheme .mxPrisonersDiv
+{
+	position:absolute;
+	max-width:calc(var(--gobanMaxWidth) / 2);
+	height:calc(var(--gobanMaxWidth) * 3 / 5);
+	overflow:hidden;
+	text-align:center;
+}
+.mxTatamiTheme .mxCartoucheDiv .mxPrisonersDiv
+{
+	/* to click through when these divs overlap goban */
+	pointer-events:none;
+}
+.mxTatamiTheme .mxCartoucheDiv:first-of-type .mxPrisonersDiv
+{
+	text-align:left;
+	top:0;
+	margin-right:calc(var(--gobanMaxWidth) * 41 / 30);
+	left:calc(var(--gobanMaxWidth) * 1 / 60);
+}
+.mxTatamiTheme .mxCartoucheDiv:last-of-type .mxPrisonersDiv
+{
+	text-align:right;
+	bottom:0;
+	margin-left:calc(var(--gobanMaxWidth) * 41 / 30);
+	right:calc(var(--gobanMaxWidth) * 1 / 60);
+}
+.mxTatamiTheme .mxPrisonersSpan
+{
+	display:none;
+	width:calc(var(--gobanMaxWidth) / 3);
+}
+.mxTatamiTheme .mxPrisonersStoneSpan
+{
+	display:inline-block;
+	width:calc(var(--gobanMaxWidth) / 3);
+}
+.mxTatamiTheme .mxPrisonersStoneSpan svg
+{
+	width:100%;
+	height:100%;
+}
+.mxTatamiTheme .mxPrisonersLabelSpan
+{
+	/* used as a trick to hide bowl and cap when narrow width */
+	display:inline-block;
+	width:1px;
+	height:calc(var(--gobanMaxWidth) * 3 / 5);
+	overflow:hidden;
+	opacity:0;
+}
+/* focus */
+.mxTatamiTheme .mxGBoxDiv .mxShowContentDiv:focus,
+.mxTatamiTheme.mxCommentConfig .mxCommentDiv:focus,
+.mxTatamiTheme.mxTreeConfig .mxCommentDiv:focus,
+.mxTatamiTheme.mxTreeConfig .mxTreeDiv:focus,
+.mxTatamiTheme.mxProblemConfig .mxCommentDiv:focus
+{
+	border:1px solid #000;
+}
+/* gBox */
+.mxTatamiTheme .mxGBoxDiv
+{
+	box-sizing:border-box;
+	border:1px solid #ccc;
+	background:#fff;
+	text-align:left;
+}
+.mxTatamiTheme .mxGBoxDiv.mxShowSgfDiv
+{
+	font-family:monospace;
+	white-space:pre-wrap;
+}
+.mxTatamiTheme .mxGBoxDiv.mxShowSvgDiv .mxShowContentDiv img,
+.mxTatamiTheme .mxGBoxDiv.mxShowPngDiv .mxShowContentDiv img
+{
+	display:block;
+	box-sizing:border-box;
+	height:100%;
+	width:auto;
+	border:0;
+	margin:0 auto;
+}
+.mxTatamiTheme .mxGBoxDiv .mxShowContentDiv
+{
+	box-sizing:border-box;
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:3em;
+	background:#fff;
+	padding:0.25em;
+	overflow:auto;
+	z-index:1;
+	border:1px solid transparent;
+}
+.mxTatamiTheme .mxOKDiv
+{
+	box-sizing:border-box;
+	background:#ddd;
+	position:absolute;
+	bottom:0;
+	height:3em;
+	width:100%;
+	max-width:100%;
+	overflow:auto;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-wrap:wrap;
+	z-index:1;
+}
+.mxTatamiTheme .mxShowOptionDiv
+{
+	line-height:1.75em;
+}
+.mxTatamiTheme .mxNumFromTextSpan,
+.mxTatamiTheme .mxNumWithTextSpan
+{
+	position:relative;
+	left:2em;
+	white-space:nowrap;
+}
+.mxTatamiTheme .mxNumFromTextSpan:before
+{
+	content:"\a";
+	white-space:pre-line;
+}
+.mxTatamiTheme .mxShowOptionDiv input[type=text]
+{
+	font-size:1em;
+}
+.mxTatamiTheme input:not(:checked)~.mxNumFromTextSpan,
+.mxTatamiTheme input:not(:checked)~.mxNumWithTextSpan
+{
+	display:none;
+}
+.mxTatamiTheme a
+{
+	color:#000;
+}
+.mxTatamiTheme a:focus
+{
+	color:#f00;
+}
+.mxTatamiTheme [data-maxigos-disabled] {opacity:0.5;}
+/* goto */
+.mxTatamiTheme.mxReplayConfig .mxGotoDiv
+{
+	margin:0 0.5em;
+	user-select:none;
+}
+.mxTatamiTheme.mxReplayConfig .mxGotoDiv svg
+{
+	box-sizing:border-box;
+	display:block;
+	margin:0 auto;
+}
+.mxTatamiTheme.mxReplayConfig .mxGotoBar
+{
+	fill:#fff;
+	stroke:#ccc;
+}
+.mxTatamiTheme.mxReplayConfig .mxGotoCursor
+{
+	fill:#000;
+	stroke:#000;
+	cursor:pointer;
+}
+/* Guess */
+.mxTatamiTheme.mxReplayConfig .mxGuessDiv
+{
+	padding:0.5em;
+	user-select:none;
+}
+.mxTatamiTheme.mxReplayConfig .mxGuessSvg
+{
+	display:block;
+}
+.mxTatamiTheme.mxReplayConfig .mxGuessBar
+{
+	stroke:#ccc;
+	fill:#fff;
+}
+.mxTatamiTheme.mxReplayConfig .mxGuessBad
+{
+	stroke:#f00;
+	fill:#f00;
+}
+.mxTatamiTheme.mxReplayConfig .mxGuessGood
+{
+	stroke:#090;
+	fill:#090;
+}
+/* navigation */
+.mxTatamiTheme .mxNavigationDiv
+{
+	margin:0 auto;
+	text-align:center;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+.mxTatamiTheme .mxNavigationDiv button
+{
+	flex:1 1;
+	border:none;
+	background:none;
+	margin:0 2%;
+	padding:0;
+	max-width:4em;
+}
+.mxTatamiTheme .mxNavigationDiv button svg
+{
+	display:block;
+	max-width:60%;
+	width:100%;
+	height:auto;
+	margin:20% auto;
+}
+.mxTatamiTheme .mxSolveDiv
+{
+	padding:1px;
+	text-align:center;
+	display:flex;
+	justify-content:center;
+}
+.mxTatamiTheme .mxSolveDiv button
+{
+	flex:1 1 3em;
+	border:none;
+	background:none;
+	margin:1em;
+	padding:0;
+	max-width:40px;
+}
+.mxTatamiTheme .mxSolveDiv button svg
+{
+	display:block;
+	width:100%;
+	height:100%;
+}
+.mxTatamiTheme .mxNavigationDiv button:focus rect,
+.mxTatamiTheme .mxNavigationDiv button:focus polygon,
+.mxTatamiTheme .mxSolveDiv button:focus circle,
+.mxTatamiTheme .mxSolveDiv button:focus rect,
+.mxTatamiTheme .mxSolveDiv button:focus path
+{
+	fill:#f00;
+}
+.mxTatamiTheme .mxNavigationDiv .mxGotoInput
+{
+	font-size:1em;
+	width:2.4em;
+	height:1.8em;
+	border:1px solid #ccc;
+	text-align:center;
+}
+.mxTatamiTheme .mxNavigationDiv .mxGotoInput:focus
+{
+	border:1px solid #000;
+}
+/* speed */
+.mxTatamiTheme.mxReplayConfig .mxSpeedDiv
+{
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	margin:1em 0.5em 0.5em 0.5em;
+	user-select:none;
+}
+.mxTatamiTheme.mxReplayConfig .mxSpeedDiv button
+{
+	flex:0;
+	font-size:1em;
+	margin:0;
+	padding:0;
+	border:1px solid transparent;
+	background:none;
+}
+.mxTatamiTheme.mxReplayConfig .mxSpeedDiv svg
+{
+	flex:1;
+	min-width:0; /* necessary for chrome? */
+}
+.mxTatamiTheme.mxReplayConfig .mxSpeedDiv button span
+{
+	display:block;
+	margin:auto;
+	width:1.5em;
+	height:1.5em;
+	line-height:1.5em;
+	color:transparent;
+	position:relative;
+}
+.mxTatamiTheme.mxReplayConfig .mxSpeedDiv button:focus span,
+.mxTatamiTheme.mxReplayConfig .mxSpeedDiv button:hover span
+{
+	background:rgba(0,0,0,0.05);
+}
+.mxTatamiTheme.mxReplayConfig .mxSpeedDiv button span:before
+{
+	content:"";
+	display:block;
+	position:absolute;
+	top:calc(50% - 1px);
+	left:25%;
+	bottom:0;
+	right:25%;
+	border-top:2px solid #000;
+	z-index:1;
+}
+.mxTatamiTheme.mxReplayConfig .mxSpeedDiv button.mxSpeedPlusBtn span:after
+{
+	content:"";
+	display:block;
+	position:absolute;
+	top:25%;
+	left:calc(50% - 1px);
+	bottom:25%;
+	right:0;
+	border-left:2px solid #000;
+	z-index:1;
+}
+.mxTatamiTheme.mxReplayConfig .mxSpeedDiv .mxSpeedBar,
+.mxTatamiTheme.mxReplayConfig .mxSpeedDiv .mxSpeedCursor
+{
+	stroke:#ccc;
+	cursor:pointer;
+}

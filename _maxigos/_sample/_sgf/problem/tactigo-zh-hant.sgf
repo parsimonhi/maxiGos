@@ -1,0 +1,12 @@
+(;GM[1]FF[4]CA[UTF-8]ST[2]
+SZ[19]
+DT[2002-08-04]
+SO[TactiGo 1992/10: jeu concours Igo-Kenkyu]
+AW[mc][oc][dd][ml][rm][lo][no][oo][qo][np][pp][qp][eq][qq]
+AB[nd][qd][pe][pl][pn][po][cp][jp][op][gq][lq][nq][oq][pq]
+LB[pc:A][dj:D][pj:B][dq:C]
+C[黑先]
+(;B[pj]TG[10]C[正解])
+(;B[pc]TG[5]C[失敗])
+(;B[dq]TG[5]C[失敗])
+(;B[dj]TG[5]C[失敗]))

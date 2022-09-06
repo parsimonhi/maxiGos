@@ -1,0 +1,490 @@
+.mxFmTheme
+{
+	--gobanMaxWidth:30em;
+	text-align:left;
+}
+/* general */
+.mxFmTheme div::-moz-focus-inner,
+.mxFmTheme button::-moz-focus-inner,
+.mxFmTheme input[type="text"]::-moz-focus-inner,
+.mxFmTheme a::-moz-focus-inner {padding:0;border:0;}
+.mxFmTheme div:focus,
+.mxFmTheme button:focus,
+.mxFmTheme input[type="text"]:focus,
+.mxFmTheme a:focus {outline:none;}
+.mxFmTheme button,
+.mxFmTheme input[type="button"],
+.mxFmTheme textarea {-webkit-appearance:none;-moz-appearance:none;}
+.mxFmTheme text {cursor:default;}
+.mxFmTheme button {cursor:pointer;}
+.mxFmTheme input[type="text"][disabled],
+.mxFmTheme button[disabled] {cursor:default;}
+/* font */
+.mxFmTheme
+{
+	font-family:sans-serif;
+}
+.mxFmTheme svg
+{
+	font-family:arial,sans-serif;
+}
+.mxFmTheme button
+{
+	font-family:sans-serif;
+}
+/* layout */
+.mxFmTheme
+{
+	box-sizing:border-box;
+	max-width:var(--gobanMaxWidth);
+	margin:0 auto;
+}
+.mxFmTheme.mxCommentConfig,
+.mxFmTheme.mxGameConfig,
+.mxFmTheme.mxTreeConfig
+{
+	display:flex;
+	flex-wrap:wrap;
+	justify-content:center;
+	max-width:calc((var(--gobanMaxWidth) * 7 / 4) + 2em);
+}
+.mxFmTheme.mxCommentConfig>div,
+.mxFmTheme.mxGameConfig>div,
+.mxFmTheme.mxTreeConfig>div
+{
+	box-sizing:border-box;
+	max-width:var(--gobanMaxWidth);
+	flex:4 1 var(--gobanMaxWidth);
+}
+.mxFmTheme.mxCommentConfig .mxGobanGrandParentDiv,
+.mxFmTheme.mxGameConfig .mxGobanGrandParentDiv,
+.mxFmTheme.mxTreeConfig .mxGobanGrandParentDiv
+{
+	display:flex;
+	flex-direction:column;
+	justify-content:center;
+}
+.mxFmTheme.mxCommentConfig .mxCommentParentDiv,
+.mxFmTheme.mxGameConfig .mxHeaderParentDiv,
+.mxFmTheme.mxTreeConfig .mxTreeParentDiv
+{
+	box-sizing:border-box;
+	/* when vertical layout, both columns have the same width */
+	max-width:var(--gobanMaxWidth);
+	/* when horizontal layout, 2nd column is narrower */
+	flex:3 1 calc(var(--gobanMaxWidth) * 3 / 4);
+	margin:0 1em;
+	display:flex;
+	flex-direction:column;
+	justify-content:space-between;
+}
+.mxFmTheme.mxCommentConfig .mxGobanParentDiv,
+.mxFmTheme.mxGameConfig .mxGobanParentDiv,
+.mxFmTheme.mxTreeConfig .mxGobanParentDiv
+{
+	/* cannot use flex:0 below (bug on Android?) */
+	flex:1;
+	display:flex;
+	flex-direction:column;
+}
+.mxFmTheme.mxCommentConfig .mxGobanDiv,
+.mxFmTheme.mxGameConfig .mxGobanDiv,
+.mxFmTheme.mxTreeConfig .mxGobanDiv
+{
+	margin:auto;
+	width:100%;
+}
+.mxFmTheme.mxCommentConfig .mxCommentDiv,
+.mxFmTheme.mxTreeConfig .mxCommentDiv,
+.mxFmTheme.mxTreeConfig .mxTreeDiv
+{
+	flex:1;
+	min-height:7em;
+}
+/* set position:absolute to .mxXxxContentDiv to avoid overflow */
+/* when available space is narrower than --gobanMaxWidth */
+/* and when .mxXxxContentDiv is wider than available space */
+.mxFmTheme.mxCommentConfig .mxCommentDiv,
+.mxFmTheme.mxTreeConfig .mxCommentDiv,
+.mxFmTheme.mxTreeConfig .mxTreeDiv
+{
+	position:relative;
+}
+.mxFmTheme.mxCommentConfig .mxCommentContentDiv,
+.mxFmTheme.mxTreeConfig .mxCommentContentDiv,
+.mxFmTheme.mxTreeConfig .mxTreeContentDiv
+{
+	position:absolute;
+}
+.mxFmTheme.mxGameConfig .mxSgfParentDiv
+{
+	text-align:center;
+}
+.mxFmTheme.mxGameConfig .mxSgfParentDiv>div
+{
+	display:inline-block;
+}
+.mxFmTheme .mxVersionDiv
+{
+	box-sizing:border-box;
+	text-align:center;
+	height:2.5em;
+	line-height:2.5em;
+}
+/* common */
+.mxFmTheme .mxInnerGobanDiv
+{
+	/* avoid bad touch effect on mobile */
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
+	user-select:none;
+	margin:0 auto;
+	position:relative;
+}
+.mxFmTheme.mxIn3d .mxInnerGobanDiv
+{
+	box-shadow:0 0.25em 0.5em rgba(0,0,0,0.3);
+}
+.mxFmTheme.mxIn3d .mxGobanDiv.mxUnder .mxInnerGobanDiv
+{
+	box-shadow:none;
+}
+.mxFmTheme .mxGobanDiv svg
+{
+	box-sizing:border-box;
+	display:block;
+	width:100%;
+	height:100%;
+	pointer-events:none;
+	/* set goban background below */
+	background:#fc9;
+}
+.mxFmTheme text
+{
+	stroke-width:0.5px;
+}
+.mxFmTheme text.mxOnBlack
+{
+	fill:#fff;
+	stroke:#fff;
+}
+.mxFmTheme text.mxOnWhite,
+.mxFmTheme text.mxOnEmpty
+{
+	fill:#000;
+	stroke:#000;
+}
+.mxFmTheme rect.mxPointBackground.mxVariation.mxOnFocus
+{
+	fill:none;
+	stroke:#000;
+}
+.mxFmTheme .mxTitleH1
+{
+	font-size:1em;
+	padding:0;
+	margin:0 0 0.25em 0;
+	color:#900;
+	text-align:center;
+}
+.mxFmTheme .mxP:not(:first-child)
+{
+	padding-top:0.5em;
+}
+/* comment, edit and tree*/
+.mxFmTheme.mxCommentConfig .mxCommentDiv,
+.mxFmTheme.mxTreeConfig .mxCommentDiv,
+.mxFmTheme.mxTreeConfig .mxTreeDiv
+{
+	padding:0.25em;
+	border:1px solid rgba(0,0,0,0.3);
+	overflow:auto;
+}
+.mxFmTheme.mxTreeConfig .mxTreeDiv
+{
+	margin-top:0.25em;
+}
+.mxFmTheme.mxTreeConfig .mxTreeDiv
+{
+	user-select:none;
+}
+/* diagram */
+.mxFmTheme.mxDiagramConfig .mxInnerNotSeenDiv
+{
+	margin:0 auto;
+	padding:0.25em 0;
+	display:flex;
+	flex-wrap:wrap;
+	justify-content:center;
+}
+.mxFmTheme.mxDiagramConfig .mxInnerNotSeenDiv:empty
+{
+	display:none;
+}
+.mxFmTheme.mxDiagramConfig .mxInnerNotSeenDiv svg
+{
+	margin:0.125em 0;
+}
+/* game */
+.mxFmTheme.mxGameConfig .mxHeaderDiv
+{
+	padding:0.25em 0.25em 0.25em 0.75em;
+	margin-bottom:0.25em;
+}
+.mxFmTheme.mxGameConfig .mxHeaderDiv h1
+{
+	font-size:1em;
+	font-weight:bold;
+}
+.mxFmTheme.mxGameConfig .mxGuessDiv
+{
+	margin-top:0.5em;
+	box-sizing:border-box;
+	border:1px solid #666;
+	background:#fff;
+}
+.mxFmTheme.mxGameConfig .mxGuessOMeterDiv
+{
+	background:#900;
+}
+.mxFmTheme.mxGameConfig .mxGuessSvg
+{
+	display:block;
+}
+.mxFmTheme.mxGameConfig .mxGuessBar
+{
+	fill:#090;
+}
+/* problem */
+.mxFmTheme.mxProblemConfig .mxCommentDiv
+{
+	margin:0 auto 0.5em auto;
+	text-align:center;
+	min-height:1.5em;
+	line-height:1.5em;
+}
+.mxFmTheme.mxProblemConfig .mxCommentContentDiv
+{
+	display:inline-block;
+	text-align:justify;
+}
+/* buttons and inputs */
+.mxFmTheme input[type="text"][disabled],
+.mxFmTheme button[disabled] {opacity:0.3;}
+.mxFmTheme .mxSgfParentDiv button 
+{
+	box-sizing:border-box;
+	border:1px solid #000;
+	border-radius:0.25em;
+	background:#fff;
+	margin:0.125em;
+	padding-top:0;
+	padding-bottom:0;
+	height:1.5em;
+	line-height:1.5em;
+}
+/* focus */
+.mxFmTheme.mxCommentConfig .mxCommentDiv:focus,
+.mxFmTheme.mxEditConfig .mxTreeDiv:focus,
+.mxFmTheme.mxTreeConfig .mxCommentDiv:focus,
+.mxFmTheme.mxTreeConfig .mxTreeDiv:focus
+{
+	background:rgba(0,0,0,0.05);
+}
+.mxFmTheme .mxNavigationDiv button:focus,
+.mxFmTheme .mxSolveDiv button:focus
+{
+	background:rgba(0,0,0,0.1);
+}
+.mxFmTheme .mxSgfParentDiv button:focus
+{
+	background:rgba(0,0,0,0.1);
+}
+/* gbox */
+.mxFmTheme .mxGBoxDiv
+{
+	box-sizing:border-box;
+	background:#fff;
+}
+.mxFmTheme.mxIn3d .mxGBoxDiv
+{
+	box-shadow:0 0.25em 0.5em rgba(0,0,0,0.3);
+}
+.mxFmTheme.mxIn2d .mxGBoxDiv
+{
+	border:1px solid #ccc;
+}
+.mxFmTheme .mxGBoxDiv .mxShowContentDiv
+{
+	box-sizing:border-box;
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:3em;
+	background:#fff;
+	padding:0.25em;
+	overflow:auto;
+	z-index:2;
+	border:1px solid transparent;
+}
+.mxFmTheme .mxGBoxDiv.mxShowSgfDiv
+{
+	font-family:monospace;
+	white-space:pre-wrap;
+}
+.mxFmTheme .mxOKDiv
+{
+	box-sizing:border-box;
+	background:#ddd;
+	position:absolute;
+	bottom:0;
+	width:100%;
+	height:3em;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+.mxFmTheme .mxShowOptionDiv
+{
+	line-height:1.75em;
+}
+.mxFmTheme .mxNumFromTextSpan,
+.mxFmTheme .mxNumWithTextSpan
+{
+	position:relative;
+	left:2em;
+	white-space:nowrap;
+}
+.mxFmTheme .mxNumFromTextSpan:before
+{
+	content:"\a";
+	white-space:pre-line;
+}
+.mxFmTheme .mxShowOptionDiv input[type="text"]
+{
+	font-size:1em;
+}
+.mxFmTheme input:not(:checked)~.mxNumFromTextSpan,
+.mxFmTheme input:not(:checked)~.mxNumWithTextSpan
+{
+	display:none;
+}
+.mxFmTheme a
+{
+	color:#000;
+}
+.mxFmTheme [data-maxigos-disabled] {opacity:0.5;}
+/* navigation and solve*/
+.mxFmTheme:not(.mxLoopConfig) .mxNavigationDiv
+{
+	box-sizing:border-box;
+	display:flex;
+	justify-content:space-around;
+	align-items:center;
+	height:2.5em;
+	border:0;
+}
+.mxFmTheme .mxNavigationDiv button
+{
+	flex:1;
+	font-size:1em;
+	border:0;
+	background:none;
+	margin:0 2%;
+	padding:0;
+}
+.mxFmTheme .mxNavigationDiv button svg
+{
+	display:block;
+	margin:10% auto;
+	max-width:50%;
+	width:100%;
+	height:100%;
+}
+.mxFmTheme .mxSolveDiv
+{
+	margin:0.5em auto;
+	text-align:center;
+}
+.mxFmTheme .mxSolveDiv button
+{
+	font-size:1em;
+	margin:0.125em 1em;
+	padding:0.25em;
+	border:0;
+	background:none;
+	width:10%;
+	min-width:3em;
+}
+.mxFmTheme .mxSolveDiv button svg
+{
+	display:block;
+	width:100%;
+	height:100%;
+}
+/* speed */
+.mxFmTheme .mxSpeedDiv
+{
+	display:flex;
+	align-items:center;
+}
+.mxFmTheme .mxSpeedDiv button
+{
+	flex:0;
+	font-size:1em;
+	margin:0;
+	padding:0;
+	border:1px solid transparent;
+	background:none;
+}
+.mxFmTheme .mxSpeedDiv svg
+{
+	flex:1;
+	margin:0 0.5em;
+}
+.mxFmTheme .mxSpeedDiv button span
+{
+	display:block;
+	margin:auto;
+	width:1.5em;
+	height:1.5em;
+	line-height:1.5em;
+	color:transparent;
+	position:relative;
+}
+.mxFmTheme .mxSpeedDiv button:focus span,
+.mxFmTheme .mxSpeedDiv button:hover span
+{
+	background:rgba(0,0,0,0.05);
+}
+.mxFmTheme .mxSpeedDiv button span:before
+{
+	content:"";
+	display:block;
+	position:absolute;
+	top:calc(50% - 1px);
+	left:25%;
+	bottom:0;
+	right:25%;
+	border-top:2px solid #000;
+	z-index:1;
+}
+.mxFmTheme .mxSpeedDiv button.mxSpeedPlusBtn span:after
+{
+	content:"";
+	display:block;
+	position:absolute;
+	top:25%;
+	left:calc(50% - 1px);
+	bottom:25%;
+	right:0;
+	border-left:2px solid #000;
+	z-index:1;
+}
+.mxFmTheme .mxSpeedDiv .mxSpeedBar,
+.mxFmTheme .mxSpeedDiv .mxSpeedCursor
+{
+	stroke:#000;
+	stroke-width:0.25px;
+	cursor:pointer;
+}

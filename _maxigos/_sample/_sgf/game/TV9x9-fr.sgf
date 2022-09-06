@@ -1,0 +1,132 @@
+(;GM[1]FF[4]EV[Un exemple de partie commentée sur "9x9"]
+ST[2]RU[AGA]SZ[9]KM[7.5]RE[W+10.5]
+PB[Kissy Suzuki]BR[4d]PW[Mariko Ichiban]WR[4d]DT[1993-03]AN[FM]
+US[FM, illustration of AGA rules counting, played during a japanese TV program, Mars 1993, rules were japanese (not AGA), komi was 5.5pts (not 7.5pts).]
+GC[Voici un exemple de partie sur un "9x9". \
+Bien que les grilles de "9x9" soient plutôt utilisées pour l'initiation, \
+il s'agit ici d'une partie entre deux amateurs 4e dan (les noms sont fictifs).]
+;B[fd]C[Les premiers coups sont placés généralement sur la troisième ou quatrième ligne à partir du bord. Ici, Noir choisit de jouer sur la quatrième ligne.
+Un coup plus proche du bord ne ferait pas assez d'influence, tandis qu'un coup plus au centre ne ferait pas assez de territoire.]
+;W[de]C[Blanc doit éviter de jouer au contact de la pierre noire. Il est trop tôt pour engager des combats.]
+;B[ef]C[Noir va essayer de faire du territoire dans le coin en bas à droite.]
+;W[gf]C[Blanc estime cette zone trop grande et il l'envahit.]
+;B[df]C[Ce coup, bien qu'étant au contact de l'adversaire, est ici correct car il s'appuie sur une pierre noire existante, attaque une pierre blanche et augmente l'emprise de Noir sur le bas du jeu.]
+;W[ce]C[Blanc renforce sa pierre, en augmentant ses libertés.]
+;B[ee]C[Noir connecte ses deux groupes. Ce coup affaiblit par la même occasion les deux groupes blancs.
+Il s'agit là d'un bel exemple d'application de deux principes stratégiques bien connus, "l'union fait la force" et "diviser pour régner".]
+;W[hd]C[Blanc consolide sa position sur le bord droit du jeu.]
+;B[dc]MA[ce][de]C[Noir s'étend sur le bord du haut. Cela diminue de plus la force des deux pierres blanches 'X'.]
+;W[cf]MA[ce][de]C[Blanc renforce ses deux pierres 'X' et prend une sérieuse option sur le bord gauche du jeu.]
+;B[gg]C[Noir conteste agressivement la suprématie de Blanc dans le coin en bas à droite.]
+(
+;W[hg]LB[fg:a]C[Blanc répond calmement sur la deuxième ligne. Jouer en 'a' serait un peu dangereux pour Blanc.]
+;B[fg]C[Noir renforce sa pierre tout en faisant des points sur le bord du bas.]
+;W[gc]C[Blanc "prend" le territoire du coin en haut à droite.]
+;B[bd]MA[ce][de][cf]C[Noir "prend" le territoire en haut à gauche tout en attaquant le groupe des 3 pierres blanches 'X'.]
+;W[be]MA[bd]C[Blanc renforce ses pierres tout en mettant en danger la pierre noire 'X'.]
+;B[cd]
+;W[ch]C[Blanc "prend" le coin en bas à gauche.]
+;B[bg]C[Ce coup noir n'est pas raisonnable, car il y a trop de blancs dans la région.]
+;W[cg]C[Blanc empêche Noir de se raccrocher aux autres groupes.]
+;B[hh]C[Noir s'attaque maintenant au dernier coin ouvert. S'il n'y avait pas joué, Blanc y aurait fait des points.]
+;W[eh]C[Blanc passe sous les pierres noires pour grignoter quelques points sur le bord du bas.]
+;B[ae]MA[bg]C[Noir ferme son coin supérieur gauche tout en diminuant le territoire blanc et en menaçant de connecter sa pierre 'X'.]
+;W[af]C[Blanc ferme son territoire en mettant Noir en atari.]
+;B[ad]
+;W[bh]LB[bf:a]C[Blanc protège son territoire. Pourquoi? Mettez le coup blanc ailleurs et regardez ce qui se passe si Noir joue en 'a'.]
+;B[fb]C[Ce coup augmente à la fois le nombre de points noirs sur le bord du haut et empêche un agrandissement du coin blanc en haut à droite.]
+;W[gb]C[Blanc protège son coin contre de possibles réductions.]
+(
+;B[hf]LB[he:a]BM[1]C[Noir met une pierre blanche en atari.
+Remarque pour les joueurs forts : Noir aurait pu jouer en 'a' et prendre tout le coin blanc.]
+;W[he]C[Après le coup noir précédent, Blanc ne peut plus sauver sa pierre. Aussi, il préfère l'abandonner.]
+;B[ig]MA[hf]C[Noir capture la pierre blanche. S'il ne le faisait pas, c'est Blanc qui pourrait capturer la pierre 'X' au coup suivant.]
+;W[fc]MA[fb]C[Blanc réduit le territoire noir sur le bord du haut en menaçant de prendre la pierre noire 'X'.]
+;B[ec]MA[fb]C[Noir abandonne la pierre 'X' et préfère bloquer l'avance de Blanc.]
+;W[eb]MA[fb]C[Blanc met la pierre noire 'X' en atari. Vérifiez que Noir ne peut plus la sauver.]
+;B[db]MA[fb]C[Noir utilise sa pierre 'X' pour empêcher Blanc d'avancer dans son territoire en haut à gauche, tout en conservant l'initiative.]
+;W[fa]C[Blanc prend effectivement la pierre noire.]
+;B[fh]C[Noir bloque l'avance de Blanc en bas.]
+;W[da]C[Il ne reste plus qu'à fermer les territoires. Blanc commence par le bord du haut.]
+;B[ca]C[Noir bloque Blanc et le met en atari.]
+;W[ea]
+(
+;B[bb]MA[ca]LB[cb:a][ge:b]C[Noir rajoute un coup de protection. C'est obligatoire, sinon, si Noir joue ailleurs (par exemple en 'b'), Blanc peut jouer en 'a' et lancer une séquence qui conduira à la capture de la pierre noire 'X'.
+Noir aurait aussi pu jouer sa pierre en 'a'.]
+;W[ge]C[Blanc connecte sa pierre avec le reste de son groupe. S'il ne l'avait pas fait, Noir aurait pu jouer à la place de ce Blanc, et s'assurer de la capture de cette pierre.]
+;B[eg]
+;W[ei]MA[eh]C[Blanc protège sa pierre 'X', tout en poursuivant la fermeture de son territoire.]
+;B[fi]C[Noir ferme complètement son territoire en bas à droite.]
+;W[dg]MA[eh][ei]C[Blanc lui aussi ferme complètement son territoire, tout en protégeant ses pierres 'X', qui étaient en danger.]
+;B[ie]C[Noir avance dans le territoire de Blanc en haut à gauche.]
+;W[id]C[Blanc ferme son territoire, et met une pierre noire en atari.]
+;B[gd]MA[ie]LB[if:a]C[Au lieu de jouer 'a', connectant ainsi sa pierre 'X' au reste de son groupe, Noir complique la situation en jouant ailleurs.]
+;W[if]C[Blanc prend la pierre noire, ce qui lance une bataille de ko.]
+;B[dh]MA[if]LB[ie:a]C[La pierre 'X' que Blanc vient de jouer est en atari. Mais d'après la règle, qui interdit les répétitions, Noir n'a pas le droit de rejouer immédiatement en 'a' et de reprendre cette pierre. Il joue donc ailleurs un coup menaçant de prendre deux pierres blanches.]
+;W[di]LB[ie:a]C[Blanc aurait bien voulu connecter en 'a', terminant ainsi la bataille de ko. Mais la menace de Noir est trop forte, et Blanc doit y répondre.]
+;B[ie]C[Maintenant, Noir a le droit de reprendre la pierre blanche.]
+;W[hc]LB[if:a]C[Blanc, toujours à cause de l'interdiction des répétitions, n'a pas le droit de jouer en 'a'. Il aurait pu faire lui aussi une menace ailleurs, comme Noir tout à l'heure. Mais ensuite, Noir pourra à nouveau faire une menace, et ainsi de suite jusqu'à ce que l'un des joueurs n'en ait plus aucune. Or, Blanc a moins de menace que Noir (ce point est un peu difficile à vérifier, mais vous pouvez essayer de le faire). De plus, Blanc est en avance. Il préfère donc connecter prudemment.]
+;B[if]C[Noir connecte, ce qui termine la bataille de ko.]
+;W[fe]C[Il ne reste plus que les finitions à faire. Blanc met deux pierres noires en atari.]
+;B[ed]C[Noir connecte.]
+;W[dd]C[Blanc occupe un point neutre (un point neutre est un point situé entre une frontière noire et une frontière blanche).]
+;B[ff]C[Noir occupe le dernier point neutre. Après ce coup, il n'y a plus rien à faire, car les territoires des deux joueurs sont tous fermés, et aucune de leurs frontières ne peuvent être capturées par l'adversaire.]
+;W[]C[Blanc passe.]
+;B[]C[Noir passe.]
+;W[]C[Comme Noir a posé la dernière pierre sur le jeu, Blanc lui donne une pierre supplémentaire. Ainsi, Noir ayant joué le premier coup de la partie, les deux joueurs auront consommé le même nombre de pierre.]
+;MA[bg]C[Puis Blanc retire du jeu la pierre noire 'X', qu'il aurait de toute façon capturée tôt ou tard, si Noir l'avait forcé à le faire (vérifiez-le).]
+;AE[bg]C[Comptage des points (méthode 1) :
+On compte les territoires et les frontières.]
+;TB[aa][ab][ac][gh][gi][hi][ih][ii][ba][bc][cb][cc][hg]
+TW[ga][ha][hb][ia][ib][ic][ag][ah][ai][bg][bi][fb][bf][ci][dh]
+C[- Noir a 7 points de territoire en haut à gauche, et 6 en bas à droite. Il a de plus 26 pierres sur le jeu. Son total est de 39 points.
+- Blanc a 8 points de territoire en bas à gauche, et 7 en haut à droite. Il a de plus 27 pierres sur le jeu. Son total est de 42 points.
+- Blanc a donc 3 points de plus que Noir sur le jeu.]
+;C[Par ailleurs, comme Noir a commencé, Blanc ajoute à son total les 7,5 points de compensation.
+Blanc gagne donc de 10,5 points.]
+;C[En pratique, on n'utilise guère cette méthode, et on lui préfère la méthode 2 expliquée à la page suivante.]
+;AB[ba][bc][cb][cc][hg]AW[fb][bf][ci][dh]MA[ba][bc][cb][cc][hg][fb][bf][ci][dh]
+C[Comptage des points (méthode 2) :
+Chaque joueur placent dans le territoire de l'autre les pierres adverses (notées 'X' sur la figure), qu'il a en sa possession. On est alors sûr qu'il y a sur le jeu autant de pierres de chaque couleur sans avoir à les compter (vérifiez-le).]
+;TB[aa][ab][ac][gh][gi][hi][ih][ii]
+TW[ga][ha][hb][ia][ib][ic][ag][ah][ai][bg][bi]
+C[- Noir a 3 points de territoire en haut à gauche, et 5 en bas à droite, soit 8 points.
+- Blanc a 5 points de territoire en bas à gauche, et 6 en haut à droite, soit 11 points.
+- Blanc a donc 3 points de plus que Noir sur le jeu.]
+;C[Par ailleurs, comme Noir a commencé, Blanc ajoute à son total les 7,5 points de compensation.
+Blanc gagne donc de 10,5 points.]
+;C[Les deux méthodes donnent toujours le même résultat.]
+)
+(
+;B[ge]C[Dans cette variante, Noir prend une pierre blanche, mais ...]
+;W[cb]C[... Blanc lui aussi prend une pierre noire.]
+;B[ba]
+;W[bb]
+;B[aa]
+;W[ab]C[C'est sans issue pour Noir!]
+))
+(
+;B[he]TE[1]C[Si Noir trouve ce coup, la suite est terrible pour Blanc!]
+(;W[hb]
+;B[ic]
+;W[id]
+;B[ga]
+;W[ha]
+;B[ib]LB[fc:a]C[... Blanc n'a pas 2 yeux!
+Et exploiter la faiblesse de Noir en 'a' ne donne rien pour Blanc.]
+)
+(
+;W[ge]
+;B[hf]
+;W[hb]
+;B[ic]C[... Blanc n'a pas 2 yeux!]
+))
+)
+(
+;W[fg]
+;B[ff]C[Les deux pierres blanches sont séparées!]
+;W[hg]
+;B[gh]
+;W[hh]
+;B[fh]MA[fg]C[Noir finira par prendre tôt ou tard la pierre blanche 'X'!]
+))

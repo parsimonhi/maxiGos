@@ -1,0 +1,9 @@
+<svg width="30px" height="20px" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="0" width="300" height="200" fill="#e11"/>
+<rect x="0" y="0" width="150" height="100" fill="#06a"/>
+<path id="r" fill="#fff" d="M 85,50 75,87.5 65,50 75,12.5 M 75,60 112.5,50 75,40 37.5,50"/>
+<use transform="rotate(30,75,50)" href="#r"/>
+<use transform="rotate(60,75,50)" href="#r"/>
+<circle cx="75" cy="50" r="21.25" fill="#06a"/>
+<circle cx="75" cy="50" r="18.75" fill="#fff"/>
+</svg>

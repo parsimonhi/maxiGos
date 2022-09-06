@@ -1,0 +1,14 @@
+(;
+FF[4]
+CA[ISO-8859-1]
+GM[1]
+SZ[19]
+C[héhé &#30707;&#30000;
+sgf filename="ISO-8859-1.sgf"
+sgf file encoded in ISO-8859-1
+CA\[ISO-8859-1\] in sgf
+
+Note: in a sgf file encoded in ISO-8859-1 (and having CA\[ISO-8859-1\] property \
+or no CA property), characters such as "&#30707;" or "&#30000;" \
+that are not in the ISO-8859-1 charset must be encoded using for instance Decimal NCRs.
+])

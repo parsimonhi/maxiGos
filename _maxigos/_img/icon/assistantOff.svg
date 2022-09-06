@@ -1,0 +1,27 @@
+<svg viewBox="0 0 160 112"
+	stroke-linecap="square" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<radialGradient id="rgw4i" cx="33%" cy="33%" r="100%">
+<stop stop-color="#fff" offset="0"/>
+<stop stop-color="#ccc" offset="0.5"/>
+<stop stop-color="#333" offset="1"/>
+</radialGradient>
+</defs>
+<g transform="translate(0,31)">
+<ellipse cx="80" cy="40" rx="80" ry="40" fill="url(#rgw4i)"/>
+</g>
+<g transform="translate(0,21)" stroke="#000" stroke-width="1" stroke-linecap="round">
+<line x1="80" y1="9" x2="80" y2="1"/>
+<line x1="80" y1="9" x2="70" y2="1"/>
+<line x1="80" y1="9" x2="90" y2="1"/>
+</g>
+<g transform="translate(0,31)" stroke="#000" stroke-width="1" stroke-linecap="round">
+<line x1="20" y1="40" x2="60" y2="40"/>
+<line x1="140" y1="40" x2="100" y2="40"/>
+<line x1="60" y1="65" x2="100" y2="65"/>
+</g>
+<g stroke="#000" stroke-width="1">
+<line x1="30" y1="111" x2="50" y2="111"/>
+<line x1="130" y1="111" x2="110" y2="111"/>
+</g>
+</svg>

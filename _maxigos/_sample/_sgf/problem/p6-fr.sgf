@@ -1,0 +1,30 @@
+(;
+FF[4]
+CA[UTF-8]
+GM[1]
+SZ[19]
+AB[bq][bp][cp][dp][ep][fp][fq][fr]
+AW[er][eq][dq][cq][br][ar]
+VW[an:hs]
+AP[maxiGos:6.49]
+C[Capturez les pierres blanches !]
+(;B[ds];W[es]
+(;B[cr]C[Correct !])
+(;B[bs];W[cr];B[cs]C[Echec (seki) !]GW[1]))
+(;B[es]
+(;W[ds];B[cr];W[fs]
+(;B[bs];W[cs])
+(;B[cs];W[bs])
+(;B[gs];W[cs];B[es];W[dr]))
+(;W[cs];B[ds]))
+(;B[cs];W[ds]
+(;B[cr];W[bs])
+(;B[fs];W[cr])
+(;B[bs];W[cr];B[fs];W[es]))
+(;B[bs];W[ds]
+(;B[cr];W[cs];B[aq];W[dr])
+(;B[cs];W[cr])
+(;B[fs];W[cr]))
+(;B[cr];W[cs]
+(;B[es];W[dr])
+(;B[ds];W[dr];B[fs];W[es])))

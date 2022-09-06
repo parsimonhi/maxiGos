@@ -1,0 +1,524 @@
+(;
+FF[4]
+GM[1]
+CA[UTF-8]
+SZ[19]
+VW[ha:sl]
+CP[2011 - François Mizessyn]
+EV[Josekis (3-3)]
+GC[Recueil de josekis commençant par le point 3-3]
+AP[maxiGos:6.35]
+;B[qc]C[Joseki
+Souvent, cette pierre reste seule jusqu'à un stade assez avancé de la partie. La suite dépend alors fortement de la situation globale.]
+(;W[pf]
+(;B[nd];W[qj]C[Joseki])
+(;B[nc]C[Joseki]))
+(;W[pd];B[pc];W[od]
+(;B[re];W[pg];B[nb];W[ld]C[Joseki])
+(;B[qd]C[Blanc en A est correct. Blanc en B ou C ne sont pas joseki.]LB[pf:A][oc:B][qe:C];W[pf];B[qe];W[ng]C[Joseki
+Plus tard ou tout de suite, Noir continue en A ou B. Si Noir joue ailleurs, Blanc peut bloquer en C ou D.]LB[qg:A][nc:B][qf:C][oc:D]))
+(;W[qe]
+(;B[oc];W[qh]C[Joseki])
+(;B[od]
+(;W[pg]C[Joseki
+La suite dépend fortement de la situation globale.])
+(;W[qh]C[Joseki]))))
+(;
+FF[4]
+GM[1]
+CA[UTF-8]
+SZ[19]
+ST[0]
+EV[Josekis (3-4 suivi d'un 5-3)]
+GC[Recueil de josekis commençant par le point 3-4 suivi d'un 5-3]
+PM[0]
+VW[ha:sl]
+CP[François Mizessyn]
+AP[maxiGos:6.35]
+;B[qd];W[oc]FG[0]PM[1]MN[1]
+(;B[mc];W[oe];B[pf];W[ld];B[pc]LB[pb:A]C[Blanc en A est parfois signalé comme étant joseki, mais est rarement joué.]
+(;W[ob];B[lc];W[kd];B[md];W[me]
+;B[kc];W[jd]
+(;B[ic];W[nd];B[ph]C[Joseki])
+(;B[jc];W[of];B[pg];W[id];B[hc]C[Parfois joué]))
+(;W[lc];B[ob];W[nc];B[nb];W[mb]C[Joseki]))
+(;B[md];W[oe];B[pf];W[kd];B[mf]
+;W[mc];B[nd];W[nc];B[od];W[pc]
+;B[pd]C[Joseki])
+(;B[lc]
+(;W[of]
+(;B[qg]C[Joseki
+La suite est souvent similaire aux josekis où la tenaille noire initiale est sur la quatrième ligne. Consultez-les.])
+(;B[pg];W[og];B[pf];W[oh];B[oe]
+;W[ne];B[nd];W[od];B[pe];W[md]
+;B[nc];W[mc];B[nb];W[mb];B[me]
+;W[nf];B[ob];W[le]C[Parfois joué]))
+(;W[qc];B[rc];W[pd];B[qe];W[qb]
+(;B[pg]C[Joseki
+Assez vite, les deux joueurs viseront un coup en A.]LB[rb:A])
+(;B[qh]C[Joseki
+Assez vite, les deux joueurs viseront un coup en A.]LB[rb:A])))
+(;B[ld]
+(;W[of]
+(;B[qg]C[Joseki])
+(;B[pg];W[og];B[pf];W[oh]
+(;B[oe];W[ne];B[nd];W[od];B[pe]
+;W[md];B[nc];W[mc];B[nb];W[me]
+;B[ob];W[ph]C[Parfois joué])
+(;B[ph];W[oi];B[qj]C[Parfois joué])))
+(;W[nd]
+(;B[pf];W[qb];B[qj]C[Joseki])
+(;B[oe];W[pd];B[qe];W[qc];B[rc]
+;W[pe];B[qf];W[pf];B[pg]C[Joseki]))
+(;W[qc];B[rc];W[pd]
+(;B[qe];W[qb]
+(;B[pg]C[Joseki])
+(;B[qh]C[Joseki]))
+(;B[qb];W[qe];B[pc];W[rd];B[qc]
+;W[oe];B[ob];W[nc];B[mb]C[Joseki]))
+(;W[pe]
+(;B[qe]
+(;W[pf];B[qg];W[qc]
+(;B[pg];W[pd];B[ng];W[qf];B[rf]
+(;W[rc]C[Parfois joué
+Noir a l'initiative.])
+(;W[rg];B[rh]C[Parfois joué
+Blanc a l'initiative.]))
+(;B[qf];W[pc];B[qj]C[Parfois joué])
+(;B[pd];W[od];B[pc];W[pb];B[qb]C[Parfois joué
+Shicho possible]))
+(;W[pg]C[Rarement joué]))
+(;B[pd];W[od];B[oe];W[md]
+(;B[of];W[me];B[qg];W[lc]C[Joseki])
+(;B[ne];W[me];B[pf];W[lc]C[Joseki]))))
+(;B[kc]
+(;W[qc];B[rc];W[pd];B[qe];W[qb]C[Quand la tenaille noire est basse, Noir en B est plus courant qu'en A.]LB[pg:A][qh:B]
+(;B[pg]C[Joseki])
+(;B[qh]C[Joseki]))
+(;W[of];B[qg]C[Joseki]))
+(;B[kd];W[qc];B[rc];W[pd];B[qe]
+;W[qb]LB[pg:A][qh:B]C[Quand la tenaille noire est haute, Noir en A est plus courant qu'en B.]
+(;B[pg]C[Joseki])
+(;B[qh]C[Joseki]))
+(;B[od];W[nd];B[oe];W[pc];B[qc]
+(;W[ne];B[nf];W[lc]C[Joseki
+La suite dépend fortement du coin en bas à droite (A à G entre autres sont possibles).]LB[mf:A][of:B][qf:C][pj:D][qj:E][pk:F][qk:G])
+(;W[mc]C[Joseki
+La suite dépend fortement du coin en bas à droite (A à G entre autres sont possibles).]LB[ne:A][mf:B][qf:C][pj:D][qj:E][pk:F][qk:G]))
+(;B[pe];W[md]
+(;B[qj];W[ic]C[Joseki])
+(;B[pc]C[Joseki
+Noir ne finit pas tout à fait sente. Blanc, s'il répond, joue en A.]LB[od:A])
+(;B[kc]C[Joseki
+La suite dépend fortement de la situation globale. Le plus souvent, Blanc continuera avec une tenaille en A.]LB[ic:A])))
+(;
+FF[4]
+GM[1]
+CA[UTF-8]
+SZ[19]
+ST[0]
+EV[Josekis (3-4 suivi d'un 5-4)]
+GC[Recueil de josekis commençant par le point 3-4 suivi d'un 5-4]
+VW[ha:sl]
+CP[2011 - François Mizessyn]
+AP[maxiGos:6.35]
+;B[qd];W[od]
+(;B[oc]
+(;W[nc];B[pc]
+(;W[nd]
+(;B[qf]
+(;W[jc]C[Joseki])
+(;W[jd]C[Joseki]))
+(;B[pe]
+(;W[jd]C[Joseki])
+(;W[jc]C[Joseki])
+(;W[pd];B[qf];W[qc];B[qb];W[rc]
+;B[rb];W[nb];B[pa];W[ic]C[Joseki])))
+(;W[md]
+(;B[qf];W[ic]C[Joseki
+Assez vite, Noir visera une invasion en A.]LB[lc:A])
+(;B[ne]
+(;W[nd]
+(;B[pe];W[ic]C[Joseki])
+(;B[pf];W[ic]C[Joseki]))
+(;W[me];B[nb];W[mb];B[nd];W[mc]
+;B[nf];W[mg];B[ng];W[nh]C[Noir A et B sont équivalents.]LB[mf:A][oh:B]
+(;B[mf];W[lf];B[oh];W[ni];B[lg]
+;W[mh];B[kf];W[le];B[ph]LB[oi:A][pj:B]C[Joseki
+Ensuite, Blanc continuera le plus souvent en A ou B.])
+(;B[oh];W[ni];B[mf];W[lf]C[On retombe dans la variante où Noir a interverti ses deux derniers coups.])))))
+(;W[pd];B[pc];W[qe]))
+(;B[oe];W[ne];B[pe]
+(;W[md]C[Joseki]
+(;B[oc];W[nc];B[ob]C[Joseki])
+(;B[nf];W[mf];B[mg];W[ng];B[of]
+;W[lf];B[lg];W[kf];B[nh]C[Joseki]))
+(;W[nf];B[nd];W[md];B[nc];W[mc]
+;B[ob]C[Descendre tout droit est inférieur pour Noir.];W[nb];B[oc]C[Joseki]))
+(;B[pf];W[qc];B[rc];W[pc];B[re]
+(;W[lc]C[Joseki])
+(;W[kc]C[Joseki]))
+(;B[mc]
+(;W[qc]
+(;B[pc];W[pd];B[oc];W[nc];B[nd]
+;W[nb];B[qb];W[rc];B[ob]
+(;W[qe];B[mb];W[ne];B[md]C[Joseki])
+(;W[ne]C[Blanc ne doit pas faire cet atari maintenant.];B[md];W[qe]C[Bon pour Noir qui finit sente.])
+(;W[mb]C[Blanc doit veiller à ce qu'un shicho lui soit favorable.]
+(;B[md];W[oa];B[pb];W[rb];B[pe]C[Shicho
+S'il est favorable à Noir, c'est la catastrophe pour Blanc.])
+(;B[qe];W[pf];B[rb];W[lc]
+(;B[md];W[ld];B[mf];W[pe];B[le]
+;W[oa];B[pb];W[qf];B[rd];W[re]
+;B[sc];W[jd];B[ke];W[hc]C[Joseki])
+(;B[pe];W[oe];B[of];W[ne];B[nf]
+;W[me];B[pg]C[Joseki]))))
+(;B[rc];W[pc];B[re];W[ne];B[pg]
+;W[ld];B[kc];W[lc];B[lb]C[Joseki
+Blanc continue en A (si le shicho lui est ou peut lui être favorable) ou B.]LB[mb:A][md:B]))
+(;W[ne];B[qg]
+(;W[qc];B[pc];W[pd];B[oc];W[qe]
+;B[rd];W[qf];B[rc];W[pg]C[Joseki
+Il reste ensuite une possibilité de ko pour Blanc.];W[nc]FG[0]PM[1]MN[1]
+;B[nb];W[md]
+(;B[lc];W[qb];B[pb];W[pa];B[ob]
+;W[rb];B[sb];W[ra];B[oa];W[re]C[Ko])
+(;B[pb];W[lc];B[mb]C[Bon pour Blanc.]))
+(;W[ld]
+(;B[oc];W[lc];B[pd]C[Joseki])
+(;B[pc];W[oc]C[Parfois joué.
+Ensuite, Noir approche en haut à gauche (en A par exemple), et Blanc joue ailleurs.]LB[ic:A])
+(;B[lc]C[Parfois joué.
+La suite dépend fortement de la situation dans le coin en haut à gauche.]))))
+(;B[ld]
+(;W[pg]
+(;B[oe];W[ne];B[of];W[pd]
+(;B[qf]C[Blanc en B est considéré par certains comme inférieur au joseki Blanc en A.]LB[qc:A][nf:B]
+(;W[qc];B[qe];W[nf];B[og]
+(;W[pb]C[Joseki])
+(;W[rc]C[Shicho : s'ils sont favorable à Noir, celui-ci coupe en A et c'est la catastrophe pour Blanc ! Sinon, Noir joue simplement en B.]LB[nd:A][pj:B]
+(;B[nd];W[md];B[nc];W[mc];B[ob]
+;W[oc];B[nb];W[mb];B[pb];W[pc]
+;B[me];W[kb];B[kc];W[lb];B[lg]
+;W[mg];B[mf];W[ng]LB[mh:A][nh:B]C[Deux possibilités de shicho ici en A ou en B : Blanc doit y penser avant de jouer sa pierre 'X'.]MA[rc])
+(;B[pj]C[Joseki])))
+(;W[nf];B[og];W[qc]C[Si Noir joue en A, on retombe dans une variante où Blanc joue en R17 avant O14. Mais ici, Noir peut jouer en B, ce qui est légèrement supérieur localement pour lui.]LB[qe:A][rd:B]
+(;B[qe];W[pb]C[Joseki])
+(;B[rd]C[Blanc doit jouer en A. Jouer en B est inférieur, et jouer en C expose Blanc à une coupe de Noir en D.]LB[nc:A][pb:B][rc:C][nd:D];W[nc];B[rc];W[qb]C[Joseki ou pas : à vous de juger !])))
+(;B[pe];W[qc]
+(;B[qe];W[nc];B[rc];W[qb]C[Joseki])
+(;B[re]
+(;W[rd];B[qe];W[nc];B[rc];W[rb]
+;B[sd]C[Joseki];W[]C[Joseki
+Comme Blanc a toujours moyen de protéger son coin, il peut se permettre de jouer ailleurs.
+Plus tard, Noir aura le choix entre A, B ou C.]
+(;B[qb];W[pc];B[sb];W[lb])
+(;B[mb];W[pb])
+(;B[mf]))
+(;W[rc];B[nd];W[nc];B[md]C[Légèrement favorable à Noir. Plus tard, Noir pourra jouer en A et réduire le territoire de Blanc en sente.]LB[mb:A]))))
+(;B[of]
+(;W[pe];B[pf];W[qe];B[qf];W[rf]C[A simplifie, B laisse plus de possibilités.]LB[qg:A][rd:B]
+(;B[qg];W[rd];B[nd];W[nc];B[oe]
+(;W[oc];B[mc];W[ne];B[md]C[Joseki
+Plus tard, Noir aura un gros yose en sente avec la séquence A à F.]LB[pd:A][re:B][pb:C][pc:D][nb:E][qc:F])
+(;W[pc];B[mc];W[ne];B[md];W[nb]C[Joseki])
+(;W[pd];B[mc];W[ne];B[md]C[Joseki]))
+(;B[rd];W[re];B[qg]
+(;W[qc]C[Joseki])
+(;W[pc]C[Joseki])
+(;W[ne]C[Joseki
+Après, tout peut arriver.])))
+(;W[og];B[oe]C[Joseki (rarement joué)])))
+(;W[of]
+(;B[qf]
+(;W[oh];B[qh]
+(;W[id]C[Joseki])
+(;W[qc];B[rc];W[id]C[Joseki
+Blanc 10 en A est aussi possible.]LB[jc:A]))
+(;W[qc];B[rc];W[oh];B[qh];W[jc]C[Joseki
+Blanc 10 en A est aussi possible.]LB[id:A]))
+(;B[qg]
+(;W[oh];B[pi]C[Parfois joué])
+(;W[jc];B[ke]C[Parfois joué])))
+(;W[qe]C[Blanc doit veiller à ce qu'un shicho lui soit favorable avant de jouer en R15.];B[re];W[pe]
+(;B[rf];W[qc];B[rd];W[oc];B[pg]
+;W[lb]C[Joseki])
+(;B[qf]C[Si le shicho lui est favorable, Noir peut jouer 7 en R14.]
+(;W[rf]C[Si le shicho est favorable à Noir, Blanc joue 8 en S14.];B[rg];W[rd];B[sf];W[qc]C[Bon pour Noir.])
+(;W[rd]C[Si le shicho est défavorable à Noir, Blanc joue 8 en S16 (bien qu'en pratique, on voit souvent Blanc jouer quand même en S14 dans ce cas).];B[rc];W[rf];B[sd];W[qg]C[Bon pour Blanc (si le shicho lui est favorable).]))))
+(;B[qf];W[qc];B[rc];W[pc];B[rb]
+;W[kc]C[Joseki])
+(;B[pd]C[Ce coup est rarement joué (il n'y a quasiment que Kitani qui l'ait joué au niveau professionnel).]
+(;W[oe];B[oc];W[nc];B[ob]C[Joseki])
+(;W[oc];B[oe];W[ne];B[of]C[Joseki])))
+(;
+GM[1]
+FF[4]
+SZ[19]
+ST[0]
+CA[UTF-8]
+EV[Josekis (4-4)]
+GC[Recueil de josekis commençant par le point 4-4]
+VW[ha:sl]
+CP[2011 - François Mizessyn]
+PM[0]
+AP[maxiGos:6.35]
+;B[pd]LB[qf:A][pf:B][pg:D][qg:C]C[Blanc continue le plus souvent en A, plus rarement en B, C ou D.]
+(;W[qf]FG[0]PM[1]MN[1]
+(;B[nc];W[rd];B[qc];W[qi]C[Joseki])
+(;B[nd]
+(;W[rd]
+(;B[qc]
+(;W[qi];B[jc]C[Joseki])
+(;W[ph]C[Joseki
+La suite dépend fortement de la situation dans les coins en bas à droite et en haut à gauche.]))
+(;B[qh];W[qc];B[qe];W[re];B[pf]C[La suite est une question de shicho.]
+(;W[pg];B[qg];W[rf]
+(;B[og]C[Joseki
+Ensuite, chaque joueur va chercher à tirer avantage du shicho.
+Sur le bord du haut, si Blanc ne rajoute pas rapidement un coup en A (ou B), Noir peut jouer en C sente.
+]LB[ob:A][nb:B][pb:C])
+(;B[of]C[Rarement joué
+Noir peut choisir cette variante s'il n'a aucun espoir de tirer avantage du shicho.]))
+(;W[rf];B[pg]C[Rarement joué
+Blanc peut choisir cette variante  s'il n'a aucun espoir de tirer avantage du shicho.])
+(;W[ob]
+(;B[rf]C[Joseki])
+(;B[nb];W[oc];B[nc]C[Joseki]))
+(;W[nb];B[rf];W[oc]C[Joseki])))
+(;W[pj];B[jd]C[Joseki]))
+(;B[pf];W[pg];B[of]C[Tsukenobi];W[qe];B[qd]
+(;W[qj];B[jc]C[Joseki
+Blanc ne peut pas couper tout de suite en A.
+Noir vise lui la coupe en B.]LB[pe:A][qg:B]
+(;W[pe];B[oe];W[od];B[nd];W[oc]
+;B[rd];W[re];B[qg];W[rg];B[qh]
+;W[rh];B[nc];W[pb];B[nb];W[rb]
+;B[qb];W[qc];B[pc];W[ob];B[rc]
+;W[qa];B[oa];W[qc];B[se];W[rf]
+;B[qb]C[Ko favorable pour Noir.])
+(;W[]C[Blanc joue ailleurs.];B[qg]LB[rg:A][qh:B]C[Blanc en A est correct. B est une erreur.]FG[0]PM[1]MN[1]
+(;W[rg];B[qh];W[rh];B[qi];W[ri]
+;B[oh];W[pj];B[oi]C[Possible])
+(;W[qh];B[rg];W[rh];B[og];W[ph]
+;B[re];W[rf];B[pe];W[sg]C[Bon pour Noir qui a pu réparer sa faiblesse en sente.])))
+(;W[qh];B[nd]C[Joseki
+Noir est ici indispensable du fait que le coup de Blanc précédent empêche toute coupe en A.]LB[qg:A])
+(;W[og];B[ng]
+(;W[qi];B[nd]C[Joseki])
+(;W[oi];B[nh];W[qi];B[nd]C[Parfois joué])))
+(;B[qe];W[pf]
+(;B[nd];W[qj]C[Blanc a pu s'étendre idéalement : bon pour Blanc !])
+(;B[qj];W[od]C[Compliqué, mais en général favorable à Blanc !]))
+(;B[pi]
+(;W[of];B[nd]
+(;W[rd];B[qc];W[ri]C[Joseki
+La position blanche est aujourd'hui considérée comme étant un peu trop basse.])
+(;W[pk];B[ni];W[mf];B[ld];W[li]
+;B[nk]C[Joseki]))
+(;W[qc];B[qd];W[pc];B[od];W[rd]
+;B[re];W[rc];B[qe];W[nc]C[Joseki]))
+(;B[qh];W[qc];B[qd];W[pc];B[od]
+;W[rd];B[re];W[rc];B[qe];W[nc]C[Joseki])
+(;B[pj]
+(;W[nc]
+(;B[nd];W[md];B[ne];W[qc];B[oc]
+;W[qd];B[mc]C[Joseki])
+(;B[oe];W[qc];B[qd];W[pc];B[me]C[Joseki]
+;W[od];B[pe];W[ld];B[le];W[kd]
+;B[jf]C[Parfois joué]))
+(;W[qc];B[qd];W[pc];B[od];W[rd]
+;B[re];W[rc];B[qe];W[nc]C[Joseki
+Noir continue le plus souvent en A, parfois en B ou C, ou ailleurs.]LB[pf:A][nd:B][me:C];B[pf]C[Joseki]))
+(;B[qj];W[qc];B[qd];W[pc];B[od]
+;W[rd];B[re];W[rc];B[qe];W[nc]LB[nd:B][me:C][pf:A]C[Joseki
+Noir continue le plus souvent en A, parfois en B ou C, ou ailleurs.]
+;B[pf]C[Joseki])
+(;B[];W[nc];B[nd];W[md];B[ne]
+;W[qc];B[oc];W[qd];B[mc]C[Joseki]))
+(;W[pf]FG[0]PM[1]MN[1]
+(;B[nd]
+(;W[qd];B[qc];W[qe];B[rc]
+(;W[qj];B[jc]C[Joseki])
+(;W[pi]C[Joseki]))
+(;W[pj]C[Joseki]))
+(;B[qf]C[Noir 3 est peu joué (en général, quand Noir joue 3, c'est qu'il a du soutien en bas à droite).];W[qg];B[qe]
+(;W[pg];B[nd];W[qk]C[Joseki])
+(;W[ng]C[Si Noir a du soutien en bas à droite, Blanc peut préférer jouer légèrement 6.];B[ne]C[Joseki]))
+(;B[];W[nd]
+(;B[oe];W[qc];B[pc];W[qd];B[ne]
+;W[pe];B[md]C[Joseki])
+(;B[qd];W[nf];B[rf]C[Joseki])
+(;B[qc];W[nf]C[Joseki])))
+(;W[qg]FG[0]PM[1]MN[1]
+(;B[nd];W[rd];B[qc];W[qj];B[jc]C[Joseki
+Il reste un gros coup de yose (18 points). Si Noir joue le premier, il commence en A.]LB[rf:A]
+;W[]C[Blanc joue ailleurs.];B[rf]FG[0]PM[1]MN[1];W[qf];B[re];W[qe]
+;B[qd];W[rg];B[rc])
+(;B[qe];W[qj]C[Joseki])
+(;B[mc];W[rd];B[qc];W[qj]C[Joseki
+Plus tard, il reste à Noir un coup en A.]LB[rf:A]
+(;B[rf];W[qf];B[re];W[qe];B[qd]
+;W[rg];B[rc]C[Gros coup de yose.])
+(;B[];W[rc]LB[rf:A]C[Blanc peut rajouter ce coup pour éviter un coup noir en A.])))
+(;W[pg]FG[0]PM[1]MN[1];B[nd]C[Joseki])
+(;W[]C[Blanc joue ailleurs.]
+(;B[jd]
+(;W[qf]FG[0]PM[1]MN[1]
+(;B[qh]
+(;W[qc];B[pc];W[qd];B[pe]
+(;W[rf];B[og]C[Joseki])
+(;W[qb];B[pf];W[rf]
+(;B[oh]C[Joseki])
+(;B[pb]C[Joseki])))
+(;W[nc];B[pf];W[pg];B[qg];W[qc]
+;B[qe];W[pc]C[Parfois joué]))
+(;B[pi];W[qc];B[pc];W[qd];B[pe]
+;W[pf];B[qe];W[re]
+(;B[rd];W[rc];B[rf];W[sd];B[of]
+;W[og];B[pg];W[qg];B[rg]C[Sacrifier une pierre supplémentaire est meilleur pour Noir que connecter en A.]LB[ph:A];W[qh]
+;B[ph];W[ri]LB[rh:A]C[Blanc ici est meilleur que A.];B[nf]C[Joseki
+Il reste à Noir une multitude de coups sente (entre autres A, B, C, D, E ou même F).]LB[qj:A][qk:B][ql:C][pj:D][pk:E][oj:F];AB[oj]FG[0]PM[1]MN[0]C[Si Noir rajoute une pierre en P10 et que Blanc n'y répond pas ...];B[rh]
+;W[qi];B[qj];W[rj];B[rk];W[qk]
+;B[sj];W[pj];B[si]C[... Noir obtient un shicho.])
+(;B[rf]
+(;W[rg];B[rd];W[sf];B[rc]C[Bon pour Blanc])
+(;W[rd]C[Bon pour Noir])))
+(;B[nd];W[rd]C[Pour la suite, voir les josekis où la pierre noire de milieu de bord n'est pas présente.]))
+(;W[];B[pj];W[qc]FG[0]PM[1]MN[1];B[qd];W[pc]
+;B[oc];W[ob]
+(;B[nc];W[nb];B[mc];W[rd];B[re]
+;W[rc];B[qf]C[Joseki])
+(;B[nb]
+(;W[nc];B[od];W[mb]
+(;B[nd];W[na];B[mc];W[nb]C[Joseki])
+(;B[pb];W[na];B[qb];W[nd]C[Parfois joué]))
+(;W[rd];B[re];W[qe];B[od];W[rf]
+;B[rc];W[se];B[rb];W[qh]C[Joseki]))))
+(;B[jc];W[qf]FG[0]PM[1]MN[1]C[Pour la suite, voir les variantes où la pierre noire du milieu de bord est sur la quatrième ligne.])
+(;B[nc]
+(;W[qg]FG[0]PM[1]MN[1]
+(;B[qe];W[qj]C[Possible])
+(;B[qi];W[rd]C[Possible]))
+(;W[re]FG[0]PM[1]MN[1]
+(;B[rd]
+(;W[qe];B[qd];W[qi]C[Joseki])
+(;W[qd]C[Possible]))
+(;B[qd]C[La suite dépend fortement de la situation en bas à droite.]
+(;W[qi]C[Possible])
+(;W[qh]C[Possible])
+(;W[rd]C[Rarement joué dans cet ordre
+Pour la suite, voir les variantes où les deux coups blancs sont intervertis.]))
+(;B[qe]C[Possible]))
+(;W[rd]FG[0]PM[1]MN[1];B[qd];W[re];B[rc]
+(;W[rb]
+(;B[qc];W[qh]C[Possible])
+(;B[sc];W[qh]C[Possible]))
+(;W[qh]C[Possible])))))
+(;
+FF[4]
+GM[1]
+CA[UTF-8]
+SZ[19]
+VW[ha:sl]
+CP[2011 - François Mizessyn]
+EV[Josekis (5-4)]
+GC[Recueil de josekis commençant par le point 5-4]
+AP[maxiGos:6.35]
+;B[od];W[qd]
+(;B[qc];W[rc];B[pc];W[re];B[kc]C[Blanc continue en A, B ou ailleurs.]LB[pf:A][oe:B]
+(;W[pf]C[Joseki])
+(;W[oe];B[ne];W[of];B[qf];W[pd]
+;B[nd];W[pi]C[Joseki])
+(;W[]C[Blanc joue ailleurs];B[qf];W[pe];B[pg];W[oe]
+;B[ng];W[mg];B[nd];W[nf];B[nh]
+;W[lf]C[Joseki]))
+(;B[qe];W[re];B[pe];W[qf]C[Shicho possible]
+(;B[rd];W[rc];B[rf];W[sd];B[qg]C[Joseki
+Noir doit veiller à ce que le shicho lui soit ou puisse lui être favorable.])
+(;B[rf];W[rg];B[rd];W[sf];B[qc]LB[pf:A][pg:B]C[Joseki
+Ensuite, Blanc doit jouer assez vite en A. Sinon, Noir peut jouer en B.]))
+(;B[pf]LB[oc:A][qf:B]C[Blanc continue en A, B ou ailleurs.]
+(;W[oc];B[nc];W[pc];B[nd]C[Joseki
+Ensuite, Blanc joue (souvent) ailleurs ou en A.]LB[rf:A]
+(;W[]C[Blanc joue ailleurs.]
+(;B[re]FG[0]PM[1]MN[1];W[rd];B[qe];W[pd];B[pe]C[Possible])
+(;B[rf]FG[0]PM[1]MN[1]
+(;W[pe];B[oe];W[nb];B[mb];W[ob]C[Parfois joué])
+(;W[]C[Blanc joue ailleurs];B[rb];W[rc];B[qb];W[re]C[Parfois joué
+Ensuite, Noir peut enfermer Blanc dans le coin en sente. Il peut aussi tenter d'obtenir un ko.])))
+(;W[rf]C[Joseki]))
+(;W[qf]C[Shicho possible]
+(;B[pg]C[Si le shicho est favorable à Blanc, Noir peut jouer simplement comme ici.];W[oc];B[nc];W[pc];B[md]
+;W[qg];B[ph]C[Joseki])
+(;B[qg];W[pg]
+(;B[qe];W[rf]
+(;B[of];W[re];B[ph]C[Joseki
+Noir doit veiller à ce que le shicho lui soit (ou puisse lui être) favorable.])
+(;B[pe];W[re];B[qh]
+(;W[pd];B[oe]C[Parfois joué])
+(;W[qb]C[Parfois joué])
+(;W[oc]C[Parfois joué])))
+(;B[of];W[qh];B[rg];W[rf];B[rh]C[Parfois joué])))
+(;W[]C[Blanc joue ailleurs];B[re]C[Il reste à Blanc un coup en qui lui permet doit de vivre dans le coin, soit de s'installer sur le bord.
+Si Blanc joue encore une fois ailleurs, Noir peut jouer en A lui aussi.]LB[ob:A];W[ob];B[pc]
+(;W[kc]C[Joseki])
+(;W[lc]C[Joseki]))))
+(;
+FF[4]
+GM[1]
+CA[UTF-8]
+SZ[19]
+VW[ha:sl]
+CP[2011 - François Mizessyn]
+EV[Josekis (5-3)]
+GC[Recueil de josekis commençant par le point 5-3]
+AP[maxiGos:6.35]
+;B[oc]
+(;W[qd]
+(;B[pe];W[qe]
+(;B[pf];W[qg];B[jd]C[Joseki])
+(;B[pg];W[pf];B[of];W[qf];B[og]
+;W[pc];B[ob];W[qh];B[id]C[Joseki
+Le choix de l'extension noire sur le bord du haut dépend fortement de la situation dans le coin en haut à gauche. A à E, voire même plus loin sont possibles suivant les cas.]LB[jd:A][jc:B][ic:C][hc:D][hd:E]))
+(;B[pf]C[Taisha
+La suite est compliquée. les variantes sont nombreuses.])
+(;B[qg];W[pe];B[qj]LB[pc:A][nd:B]C[Blanc A ou B sont les suites les plus courantes.]
+(;W[pc];B[od];W[pb]LB[ob:A]C[Blanc en A est aussi parfois joué.];B[kc]C[Joseki])
+(;W[nd]C[Jouable pour Blanc.
+Noir continue en général avec A ou B.]LB[nc:A][mc:B])))
+(;W[pe]
+(;B[qd];W[qe]
+(;B[rd];W[qi]C[Joseki
+Assez vite, A sera une continuation possible pour les deux joueurs.]LB[nd:A])
+(;B[pd];W[oe];B[nd];W[qi]C[Joseki
+Il est risqué pour Blanc de s'étendre plus loin.]))
+(;B[qg]
+(;W[qd]C[Joseki
+Pour la suite, voir les josekis où les deux coups blancs sont intervertis.])
+(;W[nd];B[nc];W[md];B[mc];W[ld]
+;B[kc]C[Joseki
+Ensuite, Blanc fera sans doute une tenaille sur le bord de droite qui dépendra fortement de la situation dans le coin en bas à droite.])
+(;W[qc]C[Joseki])))
+(;W[qc];B[pe];W[qe]
+(;B[pf];W[qf];B[pg]
+(;W[qg];B[ph];W[ic]C[Joseki
+Le choix du coup blanc sur le bord du haut dépend fortement de la situation dans le coin en haut à gauche.])
+(;W[ob]C[Douteux pour Blanc.];B[qd]
+(;W[rd];B[pd]C[Blanc a trop de faiblesses et ne peut pas toutes les réparer.])
+(;W[pd];B[rd];W[pc];B[rc];W[od]
+;B[qg]C[Perte locale pour Blanc.])))
+(;B[qf]
+(;W[pf]
+(;B[qd];W[re];B[oe];W[rd];B[pg]C[Joseki])
+(;B[pd]
+(;W[qg];B[rf];W[rg];B[of];W[pg]
+;B[qd];W[re];B[rd];W[sf]C[Joseki])
+(;W[qd]LB[rf:A][qg:B]C[Joseki
+Noir continue en A ou B. Blanc sacrifie parfois le coin pour l'influence.])))
+(;W[pd];B[od];W[rf];B[pf];W[rg]C[Joseki
+Noir peut éventuellement continuer tout de suite en A ou B.]
+(;B[qh];W[rh];B[qi];W[ic]C[Joseki
+Le choix du coup blanc sur le bord du haut dépend fortement de la situation dans le coin en haut à gauche.])
+(;B[qb];W[rb];B[rd];W[qd];B[pb]C[Joseki
+Blanc doit rajouter un coup en A, B ou éventuellement C, suivant la situation à l'extérieur.]LB[rc:A][re:B][ra:C])))))

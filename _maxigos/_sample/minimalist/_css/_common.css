@@ -1,0 +1,1092 @@
+.mxMinimalistTheme
+{
+	--gobanMaxWidth:30em;
+	--gobanMinWidth:10em;
+	--mainBk:transparent;
+	--barBk:transparent;
+	--barColor:#000;
+	--okBarBk:rgba(0,0,0,0.1);
+	--outerGobanBk:transparent;
+	--outerGobanBorder:rgba(0,0,0,0.3);
+	
+	--navigationBk:transparent;
+	--navigationBtnBk:transparent;
+	--navigationBtnBorder:transparent;
+	--navigationBtnColor:#000;
+	--solveBk:transparent;
+	--solveBtnBk:transparent;
+	--solveBtnBorder:transparent;
+	--solveBtnColor:#000;
+	
+	--gBoxBk:#fff;
+	--commentContentBk:transparent;
+	--commentContentBorder:rgba(0,0,0,0.3);
+	--commentContentColor:#000;
+	--treeContentBk:transparent;
+	--treeContentBorder:rgba(0,0,0,0.3);
+	--treeContentColor:#000;
+	--editToolBarBk:transparent;
+	--editToolBarBorder:transparent;
+	--editToolBarColor:#000;
+	--btnBk:#fff;
+	--btnBorder:rgba(0,0,0,0.3);
+	--btnColor:#000;
+	--subBtnBk:#fff;
+	--subBtnBorder:rgba(0,0,0,0.3);
+	--subBtnColor:#000;
+	--toolBk:#fff;
+	--toolBorder:rgba(0,0,0,0.3);
+	--toolColor:#000;
+
+	--selectedBtnBk:rgba(0,0,0,0.9);
+	--selectedBtnBorder:rgba(0,0,0,0.7);
+	--selectedBtnColor:#fff;
+	
+	--selectedToolBk:rgba(0,0,0,0.1);
+	--selectedToolBorder:rgba(0,0,0,0.3);
+	--selectedToolColor:#000;
+	--superSelectedToolBk:rgba(0,0,0,0.2);
+	--superSelectedToolBorder:rgba(0,0,0,0.3);
+	--superSelectedToolColor:#000;
+	
+	--focusBk:rgba(0,0,0,0.1);
+	
+	--focusCommentContentBk:transparent;
+	--focusCommentContentBorder:#000;
+	--focusCommentContentColor:#000;
+	--focusTreeContentBk:transparent;
+	--focusTreeContentBorder:#000;
+	--focusTreeContentColor:#000;
+	--focusBtnBk:#fff;
+	--focusBtnBorder:#000;
+	--focusBtnColor:#000;
+	--focusSubBtnBk:#fff;
+	--focusSubBtnBorder:#000;
+	--focusSubBtnColor:#000;
+	
+	--focusNavigationBtnBk:rgba(0,0,0,0.1);
+	--focusNavigationBtnBorder:transparent;
+	--focusNavigationBtnColor:#000;
+	--focusSolveBtnBk:rgba(0,0,0,0.1);
+	--focusSolveBtnBorder:transparent;
+	--focusSolveBtnColor:#000;
+	
+	--focusToolBk:#fff;
+	--focusToolBorder:#000;
+	--focusToolColor:#000;
+	--focusSelectedToolBk:rgba(0,0,0,0.2);
+	--focusSelectedToolBorder:#000;
+	--focusSelectedToolColor:#000;
+	--focusSuperSelectedToolBk:rgba(0,0,0,0.3);
+	--focusSuperSelectedToolBorder:#000;
+	--focusSuperSelectedToolColor:#000;
+	text-align:left;
+}
+/* general */
+.mxMinimalistTheme div::-moz-focus-inner,
+.mxMinimalistTheme button::-moz-focus-inner,
+.mxMinimalistTheme input[type=text]::-moz-focus-inner,
+.mxMinimalistTheme a::-moz-focus-inner {padding:0;border:0;}
+.mxMinimalistTheme div:focus,
+.mxMinimalistTheme button:focus,
+.mxMinimalistTheme input[type=text]:focus,
+.mxMinimalistTheme textarea:focus,
+.mxMinimalistTheme a:focus {outline:none;}
+.mxMinimalistTheme button,
+.mxMinimalistTheme input[type=button],
+.mxMinimalistTheme textarea {-webkit-appearance:none;-moz-appearance:none;}
+.mxMinimalistTheme text {cursor:default;}
+.mxMinimalistTheme button {cursor:pointer;}
+.mxMinimalistTheme button text {cursor:pointer;}
+.mxMinimalistTheme input[type=text][disabled],
+.mxMinimalistTheme button[disabled] {cursor:default;}
+.mxMinimalistTheme input[type=file] {visibility:hidden;position:fixed;}
+.mxMinimalistTheme [data-maxigos-disabled] {opacity:0.5;}
+/* font */
+.mxMinimalistTheme
+{
+	font-family:sans-serif;
+}
+/* don't style svg font-family since */
+/* since minimalist is the default maxigos style set with js */
+.mxMinimalistTheme button
+{
+	font-family:sans-serif;
+}
+/* layout */
+.mxMinimalistTheme
+{
+	box-sizing:border-box;
+	max-width:var(--gobanMaxWidth);
+	min-width:var(--gobanMinWidth);
+	margin:0 auto;
+}
+.mxMinimalistTheme.mxCommentConfig,
+.mxMinimalistTheme.mxEditConfig,
+.mxMinimalistTheme.mxLessonConfig,
+.mxMinimalistTheme.mxTreeConfig
+{
+	display:flex;
+	flex-wrap:wrap;
+	justify-content:center;
+	align-items:stretch;
+	max-width:calc(var(--gobanMaxWidth) * 2);
+}
+.mxMinimalistTheme.mxCommentConfig>div,
+.mxMinimalistTheme.mxEditConfig>div,
+.mxMinimalistTheme.mxLessonConfig>div,
+.mxMinimalistTheme.mxTreeConfig>div
+{
+	box-sizing:border-box;
+	max-width:var(--gobanMaxWidth);
+	flex:1 1 var(--gobanMaxWidth);
+	padding:0.125em;
+}
+.mxMinimalistTheme.mxCommentConfig .mxGobanParentDiv,
+.mxMinimalistTheme.mxEditConfig .mxGobanParentDiv,
+.mxMinimalistTheme.mxLessonConfig .mxGobanParentDiv,
+.mxMinimalistTheme.mxTreeConfig .mxGobanParentDiv,
+.mxMinimalistTheme.mxCommentConfig .mxCommentParentDiv,
+.mxMinimalistTheme .mxLessonParentDiv,
+.mxMinimalistTheme .mxTreeParentDiv
+{
+	display:flex;
+	flex-direction:column;
+}
+.mxMinimalistTheme.mxCommentConfig .mxGobanDiv,
+.mxMinimalistTheme.mxEditConfig .mxGobanDiv,
+.mxMinimalistTheme.mxLessonConfig .mxGobanDiv,
+.mxMinimalistTheme.mxTreeConfig .mxGobanDiv
+{
+	flex:auto;
+	display:flex;
+	flex-direction:column;
+	width:100%;
+}
+.mxMinimalistTheme.mxCommentConfig .mxCommentDiv,
+.mxMinimalistTheme.mxTreeConfig .mxCommentDiv,
+.mxMinimalistTheme .mxTreeDiv
+{
+	height:7em;
+	min-height:2.25em;
+	padding:0.25em;
+	resize:vertical;
+	overflow:auto;
+}
+.mxMinimalistTheme.mxCommentConfig .mxCommentDiv,
+.mxMinimalistTheme .mxTreeDiv
+{
+	flex:auto;
+}
+.mxMinimalistTheme.mxTreeConfig .mxCommentDiv
+{
+	flex:initial;
+}
+.mxMinimalistTheme .mxEditCommentToolDiv,
+.mxMinimalistTheme .mxTreeDiv
+{
+	margin:0.25em 0 0 0;
+}
+.mxMinimalistTheme.mxEditConfig .mxEditToolBarDiv
+{
+	flex:none;
+	display:grid;
+	grid-template-columns:repeat(auto-fit,minmax(2.225em,1fr));
+	gap:0.125em;
+}
+.mxMinimalistTheme.mxEditConfig .mxEditCommentToolDiv
+{
+	flex:initial;
+}
+.mxMinimalistTheme.mxEditConfig .mxEditCommentToolDiv textarea
+{
+	display:block;
+	box-sizing:border-box;
+	resize:vertical;
+	height:7em;
+	min-height:2.25em;
+	/* has to set width, otherwise it doesn't shrink when narrow container */
+	width:100%;
+	max-width:100%;
+}
+/* set position:absolute to .mxXxxContentDiv to avoid overflow */
+/* when available space is narrower than --gobanMaxWidth */
+/* and when .mxXxxContentDiv is wider than available space */
+.mxMinimalistTheme.mxCommentConfig .mxCommentDiv,
+.mxMinimalistTheme.mxTreeConfig .mxCommentDiv,
+.mxMinimalistTheme .mxTreeDiv
+{
+	position:relative;
+}
+.mxMinimalistTheme.mxCommentConfig .mxCommentContentDiv,
+.mxMinimalistTheme.mxTreeConfig .mxCommentContentDiv,
+.mxMinimalistTheme .mxTreeContentDiv
+{
+	position:absolute;
+}
+.mxMinimalistTheme .mxVersionDiv
+{
+	box-sizing:border-box;
+	text-align:center;
+	height:2.5em;
+	line-height:2.5em;
+}
+/* common */
+.mxMinimalistTheme.mxCommentConfig .mxGobanDiv,
+.mxMinimalistTheme.mxEditConfig .mxGobanDiv,
+.mxMinimalistTheme.mxLessonConfig .mxGobanDiv,
+.mxMinimalistTheme.mxTreeConfig .mxGobanDiv,
+/* unlike the others "Score" goban has no border, thus add them when .mxUnder */
+.mxMinimalistTheme.mxScoreConfig .mxGobanDiv.mxUnder
+{
+	box-sizing:border-box;
+	background:var(--outerGobanBk);
+	border:1px solid var(--outerGobanBorder);
+}
+.mxMinimalistTheme.mxLessonConfig .mxGobanDiv
+{
+	background:transparent;
+	border:1px solid transparent;
+}
+.mxMinimalistTheme .mxInnerGobanDiv
+{
+	/* avoid bad touch effect on mobile */
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
+	user-select:none;
+	margin:auto;
+	position:relative;
+}
+.mxMinimalistTheme .mxGobanDiv svg
+{
+	box-sizing:border-box;
+	display:block;
+	width:100%;
+	height:100%;
+	pointer-events:none;
+	/* do not style anything else inside minimalist svg */
+	/* since minimalist is the default maxigos style set with js */
+}
+.mxMinimalistTheme .mxTitleH1
+{
+	font-size:1em;
+	padding:0;
+	margin:0 0 0.25em 0;
+}
+.mxMinimalistTheme .mxP:not(:first-child)
+{
+	padding-top:0.5em;
+}
+.mxMinimalistTheme.mxCommentConfig .mxVersionDiv,
+.mxMinimalistTheme.mxEditConfig .mxVersionDiv,
+.mxMinimalistTheme.mxTreeConfig .mxVersionDiv
+{
+	background:var(--barBk);
+	color:var(--barColor);
+}
+/* basic */
+.mxMinimalistTheme.mxBasicConfig
+{
+	background:var(--mainBk);
+}
+/* comment and tree */
+.mxMinimalistTheme.mxCommentConfig>div,
+.mxMinimalistTheme.mxTreeConfig>div
+{
+	background:var(--mainBk);
+}
+.mxMinimalistTheme.mxCommentConfig .mxCommentDiv,
+.mxMinimalistTheme.mxTreeConfig .mxCommentDiv
+{
+	background:var(--commentContentBk);
+	border:1px solid var(--commentContentBorder);
+	color:var(--commentContentColor);
+}
+.mxMinimalistTheme .mxTreeDiv
+{
+	background:var(--treeContentBk);
+	border:1px solid var(--treeContentBorder);
+	color:var(--treeContentColor);
+}
+.mxMinimalistTheme .mxTreeDiv
+{
+	user-select:none;
+}
+/* diagram, kifu */
+.mxMinimalistTheme.mxDiagramConfig
+{
+	background:var(--mainBk);
+}
+.mxMinimalistTheme .mxInnerNotSeenDiv:not(:empty)
+{
+	margin:0.5em auto 0 auto;
+}
+.mxMinimalistTheme .mxInnerNotSeenDiv
+{
+	margin:0 auto;
+}
+.mxMinimalistTheme .mxNotSeenSvg
+{
+	width:100%;
+	height:100%;
+	display:block;
+}
+/* edit and Score */
+.mxMinimalistTheme.mxEditConfig .mxInnerGobanDiv
+{
+	/* no background by default? */
+	/* background:#fff; */
+}
+.mxMinimalistTheme.mxEditConfig>div
+{
+	background:var(--mainBk);
+}
+.mxMinimalistTheme.mxEditConfig .mxMenuDiv
+{
+	background:var(--barBk);
+}
+.mxMinimalistTheme .mxSgfParentDiv
+{
+	background:var(--barBk);
+}
+.mxMinimalistTheme.mxEditConfig .mxGobanDiv svg
+{
+	/* background color and background-image will be set in mgosEdit.js */
+	/* need to set background-size and background-repeat */
+	/* to get a correct css when generating svg image using "Image" button */
+	background-size:100% 100%;
+	background-repeat:no-repeat;
+}
+.mxMinimalistTheme.mxEditConfig .mxOneMenuDiv
+{
+	text-align:left;
+}
+.mxMinimalistTheme.mxEditConfig .mxSubMenuDiv
+{
+	position:absolute;
+	z-index:1;
+	display:none;
+	margin-top:0.125em;
+}
+.mxMinimalistTheme.mxEditConfig .mxMenuDiv .mxSubMenuDiv button
+{
+	width:100%;
+	text-align:left;
+	width:-moz-available; /* work-around for firefox bug  (at least v16 on mac) */
+}
+.mxMinimalistTheme.mxEditConfig .mxMenuDiv .mxSubMenuDiv button.mxCoched,
+.mxMinimalistTheme.mxEditConfig .mxMenuDiv .mxSubMenuDiv button.mxCochable
+{
+	padding-left:1.25em;
+}
+.mxMinimalistTheme.mxEditConfig .mxMenuDiv .mxSubMenuDiv button.mxCoched span:before
+{
+	position:absolute;
+	left:0.5em;
+	content:"✓";
+}
+.mxMinimalistTheme.mxEditConfig .mxEditToolBarDiv
+{
+	margin:-1px;
+	background:var(--editToolBarBk);
+	border:1px solid var(--editToolBarBorder);
+	color:var(--editToolBarColor);
+}
+.mxMinimalistTheme.mxEditConfig .mxEditToolBarDiv button,
+.mxMinimalistTheme.mxEditConfig .mxEditToolBarDiv input[type=text]
+{
+	display:block;
+	box-sizing:border-box;
+	font-size:1em;
+	height:2.225em;
+	min-width:2.225em;
+	padding:0.125em;
+	background:var(--toolBk);
+	color:var(--toolColor);
+	border:1px solid var(--toolBorder);
+	border-radius:0;
+	outline:none;
+}
+.mxMinimalistTheme.mxEditConfig .mxEditToolBarDiv input[type=text]
+{
+	padding-top:0.1875em;
+}
+.mxMinimalistTheme.mxEditConfig .mxEditToolBarDiv button text
+{
+	fill:var(--toolColor);
+	stroke:var(--toolColor);
+}
+.mxMinimalistTheme.mxEditConfig .mxEditToolBarDiv .mxSelectedEditTool
+{
+	background:var(--selectedToolBk);
+	border-color:var(--selectedToolBorder);
+	color:var(--selectedToolColor);
+}
+.mxMinimalistTheme.mxEditConfig .mxEditToolBarDiv .mxSelectedEditTool text
+{
+	fill:var(--selectedToolColor);
+	stroke:var(--selectedToolColor);
+}
+.mxMinimalistTheme.mxEditConfig .mxEditToolBarDiv .mxSuperSelectedEditTool
+{
+	background:var(--superSelectedToolBk);
+	border-color:var(--superSelectedToolBorder);
+	color:var(--superSelectedToolColor);
+}
+.mxMinimalistTheme.mxEditConfig .mxEditToolBarDiv .mxSuperSelectedEditTool text
+{
+	fill:var(--superSelectedToolColor);
+	stroke:var(--superSelectedToolColor);
+}
+.mxMinimalistTheme.mxEditConfig .mxEditToolBarDiv svg
+{
+	display:block;
+	width:100%;
+	height:100%;
+}
+.mxMinimalistTheme.mxEditConfig .mxEditToolBarDiv div
+{
+	/* empty tags to help centering the tool bar but not the last line of tools */
+	display:none;
+	width:2.225em;
+	max-width:2.225em;
+	height:2.225em;
+	margin:0 0.125em;
+}
+.mxMinimalistTheme.mxEditConfig .mxEditToolBarDiv button:focus,
+.mxMinimalistTheme.mxEditConfig .mxEditToolBarDiv input[type=text]:focus
+{
+	background:var(--focusToolBk);
+	border-color:var(--focusToolBorder);
+	color:var(--focusToolColor);
+}
+.mxMinimalistTheme.mxEditConfig .mxEditToolBarDiv .mxSelectedEditTool:focus
+{
+	background:var(--focusSelectedToolBk);
+	border-color:var(--focusSelectedToolBorder);
+	color:var(--focusSelectedToolColor);
+}
+.mxMinimalistTheme.mxEditConfig .mxEditToolBarDiv .mxSelectedEditTool:focus text
+{
+	fill:var(--focusSelectedToolColor);
+	stroke:var(--focusSelectedToolColor);
+}
+.mxMinimalistTheme.mxEditConfig .mxEditToolBarDiv .mxSuperSelectedEditTool:focus
+{
+	background:var(--focusSuperSelectedToolBk);
+	border-color:var(--focusSuperSelectedToolBorder);
+	color:var(--focusSuperSelectedToolColor);
+}
+.mxMinimalistTheme.mxEditConfig .mxEditToolBarDiv .mxSuperSelectedEditTool:focus text
+{
+	fill:var(--focusSuperSelectedToolColor);
+	stroke:var(--focusSuperSelectedToolColor);
+}
+.mxMinimalistTheme.mxEditConfig .mxEditCommentToolDiv textarea
+{
+	background:var(--commentContentBk);
+	border:1px solid var(--commentContentBorder);
+	color:var(--commentContentColor);
+}
+/* game, kifu, replay, score */
+.mxMinimalistTheme.mxGameConfig,
+.mxMinimalistTheme.mxReplayConfig,
+.mxMinimalistTheme.mxScoreConfig
+{
+	background:var(--mainBk);
+}
+.mxMinimalistTheme.mxGameConfig .mxHeaderDiv,
+.mxMinimalistTheme.mxReplayConfig .mxHeaderDiv,
+.mxMinimalistTheme.mxScoreConfig .mxCommentDiv
+{
+	padding:0.25em 0.25em 0.25em 0.75em;
+	margin-bottom:0.25em;
+}
+.mxMinimalistTheme.mxGameConfig .mxHeaderDiv h1,
+.mxMinimalistTheme.mxReplayConfig .mxHeaderDiv h1
+{
+	font-size:1em;
+	font-weight:bold;
+}
+.mxMinimalistTheme.mxKifuConfig .mxGobanDiv
+{
+	--gobanMaxWidth:42em;
+}
+.mxMinimalistTheme.mxKifuConfig .mxHeaderDiv
+{
+	padding:0.25em 1.75em;
+	margin-bottom:0.25em;
+}
+.mxMinimalistTheme.mxKifuConfig .mxGobanDiv
+{
+	background:transparent;
+}
+.mxMinimalistTheme.mxKifuConfig .mxNotSeenDiv
+{
+	padding:0.25em 1.75em;
+	background:transparent;
+}
+.mxMinimalistTheme.mxKifuConfig .mxHeaderDiv h1
+{
+	font-size:1em;
+	font-weight:bold;
+}
+.mxMinimalistTheme.mxReplayConfig .mxGuessDiv
+{
+	margin:0.5em 0.5em 0 0.5em;
+}
+/* problem */
+.mxMinimalistTheme.mxProblemConfig
+{
+	background:var(--mainBk);
+}
+.mxMinimalistTheme.mxProblemConfig .mxCommentDiv
+{
+	margin:0 auto;
+	padding:0.5em;
+	text-align:center;
+	min-height:1.5em;
+	line-height:1.5em;
+}
+.mxMinimalistTheme.mxProblemConfig .mxCommentContentDiv
+{
+	display:inline-block;
+	text-align:justify;
+}
+/* buttons and inputs */
+.mxMinimalistTheme.mxEditConfig .mxMenuDiv,
+.mxMinimalistTheme.mxEditConfig .mxOKDiv,
+.mxMinimalistTheme .mxSgfParentDiv
+{
+	padding:0.25em;
+	text-align:center;
+}
+.mxMinimalistTheme.mxEditConfig .mxMenuDiv>div,
+.mxMinimalistTheme .mxSgfParentDiv>div
+{
+	display:inline-block;
+	margin:0.25em 0;
+}
+.mxMinimalistTheme [disabled] {opacity:0.5;}
+.mxMinimalistTheme.mxEditConfig .mxMenuDiv button,
+.mxMinimalistTheme .mxSgfParentDiv button,
+.mxMinimalistTheme .mxOKDiv button
+{
+	display:block;
+	box-sizing:border-box;
+	font-size:1em;
+	border:1px solid var(--btnBorder);
+	background:var(--btnBk);
+	color:var(--btnColor);
+	margin:0 0.125em;
+	padding:0 0.5em;
+	height:1.75em;
+	line-height:1.75em;
+	text-decoration:none;
+	white-space:nowrap;
+	text-align:center;
+}
+.mxMinimalistTheme.mxEditConfig .mxMenuDiv .mxSubMenuDiv button
+{
+	border:1px solid var(--subBtnBorder);
+	background:var(--subBtnBk);
+	color:var(--subBtnColor);
+	border-bottom:0;
+}
+.mxMinimalistTheme.mxEditConfig .mxMenuDiv .mxSubMenuDiv button:last-of-type
+{
+	border-bottom:1px solid var(--subBtnBorder);
+}
+.mxMinimalistTheme .mxGBoxDiv .mxOKDiv button
+{
+	/* in case of wrap when narrow available width */
+	margin-top:0.125em;
+	margin-bottom:0.125em;
+	border:1px solid #000;
+}
+.mxMinimalistTheme .mxGBoxDiv .mxOKDiv button
+{
+	/* need these margins in case of wrap when narrow available width */
+	margin-top:0.125em;
+	margin-bottom:0.125em;
+	border:1px solid var(--btnBorder);
+}
+.mxMinimalistTheme input[type=text]
+{
+	text-align:center;
+}
+.mxMinimalistTheme .mxSgfParentDiv .mxSelectedBtn
+{
+	background:var(--selectedBtnBk);
+	border:1px solid var(--selectedBtnBorder);
+	color:var(--selectedBtnColor);
+}
+/* gbox */
+.mxMinimalistTheme .mxGBoxDiv
+{
+	box-sizing:border-box;
+	background:var(--gBoxBk);
+	margin:0;
+}
+.mxMinimalistTheme .mxGobanDiv.mxUnder
+{
+	min-height:7em;
+}
+.mxMinimalistTheme .mxUnder .mxInnerGobanDiv
+{
+	visibility:hidden;
+}
+.mxMinimalistTheme .mxGBoxDiv .mxShowContentDiv
+{
+	box-sizing:border-box;
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:3em;
+	padding:0.25em;
+	overflow:auto;
+	z-index:1;
+	border:1px solid transparent;
+}
+.mxMinimalistTheme .mxGBoxDiv.mxShowSvgDiv .mxShowContentDiv img,
+.mxMinimalistTheme .mxGBoxDiv.mxShowPngDiv .mxShowContentDiv img
+{
+	display:block;
+	box-sizing:border-box;
+	height:100%;
+	width:auto;
+	border:0;
+	margin:0 auto;
+}
+.mxMinimalistTheme .mxGBoxDiv.mxShowSgfDiv .mxShowContentDiv textarea
+{
+	display:block;
+	font-family:monospace; /* for Safari? */
+	box-sizing:border-box;
+	width:100%;
+	height:100%;
+	border:0;
+	resize:none;
+}
+.mxMinimalistTheme.mxEditConfig .mxOpenDiv .mxShowContentDiv button
+{
+	display:block;
+	box-sizing:border-box;
+	font-size:1em;
+	border:1px solid var(--btnBorder);
+	background: var(--btnBk);
+	color: var(--btnColor);
+	margin:0 auto;
+	padding:0 0.5em;
+	height:1.75em;
+	line-height:1.75em;
+	text-decoration:none;
+	white-space:nowrap;
+	text-align:center;
+}
+.mxMinimalistTheme.mxEditConfig .mxOpenDiv .mxShowContentDiv button:focus
+{
+	background:var(--focusBtnBk);
+	border:1px solid var(--focusBtnBorder);
+	color:var(--focusBtnColor);
+}
+.mxMinimalistTheme .mxShowColorsDiv .mxShowContentDiv div:nth-of-type(2) label
+{
+	display:inline-block;
+	min-width:7em;
+}
+.mxMinimalistTheme .mxShowColorsDiv .mxShowContentDiv input[type="text"]
+{
+	margin-left:0.5em;
+}
+.mxMinimalistTheme .mxFigureOrNotP+.mxTabNumberingP
+{
+	padding-left:2em;
+}
+.mxMinimalistTheme .mxShowInfoDiv *
+{
+	box-sizing:border-box;
+}
+.mxMinimalistTheme .mxInfoPageMenuDiv
+{
+	border-bottom:1px solid #000;
+	margin-bottom:0.5em;
+}
+.mxMinimalistTheme.mxEditConfig .mxInfoPageMenuDiv button
+{
+	box-sizing:border-box;
+	display:inline-block;
+	font-size:1em;
+	border:1px solid rgba(0,0,0,0.3);
+	border-bottom:0;
+	border-radius:0.5em 0.5em 0 0;
+	background:#fff;
+	color:#000;
+	margin:0 0.125em;
+	padding:0 0.5em;
+	height:1.75em;
+	line-height:1.75em;
+	text-decoration:none;
+	white-space:nowrap;
+	text-align:center;
+}
+.mxMinimalistTheme.mxEditConfig .mxInfoPageMenuDiv button.mxInfoSelectedPageBtn,
+.mxMinimalistTheme.mxEditConfig .mxInfoPageMenuDiv button:focus
+{
+	border:1px solid #000;
+	border-bottom:0;
+}
+.mxMinimalistTheme .mxInfoPageDiv
+{
+	display:grid;
+	gap:0.5em;
+	grid-template-columns: repeat(2, 1fr);
+}
+.mxMinimalistTheme .mxInfoPageDiv input[type=text]
+{
+	text-align:left;
+}
+.mxMinimalistTheme .mxInfoPageDiv textarea
+{
+}
+.mxMinimalistTheme .mxInfoPageDiv>div.mxResultDiv,
+.mxMinimalistTheme .mxInfoPageDiv>label.mxGC,
+.mxMinimalistTheme .mxInfoPageDiv>label.mxGN
+{
+	grid-column:1 / 3;
+}
+.mxMinimalistTheme .mxInfoPageDiv>div.mxResultDiv
+{
+	display:flex;
+	flex-wrap:wrap;
+	justify-content:space-between;
+}
+.mxMinimalistTheme .mxInfoPageDiv>div.mxResultDiv label.mxSC
+{
+	white-space:nowrap;
+}
+.mxMinimalistTheme .mxInfoPageDiv>label span
+{
+	display:block;
+}
+.mxMinimalistTheme .mxInfoPageDiv>label span+input[type=text],
+.mxMinimalistTheme .mxInfoPageDiv>label span+textarea
+{
+	display:block;
+	width:100%;
+}
+.mxMinimalistTheme .mxInfoPageDiv>label span+textarea
+{
+	height:6em;
+}
+.mxMinimalistTheme .mxShowHelpDiv
+{
+	counter-reset:helpH2;
+}
+.mxMinimalistTheme .mxShowHelpDiv h1
+{
+	font-size:1.6em;
+}
+.mxMinimalistTheme .mxShowHelpDiv h2
+{
+	font-size:1.4em;
+	counter-reset:helpH3;
+}
+.mxMinimalistTheme .mxShowHelpDiv h2:before {
+  counter-increment:helpH2;
+  content:counter(helpH2) ". ";
+}
+.mxMinimalistTheme .mxShowHelpDiv h3
+{
+	font-size:1.2em;
+}
+.mxMinimalistTheme .mxShowHelpDiv h3:before {
+  counter-increment:helpH3;
+  content:counter(helpH2) "." counter(helpH3) ". ";
+}
+.mxMinimalistTheme .mxShowHelpDiv h4
+{
+	font-size:1em;
+}
+.mxMinimalistTheme .mxOKDiv
+{
+	box-sizing:border-box;
+	background:var(--okBarBk);
+	position:absolute;
+	bottom:0;
+	width:100%;
+	max-width:100%;
+	height:3em;
+	overflow:auto;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-wrap:wrap;
+	z-index:1;
+}
+/* focus */
+.mxMinimalistTheme.mxEditConfig .mxEditCommentToolDiv textarea:focus,
+.mxMinimalistTheme.mxTreeConfig .mxCommentDiv:focus
+{
+	background:var(--focusTreeContentBk);
+	border:1px solid var(--focusTreeContentBorder);
+	color:var(--focusTreeContentColor);
+}
+.mxMinimalistTheme.mxEditConfig .mxTreeDiv:focus,
+.mxMinimalistTheme.mxTreeConfig .mxTreeDiv:focus
+{
+	background:var(--focusTreeContentBk);
+	border:1px solid var(--focusTreeContentBorder);
+	color:var(--focusTreeContentColor);
+}
+.mxMinimalistTheme .mxSgfParentDiv button:focus:not(.mxSelectedBtn),
+.mxMinimalistTheme .mxMenuDiv button:focus,
+.mxMinimalistTheme .mxGBoxDiv button:focus
+{
+	background:var(--focusBtnBk);
+	border:1px solid var(--focusBtnBorder);
+	color:var(--focusBtnColor);
+}
+.mxMinimalistTheme .mxMenuDiv .mxSubMenuDiv button:focus
+{
+	background:var(--focusSubBtnBk);
+	border:1px solid var(--focusSubBtnBorder);
+	color:var(--focusSubBtnColor);
+}
+.mxMinimalistTheme .mxMenuDiv .mxSubMenuDiv button:focus
+{
+	border-bottom:0;
+}
+.mxMinimalistTheme .mxMenuDiv .mxSubMenuDiv button:last-of-type:focus
+{
+	border-bottom:1px solid var(--focusSubBtnBorder);
+}
+.mxMinimalistTheme .mxMenuDiv .mxSubMenuDiv button:focus+button
+{
+	border-top:1px solid var(--focusSubBtnBorder);
+}
+.mxMinimalistTheme .mxNavigationDiv button:focus
+{
+	background:var(--focusNavigationBtnBk);
+	border:1px solid var(--focusNavigationBtnBorder);
+}
+.mxMinimalistTheme .mxNavigationDiv button:focus svg
+{
+	fill:var(--focusNavigationBtnColor);
+}
+.mxMinimalistTheme .mxSolveDiv button:focus
+{
+	background:var(--focusSolveBtnBk);
+	border:1px solid var(--focusSolveBtnBorder);
+}
+.mxMinimalistTheme .mxSolveDiv button:focus svg
+{
+	fill:var(--focusSolveBtnColor);
+}
+/* lesson */
+.mxMinimalistTheme.mxLessonConfig
+{
+	background:var(--mainBk);
+}
+.mxMinimalistTheme.mxLessonConfig>div:first-of-type
+{
+	align-self:end;
+}
+.mxMinimalistTheme .mxLessonDiv
+{
+	box-sizing:border-box;
+	position:relative;
+	margin:0 auto 0.25em auto;
+	width:100%;
+}
+.mxMinimalistTheme .mxLessonDiv>div
+{
+	position:absolute;
+	bottom:120px;
+	left:10%;
+	right:10%;
+	border-radius:1.5em;
+	font-family:"Chalkboard SE","Comic Sans MS",sans-serif;
+	background-color:#fff;
+	text-align:center;
+}
+.mxMinimalistTheme .mxLessonDiv>img
+{
+	display:block;
+	margin:0 auto;
+}
+.mxMinimalistTheme .mxLessonDiv>div:empty
+{
+	display:none;
+}
+.mxMinimalistTheme.mxIn3d .mxLessonDiv>div {padding:8px 8px 8px 12px;box-shadow:4px 4px 12px rgba(0,0,0,0.5);}
+.mxMinimalistTheme.mxIn2d .mxLessonDiv>div {padding:8px;border:1px solid #999;}
+.mxMinimalistTheme .mxLessonDiv>div>div
+{
+	display:inline-block;
+	text-align:justify;
+	white-space:normal;
+	position:relative;
+}
+.mxMinimalistTheme .mxLessonDiv.mxTE>div>div,
+.mxMinimalistTheme .mxLessonDiv.mxBM>div>div
+{
+	margin-left:2.25em;
+	min-height:2.25em;
+}
+.mxMinimalistTheme .mxLessonDiv.mxTE>div:before,
+.mxMinimalistTheme .mxLessonDiv.mxBM>div:before
+{
+	background-repeat:no-repeat;
+	background-position:left center;
+	background-size:2em;
+	display:block;
+	height:2em;
+	width:2em;
+	content:"";
+	position:absolute;
+	top:0.25em;
+	left:0.25em;
+}
+.mxMinimalistTheme .mxLessonDiv.mxTE>div:before
+{
+	background:url('data:image/svg+xml;utf8,<svg width="100%" height="100%" viewBox="0 0 128 128" version="1.1" xmlns="http://www.w3.org/2000/svg"><circle fill="none" stroke="black" stroke-width="4" cx="64" cy="64" r="48"/><circle fill="black" cx="48" cy="48" r="8"/><circle fill="black" cx="80" cy="48" r="8"/><path fill="none" stroke="black" stroke-width="4" d="M44,78A32 32 0 0 0 84,78"/></svg>');
+}
+.mxMinimalistTheme .mxLessonDiv.mxBM>div:before
+{
+	background:url('data:image/svg+xml;utf8,<svg width="100%" height="100%" viewBox="0 0 128 128" version="1.1" xmlns="http://www.w3.org/2000/svg"><circle fill="none" stroke="black" stroke-width="4" cx="64" cy="64" r="48"/><circle fill="black" cx="48" cy="48" r="8"/><circle fill="black" cx="80" cy="48" r="8"/><path fill="none" stroke="black" stroke-width="4" d="M44,86A32 32 0 0 1 84,86"/></svg>');
+}
+/* navigation and solve*/
+.mxMinimalistTheme .mxNavigationDiv
+{
+	box-sizing:border-box;
+	display:flex;
+	justify-content:space-around;
+	align-items:center;
+	height:2.5em;
+}
+.mxMinimalistTheme.mxCommentConfig .mxNavigationDiv,
+.mxMinimalistTheme.mxEditConfig .mxNavigationDiv,
+.mxMinimalistTheme.mxTreeConfig .mxNavigationDiv
+{
+	background:var(--navigationBk);
+}
+.mxMinimalistTheme .mxNavigationDiv:empty
+{
+	display:none;
+}
+.mxMinimalistTheme .mxNavigationDiv button
+{
+	flex:1;
+	font-size:1em;
+	border:1px solid var(--navigationBtnBorder);
+	background:var(--navigationBtnBk);
+	margin:0 2%;
+	padding:0;
+	height:2.5em;
+}
+.mxMinimalistTheme .mxNavigationDiv button svg
+{
+	display:block;
+	margin:0 auto;
+	width:100%;
+	max-width:100%;
+	height:1.5em;
+	fill:var(--navigationBtnColor);
+}
+.mxMinimalistTheme .mxSolveDiv
+{
+	text-align:center;
+	padding:1px;
+	background:var(--solveBk);
+}
+.mxMinimalistTheme .mxSolveDiv:empty
+{
+	display:none;
+}
+.mxMinimalistTheme .mxSolveDiv button
+{
+	border:1px solid var(--solveBtnBorder);
+	background:var(--solveBtnBk);
+	margin:0.125em 1em;
+	padding:0;
+	width:10%;
+	min-width:40px;
+	height:auto;
+}
+.mxMinimalistTheme .mxSolveDiv button svg
+{
+	display:block;
+	width:100%;
+	height:100%;
+	fill:var(--solveBtnColor);
+}
+/* speed */
+.mxMinimalistTheme .mxSpeedDiv
+{
+	display:flex;
+	align-items:center;
+	margin-top:0.25em;
+	height:2.5em;
+}
+.mxMinimalistTheme .mxSpeedDiv button
+{
+	flex:0;
+	font-size:1em;
+	margin:0;
+	padding:0;
+	border:1px solid transparent;
+	background:none;
+}
+.mxMinimalistTheme .mxSpeedDiv svg
+{
+	flex:1;
+	margin:0 0.5em;
+}
+.mxMinimalistTheme .mxSpeedDiv button span
+{
+	display:block;
+	margin:auto;
+	width:1.5em;
+	height:1.5em;
+	line-height:1.5em;
+	color:transparent;
+	position:relative;
+}
+.mxMinimalistTheme .mxSpeedDiv button span:before
+{
+	content:"";
+	display:block;
+	position:absolute;
+	top:calc(50% - 1px);
+	left:25%;
+	bottom:0;
+	right:25%;
+	border-top:2px solid #000;
+	z-index:1;
+}
+.mxMinimalistTheme .mxSpeedDiv button:focus
+{
+	background:rgba(0,0,0,0.1);
+}
+.mxMinimalistTheme .mxSpeedDiv button.mxSpeedPlusBtn span:after
+{
+	content:"";
+	display:block;
+	position:absolute;
+	top:25%;
+	left:calc(50% - 1px);
+	bottom:25%;
+	right:0;
+	border-left:2px solid #000;
+	z-index:1;
+}
+.mxMinimalistTheme .mxSpeedDiv button.mxSpeedPlusBtn:focus
+{
+	background:rgba(0,0,0,0.1);
+}
+.mxMinimalistTheme .mxSpeedDiv .mxSpeedBar,
+.mxMinimalistTheme .mxSpeedDiv .mxSpeedCursor
+{
+	cursor:pointer;
+}

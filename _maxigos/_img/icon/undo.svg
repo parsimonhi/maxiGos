@@ -1,0 +1,10 @@
+<svg viewBox="0 0 128 128" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<style>
+<![CDATA[
+	rect {fill:#ccc;}
+	path {fill:none;stroke:#000;}
+]]>
+</style>
+<rect x="0" y="0" width="128" height="128"/>
+<path d="M20,105H108C114.6,105 120,99 120,93V44C120,37 114,32 108,32H40V8L8,40 40,72V48H96C100,48 104,51 104,56V81C104,85 100,89 96,89H20 Z"/>
+</svg>

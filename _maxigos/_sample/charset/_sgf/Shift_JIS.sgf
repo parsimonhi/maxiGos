@@ -1,0 +1,14 @@
+(;
+FF[4]
+CA[Shift_JIS]
+GM[1]
+SZ[19]
+C[h&#233;h&#233; êŒìc
+sgf filename="Shift_JIS.sgf"
+sgf file encoded in Shift_JIS
+CA\[Shift_JIS\] in sgf
+
+Note: in a sgf file encoded in Shift_JIS (and having CA\[Shift_JIS\] property), \
+characters such as "&#233;" that are not in the Shift_JIS charset \
+must be encoded using for instance Decimal NCRs.
+])

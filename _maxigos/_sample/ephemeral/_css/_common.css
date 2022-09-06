@@ -1,0 +1,45 @@
+.mxEphemeralTheme.mxSimpleConfig
+{
+	max-width:30em;
+}
+.mxEphemeralTheme.mxSimpleConfig .mxGobanDiv svg
+{
+	background:#9cf;
+}
+.mxEphemeralTheme.mxSimpleConfig .mxNavigationDiv
+{
+	display:flex;
+	justify-content:space-between;
+	margin-top:0.5em;
+}
+.mxEphemeralTheme.mxSimpleConfig .mxNavigationDiv button
+{
+	border:0;
+	background:none;
+	padding:0;
+	margin:0 5%;
+}
+.mxEphemeralTheme.mxSimpleConfig .mxNavigationDiv button svg
+{
+	width:100%;
+	height:auto;
+}
+.mxEphemeralTheme.mxSimpleConfig .mxNavigationDiv button[disabled] svg
+{
+	fill:#0007;
+}
+.mxEphemeralTheme.mxSimpleConfig .mxNavigationDiv button:focus:not([disabled]) svg,
+.mxEphemeralTheme.mxSimpleConfig .mxNavigationDiv button:hover:not([disabled]) svg
+{
+	fill:red;
+}
+.mxEphemeralTheme.mxSimpleConfig button::-moz-focus-inner
+{
+	padding:0;border:0;
+}
+.mxEphemeralTheme.mxSimpleConfig .mxInnerGobanDiv,
+.mxEphemeralTheme.mxSimpleConfig .mxNavigationDiv,
+.mxEphemeralTheme.mxSimpleConfig .mxNavigationDiv button
+{
+	outline:none;
+}

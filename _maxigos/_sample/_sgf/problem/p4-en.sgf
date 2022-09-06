@@ -1,0 +1,21 @@
+(;
+CA[UTF-8]
+GM[1]
+FF[4]
+SZ[19]
+VW[aa:lh]
+ST[2]
+EV[N° 2 .|. Level #2]
+AB[gb][bc][dc][ec][fc][gc][cd][ce]
+AW[bb][cb][db][eb][fb][cc]
+AP[maxiGos:6.49]
+C[Black to play]
+(;B[ab];W[bd];B[ad];W[ac]C[Correct; disadvantageous ko.]GB[1])
+(;B[ac];W[ab]C[Wrong.])
+(;B[bd];W[ab]C[Wrong.])
+(;B[ad];W[ab]C[Wrong.])
+(;B[be];W[ac];B[ad];W[ab];B[fa]
+;W[ea]C[Wrong.])
+(;B[fa];W[bd]
+(;B[ae];W[be];B[bf];W[ac]C[Wrong.])
+(;B[be];W[ac]C[Wrong.])))

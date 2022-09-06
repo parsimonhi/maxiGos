@@ -1,0 +1,80 @@
+(;
+FF[4]
+CA[UTF-8]
+GM[1]
+SZ[19]
+ST[0]
+EV[French West League Championship]
+RO[round 4]
+DT[2007-04-15]
+PC[Lorient]
+PW[Motoki Noguchi]
+WR[6d]
+PB[Benjamin Dréan-Guénaïzia]
+BR[5k]
+WT[Tours]
+BT[Concarneau]
+RU[AGA]
+KM[7.5]
+RE[W+26.5]
+AN[Motoki Noguchi, translated from french to english by FM]
+AP[maxiGos:6.09b1]
+GC[Benjamin is ranked 5k but he is actually 2-3d. He is one of these rising youth as our Guillaume from Tours...]
+;B[dp];W[pd];B[dd];W[pq];B[po];W[fc]LB[pl:B][pm:C][qo:A]C[6 : of course it's possible to play at A-B-C... There are many choices here.];B[cf];W[jd]
+(;B[oq]LB[np:A][qq:B]C[9 : as White played tenuki in this corner, it is normal to "punish" him like this. Black at A or B are also possible.];W[or];B[op];W[nq]
+(;B[nr]LB[pr:A]C[13 : it's a joseki to get points in the corner. Go Seigen loves this sequence, which exists from the 17th century (if memory serves me correctly). Black at A is also possible.];W[mr];B[pr];W[ns];B[qq];W[mo]LB[qm:B][np:A]C[18 : usually, White plays tenuki or A. I tested this move, prefered by Fujisawa Shuko (he played it several times, for instance during game #1 of the 1st Kisei against Hashimoto Utaro). It aims to B.];B[qf];W[qm]LB[nc:C][pm:A][fq:B]C[20 : I didn't know what to answser in the north-east corner so I started by playing here, but the result is not good for White. C should be better.
+
+**Question**
+What can Black do? A, B or C?]
+(;B[pm]LB[ro:A]C[21 : good choice, Black must go out and prevents White to play at A (which threatens black group life base).];W[pl];B[om];W[qn];B[qo];W[qi]LB[qc:B][qd:A]C[**Question 2**
+What can Black play? A or B?]
+(;B[qd]LB[qc:A]C[27 : Black at A is better. Usually, invading at san-san is rarely bad.];W[qc];B[rc];W[pc];B[re];W[pe];B[ph];W[qh]
+;B[pf];W[qe];B[rd];W[rg];B[rf];W[ne];B[nf];W[mf]
+;B[ng];W[mg]LB[me:A]C[44 : too much. A is better.];B[mh];W[lh];B[mi];W[kg]TR[ph][qh][qi][nj][oj][nk][ok][nl][ol][pl][nm][om][pm][qm]SQ[mf][nf][kg][mg][ng][lh][mh][mi]C[Anyway it's the good direction for White, who pushes Black toward a narrow area, where nobody can build something (triangle). If you compare the efficiency of the four stones of each color (square), you can see who got profit.];B[hc]C[49 : good timing.];W[hd]
+(;B[id]LB[ic:A]C[Black at A is also possible.];W[ic]LB[gd:A][ie:B]C[**Question 3**
+Black to play, A or B?]
+(;B[gd]LB[ie:A]C[53 : bad, Black must go out at A. The ponnuki is too big.];W[ie];B[gc];W[dc]C[Black splits White but there is still some aji in the corner.];B[fd]
+(;W[ec]LB[cd:C][ck:A][cn:B]C[58 : may be White at A or B is better. Locally, C is more interesting.]
+(;B[ed]LB[cc:A]C[Black at A, at the head of the three stones, is more severe.];W[cc]
+(;B[dj]C[61 : I prefer to play Black at A here (see variation).
+
+**Question 4**
+What does White play here? B or C?]LB[cd:A][be:B][fq:C]
+(;W[be]C[62 : this move is big (and almost sente). I though I was leading at this point.];B[ce];W[bf];B[bg];W[cd];B[cg];W[fq]
+(;B[dn]LB[dq:A]C[69 : as Black is behind, A is better to try to catch more points.];W[cq];B[dq];W[dr]
+(;B[cp];W[br];B[bq];W[cr]
+(;B[go]LB[fj:B][hp:A]C[**Question 5** 
+White to play, A or B? Let's estimate the score!]
+(;W[hp]TR[eg][gg][ei][gi][ek][gk][em][gm]C[78 : I estimated the score and expected to win discarding the west side (triangle).];B[in];W[jo]C[There is no further complication.];B[hh];W[ii];B[hi];W[ij];B[gk]
+;W[ge];B[hf];W[he];B[ff];W[bp]C[90 : the biggest yose.];B[bo];W[aq];B[rb]
+;W[qb];B[hb]
+(;W[jb]LB[ib:A]TR[ec][fc][ic][jd]C[96 : in this situation (called "two brothers' conflict" in japanese), this move is better than A.];B[il];W[ro];B[rp];W[ps];B[qr];W[rn]C[White wins by 26.5 points (if memory serves me correctly).
+Benjamin finished second of the championship. Congratulations to him!])
+(;W[ib];B[ia];W[ja];B[ga];W[jb];B[ea]))
+(;W[fj]))
+(;B[lq]C[Black must try this move, otherwise he has no chance.];W[kq]C[This move is tesuji.];B[kp];W[jq];B[go];W[hp]C[White is leading anyway.]))
+(;B[er];W[cr];B[eq];W[bo];B[lq]C[This move is severe but...];W[kq]C[I considered to play sabaki arround here.]
+(;B[lr];W[lp];B[kr];W[jq];B[jr];W[iq]C[White can come through.])
+(;B[kp];W[jq]
+(;B[lr];W[lp])
+(;B[lp];W[lr];B[np];W[jp]))))
+(;B[dq];W[hp];B[fo]))
+(;W[fq]))
+(;B[cd];W[cl]C[If White plays here...];B[bc];W[bb];B[bd];W[ab];B[fb];W[eb]
+;B[hb]LB[da:A][jb:B]C[A and B are miai.];W[jb];B[da];W[fa];B[ea];W[gb];B[cb]C[It's a disaster.]))
+(;B[cc]
+(;W[cb]LB[ed:A]C[As he is in damezurmari, White cannot play at A.];B[ed];W[bc];B[cd];W[ea];B[bd];W[bb];B[dk]C[White has much less points than in the actual game.])
+(;W[ed];B[ee];W[fe];B[de];W[ge];B[fb]C[Black wins.])))
+(;W[cd];B[de];W[cb];B[ec];W[be];B[bf];W[bc];B[dk]))
+(;B[ie]
+(;W[hb];B[ke]LB[me:A]C[Black aims to cut at A. Not so simple!])
+(;W[he]C[In theory, one pushes on the same side one cut.];B[if];W[jc];B[hf];W[fe];B[ff];W[cl];B[cj]
+;W[bj];B[bi];W[cn]C[I though to play like this, but Black position is good in my opinion.])))
+(;B[ic];W[jc];B[id];W[ie];B[gd];W[he];B[gc];W[dc]))
+(;B[qc];W[qd];B[pc];W[od];B[rd];W[re];B[rc];W[qe]
+;B[nc];W[fq]LB[pl:B][qm:A][mo:C]C[I prefer Black (since he took two corners, and B-C contradict themselves). A is probably too soon.]))
+(;B[fq]C[It's big but...];W[ro]C[White suppresses Black life base.])
+(;B[nc]))
+(;B[pr];W[qr];B[nr];W[ps];B[mq];W[dg]C[I though to play here (it's a shicho breaker).];B[np];W[cg]))
+(;B[np];W[qf];B[or];W[ro];B[qp];W[ql])
+(;B[qq];W[qj];B[pp];W[oq];B[rp];W[lq]))

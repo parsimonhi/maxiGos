@@ -1,0 +1,10 @@
+(;GM[1]FF[4]ST[2]SZ[13]EV[Début de partie - Coin, bord, centre (2)]
+C[Au début, chaque joueur place ses pierres près des coins.]
+;B[kc]C[Le premier coup de Noir est appelé 3-3 parce qu'il est localisé sur la troisième des lignes horizontales et verticales, en comptant à partir du bord. C'est une position d'où vous êtes quasiment sûr de garder le coin.]
+;W[ck]C[Ensuite, Blanc joue aussi sur le point 3-3.]
+;B[jj]C[Le coup suivant de Noir est appelé hoshi (ou étoile en français) et est repéré sur le goban par un petit rond noir. Les hoshis permettent d'entourer des territoires plus importants que le 3-3, mais ils peuvent être facilement envahis par l'adversaire.]
+;W[dc]C[Le quatrième coup, joué par Blanc, est aussi un coup classique.]
+;C[Bien sur, vous pouvez jouer n'importe où sur le goban, ce n'est pas interdit. Mais, en général, on commence par les coins, puis les bords et enfin le centre du goban.]
+;AE[kc][ck][jj][dc]LB[lb:A][ma:B]C[Bien que les coins soient faciles à conquerir, personne ne va jusqu'à commencer à des endroits comme 'A' ou 'B' parce que c'est trop petit, ou trop près du bord.
+Voilà, l'animation pour le début de partie est terminée !]
+)

@@ -1,0 +1,10 @@
+<svg xmlns='http://www.w3.org/2000/svg' fill='rgb(255,0,0)' stroke-width='60' stroke='rgb(255,0,0)' viewBox='0 0 1000 1000' height='1000' width='1000'>
+<circle cx='500' cy='800' r='90'/>
+<circle cx='800' cy='200' r='90'/>
+<circle cx='200' cy='600' r='90'/>
+<circle cx='800' cy='600' r='90'/>
+<circle cx='500' cy='400' r='90'/>
+<path d='M200,600L800,200'/>
+<path d='M200,600L500,800'/>
+<path d='M500,400L800,600'/>
+</svg>

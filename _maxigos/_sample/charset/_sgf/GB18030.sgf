@@ -1,0 +1,14 @@
+(;
+FF[4]
+CA[GB18030]
+GM[1]
+SZ[19]
+C[h¨¦h¨¦ Ê¯Ìï
+sgf filename="GB18030.sgf"
+sgf file encoded in GB18030
+CA\[GB18030\] in sgf
+
+Note: in a sgf file encoded in GB18030 (and having CA\[GB18030\] property), \
+characters such as "&#233;" that are not in the GB18030 charset \
+must be encoded using for instance Decimal NCRs.
+])

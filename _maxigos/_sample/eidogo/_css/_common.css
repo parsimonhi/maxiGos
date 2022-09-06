@@ -1,0 +1,568 @@
+/* this theme is similar to eidogo sgf player */
+/* (with the permission of Justin Kramer) */
+.mxEidogoTheme
+{
+	--gobanMaxWidth:30em;
+	text-align:left;
+}
+/* general */
+.mxEidogoTheme div::-moz-focus-inner,
+.mxEidogoTheme button::-moz-focus-inner,
+.mxEidogoTheme input[type=text]::-moz-focus-inner,
+.mxEidogoTheme a::-moz-focus-inner {padding:0;border:0;}
+.mxEidogoTheme div:focus,
+.mxEidogoTheme button:focus,
+.mxEidogoTheme input[type=text]:focus,
+.mxEidogoTheme a:focus {outline:none;}
+.mxEidogoTheme button,
+.mxEidogoTheme input[type=button],
+.mxEidogoTheme textarea {-webkit-appearance:none;-moz-appearance:none;}
+.mxEidogoTheme text {cursor:default;}
+.mxEidogoTheme input[type=button],
+.mxEidogoTheme button {cursor:pointer;}
+.mxEidogoTheme input[type=text][disabled],
+.mxEidogoTheme button[disabled] {cursor:default;}
+/* font */
+.mxEidogoTheme
+{
+	font-family:sans-serif;
+}
+.mxEidogoTheme svg
+{
+	font-family:arial,sans-serif;
+}
+.mxEidogoTheme button
+{
+	font-family:sans-serif;
+}
+/* layout */
+.mxEidogoTheme>.mxVersionDiv
+{
+	font-size:0.75em;
+	color:#998;
+	text-align:center;
+	height:2em;
+	line-height:2em;
+}
+.mxEidogoTheme
+{
+	box-sizing:border-box;
+	max-width:var(--gobanMaxWidth);
+	margin:0 auto;
+}
+.mxEidogoTheme.mxCommentConfig,
+.mxEidogoTheme.mxGameConfig,
+.mxEidogoTheme.mxTreeConfig
+{
+	max-width:calc(var(--gobanMaxWidth) * 2);
+}
+.mxEidogoTheme.mxBasicConfig>div:first-of-type,
+.mxEidogoTheme.mxDiagramConfig>div:first-of-type,
+.mxEidogoTheme.mxProblemConfig>div:first-of-type
+{
+	box-sizing:border-box;
+	margin:0 auto;
+	background:#466;
+}
+.mxEidogoTheme.mxCommentConfig>div:first-of-type,
+.mxEidogoTheme.mxGameConfig>div:first-of-type,
+.mxEidogoTheme.mxTreeConfig>div:first-of-type
+{
+	box-sizing:border-box;
+	display:flex;
+	flex-wrap:wrap;
+	justify-content:center;
+	max-width:calc(var(--gobanMaxWidth) * 2);
+}
+.mxEidogoTheme.mxCommentConfig>div:first-of-type>div,
+.mxEidogoTheme.mxGameConfig>div:first-of-type>div,
+.mxEidogoTheme.mxTreeConfig>div:first-of-type>div
+{
+	/* flexible columns */
+	/* whether one or two columns are shown */
+	/* their width will be the same in both cases */
+	/* if the available width is at least 2*var(--gobanMaxWidth)+1 */
+	/* then 2 columns are displayed */
+	/* else 1 column is displayed */
+	/* flex-basis should be the same as max-width */
+	box-sizing:border-box;
+	max-width:var(--gobanMaxWidth);
+	flex:1 1 var(--gobanMaxWidth);
+}
+.mxEidogoTheme.mxCommentConfig .mxGobanParentDiv,
+.mxEidogoTheme.mxGameConfig .mxGobanParentDiv,
+.mxEidogoTheme.mxTreeConfig .mxGobanParentDiv
+{
+	/* just to center the goban vertically */
+	display:flex;
+	flex-direction:column;
+	background:#aa9;
+}
+.mxEidogoTheme.mxCommentConfig .mxGobanDiv,
+.mxEidogoTheme.mxGameConfig .mxGobanDiv,
+.mxEidogoTheme.mxTreeConfig .mxGobanDiv
+{
+	margin:auto;
+	width:100%;
+}
+.mxEidogoTheme.mxBasicConfig .mxNavigationParentDiv,
+.mxEidogoTheme.mxCommentConfig .mxNavigationParentDiv,
+.mxEidogoTheme.mxGameConfig .mxNavigationParentDiv,
+.mxEidogoTheme.mxProblemConfig .mxSolveParentDiv,
+.mxEidogoTheme.mxTreeConfig .mxNavigationParentDiv
+{
+	padding:0.5em;
+}
+.mxEidogoTheme.mxCommentConfig .mxNavigationGrandParentDiv,
+.mxEidogoTheme.mxGameConfig .mxNavigationGrandParentDiv,
+.mxEidogoTheme.mxTreeConfig .mxNavigationGrandParentDiv
+{
+	background:#466;
+	display:flex;
+	flex-direction:column;
+	justify-content:space-between;
+}
+.mxEidogoTheme.mxCommentConfig .mxNavigationParentDiv,
+.mxEidogoTheme.mxGameConfig .mxNavigationParentDiv,
+.mxEidogoTheme.mxTreeConfig .mxNavigationParentDiv,
+.mxEidogoTheme.mxCommentConfig .mxGotoDiv,
+.mxEidogoTheme.mxTreeConfig .mxGotoDiv,
+.mxEidogoTheme.mxCommentConfig .mxVariationDiv,
+.mxEidogoTheme.mxTreeConfig .mxVariationDiv
+{
+	flex:0 0 auto;
+}
+.mxEidogoTheme.mxGameConfig .mxHeaderDiv,
+.mxEidogoTheme.mxCommentConfig .mxCommentDiv,
+.mxEidogoTheme.mxTreeConfig .mxCommentDiv,
+.mxEidogoTheme.mxTreeConfig .mxTreeDiv
+{
+	flex:1;
+	min-height:6em;
+}
+/* set position:absolute to .mxXxxContentDiv to avoid overflow */
+/* when available space is narrower than --gobanMaxWidth */
+/* and when .mxXxxContentDiv is wider than available space */
+.mxEidogoTheme.mxCommentConfig .mxCommentDiv,
+.mxEidogoTheme.mxTreeConfig .mxCommentDiv,
+.mxEidogoTheme.mxTreeConfig .mxTreeDiv
+{
+	position:relative;
+}
+.mxEidogoTheme.mxCommentConfig .mxCommentContentDiv,
+.mxEidogoTheme.mxTreeConfig .mxCommentContentDiv,
+.mxEidogoTheme.mxTreeConfig .mxTreeContentDiv
+{
+	position:absolute;
+}
+/* common */
+.mxEidogoTheme .mxGobanDiv
+{
+	background:#aa9;
+	margin:0 auto;
+}
+.mxEidogoTheme .mxInnerGobanDiv
+{
+	/* avoid bad touch effect on mobile */
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
+	user-select:none;
+	margin:0 auto;
+	position:relative;
+}
+.mxEidogoTheme .mxGobanDiv svg
+{
+	display:block;
+	width:100%;
+	height:100%;
+	pointer-events:none;
+}
+.mxEidogoTheme .mxOuterRect
+{
+	fill:#654;
+}
+.mxEidogoTheme .mxInnerRect
+{
+	fill:#ddbc6b;
+}
+.mxEidogoTheme .mxIndice
+{
+	fill:#a89470;
+	stroke:#a89470;
+}
+.mxEidogoTheme .mxGobanLine
+{
+	stroke:#b19655;
+}
+.mxEidogoTheme .mxStar
+{
+	fill:#705f36;
+	stroke:none;
+	r:2px;
+}
+.mxEidogoTheme.mxIn3d circle.mxBlack
+{
+	stroke:#000;
+}
+.mxEidogoTheme.mxIn3d circle.mxWhite
+{
+	stroke:#999;
+}
+.mxEidogoTheme .mxMarkOnLast
+{
+	fill:#ec1d24;
+}
+.mxEidogoTheme .mxMark
+{
+	stroke:#ec2025;
+	stroke-width:2px;
+}
+.mxEidogoTheme text.mxLabel
+{
+	fill:#ec2025;
+	stroke:#ec2025;
+}
+.mxEidogoTheme text.mxVariation,
+.mxEidogoTheme text.mxVariation.mxLabel
+{
+	fill:#831;
+	stroke:#831;
+}
+.mxEidogoTheme .mxPointBackground.mxVariation
+{
+	fill:#ee974b;
+	stroke:#ee974b;
+}
+.mxEidogoTheme text.mxVariation.mxOnFocus,
+.mxEidogoTheme text.mxVariation.mxLabel.mxOnFocus
+{
+	fill:#000;
+	stroke:#000;
+}
+.mxEidogoTheme .mxPointBackground.mxVariation.mxOnFocus
+{
+}
+.mxEidogoTheme text.mxVariation:not(.mxOnFocus),
+.mxEidogoTheme text.mxVariation.mxLabel:not(.mxOnFocus)
+{
+}
+.mxEidogoTheme .mxPointBackground.mxVariation:not(.mxOnFocus)
+{
+}
+.mxEidogoTheme .mxFocusMark
+{
+	stroke:#ec1d24;
+}
+.mxEidogoTheme .mxCommentDiv h1,
+.mxEidogoTheme .mxHeaderDiv h1
+{
+	font-size:1em;
+	padding:0;
+	margin:0 0 0.25em 0;
+}
+.mxEidogoTheme .mxP:not(:first-child)
+{
+	padding-top:0.5em;
+}
+.mxEidogoTheme .mxWhiteRadialGradient stop:nth-of-type(1)
+{
+	stop-color:#fff;
+}
+.mxEidogoTheme .mxWhiteRadialGradient stop:nth-of-type(2)
+{
+	stop-color:#ccc;
+}
+.mxEidogoTheme .mxWhiteRadialGradient stop:nth-of-type(3)
+{
+	stop-color:#999;
+}
+/* basic, comment, game and tree*/
+.mxEidogoTheme.mxCommentConfig .mxCommentDiv,
+.mxEidogoTheme.mxGameConfig .mxHeaderDiv,
+.mxEidogoTheme.mxTreeConfig .mxCommentDiv
+{
+	padding:0.5em;
+	background:#bba;
+	border:1px solid #bba;
+	overflow:auto;
+	font-size:0.875em;
+}
+.mxEidogoTheme.mxCommentConfig .mxCommentDiv,
+.mxEidogoTheme.mxGameConfig .mxHeaderDiv
+{
+	height:6em;
+}
+.mxEidogoTheme.mxTreeConfig .mxTreeDiv
+{
+	padding:0.5em;
+	background:#333;
+	border:1px solid #333;
+	overflow:auto;
+}
+.mxEidogoTheme.mxTreeConfig .mxTreeDiv svg .mxFocus
+{
+	fill:#872222;
+	opacity:1;
+}
+.mxEidogoTheme.mxTreeConfig .mxTreeDiv svg .mxTreeLine
+{
+	stroke:#666;
+}
+.mxEidogoTheme.mxTreeConfig .mxTreeDiv svg .mxMark
+{
+	stroke:#ccc;
+}
+.mxEidogoTheme.mxCommentConfig .mxCommentDiv:focus,
+.mxEidogoTheme.mxGameConfig .mxHeaderDiv:focus,
+.mxEidogoTheme.mxTreeConfig .mxCommentDiv:focus,
+.mxEidogoTheme.mxTreeConfig .mxTreeDiv:focus
+{
+	border:1px solid rgba(255,255,255,0.5);
+}
+.mxEidogoTheme.mxCommentConfig .mxVariationDiv,
+.mxEidogoTheme.mxTreeConfig .mxVariationDiv
+{
+	font-size:1em;
+	min-height:2em;
+	line-height:2em;
+	margin:0;
+	padding:0.5em;
+	color:#aac8c2;
+}
+.mxEidogoTheme.mxCommentConfig .mxVariationDiv [type=button],
+.mxEidogoTheme.mxTreeConfig .mxVariationDiv [type=button]
+{
+	font-size:1em;
+	font-weight:bold;
+	border:1px solid #466;
+	border-radius:0;
+	background:#799;
+	color:#b00;
+	margin:1px;
+	padding:0 0.125em;
+	min-width:1.75em;
+	height:1.75em;
+	line-height:1.75;
+}
+.mxEidogoTheme .mxGotoDiv
+{
+	margin:0.25em 0.5em 0 0.5em;
+	user-select:none;
+}
+.mxEidogoTheme .mxGotoDiv svg
+{
+	box-sizing:border-box;
+	display:block;
+	margin:0 auto;
+}
+.mxEidogoTheme .mxGotoBar
+{
+	fill:#244;
+	stroke:#122;
+}
+.mxEidogoTheme .mxGotoCursor
+{
+	fill:#ec1d24;
+	stroke:#ec1d24;
+	cursor:pointer;
+}
+.mxEidogoTheme.mxBasicConfig .mxNavigationParentDiv,
+.mxEidogoTheme.mxCommentConfig .mxNavigationParentDiv,
+.mxEidogoTheme.mxGameConfig .mxNavigationParentDiv,
+.mxEidogoTheme.mxProblemConfig .mxSolveParentDiv,
+.mxEidogoTheme.mxTreeConfig .mxNavigationParentDiv
+{
+	display:flex;
+	flex-wrap:wrap;
+	justify-content:space-between;
+	align-items:center;
+}
+.mxEidogoTheme.mxBasicConfig .mxNavigationDiv,
+.mxEidogoTheme.mxCommentConfig .mxNavigationDiv,
+.mxEidogoTheme.mxGameConfig .mxNavigationDiv,
+.mxEidogoTheme.mxProblemConfig .mxSolveDiv,
+.mxEidogoTheme.mxTreeConfig .mxNavigationDiv
+{
+	flex:4;
+	text-align:left;
+}
+.mxEidogoTheme.mxCommentConfig .mxMoveInfoDiv,
+.mxEidogoTheme.mxTreeConfig .mxMoveInfoDiv
+{
+	flex:2;
+	text-align:center;
+}
+.mxEidogoTheme.mxBasicConfig .mxPassDiv,
+.mxEidogoTheme.mxCommentConfig .mxPassDiv,
+.mxEidogoTheme.mxGameConfig .mxPassDiv,
+.mxEidogoTheme.mxProblemConfig .mxPassDiv,
+.mxEidogoTheme.mxTreeConfig .mxPassDiv
+{
+	flex:1;
+	text-align:right;
+}
+.mxEidogoTheme.mxBasicConfig .mxMoveInfoDiv svg,
+.mxEidogoTheme.mxCommentConfig .mxMoveInfoDiv svg,
+.mxEidogoTheme.mxGameConfig .mxMoveInfoDiv svg,
+.mxEidogoTheme.mxTreeConfig .mxMoveInfoDiv svg
+{
+	display:block;
+	width:100%;
+	height:100%;
+	max-height:1.75em;
+	min-width:3em;
+}
+.mxEidogoTheme.mxBasicConfig .mxMoveInfoDiv text:not(:first-of-type),
+.mxEidogoTheme.mxCommentConfig .mxMoveInfoDiv text:not(:first-of-type),
+.mxEidogoTheme.mxGameConfig .mxMoveInfoDiv text:not(:first-of-type),
+.mxEidogoTheme.mxTreeConfig .mxMoveInfoDiv text:not(:first-of-type)
+{
+	fill:#aac8c2;
+	stroke:#aac8c2;
+}
+.mxEidogoTheme.mxTreeConfig .mxTreeDiv
+{
+	user-select:none;
+}
+/* diagram */
+.mxEidogoTheme.mxDiagramConfig .mxNotSeenDiv
+{
+	max-width:var(--gobanMaxWidth);
+	margin:0 auto;
+}
+.mxEidogoTheme .mxInnerNotSeenDiv:not(:empty)
+{
+	margin:0auto;
+	padding:0.25em 0;
+	background:#bba;
+}
+.mxEidogoTheme .mxInnerNotSeenDiv
+{
+	margin:0 auto;
+}
+.mxEidogoTheme .mxNotSeenSvg
+{
+	width:100%;
+	height:100%;
+	display:block;
+}
+/* problem */
+.mxEidogoTheme.mxProblemConfig .mxCommentDiv
+{
+	margin:0 auto;
+    background:#bba;
+}
+.mxEidogoTheme.mxProblemConfig .mxCommentDiv
+{
+	height:2.3em;
+	padding:0.25em;
+	background:#bba;
+	border:1px solid #bba;
+	overflow:auto;
+}
+.mxEidogoTheme.mxProblemConfig .mxCommentDiv:focus
+{
+	border:1px solid rgba(255,255,255,0.5);
+}
+/* Navigation and Solve */
+.mxEidogoTheme .mxNavigationDiv,
+.mxEidogoTheme .mxSolveDiv
+{
+	margin:0;
+	display:flex;
+	flex-wrap:wrap;
+}
+.mxEidogoTheme .mxPassDiv
+{
+	margin:0;
+}
+.mxEidogoTheme .mxNavigationDiv:empty,
+.mxEidogoTheme .mxSolveDiv:empty
+{
+	margin:0;
+	display:block;
+}
+.mxEidogoTheme .mxNavigationDiv button,
+.mxEidogoTheme .mxPassDiv button,
+.mxEidogoTheme .mxSolveDiv button
+{
+	font-size:0.75em;
+	margin:0.125em;
+	vertical-align:middle;
+	border-top:1px solid #fcfafc;
+	border-left:1px solid #fcfafc;
+	border-right:1px solid #fcfafc;
+	border-bottom:1px solid #c4c6c4;
+	outline:1px solid #000;
+	background-color:#ddd;
+	background:linear-gradient(to top,#fcfafc,#ddd,#999);
+}
+.mxEidogoTheme .mxNavigationDiv button,
+.mxEidogoTheme .mxSolveDiv button
+{
+	flex:0 1 3em;
+	height:2em;
+	max-width:3em;
+	min-width:2em;
+	padding:0;
+}
+.mxEidogoTheme .mxNavigationDiv button span,
+.mxEidogoTheme .mxSolveDiv button span
+{
+	display:block;
+	width:50%;
+	max-width:1.125em;
+	margin:0 auto;
+}
+.mxEidogoTheme .mxPassDiv button
+{
+	height:2em;
+	white-space:nowrap;
+}
+.mxEidogoTheme .mxPassDiv button span
+{
+	margin:0 auto;
+}
+.mxEidogoTheme .mxNavigationDiv button svg,
+.mxEidogoTheme .mxSolveDiv button svg
+{
+	display:block;
+	width:100%;
+	height:100%;
+}
+.mxEidogoTheme .mxPassDiv button span
+{
+	white-space:no-break;
+}
+.mxEidogoTheme .mxNavigationDiv button svg polygon,
+.mxEidogoTheme .mxNavigationDiv button svg rect,
+.mxEidogoTheme .mxSolveDiv button svg polygon,
+.mxEidogoTheme .mxSolveDiv button svg rect
+{
+	fill:#ec1e24;
+}
+.mxEidogoTheme .mxPassDiv button span
+{
+	color:#444;
+}
+.mxEidogoTheme .mxPassDiv button.mxOnVariationPassBtn span
+{
+	color:#ec1e24;
+}
+.mxEidogoTheme .mxNavigationDiv button[disabled] svg polygon,
+.mxEidogoTheme .mxNavigationDiv button[disabled] svg rect,
+.mxEidogoTheme .mxSolveDiv button[disabled] svg polygon,
+.mxEidogoTheme .mxSolveDiv button[disabled] svg rect
+{
+	fill:#999;
+}
+.mxEidogoTheme .mxPassDiv button[disabled] span
+{
+	color:#999;
+}
+.mxEidogoTheme .mxNavigationDiv button:focus,
+.mxEidogoTheme .mxSolveDiv button:focus,
+.mxEidogoTheme .mxPassDiv button:focus,
+.mxEidogoTheme .mxVariationDiv input[type=button]:focus
+{
+	outline:1px solid rgba(255,255,255,0.5);
+}

@@ -1,0 +1,14 @@
+(;
+FF[4]
+CA[Big5]
+GM[1]
+SZ[19]
+C[h&#233;h&#233; ¥Û¥Ð
+sgf filename="Big5.sgf"
+sgf file encoded in Big5
+CA\[Big5\] in sgf
+
+Note: in a sgf file encoded in Big5 (and having CA\[Big5\] property), \
+characters such as "&#233;" that are not in the Big5 charset \
+must be encoded using for instance Decimal NCRs.
+])
