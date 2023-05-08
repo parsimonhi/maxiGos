@@ -270,11 +270,6 @@ mxG.G.prototype.createFile=function()
 	var z=this.k;
 	if(!this.szMin) this.szMin=1;
 	if(!this.szMax) this.szMax=52;
-	window.addEventListener("unload",function(ev)
-		{
-			if(mxG.D[z].sgfPopup&&!mxG.D[z].sgfPopup.closed)
-				mxG.D[z].sgfPopup.close();
-		},false);
 	return "";
 };
 }

@@ -568,8 +568,8 @@ with his name, his rank, etc.</p>
 <td>0</td>
 </tr>
 <tr>
-<td><span class="parameter">prisonerOn</span></td>
-<td><span class="attribute">data-maxigos-prisoner-on</span></td>
+<td><span class="parameter">prisonersOn</span></td>
+<td><span class="attribute">data-maxigos-prisoners-on</span></td>
 <td>If 1, maxiGos displays the number of prisoners of each players in cartouches.</td>
 <td>(0,1)</td>
 <td>1</td>

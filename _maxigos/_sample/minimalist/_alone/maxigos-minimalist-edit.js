@@ -1,11 +1,11 @@
-// maxiGos v7 Minimalist+Edit copyright 1998-2022 FM&SH, BSD license
+// maxiGos v7 Minimalist+Edit copyright 1998-2023 FM&SH, BSD license
 
 // maxiGos v7 > mgos_lib.js
 if(typeof mxG=='undefined') mxG={};
 if(!mxG.V)
 {
-mxG.V="7.02";
-mxG.Y="2021";
+mxG.V="7.03";
+mxG.Y="2023";
 mxG.C="FM&SH";
 mxG.D=[];
 mxG.K=0;
@@ -3226,11 +3226,6 @@ mxG.G.prototype.createFile=function()
 	var z=this.k;
 	if(!this.szMin) this.szMin=1;
 	if(!this.szMax) this.szMax=52;
-	window.addEventListener("unload",function(ev)
-		{
-			if(mxG.D[z].sgfPopup&&!mxG.D[z].sgfPopup.closed)
-				mxG.D[z].sgfPopup.close();
-		},false);
 	return "";
 };
 }
@@ -7222,11 +7217,13 @@ mxG.G.prototype.checkReal=function(el,ev)
 mxG.G.prototype.encodeResult=function()
 {
 	var e=this.getE("RE"),WN=this.getE("WN").value,HW;
-	if(WN=="D") e.value="Draw";else if(WN=="V") e.value="Void";else e.value=WN;
+	if(WN=="D") e.value="Draw";
+	else if(WN=="V") e.value="Void";
+	else e.value=WN;
 	if((WN=="B+")||(WN=="W+"))
 	{
 		HW=this.getE("HW").value;
-		if (!HW||(HW="P")) e.value+=this.getE("SC").value;
+		if (!HW||(HW=="P")) e.value+=this.getE("SC").value;
 		else e.value+=HW;
 	}
 };

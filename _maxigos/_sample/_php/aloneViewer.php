@@ -84,7 +84,10 @@ if (($lang=="ja")||($lang=="zh-hans")||($lang=="zh-hant"))
 </div>
 <div class="backLinks">
 <a href="../../../?lang=<?php print $lang;?>"><?php print $home;?></a>
-<a href="<?php echo $_SERVER['HTTP_REFERER']; ?>"><?php print $back;?></a>
+<?php
+if(isset($_SERVER['HTTP_REFERER'])&&$_SERVER['HTTP_REFERER'])
+	echo "<a href=\"".$_SERVER['HTTP_REFERER']."\">".$back."</a>";
+?>
 </div>
 </body>
 </html>

@@ -133,6 +133,12 @@ chapter of the documentation for more details.</p>
 
 <h2>Warning for those who used previous versions of maxiGos</h2>
 <p>Many changes were done from v6 to v7. Please check the documentation.</p>
+<h2>What is new in the 7.03 version?</h2>
+<ul>
+<li>Fix a bug when saving the result of a game.
+The "R" in "B+R" or "W+R" was missing in case of a win by resign.</li>
+<li>Various minor changes.</li>
+</ul>
 <h2>What is new in the 7.02 version?</h2>
 <ul>
 <li>Fix a bug when computing parent box classes.</li>

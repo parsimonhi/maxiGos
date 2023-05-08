@@ -1,11 +1,11 @@
-// maxiGos v7 Eidogo+Diagram copyright 1998-2022 FM&SH, BSD license
+// maxiGos v7 Eidogo+Diagram copyright 1998-2023 FM&SH, BSD license
 
 // maxiGos v7 > mgos_lib.js
 if(typeof mxG=='undefined') mxG={};
 if(!mxG.V)
 {
-mxG.V="7.02";
-mxG.Y="2021";
+mxG.V="7.03";
+mxG.Y="2023";
 mxG.C="FM&SH";
 mxG.D=[];
 mxG.K=0;

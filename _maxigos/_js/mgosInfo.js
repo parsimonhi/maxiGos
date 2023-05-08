@@ -94,11 +94,13 @@ mxG.G.prototype.checkReal=function(el,ev)
 mxG.G.prototype.encodeResult=function()
 {
 	var e=this.getE("RE"),WN=this.getE("WN").value,HW;
-	if(WN=="D") e.value="Draw";else if(WN=="V") e.value="Void";else e.value=WN;
+	if(WN=="D") e.value="Draw";
+	else if(WN=="V") e.value="Void";
+	else e.value=WN;
 	if((WN=="B+")||(WN=="W+"))
 	{
 		HW=this.getE("HW").value;
-		if (!HW||(HW="P")) e.value+=this.getE("SC").value;
+		if (!HW||(HW=="P")) e.value+=this.getE("SC").value;
 		else e.value+=HW;
 	}
 };

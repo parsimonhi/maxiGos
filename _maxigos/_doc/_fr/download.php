@@ -135,6 +135,12 @@ et sans configuration particulière,
 vous ne devriez avoir que peu de changements à effectuer
 (il vous faudra essentiellement remplacer les anciens lecteurs autonomes par les nouveaux,
 et changer le nom des lecteurs autonomes dans vos pages).</p>
+<h2>Quoi de neuf dans la version 7.03 ?</h2>
+<ul>
+<li>Correction d'un bug lors de l'enregistrement du résultat d'une partie.
+Le "R" dans "B+R" ou "W+R" manquait en cas de victoire par abandon.</li>
+<li>Diverses modifications mineures.</li>
+</ul>
 <h2>Quoi de neuf dans la version 7.02 ?</h2>
 <ul>
 <li>Corrige un bug lors du calcul des classes des boites parentes.</li>

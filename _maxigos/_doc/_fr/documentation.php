@@ -884,8 +884,8 @@ le nombre de ses prisonniers et son bol de pierres.</p>
 <td>0</td>
 </tr>
 <tr>
-<td><span class="parameter">prisonerOn</span></td>
-<td><span class="attribute">data-maxigos-prisoner-on</span></td>
+<td><span class="parameter">prisonersOn</span></td>
+<td><span class="attribute">data-maxigos-prisoners-on</span></td>
 <td>S'il vaut 1, maxiGos affiche dans le cartouche le nombre de prisonniers de chaque joueur.</td>
 <td>(0,1)</td>
 <td>1</td>
