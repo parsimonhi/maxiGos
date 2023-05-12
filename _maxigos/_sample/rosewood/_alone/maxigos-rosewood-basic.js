@@ -4,7 +4,7 @@
 if(typeof mxG=='undefined') mxG={};
 if(!mxG.V)
 {
-mxG.V="7.03";
+mxG.V="7.04";
 mxG.Y="2023";
 mxG.C="FM&SH";
 mxG.D=[];
@@ -72,8 +72,8 @@ mxG.getLang=function(t)
 {
 	var lang,m;
 	while(t&&!t.lang) t=t.parentNode;
-	t=t?t.lang:(navigator.language||"en");
-	return t;
+	lang=t?t.lang:(navigator.language||"en");
+	return lang;
 }
 mxG.fr=function(a,b){if(mxG.Z.fr[a]===undefined) mxG.Z.fr[a]=b;};
 mxG.en=function(a,b){if(mxG.Z.en[a]===undefined) mxG.Z.en[a]=b;};

@@ -135,6 +135,10 @@ et sans configuration particulière,
 vous ne devriez avoir que peu de changements à effectuer
 (il vous faudra essentiellement remplacer les anciens lecteurs autonomes par les nouveaux,
 et changer le nom des lecteurs autonomes dans vos pages).</p>
+<h2>Quoi de neuf dans la version 7.04 ?</h2>
+<ul>
+<li>Correction d'un bug lors de l'affichage du mot "with" ou de sa traduction dans le composant "Option".</li>
+</ul>
 <h2>Quoi de neuf dans la version 7.03 ?</h2>
 <ul>
 <li>Correction d'un bug lors de l'enregistrement du résultat d'une partie.

@@ -4,7 +4,7 @@
 if(typeof mxG=='undefined') mxG={};
 if(!mxG.V)
 {
-mxG.V="7.03";
+mxG.V="7.04";
 mxG.Y="2023";
 mxG.C="FM&SH";
 mxG.D=[];
@@ -72,8 +72,8 @@ mxG.getLang=function(t)
 {
 	var lang,m;
 	while(t&&!t.lang) t=t.parentNode;
-	t=t?t.lang:(navigator.language||"en");
-	return t;
+	lang=t?t.lang:(navigator.language||"en");
+	return lang;
 }
 mxG.fr=function(a,b){if(mxG.Z.fr[a]===undefined) mxG.Z.fr[a]=b;};
 mxG.en=function(a,b){if(mxG.Z.en[a]===undefined) mxG.Z.en[a]=b;};
@@ -4219,8 +4219,8 @@ mxG.fr("In 3d","Affichage en 3d");
 mxG.fr("When clicking on the goban","Un click sur le goban :");
 mxG.fr("place a variation","place une variation");
 mxG.fr("try to guess the next move","essaie de deviner le coup suivant");
-mxG.fr("from","à partir de");
-mxG.fr("with","avec");
+mxG.fr(" from "," à partir de ");
+mxG.fr(" with "," avec "); // cannot use just "with" because with is a keyword?
 mxG.fr("Loop time:","Temps pour l'affichage en boucle :");
 mxG.fr("Animated stone","Pierres animées");
 mxG.fr("Animated stone time:","Temps pour l'animation des pierres :");
@@ -4399,12 +4399,17 @@ mxG.G.prototype.buildOption=function()
 		s+=" onchange=\""+this.g+".doChangeNumbering()\"";
 		s+=" id=\""+this.n+"NumberingOnCheckbox\">";
 		s+=this.local("Numbering");
-		s+=" <span class=\"mxNumFromTextSpan\">"+(mxG.Z[this.lang]["•"]?"":("<label for=\""+this.n+"NumFromTextInput\">"+this.local("from")))+"</label>";
+		s+=" <span class=\"mxNumFromTextSpan\">";
+		s+=mxG.Z[this.lang]["•"]?"":("<label for=\""+this.n+"NumFromTextInput\">"+this.local(" from ")+"</label>");
 		s+=" <input class=\"mxNumFromTextInput\" type=\"text\" id=\""+this.n+"NumFromTextInput\" size=\"3\" maxlength=\"3\" ";
-		s+=(this.optionBoxOn?"onkeyup=\""+this.g+".doKeyupNumFrom()\">":">")+"</span>";
-		s+=" <span class=\"mxNumWithTextSpan\">"+(mxG.Z[this.lang]["•"]?("<label for=\""+this.n+"NumFromTextInput\">"+this.local("from")):("<label for=\""+this.n+"NumWithTextInput\">"+this.local("with")))+"</label>";
+		s+=this.optionBoxOn?"onkeyup=\""+this.g+".doKeyupNumFrom()\">":">";
+		s+="</span>";
+		s+=" <span class=\"mxNumWithTextSpan\">";
+		s+=mxG.Z[this.lang]["•"]?("<label for=\""+this.n+"NumFromTextInput\">"+this.local(" from ")+"</label>"):("<label for=\""+this.n+"NumWithTextInput\">"+this.local(" with ")+"</label>");
 		s+=" <input class=\"mxNumWithTextInput\" type=\"text\" id=\""+this.n+"NumWithTextInput\" size=\"3\" maxlength=\"3\" ";
-		s+=(this.optionBoxOn?"onkeyup=\""+this.g+".doKeyupNumWith()\">":">")+(mxG.Z[this.lang]["•"]?("<label for=\""+this.n+"NumWithTextInput\">"+this.local("with")):"")+"</span>";
+		s+=this.optionBoxOn?"onkeyup=\""+this.g+".doKeyupNumWith()\">":">";
+		s+=mxG.Z[this.lang]["•"]?("<label for=\""+this.n+"NumWithTextInput\">"+this.local(" with ")+"</label>"):"";
+		s+="</span>";
 		s+="</label>";
 		s+="</div>";
 	}
