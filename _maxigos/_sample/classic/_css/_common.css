@@ -1,6 +1,7 @@
 .mxClassicTheme
 {
 	--gobanMaxWidth:30em;
+	--gobanMinWidth:10em;
 	text-align:left;
 }
 /* general */
@@ -36,6 +37,7 @@
 .mxClassicTheme
 {
 	max-width:var(--gobanMaxWidth);
+	min-width:var(--gobanMinWidth);
 	margin:0 auto;
 }
 .mxClassicTheme .mxVersionDiv
@@ -167,10 +169,6 @@
 .mxClassicTheme.mxTreeConfig .mxTreeDiv
 {
 	margin-top:0.5em;
-}
-.mxClassicTheme.mxTreeConfig .mxTreeContentDiv
-{
-	height:100%;
 }
 .mxClassicTheme.mxTreeConfig .mxTreeDiv svg
 {

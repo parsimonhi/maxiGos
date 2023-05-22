@@ -36,10 +36,10 @@ code
 </style>
 </head>
 <body>
-<div class="menu"><?php if (file_exists("../../../index.php")) print "<a href=\"../../../index.php?lang=fr\">Accueil</a>";?><!--
+<nav class="menu"><?php if (file_exists("../../../index.php")) print "<a href=\"../../../index.php?lang=fr\">Accueil</a>";?><!--
 --><a href="documentation.php">Documentation</a><!--
 --><a href="<?php print str_replace("/_fr/","/_en/",$_SERVER["SCRIPT_NAME"]);?>"><img class="flag" src="../../_img/flag/en.svg"> English</a><!--
---><a href="<?php print str_replace("/_en/","/_fr/",$_SERVER["SCRIPT_NAME"]);?>"><img class="flag" src="../../_img/flag/fr.svg"> Fran&ccedil;ais</a></div>
+--><a href="<?php print str_replace("/_en/","/_fr/",$_SERVER["SCRIPT_NAME"]);?>"><img class="flag" src="../../_img/flag/fr.svg"> Fran&ccedil;ais</a></nav>
 <h1>MaxiGos v<?php print $v.".".$r;?> - Page de téléchargement</h1>
 <p><em>Copyright 1998-<?php print date("Y");?> - FM&SH</em></p>
 <p>MaxiGos est un ensemble de lecteurs sgf permettant d'afficher
@@ -123,9 +123,11 @@ include("../../_php/lib.php");
 
 <h3>Scripts d'internationalisation</h3>
 <p>Ci-dessous la liste des scripts d'internationalisation disponibles dans maxiGos :</p>
+<ul>
 <?php printOneInternationalizationScriptLine('ja');?>
 <?php printOneInternationalizationScriptLine('zh-hans');?>
 <?php printOneInternationalizationScriptLine('zh-hant');?>
+</ul>
 
 <h2>Alerte pour ceux qui utilisaient maxiGos v6</h2>
 <p>Beaucoup de changements ont été effectués entre la v6 et la v7.
@@ -135,6 +137,18 @@ et sans configuration particulière,
 vous ne devriez avoir que peu de changements à effectuer
 (il vous faudra essentiellement remplacer les anciens lecteurs autonomes par les nouveaux,
 et changer le nom des lecteurs autonomes dans vos pages).</p>
+<h2>Quoi de neuf dans la version 7.05 ?</h2>
+<ul>
+<li>La grille du goban est désormais dessinée avec seulement deux path svg
+(au lieu d'un path par ligne et un circle par point étoile auparavant,
+soit 38 paths et 9 circles pour un goban 19x19).
+Cela permet de réduire significativement le nombre de balises du svg.</li>
+<li>Supprime le traitement particulier qui était effectué pour les navigateurs Android
+lors de la sélection d'une partie du goban dans le composant Edit.</li>
+<li>Remplace "&lt;" et "&gt;" par leurs équivalents html quand ils apparaissent
+dans le contenu d'une balise svg &lt;text&gt;.</li>
+<li>Diverses modifications mineures.</li>
+</ul>
 <h2>Quoi de neuf dans la version 7.04 ?</h2>
 <ul>
 <li>Correction d'un bug lors de l'affichage du mot "with" ou de sa traduction dans le composant "Option".</li>
@@ -181,9 +195,9 @@ de s'afficher en entier avec firefox.</li>
 <li>Nombreuses autres optimisations et corrections.</li>
 </ul>
 
-<div class="menu"><?php if (file_exists("../../index.php")) print "<a href=\"../../index.php?lang=fr\">Accueil</a>";?><!--
+<nav class="menu"><?php if (file_exists("../../index.php")) print "<a href=\"../../index.php?lang=fr\">Accueil</a>";?><!--
 --><a href="documentation.php">Documentation</a><!--
 --><a href="<?php print str_replace("/fr/","/en/",$_SERVER["SCRIPT_NAME"]);?>"><img class="flag" src="../../_img/flag/en.svg"> English</a><!--
---><a href="<?php print str_replace("/en/","/fr/",$_SERVER["SCRIPT_NAME"]);?>"><img class="flag" src="../../_img/flag/fr.svg"> Fran&ccedil;ais</a></div>
+--><a href="<?php print str_replace("/en/","/fr/",$_SERVER["SCRIPT_NAME"]);?>"><img class="flag" src="../../_img/flag/fr.svg"> Fran&ccedil;ais</a></nav>
 </body>
 </html>

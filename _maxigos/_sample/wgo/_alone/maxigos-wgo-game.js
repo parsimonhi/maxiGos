@@ -4,7 +4,7 @@
 if(typeof mxG=='undefined') mxG={};
 if(!mxG.V)
 {
-mxG.V="7.04";
+mxG.V="7.05";
 mxG.Y="2023";
 mxG.C="FM&SH";
 mxG.D=[];
@@ -65,7 +65,6 @@ mxG.shuffle=function(a)
 	}
 	return a;
 };
-mxG.isAndroid=(navigator.userAgent.toLowerCase().indexOf("android")>-1);
 mxG.canOpen=function()
 {var r;return !(typeof FileReader=='undefined')&&(r=new FileReader())&&(r.readAsText);};
 mxG.getLang=function(t)
@@ -473,10 +472,8 @@ mxG.S=function(p)
 };
 mxG.S.prototype.star=function(x,y)
 {
-	var DX=this.DX,DY=this.DY;
-	var Ax=4,Bx=DX+1-Ax,Cx=((DX+1)>>1);
-	var Ay=4,By=DY+1-Ay,Cy=((DY+1)>>1);
-	var xok=0,yok=0;
+	let DX=this.DX,DY=this.DY,xok=0,yok=0,
+		Ax=4,Bx=DX+1-Ax,Cx=((DX+1)>>1),Ay=4,By=DY+1-Ay,Cy=((DY+1)>>1);
 	if((DX>11)&&((x==Ax)||(x==Bx))) xok=1;
 	if((DX&1)&&((DX>15)||(x==y))&&(x==Cx)) xok=1;
 	if((DY>11)&&((y==Ay)||(y==By))) yok=1;
@@ -517,7 +514,7 @@ mxG.S.prototype.j2y=function(j)
 };
 mxG.S.prototype.makeText=function(txt,i,j,o)
 {
-	var s,x,y,dx,dy,c,cls,cls2="",wbk,hbk,w,h,dw2,dh2,dz,sw,sx;
+	let s,x,y,dx,dy,c,cls,cls2="",wbk,hbk,w,h,dw2,dh2,dz,sw,sx;
 	cls=o.cls;
 	c=o.c;
 	sw=o.sw;
@@ -568,15 +565,15 @@ mxG.S.prototype.makeText=function(txt,i,j,o)
 	}
 	// font-family, font-size and text-anchor are set in svg tag
 	// bug, cannot use dominant-baseline:central everywhere
-	// then just add 5 to y to center text verticaly
+	// then just add 5 to y to center text vertically
 	s+=" x=\""+x+"\" y=\""+(y+5)+"\">";
-	s+=txt;
+	s+=txt.replace(/</g,"&lt;").replace(/>/g,"&gt;");
 	s+="</text>";
 	return s;
 };
 mxG.S.prototype.make2dStone=function(c,x,y,r,o)
 {
-	var s;
+	let s;
 	s="<circle class=\"mx"+c+"\"";
 	if(o.opacity<1) s+="fill-opacity=\""+o.opacity+"\"";
 	if(!o.ignoreFillAndStroke) // alone stones, animated stones ...
@@ -591,7 +588,7 @@ mxG.S.prototype.make2dStone=function(c,x,y,r,o)
 };
 mxG.S.prototype.makeStoneShadow=function(c,x,y,r,o)
 {
-	var s="",e=this.stoneShadowWidth;
+	let s="",e=this.stoneShadowWidth;
 	s+="<circle class=\"mx"+c+"Shadow\"";
 	// opacity better than rgba() for exporting
 	if(!o.ignoreFillAndStroke) s+=" fill=\"#000\" opacity=\"0.2\"";
@@ -600,7 +597,7 @@ mxG.S.prototype.makeStoneShadow=function(c,x,y,r,o)
 };
 mxG.S.prototype.make3dStone1=function(c,x,y,r,o)
 {
-	var s="",e=this.stoneShadowWidth;
+	let s="",e=this.stoneShadowWidth;
 	if(o.stoneShadowOn) s+=this.makeStoneShadow(c,x,y,r,o);
 	s+="<circle class=\"mx"+c+"\"";
 	if(o.opacity<1) s+="fill-opacity=\""+o.opacity+"\"";
@@ -611,7 +608,7 @@ mxG.S.prototype.make3dStone1=function(c,x,y,r,o)
 mxG.S.prototype.make3dStone2=function(c,x,y,r,o)
 {
 	// do not ignore fill and stroke here
-	var s="",a,rg;
+	let s="",a,rg;
 	if(o.stoneShadowOn) s+=this.makeStoneShadow(c,x,y,r,o);
 	s+="<circle class=\"mx"+c+"\"";
 	if(o.opacity<1) s+="fill-opacity=\""+o.opacity+"\"";
@@ -637,7 +634,7 @@ mxG.S.prototype.makeStone=function(c,x,y,r,o)
 mxG.S.prototype.makeTextOnAloneStone=function(txt,x,y,d,c,o)
 {
 	// assume txt is a number
-	var s,x,y;
+	let s;
 	txt+="";
 	s="<text";
 	s+=" text-anchor=\"middle\"";
@@ -664,7 +661,7 @@ mxG.S.prototype.makeTextOnAloneStone=function(txt,x,y,d,c,o)
 	}
 	// font-family, font-size and text-anchor are set in svg tag
 	// bug, cannot use dominant-baseline:central everywhere
-	// then just add 5 to y to center text verticaly
+	// then just add 5 to y to center text vertically
 	s+=" x=\""+x+"\" y=\""+(y+5)+"\">";
 	s+=txt;
 	s+="</text>";
@@ -672,7 +669,7 @@ mxG.S.prototype.makeTextOnAloneStone=function(txt,x,y,d,c,o)
 };
 mxG.S.prototype.makeTextAfterAloneStone=function(txt,d,c)
 {
-	var s,x,y;
+	let s,x,y;
 	txt+="";
 	x=d+d/8;
 	y=d/2;
@@ -681,7 +678,7 @@ mxG.S.prototype.makeTextAfterAloneStone=function(txt,d,c)
 	if(this.sw4text) s+=" stroke=\""+c+"\" stroke-width=\""+this.sw4text+"\"";
 	// font-family and font-size are set in svg tag
 	// bug, cannot use dominant-baseline:central everywhere
-	// then just add 5 to y to center text verticaly
+	// then just add 5 to y to center text vertically
 	s+=" x=\""+x+"\" y=\""+(y+5)+"\">";
 	s+=txt;
 	s+="</text>";
@@ -689,7 +686,7 @@ mxG.S.prototype.makeTextAfterAloneStone=function(txt,d,c)
 };
 mxG.S.prototype.makeAloneStone=function(nat,n,o)
 {
-	var s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c,t;
+	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c,t;
 	z=(o.in3dOn&&o.stoneShadowOn)?this.stoneShadowWidth:0;
 	s="<svg";
 	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
@@ -713,7 +710,7 @@ mxG.S.prototype.makeAloneStone=function(nat,n,o)
 };
 mxG.S.prototype.makeAloneStoneAndText=function(nat,n,v,o)
 {
-	var s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c,t;
+	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c,t;
 	z=(o.in3dOn&&o.stoneShadowOn)?this.stoneShadowWidth:0;
 	s="<svg";
 	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
@@ -744,7 +741,7 @@ mxG.S.prototype.makeTextSomewhere=function(txt,x,y,c,centered)
 {
 	// x: center of the text if centered, beginning of the text otherwise
 	// y: center of the text
-	var s;
+	let s;
 	txt+="";
 	s="<text class=\"mxTextSomewhere\"";
 	s+=" fill=\""+c+"\"";
@@ -752,7 +749,7 @@ mxG.S.prototype.makeTextSomewhere=function(txt,x,y,c,centered)
 	if(centered) s+=" text-anchor=\"middle\"";
 	// font-family and font-size are set in svg tag
 	// bug, cannot use dominant-baseline:central everywhere
-	// then just add 5 to y to center text verticaly
+	// then just add 5 to y to center text vertically
 	s+=" x=\""+x+"\" y=\""+(y+5)+"\">";
 	s+=txt;
 	s+="</text>";
@@ -760,8 +757,8 @@ mxG.S.prototype.makeTextSomewhere=function(txt,x,y,c,centered)
 };
 mxG.S.prototype.makeNotSeen=function(a,o)
 {
-	var k,km,s="",nw,h4ns,title="",i,j,c,x,y,xo;
-	var d,dd,ddd,z;
+	let k,km,s="",nw,h4ns,title="",i,j,c,x,y,xo;
+	let d,dd,ddd,z;
 	d=this.d;
 	dd=this.d+2;
 	z=(o.in3dOn&&o.stoneShadowOn)?this.stoneShadowWidth:0;
@@ -829,7 +826,7 @@ mxG.S.prototype.makeNotSeen=function(a,o)
 };
 mxG.S.prototype.makeSelectTool=function()
 {
-	var s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c="#000";
+	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c="#000";
 	z=d*3/4;
 	s="<svg";
 	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
@@ -845,7 +842,7 @@ mxG.S.prototype.makeSelectTool=function()
 };
 mxG.S.prototype.makeViewTool=function()
 {
-	var s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c="#000";
+	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c="#000";
 	z=d*3/4;
 	s="<svg";
 	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
@@ -911,8 +908,7 @@ mxG.S.prototype.makeAloneBiStone=function(nat,o)
 };
 mxG.S.prototype.makeMarkOnLast=function(c,x,y,cls)
 {
-	var s,z;
-	z=this.d/6;
+	let s,z=4; // z=this.d/6
 	s="<rect class=\""+cls+"\"";
 	s+=" fill=\""+c+"\"";
 	s+=" x=\""+(x-z)+"\" y=\""+(y-z)+"\"";
@@ -921,7 +917,7 @@ mxG.S.prototype.makeMarkOnLast=function(c,x,y,cls)
 };
 mxG.S.prototype.makeMark=function(c,x,y,cls)
 {
-	var s,x1,y1,x2,y2,z=this.d*0.28;
+	let s,x1,y1,x2,y2,z=6.5; // z=this.d*0.28
 	x1=x-z;
 	y1=y-z;
 	x2=x+z;
@@ -933,7 +929,7 @@ mxG.S.prototype.makeMark=function(c,x,y,cls)
 };
 mxG.S.prototype.makeCircle=function(c,x,y,cls)
 {
-	var s,z=this.d*0.27;
+	let s,z=this.d*0.27;
 	s="<circle class=\""+cls+"\"";
 	s+=" stroke-width=\""+this.sw4mark+"\" stroke=\""+c+"\" fill=\"none\"";
 	s+=" cx=\""+x+"\" cy=\""+y+"\" r=\""+z+"\"/>";
@@ -941,7 +937,7 @@ mxG.S.prototype.makeCircle=function(c,x,y,cls)
 };
 mxG.S.prototype.makeTriangle=function(c,x,y,cls)
 {
-	var s,x1,y1,x2,y2,x3,y3,z=this.d*0.32;
+	let s,x1,y1,x2,y2,x3,y3,z=this.d*0.32;
 	x1=x;
 	y1=y-z;
 	x2=x-z;
@@ -955,7 +951,7 @@ mxG.S.prototype.makeTriangle=function(c,x,y,cls)
 };
 mxG.S.prototype.makeSquare=function(c,x,y,cls)
 {
-	var s,z=this.d*0.27;
+	let s,z=this.d*0.27;
 	s="<rect class=\""+cls+"\"";
 	s+=" stroke-width=\""+this.sw4mark+"\" stroke=\""+c+"\" fill=\"none\"";
 	s+=" x=\""+(x-z)+"\" y=\""+(y-z)+"\"";
@@ -964,7 +960,7 @@ mxG.S.prototype.makeSquare=function(c,x,y,cls)
 };
 mxG.S.prototype.makeAloneMark=function(m)
 {
-	var s,d=this.d,dd=d+2,x=dd/2,y=dd/2,c="#000",cls="mxTool";
+	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,c="#000",cls="mxTool";
 	s="<svg";
 	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
 	s+=" viewBox=\"0 0 "+dd+" "+dd+"\"";
@@ -984,7 +980,7 @@ mxG.S.prototype.makeAloneToolText=function(txt)
 {
 	// for edit tool only
 	// assume text width is smaller than dd
-	var s,d=this.d,dd=d+2,x=dd/2,y=dd/2,c="#000";
+	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,c="#000";
 	s="<svg";
 	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
 	s+=" viewBox=\"0 0 "+dd+" "+dd+"\"";
@@ -1006,14 +1002,14 @@ mxG.S.prototype.makeAloneToolText=function(txt)
 };
 mxG.S.prototype.makeTerritoryMark=function(a,x,y,cls)
 {
-	var c=(a=="_TB_")?"Black":"White",o;
+	let c=(a=="_TB_")?"Black":"White";
 	if(this.p.territoryMark=="MA") return this.makeMark(c,x,y,cls);
 	o={opacity:1,in3dOn:this.in3dOn,stoneShadowOn:this.stoneShadowOn};
-	return this.makeStone(c,x,y,this.d/4.5,o);
+	return this.makeStone(c,x,y,5,o); // d=this.d/4.5
 };
 mxG.S.prototype.makeFocusMark=function(x,y)
 {
-	var s,z=this.d/2;
+	let s,z=this.d/2;
 	s+="<rect class=\"mxFocusMark\" stroke=\"#000\" fill=\"none\"";
 	s+=" x=\""+(x-z)+"\" y=\""+(y-z)+"\"";
 	s+=" width=\""+z*2+"\" height=\""+z*2+"\"/>";
@@ -1021,7 +1017,7 @@ mxG.S.prototype.makeFocusMark=function(x,y)
 };
 mxG.S.prototype.makeStoneNumberOnGrid=function(i,j,nat,a)
 {
-	var s="",c,cls,x,y;
+	let s="",c,cls,x,y;
 	cls="mxOn"+((nat=="B")?"Black":"White");
 	cls+=" mx"+i+"_"+j;
 	cls+=" mxNumber";
@@ -1039,7 +1035,7 @@ mxG.S.prototype.makeStoneNumberOnGrid=function(i,j,nat,a)
 };
 mxG.S.prototype.makeMarkOrLabel=function(i,j,nat,a)
 {
-	var s="",c,cls,x,y;
+	let s="",c,cls,x,y;
 	cls="mxOn"+((nat=="B")?"Black":(nat=="W")?"White":"Empty");
 	cls+=" mx"+i+"_"+j;
 	c=(nat=="B")?"#fff":"#000";
@@ -1076,21 +1072,21 @@ mxG.S.prototype.makeMarkOrLabel=function(i,j,nat,a)
 };
 mxG.S.prototype.k2katakana=function(ko)
 {
-	var k=this.DX-ko,s;
+	let k=this.DX-ko,s;
 	s="イロハニホヘトチリヌルヲワカヨタレソツ";
 	s+="ネナラムウヰノオクヤマケフコエテアサキユメミシヱヒモセス";
 	return (k<s.length)?s.charAt(k):"";
 };
 mxG.S.prototype.k2kanji=function(k)
 {
-	var s="一二三四五六七八九十";
+	let s="一二三四五六七八九十";
 	if(k<11) return s.charAt(k-1);
 	if(k<20) return "十"+s.charAt(k-11);
 	return "";
 };
 mxG.S.prototype.k2okanji=function(s)
 {
-	var k,ko,a,an,b,bn,c,cn;
+	let k,ko,a,an,b,bn,c,cn;
 	s+="";
 	k=parseInt(s);
 	if(!k) return s;
@@ -1122,7 +1118,7 @@ mxG.S.prototype.k2c=function(k)
 {
 	if(this.oldJapaneseIndicesOn) return this.k2katakana(k);
 	if(this.japaneseIndicesOn) return k+"";
-	var r=((k-1)%25)+1;
+	let r=((k-1)%25)+1;
 	return String.fromCharCode(r+((r>8)?65:64))+((k>25)?(k-r)/25:"");
 };
 mxG.S.prototype.getIndices=function(x,y)
@@ -1135,7 +1131,7 @@ mxG.S.prototype.getIndices=function(x,y)
 };
 mxG.S.prototype.makeIndices=function()
 {
-	var s,i,j,cls1,cls2,m;
+	let s,i,j,cls1,cls2,m;
 	cls1="mxIndice mxHorizontal";
 	if(this.japaneseIndicesOn||this.oldJapaneseIndicesOn) cls2="mxIndice mxVertical";
 	else cls2=cls1;
@@ -1192,14 +1188,13 @@ mxG.S.prototype.gridUnder=function(i,j,nat,str)
 };
 mxG.S.prototype.makeGrid=function(vNat,vStr)
 {
-	var s="",m,i,j,k,x,y,a,ds;
-	s+="<g class=\"mxGobanLines\" fill=\"none\">";
+	let s="",m,i,j,k,x,y,a,rs,gi;
+	s+="<path class=\"mxGobanLines\" fill=\"none\" d=\"";
 	for(i=this.xl;i<=this.xr;i++)
 	{
 		x=this.i2x(i);
-		y=((this.yt==1)?this.dh/2:0)+this.gbsyt;
-		s+="<path class=\"mxGobanLine\"";
-		s+=" d=\"M"+x+" "+y;
+		this.yGridMin=y=((this.yt==1)?this.dh/2:0)+this.gbsyt;
+		s+="M"+x+" "+y;
 		if(this.eraseGridUnder)
 		{
 			m="M";
@@ -1230,17 +1225,15 @@ mxG.S.prototype.makeGrid=function(vNat,vStr)
 			}
 		}
 		else m="V";
-		y=this.gbsyt+(this.yb-this.yt+1)*this.dh-((this.yb==this.DY)?this.dh/2:0);
+		this.yGridMax=y=this.gbsyt+(this.yb-this.yt+1)*this.dh-((this.yb==this.DY)?this.dh/2:0);
 		if(m=="V") s+=m+y;
 		else s+=m+x+" "+y;
-		s+="\"/>";
 	}
 	for(j=this.yt;j<=this.yb;j++)
 	{
-		x=((this.xl==1)?this.dw/2:0)+this.gbsxl;
+		this.xGridMin=x=((this.xl==1)?this.dw/2:0)+this.gbsxl;
 		y=this.j2y(j);
-		s+="<path class=\"mxGobanLine\"";
-		s+=" d=\"M"+x+" "+y;
+		s+="M"+x+" "+y;
 		if(this.eraseGridUnder)
 		{
 			m="M";
@@ -1271,13 +1264,13 @@ mxG.S.prototype.makeGrid=function(vNat,vStr)
 			}
 		}
 		else m="H";
-		x=this.gbsxl+(this.xr-this.xl+1)*this.dw-((this.xr==this.DX)?this.dw/2:0);
+		this.xGridMax=x=this.gbsxl+(this.xr-this.xl+1)*this.dw-((this.xr==this.DX)?this.dw/2:0);
 		if(m=="H") s+=m+x;
 		else s+=m+x+" "+y;
-		s+="\"/>";
 	}
-	s+="</g><g class=\"mxStars\" fill=\"#000\">";
-	ds=this.d/9;
+	s+="\"/>";
+	rs=2*this.sw4grid;
+	s+="<path class=\"mxStars\" fill=\"#000\" d=\"";
 	for(i=this.xl;i<=this.xr;i++)
 		for(j=this.yt;j<=this.yb;j++)
 			if(this.star(i,j))
@@ -1285,16 +1278,19 @@ mxG.S.prototype.makeGrid=function(vNat,vStr)
 				k=this.p.xy(i,j);
 				if(!this.eraseGridUnder||this.gridUnder(i,j,vNat[k],vStr[k]))
 				{
-					s+="<circle class=\"mxStar mxStar"+i+"_"+j+"\"";
-					s+=" cx=\""+this.i2x(i)+"\" cy=\""+this.j2y(j)+"\" r=\""+ds+"\"/>";
+					x=this.i2x(i);
+					y=this.j2y(j);
+					s+="M"+(x+rs)+" "+y+"A"+rs+" "+rs+" 0 1 0 "+(x-rs)+" "+y;
+					// Z is important otherwise the path is not well closed
+					s+="A"+rs+" "+rs+" 0 1 0 "+(x+rs)+" "+y+"Z";
 				}
 			}
-	s+="</g>";
+	s+="\"/>";
 	return s;
 };
 mxG.S.prototype.makeBackground=function(r)
 {
-	var s,x,y,a,b,cls;
+	let s,x,y,a,b,cls;
 	b=this.indicesOn?this.gobp+this.db+this.grim:0; // indices width
 	if(r=="Outer")
 	{
@@ -1332,18 +1328,18 @@ mxG.S.prototype.makeBackground=function(r)
 mxG.S.prototype.getWRatio=function()
 {
 	// get ratio from goban svg to deal the case where no css
-	var b=this.p.getE("GobanSvg").getBoundingClientRect();
+	let b=this.p.getE("GobanSvg").getBoundingClientRect();
 	return this.w/b.width;
 };
 mxG.S.prototype.getHRatio=function()
 {
 	// get ratio from goban svg to deal the case where no css
-	var b=this.p.getE("GobanSvg").getBoundingClientRect();
+	let b=this.p.getE("GobanSvg").getBoundingClientRect();
 	return this.h/b.height;
 };
 mxG.S.prototype.getC=function(ev)
 {
-	var x,y,c=this.ig.getMClick(ev);
+	let x,y,c=this.ig.getMClick(ev);
 	c.x=c.x*this.getWRatio()-this.gbsxl;
 	c.y=c.y*this.getHRatio()-this.gbsyt;
 	x=Math.max(Math.min(Math.floor(c.x/this.dw)+this.xl,this.xr),this.xl);
@@ -1356,7 +1352,7 @@ mxG.S.prototype.setMagicGobanWidth=function(e)
 	// calculate a reduction ratio wr used to display a small gobans or part of a goban
 	// with stones of the same diameter as the stone diameter of a reference goban
 	// the reduction is applied to e which is ig or one of its ancestors
-	var wr,z;
+	let wr,z;
 	if((this.xr-this.xl+1)<=this.pointsNumMax)
 	{
 		z=this.gbsxl+this.gbsxr;
@@ -1374,7 +1370,7 @@ mxG.S.prototype.setMagicGobanWidth=function(e)
 mxG.S.prototype.makeGradient1=function(c)
 {
 	// glass stones
-	var s,r,c1,c2,c3;
+	let s,r,c1,c2,c3;
 	r=(c=="Black")?50:100;
 	c1=(c=="Black")?"#999":"#fff";
 	c2=(c=="Black")?"#333":"#ccc";
@@ -1390,7 +1386,7 @@ mxG.S.prototype.makeGradient1=function(c)
 };
 mxG.S.prototype.makeShellEffect=function(o)
 {
-	var s,s1="<stop stop-color=\"#000\" offset=\"",s2="\" stop-opacity=\"",s3="\"/>";
+	let s,s1="<stop stop-color=\"#000\" offset=\"",s2="\" stop-opacity=\"",s3="\"/>";
 	s=s1+(o-0.03)+s2+"0"+s3;
 	s+=s1+(o-0.02)+s2+"0.0125"+s3;
 	s+=s1+o+s2+"0.0375"+s3;
@@ -1401,7 +1397,7 @@ mxG.S.prototype.makeShellEffect=function(o)
 mxG.S.prototype.makeGradient2=function(c)
 {
 	// slate and shell stones
-	var s,k,l,rg;
+	let s,k,l,rg;
 	s=this.makeGradient1(c);
 	s+="<radialGradient id=\""+this.p.n+c[0]+"RGA\"";
 	s+=" class=\"mx"+c[0]+"RGA\"";
@@ -1459,7 +1455,7 @@ mxG.S.prototype.makeGradient=function(c)
 };
 mxG.S.prototype.addAnimatedGoban=function(c)
 {
-	var s,tpl,list,k,km,co,xo,yo,xn,yn,z,r=this.d/2,o;
+	let s,tpl,list,k,km,co,xo,yo,xn,yn,z,r=this.d/2,o;
 	s="<svg";
 	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
 	s+=" viewBox=\"0 0 "+this.w+" "+this.h+"\"";
@@ -1489,14 +1485,14 @@ mxG.S.prototype.addAnimatedGoban=function(c)
 };
 mxG.S.prototype.removeAnimatedGoban=function(c)
 {
-	var e=this.ig.querySelector("svg:nth-of-type(2)");
+	let e=this.ig.querySelector("svg:nth-of-type(2)");
 	if(e) this.ig.removeChild(e);
 };
 mxG.S.prototype.makeGoban=function()
 {
-	var s,c,p;
-	var i,j;
-	var x,y,x1,y1,x2,y2,w,h,wmax,wr,z,a;
+	let s,c,p;
+	let i,j;
+	let x,y,x1,y1,x2,y2,w,h,wmax,wr,z,a;
 	this.vNat=[];
 	this.vStr=[];
 	this.w=this.dw*(this.xr-this.xl+1)+this.gbsxl+this.gbsxr;
@@ -1543,7 +1539,7 @@ mxG.S.prototype.makeGoban=function()
 	if(this.indicesOn) s+=this.makeIndices();
 	s+=this.makeBackground("Inner");
 	s+="<g id=\""+this.p.n+"Grid\" class=\"mxGrid\"";
-	s+=" stroke=\"#000\" stroke-width=\""+this.sw4grid+"\"></g>";
+	s+=" stroke-width=\""+this.sw4grid+"\" stroke=\"#000\"></g>";
 	s+="<g id=\""+this.p.n+"Points\" class=\"mxPoints\"></g>";
 	s+="<g id=\""+this.p.n+"Focus\" class=\"mxFocus\"></g>";
 	s+="</svg>";
@@ -1552,7 +1548,7 @@ mxG.S.prototype.makeGoban=function()
 mxG.S.prototype.setInternalParameters=function()
 {
 	// internal parameters
-	var stretchingArray=this.stretching.split(",");
+	let stretchingArray=this.stretching.split(",");
 	this.in3dWidthStretch=parseInt(stretchingArray[0]+"");
 	this.in3dHeightStretch=parseInt(stretchingArray[1]+"");
 	this.in2dWidthStretch=parseInt(stretchingArray[2]+"");
@@ -1587,7 +1583,7 @@ mxG.S.prototype.setInternalParameters=function()
 };
 mxG.S.prototype.init=function()
 {
-	var p=this.p;
+	let p=this.p;
 	this.ig=p.getE("InnerGobanDiv"); // DIV where goban displays
 	this.stoneShadowOn=p.stoneShadowOn;
 	this.pointsNumMax=p.pointsNumMax;
@@ -1607,32 +1603,28 @@ mxG.S.prototype.init=function()
 };
 mxG.S.prototype.getLabelLen=function(a,str)
 {
-	var len=a.getComputedTextLength();
+	let len=a.getComputedTextLength();
 	len=(str.length>2)?0.8*len:(str.length>1)?len=0.9*len:len;
 	len+=0.15*this.dw;
 	return Math.max(0.85*this.dw,len);
 };
-mxG.S.prototype.getHorizontalGridLine=function(j)
-{
-	var g=this.p.getE("Grid"),list;
-	list=g.querySelectorAll("path");
-	return list[this.xr-this.xl+1+j-this.yt];
-};
 mxG.S.prototype.getVerticalGridLine=function(i)
 {
-	var g=this.p.getE("Grid"),list;
+	let g=this.p.getE("Grid"),list;
 	list=g.querySelectorAll("path");
 	return list[i-this.xl];
 };
 mxG.S.prototype.eraseVerticalGridSegment=function(i,y)
 {
-	var e,d1,d2,a,b,k,km,x,y1,y2,f1,f2;
-	e=this.getVerticalGridLine(i);
-	d1=e.getAttributeNS(null,"d");
+	let e,d0,d1,d2,a,b,k,km,x,y1,y2,f1,f2;
+	x=this.i2x(i);
+	e=this.p.getE("Grid").querySelector("path");
+	d0=e.getAttributeNS(null,"d");
+	re=new RegExp("M"+x+" "+this.yGridMin+"[^H]*?V"+this.yGridMax);
+	d1=d0.match(re)[0];
 	a=d1.match(/[^M0-9.-][0-9.-]+/g);
 	km=a.length;
 	b=[];
-	x=this.i2x(i);
 	for(k=0;k<km;k++)
 	{
 		b[k]=parseFloat(a[k].substring(1));
@@ -1673,11 +1665,11 @@ mxG.S.prototype.eraseVerticalGridSegment=function(i,y)
 			else d2+="M"+x+" "+b[k];			
 		}
 	}
-	if(d1!=d2) e.setAttributeNS(null,"d",d2);
+	if(d1!=d2) e.setAttributeNS(null,"d",d0.replace(d1,d2));
 };
 mxG.S.prototype.eraseVerticalGridSegments=function(i,j,x,y,w)
 {
-	var i,i1,i2,ik,e;
+	let i1,i2,ik,e;
 	i1=Math.max(this.xl,i-Math.floor(w/2/this.dw));
 	i2=Math.min(this.xr,i+Math.floor(w/2/this.dw));
 	// if (ik==i) the job was done when making the grid
@@ -1697,9 +1689,11 @@ mxG.S.prototype.eraseVerticalGridSegments=function(i,j,x,y,w)
 mxG.S.prototype.eraseLongGridSegment=function(i,j,x,y,w)
 {
 	// is executed only when long label (i.e. almost never)
-	var e,d1,d2,a,b,k,km,x1,x2,m;
-	e=this.getHorizontalGridLine(j);
-	d1=e.getAttributeNS(null,"d");
+	let e,d0,d1,d2,a,b,k,km,x1,x2,m,re;
+	e=this.p.getE("Grid").querySelector("path");
+	d0=e.getAttributeNS(null,"d");
+	re=new RegExp("M"+this.xGridMin+" "+y+"[^V]+?H"+this.xGridMax);
+	d1=d0.match(re)[0];
 	a=d1.match(/(M|H)[0-9.-]+/g);
 	km=a.length;
 	b=[];
@@ -1744,12 +1738,12 @@ mxG.S.prototype.eraseLongGridSegment=function(i,j,x,y,w)
 		}
 		// else wait for next segment
 	}
-	if(d1!=d2) e.setAttributeNS(null,"d",d2);
+	if(d1!=d2) e.setAttributeNS(null,"d",d0.replace(d1,d2));
 	this.eraseVerticalGridSegments(i,j,x,y,w);
 };
 mxG.S.prototype.addPointBackground=function(i,j,nat,str)
 {
-	var a,b,p,cls,x,y,h,w,vof=0;
+	let a,b,p,cls,x,y,h,w,vof=0;
 	if(this.isLabel(str)||this.isVariation(str))
 	{
 		p=this.p.getE("Points");
@@ -1790,7 +1784,7 @@ mxG.S.prototype.addPointBackground=function(i,j,nat,str)
 };
 mxG.S.prototype.draw=function(vNat,vStr,pFocus)
 {
-	var i,j,k,km,s="",opacity,nat,str,list,a,b,c,xf,yf,o,z,s1,s2,s3,s4,s5,s6;
+	let i,j,k,km,s="",opacity,nat,str,list,a,b,c,xf,yf,o,z,s1,s2,s3,s4,s5,s6;
 	this.p.getE("Grid").innerHTML=this.makeGrid(vNat,vStr);
 	this.pNat=this.vNat;
 	this.pStr=this.vStr;
@@ -1798,11 +1792,7 @@ mxG.S.prototype.draw=function(vNat,vStr,pFocus)
 	this.vStr=vStr;
 	this.pFocus=pFocus;
 	// group elements to reduce final svg size
-	s1="";
-	s2="";
-	s3="";
-	s4="";
-	s5="";
+	s1=s2=s3=s4=s5="";
 	for(i=this.xl;i<=this.xr;i++)
 		for(j=this.yt;j<=this.yb;j++)
 		{
@@ -1921,13 +1911,13 @@ mxG.S.prototype.makeBtnRectangle=function(x)
 };
 mxG.S.prototype.makeBtnTriangle=function(x,a)
 {
-	var z=a*52;
+	let z=a*52;
 	return "<polygon points=\""+x+" 64 "+(x+z)+" 128 "+(x+z)+" 0\"/>";
 };
 mxG.S.prototype.makeBtnContent=function(a,t)
 {
 	// convenient width and height should be set in css
-	var s="<svg";
+	let s="<svg";
 	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
 	s+=" viewBox=\"0 0 128 128\"";
 	s+=" width=\"40\" height=\"40\">"; // acceptable size if no css
@@ -1936,73 +1926,73 @@ mxG.S.prototype.makeBtnContent=function(a,t)
 };
 mxG.S.prototype.makeFirstBtn=function()
 {
-	var s=this.makeBtnRectangle(26)+this.makeBtnTriangle(50,1);
+	let s=this.makeBtnRectangle(26)+this.makeBtnTriangle(50,1);
 	return this.makeBtnContent(s,"First");
 };
 mxG.S.prototype.makeTenPredBtn=function()
 {
-	var s=this.makeBtnTriangle(4,1)+this.makeBtnTriangle(56,1);
+	let s=this.makeBtnTriangle(4,1)+this.makeBtnTriangle(56,1);
 	return this.makeBtnContent(s,"10 Previous");
 };
 mxG.S.prototype.makePredBtn=function()
 {
-	var s=this.makeBtnTriangle(30,1);
+	let s=this.makeBtnTriangle(30,1);
 	return this.makeBtnContent(s,"Previous");
 };
 mxG.S.prototype.makeNextBtn=function()
 {
-	var s=this.makeBtnTriangle(98,-1);
+	let s=this.makeBtnTriangle(98,-1);
 	return this.makeBtnContent(s,"Next");
 };
 mxG.S.prototype.makeTenNextBtn=function()
 {
-	var s=this.makeBtnTriangle(72,-1)+this.makeBtnTriangle(124,-1);
+	let s=this.makeBtnTriangle(72,-1)+this.makeBtnTriangle(124,-1);
 	return this.makeBtnContent(s,"10 Next");
 };
 mxG.S.prototype.makeLastBtn=function()
 {
-	var s=this.makeBtnTriangle(78,-1)+this.makeBtnRectangle(78);
+	let s=this.makeBtnTriangle(78,-1)+this.makeBtnRectangle(78);
 	return this.makeBtnContent(s,"Last");
 };
 mxG.S.prototype.makeAutoBtn=function()
 {
-	var s=this.makeBtnTriangle(0,1)+this.makeBtnTriangle(128,-1);
+	let s=this.makeBtnTriangle(0,1)+this.makeBtnTriangle(128,-1);
 	return this.makeBtnContent(s,"Auto");
 };
 mxG.S.prototype.makePauseBtn=function()
 {
-	var s=this.makeBtnRectangle(24)+this.makeBtnRectangle(80);
+	let s=this.makeBtnRectangle(24)+this.makeBtnRectangle(80);
 	return this.makeBtnContent(s,"Pause");
 };
 mxG.S.prototype.makeRetryBtn=function()
 {
-	var s;
+	let s;
 	s="<path d=\"M0 64L64 64L32 92L0 64Z\"/>";
 	s+="<path d=\"M24 64A50 50 0 1 1 49 107L57 94A34 34 0 1 0 40 64Z\"/>";
 	return this.makeBtnContent(s,"Retry");
 };
 mxG.S.prototype.makeUndoBtn=function()
 {
-	var s;
+	let s;
 	s="<path d=\"M20,105H108C114.6,105 120,99 120,93V44C120,37 114,32 108,32H40V8L8,40 40,72V48H96C100,48 104,51 104,56V81C104,85 100,89 96,89H20 Z\"/>";
 	return this.makeBtnContent(s,"Undo");
 };
 mxG.S.prototype.makeHintBtn=function()
 {
-	var s;
+	let s;
 	s="<rect x=\"54\" y=\"10\" width=\"20\" height=\"64\" rx=\"5\" ry=\"5\"/>";
 	s+="<circle cx=\"64\" cy=\"104\" r=\"14\"/>";
 	return this.makeBtnContent(s,"Hint");
 };
 mxG.S.prototype.makePassBtn=function()
 {
-	var s;
+	let s;
 	s="<path fill-rule=\"evenodd\" d=\"M 64,10 L 118,64 L 64,118 L 10,64 Z M 64,35 L 93,64 L 64,93 L 35,64 Z\"/>";
 	return this.makeBtnContent(s,"Pass");
 };
 mxG.S.prototype.makeFromPath=function(p)
 {
-	var s="<svg";
+	let s="<svg";
 	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
 	s+=" viewBox=\"0 0 1024 1024\"";
 	s+=" width=\"40\" height=\"40\">"; // acceptable size if no css
@@ -2010,7 +2000,7 @@ mxG.S.prototype.makeFromPath=function(p)
 };
 mxG.S.prototype.addSelect=function(i,j)
 {
-	var b,x,y,w,h,cls;
+	let b,x,y,w,h,cls;
 	w=this.dw;
 	h=this.dh;
 	if(i==this.xl)
@@ -2058,7 +2048,7 @@ mxG.S.prototype.addSelect=function(i,j)
 };
 mxG.S.prototype.removeSelect=function(i,j)
 {
-	var a,b;
+	let a,b;
 	a=this.ig.firstChild;
 	b=a.querySelector(".mxSelect.mx"+i+"_"+j);
 	if(b) a.removeChild(b);
@@ -2066,7 +2056,7 @@ mxG.S.prototype.removeSelect=function(i,j)
 mxG.S.prototype.makeOneStone4Bowl=function(nat,x,y,d,o)
 {
 	// no shadow inside the bowl
-	var s="",o2={};
+	let s="",o2={};
 	// todo: why without o2, o keeps changes below outside this function?
 	if (o.hasOwnProperty("opacity")) o2.opacity=o.opacity;
 	if (o.hasOwnProperty("stoneShadowOn")) o2.stoneShadowOn=o.stoneShadowOn;
@@ -2083,7 +2073,7 @@ mxG.S.prototype.makeOneStone4Bowl=function(nat,x,y,d,o)
 mxG.S.prototype.makeBowl=function(nat,o)
 {
 	// no svg shadow for the bowl
-	var s="",x,y,r,i,j,k,km,km2,dk,rk,magicNum;
+	let s="",x,y,r,i,j,k,km,km2,dk,rk,magicNum;
 	magicNum=this.w/this.d*100/this.wr;
 	dk=this.bowlW/magicNum*3;
 	rk=dk/2;
@@ -2120,7 +2110,7 @@ mxG.S.prototype.makeBowl=function(nat,o)
 mxG.S.prototype.makeCap=function(nat,n,o)
 {
 	// no svg shadow for the cap
-	var s="",x,y,r,c=(nat=="B")?"Black":"White";
+	let s="",x,y,r,c=(nat=="B")?"Black":"White";
 	x=this.bowlW/2;
 	y=(nat=="W")?this.bowlW+this.capW/2:this.capW/2;
 	dy=this.capW*5/42;
@@ -2139,7 +2129,7 @@ mxG.S.prototype.makeCap=function(nat,n,o)
 };
 mxG.S.prototype.makeBowlAndCap=function(nat,n,o)
 {
-	var s="";
+	let s="";
 	this.bowlW=5*this.d;
 	this.capW=4*this.d;
 	s+="<svg";
@@ -4661,7 +4651,7 @@ mxG.B=[["WhiteCartouche","BlackCartouche"],["Header","Navigation","Goto","About"
 mxG.D[mxG.K]=new mxG.G(mxG.K,mxG.B);
 mxG.D[mxG.K].theme="WGo";
 mxG.D[mxG.K].config="Game";
-mxG.D[mxG.K].style=".mxWGoTheme{--gobanMaxWidth:30em;text-align:left;}.mxWGoTheme div::-moz-focus-inner,.mxWGoTheme button::-moz-focus-inner,.mxWGoTheme input[type=text]::-moz-focus-inner,.mxWGoTheme a::-moz-focus-inner{padding:0;border:0;}.mxWGoTheme div:focus,.mxWGoTheme button:focus,.mxWGoTheme input[type=text]:focus,.mxWGoTheme a:focus{outline:none;}.mxWGoTheme button,.mxWGoTheme input[type=button],.mxWGoTheme textarea{-webkit-appearance:none;-moz-appearance:none;}.mxWGoTheme text{cursor:default;}.mxWGoTheme button{cursor:pointer;}.mxWGoTheme input[type=text][disabled],.mxWGoTheme button[disabled]{cursor:default;}.mxWGoTheme{font-family:sans-serif;}.mxWGoTheme svg{font-family:arial,sans-serif;}.mxWGoTheme button{font-family:sans-serif;}.mxWGoTheme{max-width:var(--gobanMaxWidth);min-width:15em;line-height:1.4em;font-family:Calibri,Tahoma,Arial,sans-serif;margin:0 auto;}.mxWGoTheme.mxCommentConfig,.mxWGoTheme.mxTreeConfig{box-sizing:border-box;display:flex;flex-wrap:wrap;justify-content:center;max-width:calc((var(--gobanMaxWidth) * 2) + 1em);}.mxWGoTheme.mxCommentConfig>div,.mxWGoTheme.mxTreeConfig>div{box-sizing:border-box;margin:0.125em;}.mxWGoTheme.mxCommentConfig>div:first-of-type,.mxWGoTheme.mxTreeConfig>div:first-of-type{flex:1 1 var(--gobanMaxWidth);max-width:var(--gobanMaxWidth);}.mxWGoTheme.mxCommentConfig>div:last-of-type,.mxWGoTheme.mxTreeConfig>div:last-of-type{flex:1 1 var(--gobanMaxWidth);max-width:var(--gobanMaxWidth);}.mxWGoTheme.mxCommentConfig .mxGobanGrandParentDiv,.mxWGoTheme.mxTreeConfig .mxGobanGrandParentDiv,.mxWGoTheme.mxCommentConfig .mxCommentParentDiv,.mxWGoTheme.mxTreeConfig .mxTreeParentDiv{display:flex;flex-direction:column;justify-content:space-between;}.mxWGoTheme.mxCommentConfig .mxGobanParentDiv,.mxWGoTheme.mxTreeConfig .mxGobanParentDiv{flex:1;display:flex;flex-direction:column;}.mxWGoTheme.mxCommentConfig .mxGobanDiv,.mxWGoTheme.mxTreeConfig .mxGobanDiv{margin:auto;width:100%;}.mxWGoTheme.mxCommentConfig .mxCommentDiv,.mxWGoTheme.mxTreeConfig .mxCommentDiv,.mxWGoTheme.mxTreeConfig .mxTreeDiv{flex:1;min-height:8em;}.mxWGoTheme.mxCommentConfig .mxCommentDiv,.mxWGoTheme.mxEditConfig .mxTreeDiv,.mxWGoTheme.mxTreeConfig .mxCommentDiv,.mxWGoTheme.mxTreeConfig .mxTreeDiv{position:relative;}.mxWGoTheme.mxCommentConfig .mxCommentContentDiv,.mxWGoTheme.mxEditConfig .mxTreeContentDiv,.mxWGoTheme.mxTreeConfig .mxCommentContentDiv,.mxWGoTheme.mxTreeConfig .mxTreeContentDiv{position:absolute;}.mxWGoTheme.mxBasicConfig .mxGobanDiv,.mxWGoTheme.mxCommentConfig .mxGobanDiv,.mxWGoTheme.mxGameConfig .mxGobanDiv,.mxWGoTheme.mxTreeConfig .mxGobanDiv{background:#f0f0f0;}.mxWGoTheme .mxInnerGobanDiv{-webkit-tap-highlight-color:rgba(0,0,0,0);user-select:none;margin:0 auto;position:relative;}.mxWGoTheme .mxGobanDiv svg{box-sizing:border-box;display:block;width:100%;height:100%;pointer-events:none;background-image:url(data:image/jpg;base64,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);background-repeat:repeat;}.mxWGoTheme text{stroke-width:0.5px;}.mxWGoTheme text.mxOnBlack{fill:#fff;stroke:#fff;}.mxWGoTheme text.mxOnWhite,.mxWGoTheme text.mxOnEmpty{fill:#000;stroke:#000;}.mxWGoTheme rect.mxPointBackground.mxVariation.mxOnFocus{fill:none;stroke:#000;}.mxWGoTheme .mxTitleH1{font-size:1em;padding:0;margin:0.25em 0;}.mxWGoTheme .mxP:not(:first-child){padding-top:0.5em;}.mxWGoTheme.mxCommentConfig .mxCommentDiv,.mxWGoTheme.mxTreeConfig .mxCommentDiv,.mxWGoTheme.mxTreeConfig .mxTreeDiv{box-sizing:border-box;background:#f5f5f5;border:1px solid #ddd;overflow:auto;}.mxWGoTheme.mxTreeConfig .mxTreeLabelDiv{margin-top:0.25em;}.mxWGoTheme.mxCommentConfig .mxCommentLabelDiv,.mxWGoTheme.mxTreeConfig .mxCommentLabelDiv,.mxWGoTheme.mxTreeConfig .mxTreeLabelDiv{box-sizing:border-box;background:#f0f0f0;border:1px solid #ddd;border-bottom:0;padding:0.25em;font-size:1em;font-weight:bold;}.mxWGoTheme.mxCommentConfig .mxCommentLabelDiv,.mxWGoTheme.mxTreeConfig .mxCommentLabelDiv{background-image:url(\"data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 1000 1000\' height=\'1000\' width=\'1000\'%3E%3Cpath d=\'M811 187H186c-14 0-26.333 5-37 15-10.667 10-16 22-16 36v365c0 14 5.333 26.333 16 37 10.667 10.667 23 16 37 16h625c14 0 26.333-5.333 37-16 10.667-10.667 16-23 16-37V238c0-14-5.333-26-16-36s-23-15-37-15zm0-105c43.333 0 80.333 15.333 111 46s46 67.667 46 111v365c0 43.333-15.333 80.333-46 111s-67.667 46-111 46H395L239 917V761h-53c-43.333 0-80.333-15.333-111-46s-46-67.667-46-111V239c0-43.333 15.333-80.333 46-111s67.667-46 111-46z\'/%3E%3C/svg%3E\");background-size:auto 80%;background-repeat:no-repeat;background-position:99% center;}.mxWGoTheme.mxTreeConfig .mxTreeLabelDiv{background-image:url(\"data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' stroke-width=\'60\' stroke=\'rgb(0,0,0)\' viewBox=\'0 0 1000 1000\' height=\'1000\' width=\'1000\'%3E%3Ccircle cx=\'500\' cy=\'800\' r=\'90\'/%3E%3Ccircle cx=\'800\' cy=\'200\' r=\'90\'/%3E%3Ccircle cx=\'200\' cy=\'600\' r=\'90\'/%3E%3Ccircle cx=\'800\' cy=\'600\' r=\'90\'/%3E%3Ccircle cx=\'500\' cy=\'400\' r=\'90\'/%3E%3Cpath d=\'M200,600L800,200\'/%3E%3Cpath d=\'M200,600L500,800\'/%3E%3Cpath d=\'M500,400L800,600\'/%3E%3C/svg%3E\");background-size:auto 80%;background-repeat:no-repeat;background-position:99% center;}.mxWGoTheme.mxCommentConfig .mxCommentContentDiv,.mxWGoTheme.mxTreeConfig .mxCommentContentDiv{padding:0.25em;}.mxWGoTheme.mxCommentConfig .mxCommentContentDiv,.mxWGoTheme.mxTreeConfig .mxCommentContentDiv,.mxWGoTheme.mxTreeConfig .mxTreeContentDiv{padding:0.25em;}.mxWGoTheme.mxTreeConfig .mxTreeDiv{user-select:none;}.mxWGoTheme .mxInnerNotSeenDiv:not(:empty){margin:0.5em auto 0 auto;}.mxWGoTheme .mxInnerNotSeenDiv{margin:0 auto;}.mxWGoTheme .mxNotSeenSvg{width:100%;height:100%;display:block;}.mxWGoTheme.mxGameConfig .mxHeaderDiv h1{font-size:1em;font-weight:bold;padding:0;margin:0.25em 0;}.mxWGoTheme.mxProblemConfig .mxCommentDiv{margin:0.5em auto 0 auto;text-align:center;min-height:1.5em;line-height:1.5em;}.mxWGoTheme.mxProblemConfig .mxCommentContentDiv{display:inline-block;text-align:justify;}.mxWGoTheme input[type=text][disabled],.mxWGoTheme button[disabled]{opacity:0.4;}.mxWGoTheme .mxNavigationParentDiv button:not([disabled]):hover,.mxWGoTheme .mxSolveDiv button:not([disabled]):hover,.mxWGoTheme .mxNavigationDiv input[type=text]:not([disabled]):hover{background-color:rgba(255,255,255,0.45);border:1px solid rgba(100,100,100,0.3);box-shadow:0 0 20px 0 rgba(150,150,150,0.5);}.mxWGoTheme .mxCartoucheDiv{box-sizing:border-box;background:#f0f0f0;position:relative;min-height:2.5em;line-height:2.5em;padding:0 calc(0.75em *5.75) 0 2.5em;border:1px solid #dcdcdc;}.mxWGoTheme .mxCartoucheDiv:nth-of-type(1){border-bottom:0;}.mxWGoTheme .mxCartoucheDiv .mxPlayerStoneDiv{box-sizing:border-box;position:absolute;left:0;top:0;bottom:0;width:2.5em;padding:0.125em;}.mxWGoTheme .mxCartoucheDiv .mxPlayerStoneDiv svg{width:100%;height:100%;}.mxWGoTheme .mxCartoucheDiv .mxPlayerDiv{box-sizing:border-box;font-weight:bold;}.mxWGoTheme .mxCartoucheDiv .mxRankDiv,.mxWGoTheme .mxCartoucheDiv .mxPrisonersDiv{position:absolute;top:0.25em;bottom:0.25em;box-sizing:border-box;font-size:0.75em;line-height:1.125em;min-width:2.5em;max-width:2.5em;display:flex;flex-direction:column;justify-content:center;align-items:center;border:1px solid #e7e7e7;background:#f5f5f5;}.mxWGoTheme .mxCartoucheDiv .mxRankDiv{right:3em;}.mxWGoTheme .mxCartoucheDiv .mxPrisonersDiv{right:0.25em;}.mxWGoTheme .mxCartoucheDiv .mxPrisonersStoneSpan{display:none;}.mxWGoTheme.mxCommentConfig .mxCommentDiv:focus,.mxWGoTheme.mxTreeConfig .mxCommentDiv:focus,.mxWGoTheme.mxTreeConfig .mxTreeDiv:focus{background:rgba(0,0,0,0.05);}.mxWGoTheme .mxNavigationParentDiv button:not([disabled]):focus,.mxWGoTheme .mxSolveDiv button:not([disabled]):focus,.mxWGoTheme .mxNavigationDiv input[type=text]:not([disabled]):focus{outline:1px dotted #000;}.mxWGoTheme .mxGBoxDiv{color:#fff;background:rgba(0,0,0,0.75);overflow:auto;}.mxWGoTheme .mxGBoxDiv .mxShowContentDiv{padding:0.25em;}.mxWGoTheme .mxGBoxDiv .mxShowContentDiv h1{font-size:1em;padding:0;margin:0.25em 0;}.mxWGoTheme .mxGBoxDiv .mxOKDiv{text-align:center;}.mxWGoTheme .mxGBoxDiv .mxOKDiv button{color:#fff;background:#000;border:1px solid #fff;;border-radius:0.25em;font-size:1em;margin:0.5em 0.25em;height:2em;line-height:2em;padding:0 1em;}.mxWGoTheme .mxShowOptionDiv{line-height:1.75em;}.mxWGoTheme .mxNumFromTextSpan,.mxWGoTheme .mxNumWithTextSpan{position:relative;left:2em;white-space:nowrap;}.mxWGoTheme .mxNumFromTextSpan:before{content:\"\\a\";white-space:pre-line;}.mxWGoTheme .mxShowOptionDiv input[type=text]{font-size:1em;}.mxWGoTheme input:not(:checked)~.mxNumFromTextSpan,.mxWGoTheme input:not(:checked)~.mxNumWithTextSpan{display:none;}.mxWGoTheme .mxGBoxDiv .mxShowContentDiv a{color:#fff;}.mxWGoTheme .mxGBoxDiv .mxShowContentDiv a:focus,.mxWGoTheme .mxGBoxDiv .mxShowContentDiv a:hover{color:#f00;}.mxWGoTheme .mxGBoxDiv .mxOKDiv button:focus,.mxWGoTheme .mxGBoxDiv .mxOKDiv button:hover{color:#f00;border:1px solid #f00;}.mxWGoTheme:not(.mxLoopConfig) .mxNavigationParentDiv{box-sizing:border-box;display:flex;justify-content:space-between;align-items:center;border:0;margin:4px 0;}.mxWGoTheme .mxSolveDiv{margin:4px 0;}.mxWGoTheme:not(.mxLoopConfig) .mxNavigationDiv,.mxWGoTheme .mxAboutDiv,.mxWGoTheme .mxHeaderDiv,.mxWGoTheme .mxOptionDiv,.mxWGoTheme .mxSolveDiv{box-sizing:border-box;display:flex;justify-content:center;align-items:center;}.mxWGoTheme:not(.mxLoopConfig) .mxNavigationDiv{flex:7;}.mxWGoTheme .mxAboutDiv,.mxWGoTheme .mxHeaderDiv,.mxWGoTheme .mxOptionDiv{flex:1;}.mxWGoTheme .mxAboutDiv{justify-content:flex-end;margin-left:12px;}.mxWGoTheme .mxHeaderDiv,.mxWGoTheme .mxOptionDiv{justify-content:flex-start;margin-right:12px;}.mxWGoTheme .mxNavigationDiv .mxGotoInput{box-sizing:border-box;display:block;font-family:Arial,sans-serif;font-size:1em;flex:1;width:2em;min-width:2em;height:2em;text-align:center;margin:0;padding:0;color:#000;border:1px solid #d3d3d3;border-radius:2px;background:transparent;}.mxWGoTheme .mxNavigationDiv .mxGotoInput:focus{border:1px solid #000;}.mxWGoTheme .mxNavigationParentDiv button,.mxWGoTheme .mxSolveDiv button{display:block;box-sizing:border-box;position:relative;font-size:1em;color:#000;background-color:transparent;background-image:none;background:linear-gradient(to top,#ddd,#fff);box-shadow:none;border-top:1px solid #cecece;border-left:1px solid #d3d3d3;border-right:1px solid #d3d3d3;border-bottom:1px solid #dedede;border-radius:2px;padding:0;margin:0;}.mxWGoTheme .mxNavigationParentDiv button{flex:1;}.mxWGoTheme .mxAboutDiv button{margin-left:4px;}.mxWGoTheme .mxHeaderDiv button,.mxWGoTheme .mxOptionDiv button{margin-right:4px;}.mxWGoTheme .mxNavigationDiv button,.mxWGoTheme .mxNavigationDiv input,.mxWGoTheme .mxSolveDiv button{margin:0 2px;}.mxWGoTheme .mxNavigationParentDiv button svg{display:block;width:100%;height:100%;opacity:0;}.mxWGoTheme .mxSolveDiv button svg{display:block;width:100%;height:100%;max-width:3em;min-width:24px;}.mxWGoTheme .mxNavigationDiv{user-select: none;}.mxWGoTheme .mxNavigationParentDiv button span span{display:none;}.mxWGoTheme .mxNavigationParentDiv button span{display:block;}.mxWGoTheme .mxNavigationDiv .mxFirstBtn span,.mxWGoTheme .mxNavigationDiv .mxTenPredBtn span,.mxWGoTheme .mxNavigationDiv .mxPredBtn span{-webkit-transform:scaleX(-1);transform:scaleX(-1);}.mxWGoTheme .mxNavigationDiv .mxPredBtn span,.mxWGoTheme .mxNavigationDiv .mxNextBtn span{background:url(\"data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 1000 1000\' height=\'1000\' width=\'1000\'%3E%3Cpath d=\'M736,523Q750,513 750,497 750,483 736,473L308,207Q284,191 267,201 250,211 250,241L250,755Q250,785 267,795 284,805 308,789Z\'/%3E%3C/svg%3E\");background-size:cover;}.mxWGoTheme .mxNavigationDiv .mxTenPredBtn span,.mxWGoTheme .mxNavigationDiv .mxTenNextBtn span{background:url(\"data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 1000 1000\' height=\'1000\' width=\'1000\'%3E%3Cpath d=\'M 926,521Q940,511 940,497 940,483 926,475L554,227Q532,213 517,221 502,229 502,257L502,739Q502,767 517,775 532,783 554,769ZM472,521Q486,511 486,497 486,483 472,475L112,227Q92,213 76,221 60,229 60,257L60,739Q60,767 76,775 92,783 112,769Z\'/%3E%3C/svg>\");background-size:cover;}.mxWGoTheme .mxNavigationDiv .mxFirstBtn span,.mxWGoTheme .mxNavigationDiv .mxLastBtn span{background:url(\"data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 1000 1000\' height=\'1000\' width=\'1000\'%3E%3Cpath d=\'M 612,521 Q 626,511 626,497 626,485 612,475 L 250,247 Q 228,233 214,242 200,251 200,277 L 200,719 Q 200,745 214,754 228,763 250,749 Z M 726,789 Q 800,789 800,731 L 800,265 Q 800,207 726,207 650,207 650,265 L 650,731 Q 650,789 726,789Z\'/%3E%3C/svg>\");background-size:cover;}.mxWGoTheme .mxOptionDiv .mxOptionBtn span{background:url(\"data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 1000 1000\' height=\'1000\' width=\'1000\'%3E%3Cpath d=\'M 800,550 Q 822,550 836,535 850,520 850,500 850,480 835,465 820,450 800,450 L 200,450 Q 180,450 165,465 150,480 150,500 150,520 164,535 178,550 200,550 L 800,550 Z M 200,650 Q 180,650 165,665 150,680 150,700 150,720 164,735 178,750 200,750 L 800,750 Q 822,750 836,735 850,720 850,700 850,680 835,665 820,650 800,650 L 200,650 Z M 800,350 Q 822,350 836,335 850,320 850,300 850,280 835,265 820,250 800,250 L 200,250 Q 180,250 165,265 150,280 150,300 150,320 164,335 178,350 200,350 L 800,350 Z\'/%3E%3C/svg%3E\");background-size:cover;}.mxWGoTheme .mxHeaderDiv .mxHeaderBtn span{background:url(\"data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 1000 1000\' height=\'1000\' width=\'1000\'%3E%3Cpath d=\'M 687,785 687,856 Q 687,871 676,881 665,891 651,892 L 365,892 Q 350,892 340,881 330,870 329,856 L 329,785 Q 329,770 340,760 351,750 365,749 L 401,749 401,535 365,535 Q 350,535 340,524 330,513 329,499 L 329,428 Q 329,413 340,403 351,393 365,392 L 579,392 Q 594,392 604,403 614,414 615,428 L 615,749 651,749 Q 666,749 676,760 686,771 687,785 Z M 616,142 616,249 Q 616,264 605,274 594,284 580,285 L 437,285 Q 422,285 412,274 402,263 401,249 L 401,142 Q 401,127 412,117 423,107 437,106 L 580,106 Q 595,106 605,117 615,128 616,142 Z\'/%3E%3C/svg%3E\");background-size:cover;}.mxWGoTheme .mxAboutDiv .mxAboutBtn span{background:url(\"data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 1000 1000\' height=\'1000\' width=\'1000\'%3E%3Cpath d=\'M 575,771 575,664 Q 575,656 570,651 565,646 557,646 L 450,646 Q 442,646 437,651 432,656 432,664 L 432,771 Q 432,779 437,784 442,789 450,789 L 557,789 Q 565,789 570,784 575,779 575,771 Z M 718,396 Q 718,347 687,305 656,263 610,240 564,217 515,217 379,217 308,336 300,349 312,359 L 386,415 Q 390,418 397,418 406,418 411,411 441,373 459,360 478,347 507,347 534,347 555,362 576,377 576,395 576,416 565,429 554,442 527,454 492,470 463,502 434,534 434,572 L 434,592 Q 434,600 439,605 444,610 452,610 L 559,610 Q 567,610 572,605 577,600 577,592 577,581 589,564 601,547 619,536 637,526 646,520 655,514 672,500 689,486 697,473 705,460 713,439 721,418 720,394 Z M 932,503 Q 932,620 875,718 818,816 719,874 620,932 504,931 388,930 289,874 190,818 133,718 76,618 76,503 76,388 133,288 190,188 289,132 388,76 504,75 620,74 719,132 818,190 875,288 932,386 932,503 Z\'/%3E%3C/svg%3E\");background-size:cover;}@media screen and (max-width:50em){.mxWGoTheme{--labelSize:0.75;}.mxWGoTheme.mxCommentConfig .mxCommentParentDiv,.mxWGoTheme.mxTreeConfig .mxCommentParentDiv{position:relative;}.mxWGoTheme.mxTreeConfig .mxTreeLabelDiv{margin-top:0;}.mxWGoTheme.mxTreeConfig .mxTreeDiv{margin-top:0.25em;}.mxWGoTheme.mxCommentConfig .mxCommentContentDiv,.mxWGoTheme.mxTreeConfig .mxCommentContentDiv,.mxWGoTheme.mxTreeConfig .mxTreeContentDiv{left:calc(2em * var(--labelSize));height:8em;}.mxWGoTheme.mxCommentConfig .mxCommentLabelDiv,.mxWGoTheme.mxTreeConfig .mxCommentLabelDiv,.mxWGoTheme.mxTreeConfig .mxTreeLabelDiv{position:absolute;transform:rotate(-90deg);transform-origin:top left;font-size:calc(1em * var(--labelSize));width:calc(8em / var(--labelSize));height:2em;line-height:1.25;z-index:1;border:1px solid #ddd;}.mxWGoTheme.mxCommentConfig .mxCommentLabelDiv,.mxWGoTheme.mxTreeConfig .mxCommentLabelDiv{top:calc(8.125em / var(--labelSize) - 2px);}.mxWGoTheme.mxTreeConfig .mxTreeLabelDiv{top:calc(16.375em / var(--labelSize) - 2px);}}";
+mxG.D[mxG.K].style=".mxWGoTheme{--gobanMaxWidth:30em;text-align:left;}.mxWGoTheme div::-moz-focus-inner,.mxWGoTheme button::-moz-focus-inner,.mxWGoTheme input[type=text]::-moz-focus-inner,.mxWGoTheme a::-moz-focus-inner{padding:0;border:0;}.mxWGoTheme div:focus,.mxWGoTheme button:focus,.mxWGoTheme input[type=text]:focus,.mxWGoTheme a:focus{outline:none;}.mxWGoTheme button,.mxWGoTheme input[type=button],.mxWGoTheme textarea{-webkit-appearance:none;-moz-appearance:none;}.mxWGoTheme text{cursor:default;}.mxWGoTheme button{cursor:pointer;}.mxWGoTheme input[type=text][disabled],.mxWGoTheme button[disabled]{cursor:default;}.mxWGoTheme{font-family:sans-serif;}.mxWGoTheme svg{font-family:arial,sans-serif;}.mxWGoTheme button{font-family:sans-serif;}.mxWGoTheme{max-width:var(--gobanMaxWidth);min-width:15em;line-height:1.4em;font-family:Calibri,Tahoma,Arial,sans-serif;margin:0 auto;}.mxWGoTheme.mxCommentConfig,.mxWGoTheme.mxTreeConfig{box-sizing:border-box;display:flex;flex-wrap:wrap;justify-content:center;max-width:calc((var(--gobanMaxWidth) * 2) + 1em);}.mxWGoTheme.mxCommentConfig>div,.mxWGoTheme.mxTreeConfig>div{box-sizing:border-box;margin:0.125em;}.mxWGoTheme.mxCommentConfig>div:first-of-type,.mxWGoTheme.mxTreeConfig>div:first-of-type{flex:1 1 var(--gobanMaxWidth);max-width:var(--gobanMaxWidth);}.mxWGoTheme.mxCommentConfig>div:last-of-type,.mxWGoTheme.mxTreeConfig>div:last-of-type{flex:1 1 var(--gobanMaxWidth);max-width:var(--gobanMaxWidth);}.mxWGoTheme.mxCommentConfig .mxGobanGrandParentDiv,.mxWGoTheme.mxTreeConfig .mxGobanGrandParentDiv,.mxWGoTheme.mxCommentConfig .mxCommentParentDiv,.mxWGoTheme.mxTreeConfig .mxTreeParentDiv{display:flex;flex-direction:column;justify-content:space-between;}.mxWGoTheme.mxCommentConfig .mxGobanParentDiv,.mxWGoTheme.mxTreeConfig .mxGobanParentDiv{flex:1;display:flex;flex-direction:column;}.mxWGoTheme.mxCommentConfig .mxGobanDiv,.mxWGoTheme.mxTreeConfig .mxGobanDiv{margin:auto;width:100%;}.mxWGoTheme.mxCommentConfig .mxCommentDiv,.mxWGoTheme.mxTreeConfig .mxCommentDiv,.mxWGoTheme.mxTreeConfig .mxTreeDiv{flex:auto;height:8em;}.mxWGoTheme.mxCommentConfig .mxCommentDiv,.mxWGoTheme.mxTreeConfig .mxCommentDiv,.mxWGoTheme.mxTreeConfig .mxTreeDiv{position:relative;}.mxWGoTheme.mxCommentConfig .mxCommentContentDiv,.mxWGoTheme.mxTreeConfig .mxCommentContentDiv,.mxWGoTheme .mxTreeContentDiv{position:absolute;}.mxWGoTheme.mxBasicConfig .mxGobanDiv,.mxWGoTheme.mxCommentConfig .mxGobanDiv,.mxWGoTheme.mxGameConfig .mxGobanDiv,.mxWGoTheme.mxTreeConfig .mxGobanDiv{background:#f0f0f0;}.mxWGoTheme .mxInnerGobanDiv{-webkit-tap-highlight-color:rgba(0,0,0,0);user-select:none;margin:0 auto;position:relative;}.mxWGoTheme .mxGobanDiv svg{box-sizing:border-box;display:block;width:100%;height:100%;pointer-events:none;background-image:url(data:image/jpg;base64,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);background-repeat:repeat;}.mxWGoTheme text{stroke-width:0.5px;}.mxWGoTheme text.mxOnBlack{fill:#fff;stroke:#fff;}.mxWGoTheme text.mxOnWhite,.mxWGoTheme text.mxOnEmpty{fill:#000;stroke:#000;}.mxWGoTheme rect.mxPointBackground.mxVariation.mxOnFocus{fill:none;stroke:#000;}.mxWGoTheme .mxTitleH1{font-size:1em;padding:0;margin:0.25em 0;}.mxWGoTheme .mxP:not(:first-child){padding-top:0.5em;}.mxWGoTheme.mxCommentConfig .mxCommentDiv,.mxWGoTheme.mxTreeConfig .mxCommentDiv,.mxWGoTheme.mxTreeConfig .mxTreeDiv{box-sizing:border-box;background:#f5f5f5;border:1px solid #ddd;overflow:auto;}.mxWGoTheme.mxTreeConfig .mxTreeLabelDiv{margin-top:0.25em;}.mxWGoTheme.mxCommentConfig .mxCommentLabelDiv,.mxWGoTheme.mxTreeConfig .mxCommentLabelDiv,.mxWGoTheme.mxTreeConfig .mxTreeLabelDiv{box-sizing:border-box;background:#f0f0f0;border:1px solid #ddd;border-bottom:0;padding:0.25em;font-size:1em;font-weight:bold;}.mxWGoTheme.mxCommentConfig .mxCommentLabelDiv,.mxWGoTheme.mxTreeConfig .mxCommentLabelDiv{background-image:url(\"data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 1000 1000\' height=\'1000\' width=\'1000\'%3E%3Cpath d=\'M811 187H186c-14 0-26.333 5-37 15-10.667 10-16 22-16 36v365c0 14 5.333 26.333 16 37 10.667 10.667 23 16 37 16h625c14 0 26.333-5.333 37-16 10.667-10.667 16-23 16-37V238c0-14-5.333-26-16-36s-23-15-37-15zm0-105c43.333 0 80.333 15.333 111 46s46 67.667 46 111v365c0 43.333-15.333 80.333-46 111s-67.667 46-111 46H395L239 917V761h-53c-43.333 0-80.333-15.333-111-46s-46-67.667-46-111V239c0-43.333 15.333-80.333 46-111s67.667-46 111-46z\'/%3E%3C/svg%3E\");background-size:auto 80%;background-repeat:no-repeat;background-position:99% center;}.mxWGoTheme.mxTreeConfig .mxTreeLabelDiv{background-image:url(\"data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' stroke-width=\'60\' stroke=\'rgb(0,0,0)\' viewBox=\'0 0 1000 1000\' height=\'1000\' width=\'1000\'%3E%3Ccircle cx=\'500\' cy=\'800\' r=\'90\'/%3E%3Ccircle cx=\'800\' cy=\'200\' r=\'90\'/%3E%3Ccircle cx=\'200\' cy=\'600\' r=\'90\'/%3E%3Ccircle cx=\'800\' cy=\'600\' r=\'90\'/%3E%3Ccircle cx=\'500\' cy=\'400\' r=\'90\'/%3E%3Cpath d=\'M200,600L800,200\'/%3E%3Cpath d=\'M200,600L500,800\'/%3E%3Cpath d=\'M500,400L800,600\'/%3E%3C/svg%3E\");background-size:auto 80%;background-repeat:no-repeat;background-position:99% center;}.mxWGoTheme.mxCommentConfig .mxCommentContentDiv,.mxWGoTheme.mxTreeConfig .mxCommentContentDiv,.mxWGoTheme.mxTreeConfig .mxTreeDiv{padding:0.25em;}.mxWGoTheme.mxTreeConfig .mxTreeDiv{user-select:none;}.mxWGoTheme .mxInnerNotSeenDiv:not(:empty){margin:0.5em auto 0 auto;}.mxWGoTheme .mxInnerNotSeenDiv{margin:0 auto;}.mxWGoTheme .mxNotSeenSvg{width:100%;height:100%;display:block;}.mxWGoTheme.mxGameConfig .mxHeaderDiv h1{font-size:1em;font-weight:bold;padding:0;margin:0.25em 0;}.mxWGoTheme.mxProblemConfig .mxCommentDiv{margin:0.5em auto 0 auto;text-align:center;min-height:1.5em;line-height:1.5em;}.mxWGoTheme.mxProblemConfig .mxCommentContentDiv{display:inline-block;text-align:justify;}.mxWGoTheme input[type=text][disabled],.mxWGoTheme button[disabled]{opacity:0.4;}.mxWGoTheme .mxNavigationParentDiv button:not([disabled]):hover,.mxWGoTheme .mxSolveDiv button:not([disabled]):hover,.mxWGoTheme .mxNavigationDiv input[type=text]:not([disabled]):hover{background-color:rgba(255,255,255,0.45);border:1px solid rgba(100,100,100,0.3);box-shadow:0 0 20px 0 rgba(150,150,150,0.5);}.mxWGoTheme .mxCartoucheDiv{box-sizing:border-box;background:#f0f0f0;position:relative;min-height:2.5em;line-height:2.5em;padding:0 calc(0.75em *5.75) 0 2.5em;border:1px solid #dcdcdc;}.mxWGoTheme .mxCartoucheDiv:nth-of-type(1){border-bottom:0;}.mxWGoTheme .mxCartoucheDiv .mxPlayerStoneDiv{box-sizing:border-box;position:absolute;left:0;top:0;bottom:0;width:2.5em;padding:0.125em;}.mxWGoTheme .mxCartoucheDiv .mxPlayerStoneDiv svg{width:100%;height:100%;}.mxWGoTheme .mxCartoucheDiv .mxPlayerDiv{box-sizing:border-box;font-weight:bold;}.mxWGoTheme .mxCartoucheDiv .mxRankDiv,.mxWGoTheme .mxCartoucheDiv .mxPrisonersDiv{position:absolute;top:0.25em;bottom:0.25em;box-sizing:border-box;font-size:0.75em;line-height:1.125em;min-width:2.5em;max-width:2.5em;display:flex;flex-direction:column;justify-content:center;align-items:center;border:1px solid #e7e7e7;background:#f5f5f5;}.mxWGoTheme .mxCartoucheDiv .mxRankDiv{right:3em;}.mxWGoTheme .mxCartoucheDiv .mxPrisonersDiv{right:0.25em;}.mxWGoTheme .mxCartoucheDiv .mxPrisonersStoneSpan{display:none;}.mxWGoTheme.mxCommentConfig .mxCommentDiv:focus,.mxWGoTheme.mxTreeConfig .mxCommentDiv:focus,.mxWGoTheme.mxTreeConfig .mxTreeDiv:focus{background:rgba(0,0,0,0.05);}.mxWGoTheme .mxNavigationParentDiv button:not([disabled]):focus,.mxWGoTheme .mxSolveDiv button:not([disabled]):focus,.mxWGoTheme .mxNavigationDiv input[type=text]:not([disabled]):focus{outline:1px dotted #000;}.mxWGoTheme .mxGBoxDiv{color:#fff;background:rgba(0,0,0,0.75);overflow:auto;}.mxWGoTheme .mxGBoxDiv .mxShowContentDiv{padding:0.25em;}.mxWGoTheme .mxGBoxDiv .mxShowContentDiv h1{font-size:1em;padding:0;margin:0.25em 0;}.mxWGoTheme .mxGBoxDiv .mxOKDiv{text-align:center;}.mxWGoTheme .mxGBoxDiv .mxOKDiv button{color:#fff;background:#000;border:1px solid #fff;;border-radius:0.25em;font-size:1em;margin:0.5em 0.25em;height:2em;line-height:2em;padding:0 1em;}.mxWGoTheme .mxShowOptionDiv{line-height:1.75em;}.mxWGoTheme .mxNumFromTextSpan,.mxWGoTheme .mxNumWithTextSpan{position:relative;left:2em;white-space:nowrap;}.mxWGoTheme .mxNumFromTextSpan:before{content:\"\\a\";white-space:pre-line;}.mxWGoTheme .mxShowOptionDiv input[type=text]{font-size:1em;}.mxWGoTheme input:not(:checked)~.mxNumFromTextSpan,.mxWGoTheme input:not(:checked)~.mxNumWithTextSpan{display:none;}.mxWGoTheme .mxGBoxDiv .mxShowContentDiv a{color:#fff;}.mxWGoTheme .mxGBoxDiv .mxShowContentDiv a:focus,.mxWGoTheme .mxGBoxDiv .mxShowContentDiv a:hover{color:#f00;}.mxWGoTheme .mxGBoxDiv .mxOKDiv button:focus,.mxWGoTheme .mxGBoxDiv .mxOKDiv button:hover{color:#f00;border:1px solid #f00;}.mxWGoTheme:not(.mxLoopConfig) .mxNavigationParentDiv{box-sizing:border-box;display:flex;justify-content:space-between;align-items:center;border:0;margin:4px 0;}.mxWGoTheme .mxSolveDiv{margin:4px 0;}.mxWGoTheme:not(.mxLoopConfig) .mxNavigationDiv,.mxWGoTheme .mxAboutDiv,.mxWGoTheme .mxHeaderDiv,.mxWGoTheme .mxOptionDiv,.mxWGoTheme .mxSolveDiv{box-sizing:border-box;display:flex;justify-content:center;align-items:center;}.mxWGoTheme:not(.mxLoopConfig) .mxNavigationDiv{flex:7;}.mxWGoTheme .mxAboutDiv,.mxWGoTheme .mxHeaderDiv,.mxWGoTheme .mxOptionDiv{flex:1;}.mxWGoTheme .mxAboutDiv{justify-content:flex-end;margin-left:12px;}.mxWGoTheme .mxHeaderDiv,.mxWGoTheme .mxOptionDiv{justify-content:flex-start;margin-right:12px;}.mxWGoTheme .mxNavigationDiv .mxGotoInput{box-sizing:border-box;display:block;font-family:Arial,sans-serif;font-size:1em;flex:1;width:2em;min-width:2em;height:2em;text-align:center;margin:0;padding:0;color:#000;border:1px solid #d3d3d3;border-radius:2px;background:transparent;}.mxWGoTheme .mxNavigationDiv .mxGotoInput:focus{border:1px solid #000;}.mxWGoTheme .mxNavigationParentDiv button,.mxWGoTheme .mxSolveDiv button{display:block;box-sizing:border-box;position:relative;font-size:1em;color:#000;background-color:transparent;background-image:none;background:linear-gradient(to top,#ddd,#fff);box-shadow:none;border-top:1px solid #cecece;border-left:1px solid #d3d3d3;border-right:1px solid #d3d3d3;border-bottom:1px solid #dedede;border-radius:2px;padding:0;margin:0;}.mxWGoTheme .mxNavigationParentDiv button{flex:1;}.mxWGoTheme .mxAboutDiv button{margin-left:4px;}.mxWGoTheme .mxHeaderDiv button,.mxWGoTheme .mxOptionDiv button{margin-right:4px;}.mxWGoTheme .mxNavigationDiv button,.mxWGoTheme .mxNavigationDiv input,.mxWGoTheme .mxSolveDiv button{margin:0 2px;}.mxWGoTheme .mxNavigationParentDiv button svg{display:block;width:100%;height:100%;opacity:0;}.mxWGoTheme .mxSolveDiv button svg{display:block;width:100%;height:100%;max-width:3em;min-width:24px;}.mxWGoTheme .mxNavigationDiv{user-select: none;}.mxWGoTheme .mxNavigationParentDiv button span span{display:none;}.mxWGoTheme .mxNavigationParentDiv button span{display:block;}.mxWGoTheme .mxNavigationDiv .mxFirstBtn span,.mxWGoTheme .mxNavigationDiv .mxTenPredBtn span,.mxWGoTheme .mxNavigationDiv .mxPredBtn span{-webkit-transform:scaleX(-1);transform:scaleX(-1);}.mxWGoTheme .mxNavigationDiv .mxPredBtn span,.mxWGoTheme .mxNavigationDiv .mxNextBtn span{background:url(\"data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 1000 1000\' height=\'1000\' width=\'1000\'%3E%3Cpath d=\'M736,523Q750,513 750,497 750,483 736,473L308,207Q284,191 267,201 250,211 250,241L250,755Q250,785 267,795 284,805 308,789Z\'/%3E%3C/svg%3E\");background-size:cover;}.mxWGoTheme .mxNavigationDiv .mxTenPredBtn span,.mxWGoTheme .mxNavigationDiv .mxTenNextBtn span{background:url(\"data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 1000 1000\' height=\'1000\' width=\'1000\'%3E%3Cpath d=\'M 926,521Q940,511 940,497 940,483 926,475L554,227Q532,213 517,221 502,229 502,257L502,739Q502,767 517,775 532,783 554,769ZM472,521Q486,511 486,497 486,483 472,475L112,227Q92,213 76,221 60,229 60,257L60,739Q60,767 76,775 92,783 112,769Z\'/%3E%3C/svg>\");background-size:cover;}.mxWGoTheme .mxNavigationDiv .mxFirstBtn span,.mxWGoTheme .mxNavigationDiv .mxLastBtn span{background:url(\"data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 1000 1000\' height=\'1000\' width=\'1000\'%3E%3Cpath d=\'M 612,521 Q 626,511 626,497 626,485 612,475 L 250,247 Q 228,233 214,242 200,251 200,277 L 200,719 Q 200,745 214,754 228,763 250,749 Z M 726,789 Q 800,789 800,731 L 800,265 Q 800,207 726,207 650,207 650,265 L 650,731 Q 650,789 726,789Z\'/%3E%3C/svg>\");background-size:cover;}.mxWGoTheme .mxOptionDiv .mxOptionBtn span{background:url(\"data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 1000 1000\' height=\'1000\' width=\'1000\'%3E%3Cpath d=\'M 800,550 Q 822,550 836,535 850,520 850,500 850,480 835,465 820,450 800,450 L 200,450 Q 180,450 165,465 150,480 150,500 150,520 164,535 178,550 200,550 L 800,550 Z M 200,650 Q 180,650 165,665 150,680 150,700 150,720 164,735 178,750 200,750 L 800,750 Q 822,750 836,735 850,720 850,700 850,680 835,665 820,650 800,650 L 200,650 Z M 800,350 Q 822,350 836,335 850,320 850,300 850,280 835,265 820,250 800,250 L 200,250 Q 180,250 165,265 150,280 150,300 150,320 164,335 178,350 200,350 L 800,350 Z\'/%3E%3C/svg%3E\");background-size:cover;}.mxWGoTheme .mxHeaderDiv .mxHeaderBtn span{background:url(\"data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 1000 1000\' height=\'1000\' width=\'1000\'%3E%3Cpath d=\'M 687,785 687,856 Q 687,871 676,881 665,891 651,892 L 365,892 Q 350,892 340,881 330,870 329,856 L 329,785 Q 329,770 340,760 351,750 365,749 L 401,749 401,535 365,535 Q 350,535 340,524 330,513 329,499 L 329,428 Q 329,413 340,403 351,393 365,392 L 579,392 Q 594,392 604,403 614,414 615,428 L 615,749 651,749 Q 666,749 676,760 686,771 687,785 Z M 616,142 616,249 Q 616,264 605,274 594,284 580,285 L 437,285 Q 422,285 412,274 402,263 401,249 L 401,142 Q 401,127 412,117 423,107 437,106 L 580,106 Q 595,106 605,117 615,128 616,142 Z\'/%3E%3C/svg%3E\");background-size:cover;}.mxWGoTheme .mxAboutDiv .mxAboutBtn span{background:url(\"data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 1000 1000\' height=\'1000\' width=\'1000\'%3E%3Cpath d=\'M 575,771 575,664 Q 575,656 570,651 565,646 557,646 L 450,646 Q 442,646 437,651 432,656 432,664 L 432,771 Q 432,779 437,784 442,789 450,789 L 557,789 Q 565,789 570,784 575,779 575,771 Z M 718,396 Q 718,347 687,305 656,263 610,240 564,217 515,217 379,217 308,336 300,349 312,359 L 386,415 Q 390,418 397,418 406,418 411,411 441,373 459,360 478,347 507,347 534,347 555,362 576,377 576,395 576,416 565,429 554,442 527,454 492,470 463,502 434,534 434,572 L 434,592 Q 434,600 439,605 444,610 452,610 L 559,610 Q 567,610 572,605 577,600 577,592 577,581 589,564 601,547 619,536 637,526 646,520 655,514 672,500 689,486 697,473 705,460 713,439 721,418 720,394 Z M 932,503 Q 932,620 875,718 818,816 719,874 620,932 504,931 388,930 289,874 190,818 133,718 76,618 76,503 76,388 133,288 190,188 289,132 388,76 504,75 620,74 719,132 818,190 875,288 932,386 932,503 Z\'/%3E%3C/svg%3E\");background-size:cover;}@media screen and (max-width:50em){.mxWGoTheme{--labelSize:0.75;}.mxWGoTheme.mxCommentConfig .mxCommentParentDiv,.mxWGoTheme.mxTreeConfig .mxCommentParentDiv{position:relative;}.mxWGoTheme.mxTreeConfig .mxTreeLabelDiv{margin-top:0;}.mxWGoTheme.mxTreeConfig .mxTreeDiv{margin-top:0.25em;}.mxWGoTheme.mxCommentConfig .mxCommentContentDiv,.mxWGoTheme.mxTreeConfig .mxCommentContentDiv{left:calc(2em * var(--labelSize));}.mxWGoTheme.mxCommentConfig .mxCommentDiv,.mxWGoTheme.mxTreeConfig .mxCommentDiv,.mxWGoTheme.mxTreeConfig .mxTreeDiv{max-height:8em;}.mxWGoTheme.mxCommentConfig .mxCommentLabelDiv,.mxWGoTheme.mxTreeConfig .mxCommentLabelDiv,.mxWGoTheme.mxTreeConfig .mxTreeLabelDiv{position:absolute;transform:rotate(-90deg);transform-origin:top left;font-size:calc(1em * var(--labelSize));width:calc(8em / var(--labelSize));height:2em;line-height:1.25;z-index:1;border:1px solid #ddd;}.mxWGoTheme.mxCommentConfig .mxCommentLabelDiv,.mxWGoTheme.mxTreeConfig .mxCommentLabelDiv{top:calc(8.125em / var(--labelSize) - 2px);}.mxWGoTheme.mxTreeConfig .mxTreeLabelDiv{top:calc(16.375em / var(--labelSize) - 2px);}}";
 // general
 mxG.D[mxG.K].a.in3dOn=1; // (0,1) default 1
 mxG.D[mxG.K].a.htmlParenthesis=1; // (0,1) default 0

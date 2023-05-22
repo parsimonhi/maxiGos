@@ -19,12 +19,12 @@
 	--solveBtnColor:#000;
 	
 	--gBoxBk:#fff;
-	--commentContentBk:transparent;
-	--commentContentBorder:rgba(0,0,0,0.3);
-	--commentContentColor:#000;
-	--treeContentBk:transparent;
-	--treeContentBorder:rgba(0,0,0,0.3);
-	--treeContentColor:#000;
+	--commentBk:transparent;
+	--commentBorder:rgba(0,0,0,0.3);
+	--commentColor:#000;
+	--treeBk:transparent;
+	--treeBorder:rgba(0,0,0,0.3);
+	--treeColor:#000;
 	--editToolBarBk:transparent;
 	--editToolBarBorder:transparent;
 	--editToolBarColor:#000;
@@ -51,12 +51,12 @@
 	
 	--focusBk:rgba(0,0,0,0.1);
 	
-	--focusCommentContentBk:transparent;
-	--focusCommentContentBorder:#000;
-	--focusCommentContentColor:#000;
-	--focusTreeContentBk:transparent;
-	--focusTreeContentBorder:#000;
-	--focusTreeContentColor:#000;
+	--focusCommentBk:transparent;
+	--focusCommentBorder:#000;
+	--focusCommentColor:#000;
+	--focusTreeBk:transparent;
+	--focusTreeBorder:#000;
+	--focusTreeColor:#000;
 	--focusBtnBk:#fff;
 	--focusBtnBorder:#000;
 	--focusBtnColor:#000;
@@ -167,7 +167,7 @@
 .mxMinimalistTheme.mxTreeConfig .mxCommentDiv,
 .mxMinimalistTheme .mxTreeDiv
 {
-	height:7em;
+	height:8em;
 	min-height:2.25em;
 	padding:0.25em;
 	resize:vertical;
@@ -177,10 +177,6 @@
 .mxMinimalistTheme .mxTreeDiv
 {
 	flex:auto;
-}
-.mxMinimalistTheme.mxTreeConfig .mxCommentDiv
-{
-	flex:initial;
 }
 .mxMinimalistTheme .mxEditCommentToolDiv,
 .mxMinimalistTheme .mxTreeDiv
@@ -297,15 +293,15 @@
 .mxMinimalistTheme.mxCommentConfig .mxCommentDiv,
 .mxMinimalistTheme.mxTreeConfig .mxCommentDiv
 {
-	background:var(--commentContentBk);
-	border:1px solid var(--commentContentBorder);
-	color:var(--commentContentColor);
+	background:var(--commentBk);
+	border:1px solid var(--commentBorder);
+	color:var(--commentColor);
 }
 .mxMinimalistTheme .mxTreeDiv
 {
-	background:var(--treeContentBk);
-	border:1px solid var(--treeContentBorder);
-	color:var(--treeContentColor);
+	background:var(--treeBk);
+	border:1px solid var(--treeBorder);
+	color:var(--treeColor);
 }
 .mxMinimalistTheme .mxTreeDiv
 {
@@ -483,9 +479,9 @@
 }
 .mxMinimalistTheme.mxEditConfig .mxEditCommentToolDiv textarea
 {
-	background:var(--commentContentBk);
-	border:1px solid var(--commentContentBorder);
-	color:var(--commentContentColor);
+	background:var(--commentBk);
+	border:1px solid var(--commentBorder);
+	color:var(--commentColor);
 }
 /* game, kifu, replay, score */
 .mxMinimalistTheme.mxGameConfig,
@@ -828,16 +824,15 @@
 .mxMinimalistTheme.mxEditConfig .mxEditCommentToolDiv textarea:focus,
 .mxMinimalistTheme.mxTreeConfig .mxCommentDiv:focus
 {
-	background:var(--focusTreeContentBk);
-	border:1px solid var(--focusTreeContentBorder);
-	color:var(--focusTreeContentColor);
+	background:var(--focusCommentBk);
+	border:1px solid var(--focusCommentBorder);
+	color:var(--focusCommentColor);
 }
-.mxMinimalistTheme.mxEditConfig .mxTreeDiv:focus,
-.mxMinimalistTheme.mxTreeConfig .mxTreeDiv:focus
+.mxMinimalistTheme .mxTreeDiv:focus
 {
-	background:var(--focusTreeContentBk);
-	border:1px solid var(--focusTreeContentBorder);
-	color:var(--focusTreeContentColor);
+	background:var(--focusTreeBk);
+	border:1px solid var(--focusTreeBorder);
+	color:var(--focusTreeColor);
 }
 .mxMinimalistTheme .mxSgfParentDiv button:focus:not(.mxSelectedBtn),
 .mxMinimalistTheme .mxMenuDiv button:focus,

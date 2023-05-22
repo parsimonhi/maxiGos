@@ -95,23 +95,21 @@
 .mxWGoTheme.mxTreeConfig .mxCommentDiv,
 .mxWGoTheme.mxTreeConfig .mxTreeDiv
 {
-	flex:1;
-	min-height:8em;
+	flex:auto;
+	height:8em;
 }
 /* set position:absolute to .mxXxxContentDiv to avoid overflow */
 /* when available space is narrower than --gobanMaxWidth */
 /* and when .mxXxxContentDiv is wider than available space */
 .mxWGoTheme.mxCommentConfig .mxCommentDiv,
-.mxWGoTheme.mxEditConfig .mxTreeDiv,
 .mxWGoTheme.mxTreeConfig .mxCommentDiv,
 .mxWGoTheme.mxTreeConfig .mxTreeDiv
 {
 	position:relative;
 }
 .mxWGoTheme.mxCommentConfig .mxCommentContentDiv,
-.mxWGoTheme.mxEditConfig .mxTreeContentDiv,
 .mxWGoTheme.mxTreeConfig .mxCommentContentDiv,
-.mxWGoTheme.mxTreeConfig .mxTreeContentDiv
+.mxWGoTheme .mxTreeContentDiv
 {
 	position:absolute;
 }
@@ -214,13 +212,8 @@
 	background-position:99% center;
 }
 .mxWGoTheme.mxCommentConfig .mxCommentContentDiv,
-.mxWGoTheme.mxTreeConfig .mxCommentContentDiv
-{
-	padding:0.25em;
-}
-.mxWGoTheme.mxCommentConfig .mxCommentContentDiv,
 .mxWGoTheme.mxTreeConfig .mxCommentContentDiv,
-.mxWGoTheme.mxTreeConfig .mxTreeContentDiv
+.mxWGoTheme.mxTreeConfig .mxTreeDiv
 {
 	padding:0.25em;
 }
@@ -614,11 +607,15 @@
 		margin-top:0.25em;
 	}
 	.mxWGoTheme.mxCommentConfig .mxCommentContentDiv,
-	.mxWGoTheme.mxTreeConfig .mxCommentContentDiv,
-	.mxWGoTheme.mxTreeConfig .mxTreeContentDiv
+	.mxWGoTheme.mxTreeConfig .mxCommentContentDiv
 	{
 		left:calc(2em * var(--labelSize));
-		height:8em;
+	}
+	.mxWGoTheme.mxCommentConfig .mxCommentDiv,
+	.mxWGoTheme.mxTreeConfig .mxCommentDiv,
+	.mxWGoTheme.mxTreeConfig .mxTreeDiv
+	{
+		max-height:8em;
 	}
 	.mxWGoTheme.mxCommentConfig .mxCommentLabelDiv,
 	.mxWGoTheme.mxTreeConfig .mxCommentLabelDiv,

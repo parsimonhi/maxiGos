@@ -44,11 +44,11 @@ code
 </style>
 </head>
 <body>
-<div class="menu">
+<nav class="menu">
 <?php if (file_exists("../../../index.php")) print "<a href=\"../../../index.php?lang=en\">Home</a>";?>
 <?php print "<a href=\"documentation.php\">Documentation</a>";?>
 <a href="<?php print str_replace("/_fr/","/_en/",$_SERVER["SCRIPT_NAME"]);?>"><img class="flag" src="../../_img/flag/en.svg"> English</a>
-<a href="<?php print str_replace("/_en/","/_fr/",$_SERVER["SCRIPT_NAME"]);?>"><img class="flag" src="../../_img/flag/fr.svg"> Fran&ccedil;ais</a></div>
+<a href="<?php print str_replace("/_en/","/_fr/",$_SERVER["SCRIPT_NAME"]);?>"><img class="flag" src="../../_img/flag/fr.svg"> Fran&ccedil;ais</a></nav>
 <h1>MaxiGos v<?php print $v.".".$r;?> download page</h1>
 <p><em>Copyright 1998-<?php print date("Y");?> - FM&SH</em></p>
 <p>
@@ -127,12 +127,26 @@ chapter of the documentation for more details.</p>
 <?php printOneThemeDownloadLines("wgo");?>
 
 <h3>Internationalization scripts</h3>
+<ul>
 <?php printOneInternationalizationScriptLine('ja');?>
 <?php printOneInternationalizationScriptLine('zh-hans');?>
 <?php printOneInternationalizationScriptLine('zh-hant');?>
+</ul>
 
 <h2>Warning for those who used previous versions of maxiGos</h2>
 <p>Many changes were done from v6 to v7. Please check the documentation.</p>
+<h2>What is new in the 7.05 version?</h2>
+<ul>
+<li>The goban grid is now drawn with only two svg path
+(instead of one path per line and one circle per star point before,
+i.e. 38 paths and 9 circles for a 19x19 goban).
+This greatly reduces the number of svg tags.</li>
+<li>Removes the special processing that was done for Android browsers
+when selecting a part of the goban in the Edit component.</li>
+<li>Replaces "&lt;" et "&gt;" with their html equivalents
+when they appear in the content of an svg &lt;text&gt; tag.</li>
+<li>Various minor changes.</li>
+</ul>
 <h2>What is new in the 7.04 version?</h2>
 <ul>
 <li>Fix a bug when displaying the word "with" in the "Option" component.</li>
@@ -178,9 +192,9 @@ to display in full with firefox.</li>
 <li>Various other optimizations and corrections.</li>
 </ul>
 
-<div class="menu"><?php if (file_exists("../../index.php")) print "<a href=\"../../index.php?lang=en\">Home</a>";?><!--
+<nav class="menu"><?php if (file_exists("../../index.php")) print "<a href=\"../../index.php?lang=en\">Home</a>";?><!--
 --><a href="documentation.php">Documentation</a><!--
 --><a href="<?php print str_replace("/fr/","/en/",$_SERVER["SCRIPT_NAME"]);?>"><img class="flag" src="../../_img/flag/en.svg"> English</a><!--
---><a href="<?php print str_replace("/en/","/fr/",$_SERVER["SCRIPT_NAME"]);?>"><img class="flag" src="../../_img/flag/fr.svg"> Fran&ccedil;ais</a></div>
+--><a href="<?php print str_replace("/en/","/fr/",$_SERVER["SCRIPT_NAME"]);?>"><img class="flag" src="../../_img/flag/fr.svg"> Fran&ccedil;ais</a></nav>
 </body>
 </html>

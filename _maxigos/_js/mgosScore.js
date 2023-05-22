@@ -455,7 +455,6 @@ mxG.G.prototype.computeScoreMarks_estimate=function(v)
 		{
 			if(!v||v[this.xy(i,j)])
 			{
-				//console.log(i+" "+j+" "+this.scoreBan.initial[i][j]);
 				if(this.scoreBan.initial[i][j]=="E")
 					this.scoreBan.computed[i][j]=this.possibleOwner(i,j);
 				else
@@ -485,7 +484,6 @@ mxG.G.prototype.computeScoreMarks_estimate=function(v)
 				if(this.scoreBan.initial[i][j]=="E")
 				{
 					let z=this.checkNeighbour(i,j);
-					// console.log(i+" "+j+" "+z);
 					if(z==1) this.scoreBan.computed[i][j]="B";
 					else if(z==2) this.scoreBan.computed[i][j]="W";
 				}

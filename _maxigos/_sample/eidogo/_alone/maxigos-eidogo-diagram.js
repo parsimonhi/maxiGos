@@ -4,7 +4,7 @@
 if(typeof mxG=='undefined') mxG={};
 if(!mxG.V)
 {
-mxG.V="7.04";
+mxG.V="7.05";
 mxG.Y="2023";
 mxG.C="FM&SH";
 mxG.D=[];
@@ -65,7 +65,6 @@ mxG.shuffle=function(a)
 	}
 	return a;
 };
-mxG.isAndroid=(navigator.userAgent.toLowerCase().indexOf("android")>-1);
 mxG.canOpen=function()
 {var r;return !(typeof FileReader=='undefined')&&(r=new FileReader())&&(r.readAsText);};
 mxG.getLang=function(t)
@@ -473,10 +472,8 @@ mxG.S=function(p)
 };
 mxG.S.prototype.star=function(x,y)
 {
-	var DX=this.DX,DY=this.DY;
-	var Ax=4,Bx=DX+1-Ax,Cx=((DX+1)>>1);
-	var Ay=4,By=DY+1-Ay,Cy=((DY+1)>>1);
-	var xok=0,yok=0;
+	let DX=this.DX,DY=this.DY,xok=0,yok=0,
+		Ax=4,Bx=DX+1-Ax,Cx=((DX+1)>>1),Ay=4,By=DY+1-Ay,Cy=((DY+1)>>1);
 	if((DX>11)&&((x==Ax)||(x==Bx))) xok=1;
 	if((DX&1)&&((DX>15)||(x==y))&&(x==Cx)) xok=1;
 	if((DY>11)&&((y==Ay)||(y==By))) yok=1;
@@ -517,7 +514,7 @@ mxG.S.prototype.j2y=function(j)
 };
 mxG.S.prototype.makeText=function(txt,i,j,o)
 {
-	var s,x,y,dx,dy,c,cls,cls2="",wbk,hbk,w,h,dw2,dh2,dz,sw,sx;
+	let s,x,y,dx,dy,c,cls,cls2="",wbk,hbk,w,h,dw2,dh2,dz,sw,sx;
 	cls=o.cls;
 	c=o.c;
 	sw=o.sw;
@@ -568,15 +565,15 @@ mxG.S.prototype.makeText=function(txt,i,j,o)
 	}
 	// font-family, font-size and text-anchor are set in svg tag
 	// bug, cannot use dominant-baseline:central everywhere
-	// then just add 5 to y to center text verticaly
+	// then just add 5 to y to center text vertically
 	s+=" x=\""+x+"\" y=\""+(y+5)+"\">";
-	s+=txt;
+	s+=txt.replace(/</g,"&lt;").replace(/>/g,"&gt;");
 	s+="</text>";
 	return s;
 };
 mxG.S.prototype.make2dStone=function(c,x,y,r,o)
 {
-	var s;
+	let s;
 	s="<circle class=\"mx"+c+"\"";
 	if(o.opacity<1) s+="fill-opacity=\""+o.opacity+"\"";
 	if(!o.ignoreFillAndStroke) // alone stones, animated stones ...
@@ -591,7 +588,7 @@ mxG.S.prototype.make2dStone=function(c,x,y,r,o)
 };
 mxG.S.prototype.makeStoneShadow=function(c,x,y,r,o)
 {
-	var s="",e=this.stoneShadowWidth;
+	let s="",e=this.stoneShadowWidth;
 	s+="<circle class=\"mx"+c+"Shadow\"";
 	// opacity better than rgba() for exporting
 	if(!o.ignoreFillAndStroke) s+=" fill=\"#000\" opacity=\"0.2\"";
@@ -600,7 +597,7 @@ mxG.S.prototype.makeStoneShadow=function(c,x,y,r,o)
 };
 mxG.S.prototype.make3dStone1=function(c,x,y,r,o)
 {
-	var s="",e=this.stoneShadowWidth;
+	let s="",e=this.stoneShadowWidth;
 	if(o.stoneShadowOn) s+=this.makeStoneShadow(c,x,y,r,o);
 	s+="<circle class=\"mx"+c+"\"";
 	if(o.opacity<1) s+="fill-opacity=\""+o.opacity+"\"";
@@ -611,7 +608,7 @@ mxG.S.prototype.make3dStone1=function(c,x,y,r,o)
 mxG.S.prototype.make3dStone2=function(c,x,y,r,o)
 {
 	// do not ignore fill and stroke here
-	var s="",a,rg;
+	let s="",a,rg;
 	if(o.stoneShadowOn) s+=this.makeStoneShadow(c,x,y,r,o);
 	s+="<circle class=\"mx"+c+"\"";
 	if(o.opacity<1) s+="fill-opacity=\""+o.opacity+"\"";
@@ -637,7 +634,7 @@ mxG.S.prototype.makeStone=function(c,x,y,r,o)
 mxG.S.prototype.makeTextOnAloneStone=function(txt,x,y,d,c,o)
 {
 	// assume txt is a number
-	var s,x,y;
+	let s;
 	txt+="";
 	s="<text";
 	s+=" text-anchor=\"middle\"";
@@ -664,7 +661,7 @@ mxG.S.prototype.makeTextOnAloneStone=function(txt,x,y,d,c,o)
 	}
 	// font-family, font-size and text-anchor are set in svg tag
 	// bug, cannot use dominant-baseline:central everywhere
-	// then just add 5 to y to center text verticaly
+	// then just add 5 to y to center text vertically
 	s+=" x=\""+x+"\" y=\""+(y+5)+"\">";
 	s+=txt;
 	s+="</text>";
@@ -672,7 +669,7 @@ mxG.S.prototype.makeTextOnAloneStone=function(txt,x,y,d,c,o)
 };
 mxG.S.prototype.makeTextAfterAloneStone=function(txt,d,c)
 {
-	var s,x,y;
+	let s,x,y;
 	txt+="";
 	x=d+d/8;
 	y=d/2;
@@ -681,7 +678,7 @@ mxG.S.prototype.makeTextAfterAloneStone=function(txt,d,c)
 	if(this.sw4text) s+=" stroke=\""+c+"\" stroke-width=\""+this.sw4text+"\"";
 	// font-family and font-size are set in svg tag
 	// bug, cannot use dominant-baseline:central everywhere
-	// then just add 5 to y to center text verticaly
+	// then just add 5 to y to center text vertically
 	s+=" x=\""+x+"\" y=\""+(y+5)+"\">";
 	s+=txt;
 	s+="</text>";
@@ -689,7 +686,7 @@ mxG.S.prototype.makeTextAfterAloneStone=function(txt,d,c)
 };
 mxG.S.prototype.makeAloneStone=function(nat,n,o)
 {
-	var s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c,t;
+	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c,t;
 	z=(o.in3dOn&&o.stoneShadowOn)?this.stoneShadowWidth:0;
 	s="<svg";
 	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
@@ -713,7 +710,7 @@ mxG.S.prototype.makeAloneStone=function(nat,n,o)
 };
 mxG.S.prototype.makeAloneStoneAndText=function(nat,n,v,o)
 {
-	var s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c,t;
+	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c,t;
 	z=(o.in3dOn&&o.stoneShadowOn)?this.stoneShadowWidth:0;
 	s="<svg";
 	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
@@ -744,7 +741,7 @@ mxG.S.prototype.makeTextSomewhere=function(txt,x,y,c,centered)
 {
 	// x: center of the text if centered, beginning of the text otherwise
 	// y: center of the text
-	var s;
+	let s;
 	txt+="";
 	s="<text class=\"mxTextSomewhere\"";
 	s+=" fill=\""+c+"\"";
@@ -752,7 +749,7 @@ mxG.S.prototype.makeTextSomewhere=function(txt,x,y,c,centered)
 	if(centered) s+=" text-anchor=\"middle\"";
 	// font-family and font-size are set in svg tag
 	// bug, cannot use dominant-baseline:central everywhere
-	// then just add 5 to y to center text verticaly
+	// then just add 5 to y to center text vertically
 	s+=" x=\""+x+"\" y=\""+(y+5)+"\">";
 	s+=txt;
 	s+="</text>";
@@ -760,8 +757,8 @@ mxG.S.prototype.makeTextSomewhere=function(txt,x,y,c,centered)
 };
 mxG.S.prototype.makeNotSeen=function(a,o)
 {
-	var k,km,s="",nw,h4ns,title="",i,j,c,x,y,xo;
-	var d,dd,ddd,z;
+	let k,km,s="",nw,h4ns,title="",i,j,c,x,y,xo;
+	let d,dd,ddd,z;
 	d=this.d;
 	dd=this.d+2;
 	z=(o.in3dOn&&o.stoneShadowOn)?this.stoneShadowWidth:0;
@@ -829,7 +826,7 @@ mxG.S.prototype.makeNotSeen=function(a,o)
 };
 mxG.S.prototype.makeSelectTool=function()
 {
-	var s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c="#000";
+	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c="#000";
 	z=d*3/4;
 	s="<svg";
 	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
@@ -845,7 +842,7 @@ mxG.S.prototype.makeSelectTool=function()
 };
 mxG.S.prototype.makeViewTool=function()
 {
-	var s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c="#000";
+	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c="#000";
 	z=d*3/4;
 	s="<svg";
 	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
@@ -911,8 +908,7 @@ mxG.S.prototype.makeAloneBiStone=function(nat,o)
 };
 mxG.S.prototype.makeMarkOnLast=function(c,x,y,cls)
 {
-	var s,z;
-	z=this.d/6;
+	let s,z=4; // z=this.d/6
 	s="<rect class=\""+cls+"\"";
 	s+=" fill=\""+c+"\"";
 	s+=" x=\""+(x-z)+"\" y=\""+(y-z)+"\"";
@@ -921,7 +917,7 @@ mxG.S.prototype.makeMarkOnLast=function(c,x,y,cls)
 };
 mxG.S.prototype.makeMark=function(c,x,y,cls)
 {
-	var s,x1,y1,x2,y2,z=this.d*0.28;
+	let s,x1,y1,x2,y2,z=6.5; // z=this.d*0.28
 	x1=x-z;
 	y1=y-z;
 	x2=x+z;
@@ -933,7 +929,7 @@ mxG.S.prototype.makeMark=function(c,x,y,cls)
 };
 mxG.S.prototype.makeCircle=function(c,x,y,cls)
 {
-	var s,z=this.d*0.27;
+	let s,z=this.d*0.27;
 	s="<circle class=\""+cls+"\"";
 	s+=" stroke-width=\""+this.sw4mark+"\" stroke=\""+c+"\" fill=\"none\"";
 	s+=" cx=\""+x+"\" cy=\""+y+"\" r=\""+z+"\"/>";
@@ -941,7 +937,7 @@ mxG.S.prototype.makeCircle=function(c,x,y,cls)
 };
 mxG.S.prototype.makeTriangle=function(c,x,y,cls)
 {
-	var s,x1,y1,x2,y2,x3,y3,z=this.d*0.32;
+	let s,x1,y1,x2,y2,x3,y3,z=this.d*0.32;
 	x1=x;
 	y1=y-z;
 	x2=x-z;
@@ -955,7 +951,7 @@ mxG.S.prototype.makeTriangle=function(c,x,y,cls)
 };
 mxG.S.prototype.makeSquare=function(c,x,y,cls)
 {
-	var s,z=this.d*0.27;
+	let s,z=this.d*0.27;
 	s="<rect class=\""+cls+"\"";
 	s+=" stroke-width=\""+this.sw4mark+"\" stroke=\""+c+"\" fill=\"none\"";
 	s+=" x=\""+(x-z)+"\" y=\""+(y-z)+"\"";
@@ -964,7 +960,7 @@ mxG.S.prototype.makeSquare=function(c,x,y,cls)
 };
 mxG.S.prototype.makeAloneMark=function(m)
 {
-	var s,d=this.d,dd=d+2,x=dd/2,y=dd/2,c="#000",cls="mxTool";
+	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,c="#000",cls="mxTool";
 	s="<svg";
 	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
 	s+=" viewBox=\"0 0 "+dd+" "+dd+"\"";
@@ -984,7 +980,7 @@ mxG.S.prototype.makeAloneToolText=function(txt)
 {
 	// for edit tool only
 	// assume text width is smaller than dd
-	var s,d=this.d,dd=d+2,x=dd/2,y=dd/2,c="#000";
+	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,c="#000";
 	s="<svg";
 	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
 	s+=" viewBox=\"0 0 "+dd+" "+dd+"\"";
@@ -1006,14 +1002,14 @@ mxG.S.prototype.makeAloneToolText=function(txt)
 };
 mxG.S.prototype.makeTerritoryMark=function(a,x,y,cls)
 {
-	var c=(a=="_TB_")?"Black":"White",o;
+	let c=(a=="_TB_")?"Black":"White";
 	if(this.p.territoryMark=="MA") return this.makeMark(c,x,y,cls);
 	o={opacity:1,in3dOn:this.in3dOn,stoneShadowOn:this.stoneShadowOn};
-	return this.makeStone(c,x,y,this.d/4.5,o);
+	return this.makeStone(c,x,y,5,o); // d=this.d/4.5
 };
 mxG.S.prototype.makeFocusMark=function(x,y)
 {
-	var s,z=this.d/2;
+	let s,z=this.d/2;
 	s+="<rect class=\"mxFocusMark\" stroke=\"#000\" fill=\"none\"";
 	s+=" x=\""+(x-z)+"\" y=\""+(y-z)+"\"";
 	s+=" width=\""+z*2+"\" height=\""+z*2+"\"/>";
@@ -1021,7 +1017,7 @@ mxG.S.prototype.makeFocusMark=function(x,y)
 };
 mxG.S.prototype.makeStoneNumberOnGrid=function(i,j,nat,a)
 {
-	var s="",c,cls,x,y;
+	let s="",c,cls,x,y;
 	cls="mxOn"+((nat=="B")?"Black":"White");
 	cls+=" mx"+i+"_"+j;
 	cls+=" mxNumber";
@@ -1039,7 +1035,7 @@ mxG.S.prototype.makeStoneNumberOnGrid=function(i,j,nat,a)
 };
 mxG.S.prototype.makeMarkOrLabel=function(i,j,nat,a)
 {
-	var s="",c,cls,x,y;
+	let s="",c,cls,x,y;
 	cls="mxOn"+((nat=="B")?"Black":(nat=="W")?"White":"Empty");
 	cls+=" mx"+i+"_"+j;
 	c=(nat=="B")?"#fff":"#000";
@@ -1076,21 +1072,21 @@ mxG.S.prototype.makeMarkOrLabel=function(i,j,nat,a)
 };
 mxG.S.prototype.k2katakana=function(ko)
 {
-	var k=this.DX-ko,s;
+	let k=this.DX-ko,s;
 	s="イロハニホヘトチリヌルヲワカヨタレソツ";
 	s+="ネナラムウヰノオクヤマケフコエテアサキユメミシヱヒモセス";
 	return (k<s.length)?s.charAt(k):"";
 };
 mxG.S.prototype.k2kanji=function(k)
 {
-	var s="一二三四五六七八九十";
+	let s="一二三四五六七八九十";
 	if(k<11) return s.charAt(k-1);
 	if(k<20) return "十"+s.charAt(k-11);
 	return "";
 };
 mxG.S.prototype.k2okanji=function(s)
 {
-	var k,ko,a,an,b,bn,c,cn;
+	let k,ko,a,an,b,bn,c,cn;
 	s+="";
 	k=parseInt(s);
 	if(!k) return s;
@@ -1122,7 +1118,7 @@ mxG.S.prototype.k2c=function(k)
 {
 	if(this.oldJapaneseIndicesOn) return this.k2katakana(k);
 	if(this.japaneseIndicesOn) return k+"";
-	var r=((k-1)%25)+1;
+	let r=((k-1)%25)+1;
 	return String.fromCharCode(r+((r>8)?65:64))+((k>25)?(k-r)/25:"");
 };
 mxG.S.prototype.getIndices=function(x,y)
@@ -1135,7 +1131,7 @@ mxG.S.prototype.getIndices=function(x,y)
 };
 mxG.S.prototype.makeIndices=function()
 {
-	var s,i,j,cls1,cls2,m;
+	let s,i,j,cls1,cls2,m;
 	cls1="mxIndice mxHorizontal";
 	if(this.japaneseIndicesOn||this.oldJapaneseIndicesOn) cls2="mxIndice mxVertical";
 	else cls2=cls1;
@@ -1192,14 +1188,13 @@ mxG.S.prototype.gridUnder=function(i,j,nat,str)
 };
 mxG.S.prototype.makeGrid=function(vNat,vStr)
 {
-	var s="",m,i,j,k,x,y,a,ds;
-	s+="<g class=\"mxGobanLines\" fill=\"none\">";
+	let s="",m,i,j,k,x,y,a,rs,gi;
+	s+="<path class=\"mxGobanLines\" fill=\"none\" d=\"";
 	for(i=this.xl;i<=this.xr;i++)
 	{
 		x=this.i2x(i);
-		y=((this.yt==1)?this.dh/2:0)+this.gbsyt;
-		s+="<path class=\"mxGobanLine\"";
-		s+=" d=\"M"+x+" "+y;
+		this.yGridMin=y=((this.yt==1)?this.dh/2:0)+this.gbsyt;
+		s+="M"+x+" "+y;
 		if(this.eraseGridUnder)
 		{
 			m="M";
@@ -1230,17 +1225,15 @@ mxG.S.prototype.makeGrid=function(vNat,vStr)
 			}
 		}
 		else m="V";
-		y=this.gbsyt+(this.yb-this.yt+1)*this.dh-((this.yb==this.DY)?this.dh/2:0);
+		this.yGridMax=y=this.gbsyt+(this.yb-this.yt+1)*this.dh-((this.yb==this.DY)?this.dh/2:0);
 		if(m=="V") s+=m+y;
 		else s+=m+x+" "+y;
-		s+="\"/>";
 	}
 	for(j=this.yt;j<=this.yb;j++)
 	{
-		x=((this.xl==1)?this.dw/2:0)+this.gbsxl;
+		this.xGridMin=x=((this.xl==1)?this.dw/2:0)+this.gbsxl;
 		y=this.j2y(j);
-		s+="<path class=\"mxGobanLine\"";
-		s+=" d=\"M"+x+" "+y;
+		s+="M"+x+" "+y;
 		if(this.eraseGridUnder)
 		{
 			m="M";
@@ -1271,13 +1264,13 @@ mxG.S.prototype.makeGrid=function(vNat,vStr)
 			}
 		}
 		else m="H";
-		x=this.gbsxl+(this.xr-this.xl+1)*this.dw-((this.xr==this.DX)?this.dw/2:0);
+		this.xGridMax=x=this.gbsxl+(this.xr-this.xl+1)*this.dw-((this.xr==this.DX)?this.dw/2:0);
 		if(m=="H") s+=m+x;
 		else s+=m+x+" "+y;
-		s+="\"/>";
 	}
-	s+="</g><g class=\"mxStars\" fill=\"#000\">";
-	ds=this.d/9;
+	s+="\"/>";
+	rs=2*this.sw4grid;
+	s+="<path class=\"mxStars\" fill=\"#000\" d=\"";
 	for(i=this.xl;i<=this.xr;i++)
 		for(j=this.yt;j<=this.yb;j++)
 			if(this.star(i,j))
@@ -1285,16 +1278,19 @@ mxG.S.prototype.makeGrid=function(vNat,vStr)
 				k=this.p.xy(i,j);
 				if(!this.eraseGridUnder||this.gridUnder(i,j,vNat[k],vStr[k]))
 				{
-					s+="<circle class=\"mxStar mxStar"+i+"_"+j+"\"";
-					s+=" cx=\""+this.i2x(i)+"\" cy=\""+this.j2y(j)+"\" r=\""+ds+"\"/>";
+					x=this.i2x(i);
+					y=this.j2y(j);
+					s+="M"+(x+rs)+" "+y+"A"+rs+" "+rs+" 0 1 0 "+(x-rs)+" "+y;
+					// Z is important otherwise the path is not well closed
+					s+="A"+rs+" "+rs+" 0 1 0 "+(x+rs)+" "+y+"Z";
 				}
 			}
-	s+="</g>";
+	s+="\"/>";
 	return s;
 };
 mxG.S.prototype.makeBackground=function(r)
 {
-	var s,x,y,a,b,cls;
+	let s,x,y,a,b,cls;
 	b=this.indicesOn?this.gobp+this.db+this.grim:0; // indices width
 	if(r=="Outer")
 	{
@@ -1332,18 +1328,18 @@ mxG.S.prototype.makeBackground=function(r)
 mxG.S.prototype.getWRatio=function()
 {
 	// get ratio from goban svg to deal the case where no css
-	var b=this.p.getE("GobanSvg").getBoundingClientRect();
+	let b=this.p.getE("GobanSvg").getBoundingClientRect();
 	return this.w/b.width;
 };
 mxG.S.prototype.getHRatio=function()
 {
 	// get ratio from goban svg to deal the case where no css
-	var b=this.p.getE("GobanSvg").getBoundingClientRect();
+	let b=this.p.getE("GobanSvg").getBoundingClientRect();
 	return this.h/b.height;
 };
 mxG.S.prototype.getC=function(ev)
 {
-	var x,y,c=this.ig.getMClick(ev);
+	let x,y,c=this.ig.getMClick(ev);
 	c.x=c.x*this.getWRatio()-this.gbsxl;
 	c.y=c.y*this.getHRatio()-this.gbsyt;
 	x=Math.max(Math.min(Math.floor(c.x/this.dw)+this.xl,this.xr),this.xl);
@@ -1356,7 +1352,7 @@ mxG.S.prototype.setMagicGobanWidth=function(e)
 	// calculate a reduction ratio wr used to display a small gobans or part of a goban
 	// with stones of the same diameter as the stone diameter of a reference goban
 	// the reduction is applied to e which is ig or one of its ancestors
-	var wr,z;
+	let wr,z;
 	if((this.xr-this.xl+1)<=this.pointsNumMax)
 	{
 		z=this.gbsxl+this.gbsxr;
@@ -1374,7 +1370,7 @@ mxG.S.prototype.setMagicGobanWidth=function(e)
 mxG.S.prototype.makeGradient1=function(c)
 {
 	// glass stones
-	var s,r,c1,c2,c3;
+	let s,r,c1,c2,c3;
 	r=(c=="Black")?50:100;
 	c1=(c=="Black")?"#999":"#fff";
 	c2=(c=="Black")?"#333":"#ccc";
@@ -1390,7 +1386,7 @@ mxG.S.prototype.makeGradient1=function(c)
 };
 mxG.S.prototype.makeShellEffect=function(o)
 {
-	var s,s1="<stop stop-color=\"#000\" offset=\"",s2="\" stop-opacity=\"",s3="\"/>";
+	let s,s1="<stop stop-color=\"#000\" offset=\"",s2="\" stop-opacity=\"",s3="\"/>";
 	s=s1+(o-0.03)+s2+"0"+s3;
 	s+=s1+(o-0.02)+s2+"0.0125"+s3;
 	s+=s1+o+s2+"0.0375"+s3;
@@ -1401,7 +1397,7 @@ mxG.S.prototype.makeShellEffect=function(o)
 mxG.S.prototype.makeGradient2=function(c)
 {
 	// slate and shell stones
-	var s,k,l,rg;
+	let s,k,l,rg;
 	s=this.makeGradient1(c);
 	s+="<radialGradient id=\""+this.p.n+c[0]+"RGA\"";
 	s+=" class=\"mx"+c[0]+"RGA\"";
@@ -1459,7 +1455,7 @@ mxG.S.prototype.makeGradient=function(c)
 };
 mxG.S.prototype.addAnimatedGoban=function(c)
 {
-	var s,tpl,list,k,km,co,xo,yo,xn,yn,z,r=this.d/2,o;
+	let s,tpl,list,k,km,co,xo,yo,xn,yn,z,r=this.d/2,o;
 	s="<svg";
 	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
 	s+=" viewBox=\"0 0 "+this.w+" "+this.h+"\"";
@@ -1489,14 +1485,14 @@ mxG.S.prototype.addAnimatedGoban=function(c)
 };
 mxG.S.prototype.removeAnimatedGoban=function(c)
 {
-	var e=this.ig.querySelector("svg:nth-of-type(2)");
+	let e=this.ig.querySelector("svg:nth-of-type(2)");
 	if(e) this.ig.removeChild(e);
 };
 mxG.S.prototype.makeGoban=function()
 {
-	var s,c,p;
-	var i,j;
-	var x,y,x1,y1,x2,y2,w,h,wmax,wr,z,a;
+	let s,c,p;
+	let i,j;
+	let x,y,x1,y1,x2,y2,w,h,wmax,wr,z,a;
 	this.vNat=[];
 	this.vStr=[];
 	this.w=this.dw*(this.xr-this.xl+1)+this.gbsxl+this.gbsxr;
@@ -1543,7 +1539,7 @@ mxG.S.prototype.makeGoban=function()
 	if(this.indicesOn) s+=this.makeIndices();
 	s+=this.makeBackground("Inner");
 	s+="<g id=\""+this.p.n+"Grid\" class=\"mxGrid\"";
-	s+=" stroke=\"#000\" stroke-width=\""+this.sw4grid+"\"></g>";
+	s+=" stroke-width=\""+this.sw4grid+"\" stroke=\"#000\"></g>";
 	s+="<g id=\""+this.p.n+"Points\" class=\"mxPoints\"></g>";
 	s+="<g id=\""+this.p.n+"Focus\" class=\"mxFocus\"></g>";
 	s+="</svg>";
@@ -1552,7 +1548,7 @@ mxG.S.prototype.makeGoban=function()
 mxG.S.prototype.setInternalParameters=function()
 {
 	// internal parameters
-	var stretchingArray=this.stretching.split(",");
+	let stretchingArray=this.stretching.split(",");
 	this.in3dWidthStretch=parseInt(stretchingArray[0]+"");
 	this.in3dHeightStretch=parseInt(stretchingArray[1]+"");
 	this.in2dWidthStretch=parseInt(stretchingArray[2]+"");
@@ -1587,7 +1583,7 @@ mxG.S.prototype.setInternalParameters=function()
 };
 mxG.S.prototype.init=function()
 {
-	var p=this.p;
+	let p=this.p;
 	this.ig=p.getE("InnerGobanDiv"); // DIV where goban displays
 	this.stoneShadowOn=p.stoneShadowOn;
 	this.pointsNumMax=p.pointsNumMax;
@@ -1607,32 +1603,28 @@ mxG.S.prototype.init=function()
 };
 mxG.S.prototype.getLabelLen=function(a,str)
 {
-	var len=a.getComputedTextLength();
+	let len=a.getComputedTextLength();
 	len=(str.length>2)?0.8*len:(str.length>1)?len=0.9*len:len;
 	len+=0.15*this.dw;
 	return Math.max(0.85*this.dw,len);
 };
-mxG.S.prototype.getHorizontalGridLine=function(j)
-{
-	var g=this.p.getE("Grid"),list;
-	list=g.querySelectorAll("path");
-	return list[this.xr-this.xl+1+j-this.yt];
-};
 mxG.S.prototype.getVerticalGridLine=function(i)
 {
-	var g=this.p.getE("Grid"),list;
+	let g=this.p.getE("Grid"),list;
 	list=g.querySelectorAll("path");
 	return list[i-this.xl];
 };
 mxG.S.prototype.eraseVerticalGridSegment=function(i,y)
 {
-	var e,d1,d2,a,b,k,km,x,y1,y2,f1,f2;
-	e=this.getVerticalGridLine(i);
-	d1=e.getAttributeNS(null,"d");
+	let e,d0,d1,d2,a,b,k,km,x,y1,y2,f1,f2;
+	x=this.i2x(i);
+	e=this.p.getE("Grid").querySelector("path");
+	d0=e.getAttributeNS(null,"d");
+	re=new RegExp("M"+x+" "+this.yGridMin+"[^H]*?V"+this.yGridMax);
+	d1=d0.match(re)[0];
 	a=d1.match(/[^M0-9.-][0-9.-]+/g);
 	km=a.length;
 	b=[];
-	x=this.i2x(i);
 	for(k=0;k<km;k++)
 	{
 		b[k]=parseFloat(a[k].substring(1));
@@ -1673,11 +1665,11 @@ mxG.S.prototype.eraseVerticalGridSegment=function(i,y)
 			else d2+="M"+x+" "+b[k];			
 		}
 	}
-	if(d1!=d2) e.setAttributeNS(null,"d",d2);
+	if(d1!=d2) e.setAttributeNS(null,"d",d0.replace(d1,d2));
 };
 mxG.S.prototype.eraseVerticalGridSegments=function(i,j,x,y,w)
 {
-	var i,i1,i2,ik,e;
+	let i1,i2,ik,e;
 	i1=Math.max(this.xl,i-Math.floor(w/2/this.dw));
 	i2=Math.min(this.xr,i+Math.floor(w/2/this.dw));
 	// if (ik==i) the job was done when making the grid
@@ -1697,9 +1689,11 @@ mxG.S.prototype.eraseVerticalGridSegments=function(i,j,x,y,w)
 mxG.S.prototype.eraseLongGridSegment=function(i,j,x,y,w)
 {
 	// is executed only when long label (i.e. almost never)
-	var e,d1,d2,a,b,k,km,x1,x2,m;
-	e=this.getHorizontalGridLine(j);
-	d1=e.getAttributeNS(null,"d");
+	let e,d0,d1,d2,a,b,k,km,x1,x2,m,re;
+	e=this.p.getE("Grid").querySelector("path");
+	d0=e.getAttributeNS(null,"d");
+	re=new RegExp("M"+this.xGridMin+" "+y+"[^V]+?H"+this.xGridMax);
+	d1=d0.match(re)[0];
 	a=d1.match(/(M|H)[0-9.-]+/g);
 	km=a.length;
 	b=[];
@@ -1744,12 +1738,12 @@ mxG.S.prototype.eraseLongGridSegment=function(i,j,x,y,w)
 		}
 		// else wait for next segment
 	}
-	if(d1!=d2) e.setAttributeNS(null,"d",d2);
+	if(d1!=d2) e.setAttributeNS(null,"d",d0.replace(d1,d2));
 	this.eraseVerticalGridSegments(i,j,x,y,w);
 };
 mxG.S.prototype.addPointBackground=function(i,j,nat,str)
 {
-	var a,b,p,cls,x,y,h,w,vof=0;
+	let a,b,p,cls,x,y,h,w,vof=0;
 	if(this.isLabel(str)||this.isVariation(str))
 	{
 		p=this.p.getE("Points");
@@ -1790,7 +1784,7 @@ mxG.S.prototype.addPointBackground=function(i,j,nat,str)
 };
 mxG.S.prototype.draw=function(vNat,vStr,pFocus)
 {
-	var i,j,k,km,s="",opacity,nat,str,list,a,b,c,xf,yf,o,z,s1,s2,s3,s4,s5,s6;
+	let i,j,k,km,s="",opacity,nat,str,list,a,b,c,xf,yf,o,z,s1,s2,s3,s4,s5,s6;
 	this.p.getE("Grid").innerHTML=this.makeGrid(vNat,vStr);
 	this.pNat=this.vNat;
 	this.pStr=this.vStr;
@@ -1798,11 +1792,7 @@ mxG.S.prototype.draw=function(vNat,vStr,pFocus)
 	this.vStr=vStr;
 	this.pFocus=pFocus;
 	// group elements to reduce final svg size
-	s1="";
-	s2="";
-	s3="";
-	s4="";
-	s5="";
+	s1=s2=s3=s4=s5="";
 	for(i=this.xl;i<=this.xr;i++)
 		for(j=this.yt;j<=this.yb;j++)
 		{
@@ -1921,13 +1911,13 @@ mxG.S.prototype.makeBtnRectangle=function(x)
 };
 mxG.S.prototype.makeBtnTriangle=function(x,a)
 {
-	var z=a*52;
+	let z=a*52;
 	return "<polygon points=\""+x+" 64 "+(x+z)+" 128 "+(x+z)+" 0\"/>";
 };
 mxG.S.prototype.makeBtnContent=function(a,t)
 {
 	// convenient width and height should be set in css
-	var s="<svg";
+	let s="<svg";
 	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
 	s+=" viewBox=\"0 0 128 128\"";
 	s+=" width=\"40\" height=\"40\">"; // acceptable size if no css
@@ -1936,73 +1926,73 @@ mxG.S.prototype.makeBtnContent=function(a,t)
 };
 mxG.S.prototype.makeFirstBtn=function()
 {
-	var s=this.makeBtnRectangle(26)+this.makeBtnTriangle(50,1);
+	let s=this.makeBtnRectangle(26)+this.makeBtnTriangle(50,1);
 	return this.makeBtnContent(s,"First");
 };
 mxG.S.prototype.makeTenPredBtn=function()
 {
-	var s=this.makeBtnTriangle(4,1)+this.makeBtnTriangle(56,1);
+	let s=this.makeBtnTriangle(4,1)+this.makeBtnTriangle(56,1);
 	return this.makeBtnContent(s,"10 Previous");
 };
 mxG.S.prototype.makePredBtn=function()
 {
-	var s=this.makeBtnTriangle(30,1);
+	let s=this.makeBtnTriangle(30,1);
 	return this.makeBtnContent(s,"Previous");
 };
 mxG.S.prototype.makeNextBtn=function()
 {
-	var s=this.makeBtnTriangle(98,-1);
+	let s=this.makeBtnTriangle(98,-1);
 	return this.makeBtnContent(s,"Next");
 };
 mxG.S.prototype.makeTenNextBtn=function()
 {
-	var s=this.makeBtnTriangle(72,-1)+this.makeBtnTriangle(124,-1);
+	let s=this.makeBtnTriangle(72,-1)+this.makeBtnTriangle(124,-1);
 	return this.makeBtnContent(s,"10 Next");
 };
 mxG.S.prototype.makeLastBtn=function()
 {
-	var s=this.makeBtnTriangle(78,-1)+this.makeBtnRectangle(78);
+	let s=this.makeBtnTriangle(78,-1)+this.makeBtnRectangle(78);
 	return this.makeBtnContent(s,"Last");
 };
 mxG.S.prototype.makeAutoBtn=function()
 {
-	var s=this.makeBtnTriangle(0,1)+this.makeBtnTriangle(128,-1);
+	let s=this.makeBtnTriangle(0,1)+this.makeBtnTriangle(128,-1);
 	return this.makeBtnContent(s,"Auto");
 };
 mxG.S.prototype.makePauseBtn=function()
 {
-	var s=this.makeBtnRectangle(24)+this.makeBtnRectangle(80);
+	let s=this.makeBtnRectangle(24)+this.makeBtnRectangle(80);
 	return this.makeBtnContent(s,"Pause");
 };
 mxG.S.prototype.makeRetryBtn=function()
 {
-	var s;
+	let s;
 	s="<path d=\"M0 64L64 64L32 92L0 64Z\"/>";
 	s+="<path d=\"M24 64A50 50 0 1 1 49 107L57 94A34 34 0 1 0 40 64Z\"/>";
 	return this.makeBtnContent(s,"Retry");
 };
 mxG.S.prototype.makeUndoBtn=function()
 {
-	var s;
+	let s;
 	s="<path d=\"M20,105H108C114.6,105 120,99 120,93V44C120,37 114,32 108,32H40V8L8,40 40,72V48H96C100,48 104,51 104,56V81C104,85 100,89 96,89H20 Z\"/>";
 	return this.makeBtnContent(s,"Undo");
 };
 mxG.S.prototype.makeHintBtn=function()
 {
-	var s;
+	let s;
 	s="<rect x=\"54\" y=\"10\" width=\"20\" height=\"64\" rx=\"5\" ry=\"5\"/>";
 	s+="<circle cx=\"64\" cy=\"104\" r=\"14\"/>";
 	return this.makeBtnContent(s,"Hint");
 };
 mxG.S.prototype.makePassBtn=function()
 {
-	var s;
+	let s;
 	s="<path fill-rule=\"evenodd\" d=\"M 64,10 L 118,64 L 64,118 L 10,64 Z M 64,35 L 93,64 L 64,93 L 35,64 Z\"/>";
 	return this.makeBtnContent(s,"Pass");
 };
 mxG.S.prototype.makeFromPath=function(p)
 {
-	var s="<svg";
+	let s="<svg";
 	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
 	s+=" viewBox=\"0 0 1024 1024\"";
 	s+=" width=\"40\" height=\"40\">"; // acceptable size if no css
@@ -2010,7 +2000,7 @@ mxG.S.prototype.makeFromPath=function(p)
 };
 mxG.S.prototype.addSelect=function(i,j)
 {
-	var b,x,y,w,h,cls;
+	let b,x,y,w,h,cls;
 	w=this.dw;
 	h=this.dh;
 	if(i==this.xl)
@@ -2058,7 +2048,7 @@ mxG.S.prototype.addSelect=function(i,j)
 };
 mxG.S.prototype.removeSelect=function(i,j)
 {
-	var a,b;
+	let a,b;
 	a=this.ig.firstChild;
 	b=a.querySelector(".mxSelect.mx"+i+"_"+j);
 	if(b) a.removeChild(b);
@@ -2066,7 +2056,7 @@ mxG.S.prototype.removeSelect=function(i,j)
 mxG.S.prototype.makeOneStone4Bowl=function(nat,x,y,d,o)
 {
 	// no shadow inside the bowl
-	var s="",o2={};
+	let s="",o2={};
 	// todo: why without o2, o keeps changes below outside this function?
 	if (o.hasOwnProperty("opacity")) o2.opacity=o.opacity;
 	if (o.hasOwnProperty("stoneShadowOn")) o2.stoneShadowOn=o.stoneShadowOn;
@@ -2083,7 +2073,7 @@ mxG.S.prototype.makeOneStone4Bowl=function(nat,x,y,d,o)
 mxG.S.prototype.makeBowl=function(nat,o)
 {
 	// no svg shadow for the bowl
-	var s="",x,y,r,i,j,k,km,km2,dk,rk,magicNum;
+	let s="",x,y,r,i,j,k,km,km2,dk,rk,magicNum;
 	magicNum=this.w/this.d*100/this.wr;
 	dk=this.bowlW/magicNum*3;
 	rk=dk/2;
@@ -2120,7 +2110,7 @@ mxG.S.prototype.makeBowl=function(nat,o)
 mxG.S.prototype.makeCap=function(nat,n,o)
 {
 	// no svg shadow for the cap
-	var s="",x,y,r,c=(nat=="B")?"Black":"White";
+	let s="",x,y,r,c=(nat=="B")?"Black":"White";
 	x=this.bowlW/2;
 	y=(nat=="W")?this.bowlW+this.capW/2:this.capW/2;
 	dy=this.capW*5/42;
@@ -2139,7 +2129,7 @@ mxG.S.prototype.makeCap=function(nat,n,o)
 };
 mxG.S.prototype.makeBowlAndCap=function(nat,n,o)
 {
-	var s="";
+	let s="";
 	this.bowlW=5*this.d;
 	this.capW=4*this.d;
 	s+="<svg";
@@ -3483,7 +3473,7 @@ mxG.B=[["Goban","NotSeen"],"Version"];
 mxG.D[mxG.K]=new mxG.G(mxG.K,mxG.B);
 mxG.D[mxG.K].theme="Eidogo";
 mxG.D[mxG.K].config="Diagram";
-mxG.D[mxG.K].style=".mxEidogoTheme{--gobanMaxWidth:30em;text-align:left;}.mxEidogoTheme div::-moz-focus-inner,.mxEidogoTheme button::-moz-focus-inner,.mxEidogoTheme input[type=text]::-moz-focus-inner,.mxEidogoTheme a::-moz-focus-inner{padding:0;border:0;}.mxEidogoTheme div:focus,.mxEidogoTheme button:focus,.mxEidogoTheme input[type=text]:focus,.mxEidogoTheme a:focus{outline:none;}.mxEidogoTheme button,.mxEidogoTheme input[type=button],.mxEidogoTheme textarea{-webkit-appearance:none;-moz-appearance:none;}.mxEidogoTheme text{cursor:default;}.mxEidogoTheme input[type=button],.mxEidogoTheme button{cursor:pointer;}.mxEidogoTheme input[type=text][disabled],.mxEidogoTheme button[disabled]{cursor:default;}.mxEidogoTheme{font-family:sans-serif;}.mxEidogoTheme svg{font-family:arial,sans-serif;}.mxEidogoTheme button{font-family:sans-serif;}.mxEidogoTheme>.mxVersionDiv{font-size:0.75em;color:#998;text-align:center;height:2em;line-height:2em;}.mxEidogoTheme{box-sizing:border-box;max-width:var(--gobanMaxWidth);margin:0 auto;}.mxEidogoTheme.mxCommentConfig,.mxEidogoTheme.mxGameConfig,.mxEidogoTheme.mxTreeConfig{max-width:calc(var(--gobanMaxWidth) * 2);}.mxEidogoTheme.mxBasicConfig>div:first-of-type,.mxEidogoTheme.mxDiagramConfig>div:first-of-type,.mxEidogoTheme.mxProblemConfig>div:first-of-type{box-sizing:border-box;margin:0 auto;background:#466;}.mxEidogoTheme.mxCommentConfig>div:first-of-type,.mxEidogoTheme.mxGameConfig>div:first-of-type,.mxEidogoTheme.mxTreeConfig>div:first-of-type{box-sizing:border-box;display:flex;flex-wrap:wrap;justify-content:center;max-width:calc(var(--gobanMaxWidth) * 2);}.mxEidogoTheme.mxCommentConfig>div:first-of-type>div,.mxEidogoTheme.mxGameConfig>div:first-of-type>div,.mxEidogoTheme.mxTreeConfig>div:first-of-type>div{box-sizing:border-box;max-width:var(--gobanMaxWidth);flex:1 1 var(--gobanMaxWidth);}.mxEidogoTheme.mxCommentConfig .mxGobanParentDiv,.mxEidogoTheme.mxGameConfig .mxGobanParentDiv,.mxEidogoTheme.mxTreeConfig .mxGobanParentDiv{display:flex;flex-direction:column;background:#aa9;}.mxEidogoTheme.mxCommentConfig .mxGobanDiv,.mxEidogoTheme.mxGameConfig .mxGobanDiv,.mxEidogoTheme.mxTreeConfig .mxGobanDiv{margin:auto;width:100%;}.mxEidogoTheme.mxBasicConfig .mxNavigationParentDiv,.mxEidogoTheme.mxCommentConfig .mxNavigationParentDiv,.mxEidogoTheme.mxGameConfig .mxNavigationParentDiv,.mxEidogoTheme.mxProblemConfig .mxSolveParentDiv,.mxEidogoTheme.mxTreeConfig .mxNavigationParentDiv{padding:0.5em;}.mxEidogoTheme.mxCommentConfig .mxNavigationGrandParentDiv,.mxEidogoTheme.mxGameConfig .mxNavigationGrandParentDiv,.mxEidogoTheme.mxTreeConfig .mxNavigationGrandParentDiv{background:#466;display:flex;flex-direction:column;justify-content:space-between;}.mxEidogoTheme.mxCommentConfig .mxNavigationParentDiv,.mxEidogoTheme.mxGameConfig .mxNavigationParentDiv,.mxEidogoTheme.mxTreeConfig .mxNavigationParentDiv,.mxEidogoTheme.mxCommentConfig .mxGotoDiv,.mxEidogoTheme.mxTreeConfig .mxGotoDiv,.mxEidogoTheme.mxCommentConfig .mxVariationDiv,.mxEidogoTheme.mxTreeConfig .mxVariationDiv{flex:0 0 auto;}.mxEidogoTheme.mxGameConfig .mxHeaderDiv,.mxEidogoTheme.mxCommentConfig .mxCommentDiv,.mxEidogoTheme.mxTreeConfig .mxCommentDiv,.mxEidogoTheme.mxTreeConfig .mxTreeDiv{flex:1;min-height:6em;}.mxEidogoTheme.mxCommentConfig .mxCommentDiv,.mxEidogoTheme.mxTreeConfig .mxCommentDiv,.mxEidogoTheme.mxTreeConfig .mxTreeDiv{position:relative;}.mxEidogoTheme.mxCommentConfig .mxCommentContentDiv,.mxEidogoTheme.mxTreeConfig .mxCommentContentDiv,.mxEidogoTheme.mxTreeConfig .mxTreeContentDiv{position:absolute;}.mxEidogoTheme .mxGobanDiv{background:#aa9;margin:0 auto;}.mxEidogoTheme .mxInnerGobanDiv{-webkit-tap-highlight-color:rgba(0,0,0,0);user-select:none;margin:0 auto;position:relative;}.mxEidogoTheme .mxGobanDiv svg{display:block;width:100%;height:100%;pointer-events:none;}.mxEidogoTheme .mxOuterRect{fill:#654;}.mxEidogoTheme .mxInnerRect{fill:#ddbc6b;}.mxEidogoTheme .mxIndice{fill:#a89470;stroke:#a89470;}.mxEidogoTheme .mxGobanLine{stroke:#b19655;}.mxEidogoTheme .mxStar{fill:#705f36;stroke:none;r:2px;}.mxEidogoTheme.mxIn3d circle.mxBlack{stroke:#000;}.mxEidogoTheme.mxIn3d circle.mxWhite{stroke:#999;}.mxEidogoTheme .mxMarkOnLast{fill:#ec1d24;}.mxEidogoTheme .mxMark{stroke:#ec2025;stroke-width:2px;}.mxEidogoTheme text.mxLabel{fill:#ec2025;stroke:#ec2025;}.mxEidogoTheme text.mxVariation,.mxEidogoTheme text.mxVariation.mxLabel{fill:#831;stroke:#831;}.mxEidogoTheme .mxPointBackground.mxVariation{fill:#ee974b;stroke:#ee974b;}.mxEidogoTheme text.mxVariation.mxOnFocus,.mxEidogoTheme text.mxVariation.mxLabel.mxOnFocus{fill:#000;stroke:#000;}.mxEidogoTheme .mxPointBackground.mxVariation.mxOnFocus{}.mxEidogoTheme text.mxVariation:not(.mxOnFocus),.mxEidogoTheme text.mxVariation.mxLabel:not(.mxOnFocus){}.mxEidogoTheme .mxPointBackground.mxVariation:not(.mxOnFocus){}.mxEidogoTheme .mxFocusMark{stroke:#ec1d24;}.mxEidogoTheme .mxCommentDiv h1,.mxEidogoTheme .mxHeaderDiv h1{font-size:1em;padding:0;margin:0 0 0.25em 0;}.mxEidogoTheme .mxP:not(:first-child){padding-top:0.5em;}.mxEidogoTheme .mxWhiteRadialGradient stop:nth-of-type(1){stop-color:#fff;}.mxEidogoTheme .mxWhiteRadialGradient stop:nth-of-type(2){stop-color:#ccc;}.mxEidogoTheme .mxWhiteRadialGradient stop:nth-of-type(3){stop-color:#999;}.mxEidogoTheme.mxCommentConfig .mxCommentDiv,.mxEidogoTheme.mxGameConfig .mxHeaderDiv,.mxEidogoTheme.mxTreeConfig .mxCommentDiv{padding:0.5em;background:#bba;border:1px solid #bba;overflow:auto;font-size:0.875em;}.mxEidogoTheme.mxCommentConfig .mxCommentDiv,.mxEidogoTheme.mxGameConfig .mxHeaderDiv{height:6em;}.mxEidogoTheme.mxTreeConfig .mxTreeDiv{padding:0.5em;background:#333;border:1px solid #333;overflow:auto;}.mxEidogoTheme.mxTreeConfig .mxTreeDiv svg .mxFocus{fill:#872222;opacity:1;}.mxEidogoTheme.mxTreeConfig .mxTreeDiv svg .mxTreeLine{stroke:#666;}.mxEidogoTheme.mxTreeConfig .mxTreeDiv svg .mxMark{stroke:#ccc;}.mxEidogoTheme.mxCommentConfig .mxCommentDiv:focus,.mxEidogoTheme.mxGameConfig .mxHeaderDiv:focus,.mxEidogoTheme.mxTreeConfig .mxCommentDiv:focus,.mxEidogoTheme.mxTreeConfig .mxTreeDiv:focus{border:1px solid rgba(255,255,255,0.5);}.mxEidogoTheme.mxCommentConfig .mxVariationDiv,.mxEidogoTheme.mxTreeConfig .mxVariationDiv{font-size:1em;min-height:2em;line-height:2em;margin:0;padding:0.5em;color:#aac8c2;}.mxEidogoTheme.mxCommentConfig .mxVariationDiv [type=button],.mxEidogoTheme.mxTreeConfig .mxVariationDiv [type=button]{font-size:1em;font-weight:bold;border:1px solid #466;border-radius:0;background:#799;color:#b00;margin:1px;padding:0 0.125em;min-width:1.75em;height:1.75em;line-height:1.75;}.mxEidogoTheme .mxGotoDiv{margin:0.25em 0.5em 0 0.5em;user-select:none;}.mxEidogoTheme .mxGotoDiv svg{box-sizing:border-box;display:block;margin:0 auto;}.mxEidogoTheme .mxGotoBar{fill:#244;stroke:#122;}.mxEidogoTheme .mxGotoCursor{fill:#ec1d24;stroke:#ec1d24;cursor:pointer;}.mxEidogoTheme.mxBasicConfig .mxNavigationParentDiv,.mxEidogoTheme.mxCommentConfig .mxNavigationParentDiv,.mxEidogoTheme.mxGameConfig .mxNavigationParentDiv,.mxEidogoTheme.mxProblemConfig .mxSolveParentDiv,.mxEidogoTheme.mxTreeConfig .mxNavigationParentDiv{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;}.mxEidogoTheme.mxBasicConfig .mxNavigationDiv,.mxEidogoTheme.mxCommentConfig .mxNavigationDiv,.mxEidogoTheme.mxGameConfig .mxNavigationDiv,.mxEidogoTheme.mxProblemConfig .mxSolveDiv,.mxEidogoTheme.mxTreeConfig .mxNavigationDiv{flex:4;text-align:left;}.mxEidogoTheme.mxCommentConfig .mxMoveInfoDiv,.mxEidogoTheme.mxTreeConfig .mxMoveInfoDiv{flex:2;text-align:center;}.mxEidogoTheme.mxBasicConfig .mxPassDiv,.mxEidogoTheme.mxCommentConfig .mxPassDiv,.mxEidogoTheme.mxGameConfig .mxPassDiv,.mxEidogoTheme.mxProblemConfig .mxPassDiv,.mxEidogoTheme.mxTreeConfig .mxPassDiv{flex:1;text-align:right;}.mxEidogoTheme.mxBasicConfig .mxMoveInfoDiv svg,.mxEidogoTheme.mxCommentConfig .mxMoveInfoDiv svg,.mxEidogoTheme.mxGameConfig .mxMoveInfoDiv svg,.mxEidogoTheme.mxTreeConfig .mxMoveInfoDiv svg{display:block;width:100%;height:100%;max-height:1.75em;min-width:3em;}.mxEidogoTheme.mxBasicConfig .mxMoveInfoDiv text:not(:first-of-type),.mxEidogoTheme.mxCommentConfig .mxMoveInfoDiv text:not(:first-of-type),.mxEidogoTheme.mxGameConfig .mxMoveInfoDiv text:not(:first-of-type),.mxEidogoTheme.mxTreeConfig .mxMoveInfoDiv text:not(:first-of-type){fill:#aac8c2;stroke:#aac8c2;}.mxEidogoTheme.mxTreeConfig .mxTreeDiv{user-select:none;}.mxEidogoTheme.mxDiagramConfig .mxNotSeenDiv{max-width:var(--gobanMaxWidth);margin:0 auto;}.mxEidogoTheme .mxInnerNotSeenDiv:not(:empty){margin:0auto;padding:0.25em 0;background:#bba;}.mxEidogoTheme .mxInnerNotSeenDiv{margin:0 auto;}.mxEidogoTheme .mxNotSeenSvg{width:100%;height:100%;display:block;}.mxEidogoTheme.mxProblemConfig .mxCommentDiv{margin:0 auto;background:#bba;}.mxEidogoTheme.mxProblemConfig .mxCommentDiv{height:2.3em;padding:0.25em;background:#bba;border:1px solid #bba;overflow:auto;}.mxEidogoTheme.mxProblemConfig .mxCommentDiv:focus{border:1px solid rgba(255,255,255,0.5);}.mxEidogoTheme .mxNavigationDiv,.mxEidogoTheme .mxSolveDiv{margin:0;display:flex;flex-wrap:wrap;}.mxEidogoTheme .mxPassDiv{margin:0;}.mxEidogoTheme .mxNavigationDiv:empty,.mxEidogoTheme .mxSolveDiv:empty{margin:0;display:block;}.mxEidogoTheme .mxNavigationDiv button,.mxEidogoTheme .mxPassDiv button,.mxEidogoTheme .mxSolveDiv button{font-size:0.75em;margin:0.125em;vertical-align:middle;border-top:1px solid #fcfafc;border-left:1px solid #fcfafc;border-right:1px solid #fcfafc;border-bottom:1px solid #c4c6c4;outline:1px solid #000;background-color:#ddd;background:linear-gradient(to top,#fcfafc,#ddd,#999);}.mxEidogoTheme .mxNavigationDiv button,.mxEidogoTheme .mxSolveDiv button{flex:0 1 3em;height:2em;max-width:3em;min-width:2em;padding:0;}.mxEidogoTheme .mxNavigationDiv button span,.mxEidogoTheme .mxSolveDiv button span{display:block;width:50%;max-width:1.125em;margin:0 auto;}.mxEidogoTheme .mxPassDiv button{height:2em;white-space:nowrap;}.mxEidogoTheme .mxPassDiv button span{margin:0 auto;}.mxEidogoTheme .mxNavigationDiv button svg,.mxEidogoTheme .mxSolveDiv button svg{display:block;width:100%;height:100%;}.mxEidogoTheme .mxPassDiv button span{white-space:no-break;}.mxEidogoTheme .mxNavigationDiv button svg polygon,.mxEidogoTheme .mxNavigationDiv button svg rect,.mxEidogoTheme .mxSolveDiv button svg polygon,.mxEidogoTheme .mxSolveDiv button svg rect{fill:#ec1e24;}.mxEidogoTheme .mxPassDiv button span{color:#444;}.mxEidogoTheme .mxPassDiv button.mxOnVariationPassBtn span{color:#ec1e24;}.mxEidogoTheme .mxNavigationDiv button[disabled] svg polygon,.mxEidogoTheme .mxNavigationDiv button[disabled] svg rect,.mxEidogoTheme .mxSolveDiv button[disabled] svg polygon,.mxEidogoTheme .mxSolveDiv button[disabled] svg rect{fill:#999;}.mxEidogoTheme .mxPassDiv button[disabled] span{color:#999;}.mxEidogoTheme .mxNavigationDiv button:focus,.mxEidogoTheme .mxSolveDiv button:focus,.mxEidogoTheme .mxPassDiv button:focus,.mxEidogoTheme .mxVariationDiv input[type=button]:focus{outline:1px solid rgba(255,255,255,0.5);}";
+mxG.D[mxG.K].style=".mxEidogoTheme{--gobanMaxWidth:30em;text-align:left;}.mxEidogoTheme div::-moz-focus-inner,.mxEidogoTheme button::-moz-focus-inner,.mxEidogoTheme input[type=text]::-moz-focus-inner,.mxEidogoTheme a::-moz-focus-inner{padding:0;border:0;}.mxEidogoTheme div:focus,.mxEidogoTheme button:focus,.mxEidogoTheme input[type=text]:focus,.mxEidogoTheme a:focus{outline:none;}.mxEidogoTheme button,.mxEidogoTheme input[type=button],.mxEidogoTheme textarea{-webkit-appearance:none;-moz-appearance:none;}.mxEidogoTheme text{cursor:default;}.mxEidogoTheme input[type=button],.mxEidogoTheme button{cursor:pointer;}.mxEidogoTheme input[type=text][disabled],.mxEidogoTheme button[disabled]{cursor:default;}.mxEidogoTheme{font-family:sans-serif;}.mxEidogoTheme svg{font-family:arial,sans-serif;}.mxEidogoTheme button{font-family:sans-serif;}.mxEidogoTheme>.mxVersionDiv{font-size:0.75em;color:#998;text-align:center;height:2em;line-height:2em;}.mxEidogoTheme{box-sizing:border-box;max-width:var(--gobanMaxWidth);margin:0 auto;}.mxEidogoTheme.mxCommentConfig,.mxEidogoTheme.mxGameConfig,.mxEidogoTheme.mxTreeConfig{max-width:calc(var(--gobanMaxWidth) * 2);}.mxEidogoTheme.mxBasicConfig>div:first-of-type,.mxEidogoTheme.mxDiagramConfig>div:first-of-type,.mxEidogoTheme.mxProblemConfig>div:first-of-type{box-sizing:border-box;margin:0 auto;background:#466;}.mxEidogoTheme.mxCommentConfig>div:first-of-type,.mxEidogoTheme.mxGameConfig>div:first-of-type,.mxEidogoTheme.mxTreeConfig>div:first-of-type{box-sizing:border-box;display:flex;flex-wrap:wrap;justify-content:center;max-width:calc(var(--gobanMaxWidth) * 2);}.mxEidogoTheme.mxCommentConfig>div:first-of-type>div,.mxEidogoTheme.mxGameConfig>div:first-of-type>div,.mxEidogoTheme.mxTreeConfig>div:first-of-type>div{box-sizing:border-box;max-width:var(--gobanMaxWidth);flex:1 1 var(--gobanMaxWidth);}.mxEidogoTheme.mxCommentConfig .mxGobanParentDiv,.mxEidogoTheme.mxGameConfig .mxGobanParentDiv,.mxEidogoTheme.mxTreeConfig .mxGobanParentDiv{display:flex;flex-direction:column;background:#aa9;}.mxEidogoTheme.mxCommentConfig .mxGobanDiv,.mxEidogoTheme.mxGameConfig .mxGobanDiv,.mxEidogoTheme.mxTreeConfig .mxGobanDiv{margin:auto;width:100%;}.mxEidogoTheme.mxBasicConfig .mxNavigationParentDiv,.mxEidogoTheme.mxCommentConfig .mxNavigationParentDiv,.mxEidogoTheme.mxGameConfig .mxNavigationParentDiv,.mxEidogoTheme.mxProblemConfig .mxSolveParentDiv,.mxEidogoTheme.mxTreeConfig .mxNavigationParentDiv{padding:0.5em;}.mxEidogoTheme.mxCommentConfig .mxNavigationGrandParentDiv,.mxEidogoTheme.mxGameConfig .mxNavigationGrandParentDiv,.mxEidogoTheme.mxTreeConfig .mxNavigationGrandParentDiv{background:#466;display:flex;flex-direction:column;justify-content:space-between;}.mxEidogoTheme.mxCommentConfig .mxNavigationParentDiv,.mxEidogoTheme.mxGameConfig .mxNavigationParentDiv,.mxEidogoTheme.mxTreeConfig .mxNavigationParentDiv,.mxEidogoTheme.mxCommentConfig>*,.mxEidogoTheme.mxTreeConfig>*{flex:0 0 auto;}.mxEidogoTheme.mxGameConfig .mxHeaderDiv,.mxEidogoTheme.mxCommentConfig .mxCommentDiv,.mxEidogoTheme.mxTreeConfig .mxCommentDiv,.mxEidogoTheme.mxTreeConfig .mxTreeDiv{flex:1;min-height:6em;}.mxEidogoTheme.mxCommentConfig .mxCommentDiv,.mxEidogoTheme.mxTreeConfig .mxCommentDiv,.mxEidogoTheme.mxTreeConfig .mxTreeDiv{position:relative;}.mxEidogoTheme.mxCommentConfig .mxCommentContentDiv,.mxEidogoTheme.mxTreeConfig .mxCommentContentDiv,.mxEidogoTheme .mxTreeContentDiv{position:absolute;}.mxEidogoTheme .mxGobanDiv{background:#aa9;margin:0 auto;}.mxEidogoTheme .mxInnerGobanDiv{-webkit-tap-highlight-color:rgba(0,0,0,0);user-select:none;margin:0 auto;position:relative;}.mxEidogoTheme .mxGobanDiv svg{display:block;width:100%;height:100%;pointer-events:none;}.mxEidogoTheme .mxOuterRect{fill:#654;}.mxEidogoTheme .mxInnerRect{fill:#ddbc6b;}.mxEidogoTheme .mxIndice{fill:#a89470;stroke:#a89470;}.mxEidogoTheme .mxGobanLines{stroke:#b19655;}.mxEidogoTheme .mxStars{fill:#705f36;stroke:none;}.mxEidogoTheme.mxIn3d circle.mxBlack{stroke:#000;}.mxEidogoTheme.mxIn3d circle.mxWhite{stroke:#999;}.mxEidogoTheme .mxMarkOnLast{fill:#ec1d24;}.mxEidogoTheme .mxMark{stroke:#ec2025;stroke-width:2px;}.mxEidogoTheme text.mxLabel{fill:#ec2025;stroke:#ec2025;}.mxEidogoTheme text.mxVariation,.mxEidogoTheme text.mxVariation.mxLabel{fill:#831;stroke:#831;}.mxEidogoTheme .mxPointBackground.mxVariation{fill:#ee974b;stroke:#ee974b;}.mxEidogoTheme text.mxVariation.mxOnFocus,.mxEidogoTheme text.mxVariation.mxLabel.mxOnFocus{fill:#000;stroke:#000;}.mxEidogoTheme .mxPointBackground.mxVariation.mxOnFocus{}.mxEidogoTheme text.mxVariation:not(.mxOnFocus),.mxEidogoTheme text.mxVariation.mxLabel:not(.mxOnFocus){}.mxEidogoTheme .mxPointBackground.mxVariation:not(.mxOnFocus){}.mxEidogoTheme .mxFocusMark{stroke:#ec1d24;}.mxEidogoTheme .mxCommentDiv h1,.mxEidogoTheme .mxHeaderDiv h1{font-size:1em;padding:0;margin:0 0 0.25em 0;}.mxEidogoTheme .mxP:not(:first-child){padding-top:0.5em;}.mxEidogoTheme .mxWhiteRadialGradient stop:nth-of-type(1){stop-color:#fff;}.mxEidogoTheme .mxWhiteRadialGradient stop:nth-of-type(2){stop-color:#ccc;}.mxEidogoTheme .mxWhiteRadialGradient stop:nth-of-type(3){stop-color:#999;}.mxEidogoTheme.mxCommentConfig .mxCommentDiv,.mxEidogoTheme.mxGameConfig .mxHeaderDiv,.mxEidogoTheme.mxTreeConfig .mxCommentDiv{padding:0.5em;background:#bba;border:1px solid #bba;overflow:auto;font-size:0.875em;}.mxEidogoTheme.mxCommentConfig .mxCommentDiv,.mxEidogoTheme.mxGameConfig .mxHeaderDiv{height:6em;}.mxEidogoTheme.mxTreeConfig .mxTreeDiv{padding:0.5em;background:#333;border:1px solid #333;overflow:auto;}.mxEidogoTheme.mxTreeConfig .mxTreeDiv svg .mxFocus{fill:#872222;opacity:1;}.mxEidogoTheme.mxTreeConfig .mxTreeDiv svg .mxTreeLine{stroke:#666;}.mxEidogoTheme.mxTreeConfig .mxTreeDiv svg .mxMark{stroke:#ccc;}.mxEidogoTheme.mxCommentConfig .mxCommentDiv:focus,.mxEidogoTheme.mxGameConfig .mxHeaderDiv:focus,.mxEidogoTheme.mxTreeConfig .mxCommentDiv:focus,.mxEidogoTheme.mxTreeConfig .mxTreeDiv:focus{border:1px solid rgba(255,255,255,0.5);}.mxEidogoTheme.mxCommentConfig .mxVariationDiv,.mxEidogoTheme.mxTreeConfig .mxVariationDiv{font-size:1em;min-height:2em;line-height:2em;margin:0;padding:0.5em;color:#aac8c2;}.mxEidogoTheme.mxCommentConfig .mxVariationDiv [type=button],.mxEidogoTheme.mxTreeConfig .mxVariationDiv [type=button]{font-size:1em;font-weight:bold;border:1px solid #466;border-radius:0;background:#799;color:#b00;margin:1px;padding:0 0.125em;min-width:1.75em;height:1.75em;line-height:1.75;}.mxEidogoTheme .mxGotoDiv{margin:0.25em 0.5em 0 0.5em;user-select:none;}.mxEidogoTheme .mxGotoDiv svg{box-sizing:border-box;display:block;margin:0 auto;}.mxEidogoTheme .mxGotoBar{fill:#244;stroke:#122;}.mxEidogoTheme .mxGotoCursor{fill:#ec1d24;stroke:#ec1d24;cursor:pointer;}.mxEidogoTheme.mxBasicConfig .mxNavigationParentDiv,.mxEidogoTheme.mxCommentConfig .mxNavigationParentDiv,.mxEidogoTheme.mxGameConfig .mxNavigationParentDiv,.mxEidogoTheme.mxProblemConfig .mxSolveParentDiv,.mxEidogoTheme.mxTreeConfig .mxNavigationParentDiv{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;}.mxEidogoTheme.mxBasicConfig .mxNavigationDiv,.mxEidogoTheme.mxCommentConfig .mxNavigationDiv,.mxEidogoTheme.mxGameConfig .mxNavigationDiv,.mxEidogoTheme.mxProblemConfig .mxSolveDiv,.mxEidogoTheme.mxTreeConfig .mxNavigationDiv{flex:4;text-align:left;}.mxEidogoTheme.mxCommentConfig .mxMoveInfoDiv,.mxEidogoTheme.mxTreeConfig .mxMoveInfoDiv{flex:2;text-align:center;}.mxEidogoTheme.mxBasicConfig .mxPassDiv,.mxEidogoTheme.mxCommentConfig .mxPassDiv,.mxEidogoTheme.mxGameConfig .mxPassDiv,.mxEidogoTheme.mxProblemConfig .mxPassDiv,.mxEidogoTheme.mxTreeConfig .mxPassDiv{flex:1;text-align:right;}.mxEidogoTheme.mxBasicConfig .mxMoveInfoDiv svg,.mxEidogoTheme.mxCommentConfig .mxMoveInfoDiv svg,.mxEidogoTheme.mxGameConfig .mxMoveInfoDiv svg,.mxEidogoTheme.mxTreeConfig .mxMoveInfoDiv svg{display:block;width:100%;height:100%;max-height:1.75em;min-width:3em;}.mxEidogoTheme.mxBasicConfig .mxMoveInfoDiv text:not(:first-of-type),.mxEidogoTheme.mxCommentConfig .mxMoveInfoDiv text:not(:first-of-type),.mxEidogoTheme.mxGameConfig .mxMoveInfoDiv text:not(:first-of-type),.mxEidogoTheme.mxTreeConfig .mxMoveInfoDiv text:not(:first-of-type){fill:#aac8c2;stroke:#aac8c2;}.mxEidogoTheme.mxTreeConfig .mxTreeDiv{user-select:none;}.mxEidogoTheme.mxDiagramConfig .mxNotSeenDiv{max-width:var(--gobanMaxWidth);margin:0 auto;}.mxEidogoTheme .mxInnerNotSeenDiv:not(:empty){margin:0auto;padding:0.25em 0;background:#bba;}.mxEidogoTheme .mxInnerNotSeenDiv{margin:0 auto;}.mxEidogoTheme .mxNotSeenSvg{width:100%;height:100%;display:block;}.mxEidogoTheme.mxProblemConfig .mxCommentDiv{margin:0 auto;background:#bba;}.mxEidogoTheme.mxProblemConfig .mxCommentDiv{height:2.3em;padding:0.25em;background:#bba;border:1px solid #bba;overflow:auto;}.mxEidogoTheme.mxProblemConfig .mxCommentDiv:focus{border:1px solid rgba(255,255,255,0.5);}.mxEidogoTheme .mxNavigationDiv,.mxEidogoTheme .mxSolveDiv{margin:0;display:flex;flex-wrap:wrap;}.mxEidogoTheme .mxPassDiv{margin:0;}.mxEidogoTheme .mxNavigationDiv:empty,.mxEidogoTheme .mxSolveDiv:empty{margin:0;display:block;}.mxEidogoTheme .mxNavigationDiv button,.mxEidogoTheme .mxPassDiv button,.mxEidogoTheme .mxSolveDiv button{font-size:0.75em;margin:0.125em;vertical-align:middle;border-top:1px solid #fcfafc;border-left:1px solid #fcfafc;border-right:1px solid #fcfafc;border-bottom:1px solid #c4c6c4;outline:1px solid #000;background-color:#ddd;background:linear-gradient(to top,#fcfafc,#ddd,#999);}.mxEidogoTheme .mxNavigationDiv button,.mxEidogoTheme .mxSolveDiv button{flex:0 1 3em;height:2em;max-width:3em;min-width:2em;padding:0;}.mxEidogoTheme .mxNavigationDiv button span,.mxEidogoTheme .mxSolveDiv button span{display:block;width:50%;max-width:1.125em;margin:0 auto;}.mxEidogoTheme .mxPassDiv button{height:2em;white-space:nowrap;}.mxEidogoTheme .mxPassDiv button span{margin:0 auto;}.mxEidogoTheme .mxNavigationDiv button svg,.mxEidogoTheme .mxSolveDiv button svg{display:block;width:100%;height:100%;}.mxEidogoTheme .mxPassDiv button span{white-space:no-break;}.mxEidogoTheme .mxNavigationDiv button svg polygon,.mxEidogoTheme .mxNavigationDiv button svg rect,.mxEidogoTheme .mxSolveDiv button svg polygon,.mxEidogoTheme .mxSolveDiv button svg rect{fill:#ec1e24;}.mxEidogoTheme .mxPassDiv button span{color:#444;}.mxEidogoTheme .mxPassDiv button.mxOnVariationPassBtn span{color:#ec1e24;}.mxEidogoTheme .mxNavigationDiv button[disabled] svg polygon,.mxEidogoTheme .mxNavigationDiv button[disabled] svg rect,.mxEidogoTheme .mxSolveDiv button[disabled] svg polygon,.mxEidogoTheme .mxSolveDiv button[disabled] svg rect{fill:#999;}.mxEidogoTheme .mxPassDiv button[disabled] span{color:#999;}.mxEidogoTheme .mxNavigationDiv button:focus,.mxEidogoTheme .mxSolveDiv button:focus,.mxEidogoTheme .mxPassDiv button:focus,.mxEidogoTheme .mxVariationDiv input[type=button]:focus{outline:1px solid rgba(255,255,255,0.5);}";
 // general
 mxG.D[mxG.K].a.in3dOn=1; // (0,1) default 1
 mxG.D[mxG.K].a.htmlParenthesis=1; // (0,1) default 0

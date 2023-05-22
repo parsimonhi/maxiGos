@@ -7,7 +7,10 @@
 <?php include "../../_php/version.php";?>
 <title>Documentation pour maxiGos v<?php print $v;?></title>
 <style>
-p.em, p.note {font-style:italic;}
+p.note {font-style:italic;}
+h1+em,
+h1+em+nav {display:block;text-align:center;}
+h1+em+nav {margin-top:0.5em;}
 pre,
 .code
 {
@@ -53,7 +56,6 @@ img.flag
 	width:1.8em;
 	height:auto;
 }
-.download {text-align:center;padding:1em 0 0 0;}
 .classList>div {margin:1em 0;}
 .classList>div div {margin-left:2em;}
 h2 .component,
@@ -103,8 +105,8 @@ figure.maxigosSample
 --><a href="<?php print str_replace("/_fr/","/_en/",$_SERVER["SCRIPT_NAME"]);?>"><img alt="English" class="flag" src="../../_img/flag/en.svg">English</a><!--
 --><a href="<?php print str_replace("/_en/","/_fr/",$_SERVER["SCRIPT_NAME"]);?>"><img alt="Français" class="flag" src="../../_img/flag/fr.svg">Français</a></nav>
 <h1>Documentation pour maxiGos v<?php print $v;?></h1>
-<p class="em">Copyright 1998-<?php print date("Y");?> - FM&SH</p>
-<div class="download"><a href="download.php">Cliquez ici pour aller à la page de téléchargement</a></div>
+<em>Copyright 1998-<?php print date("Y");?> - FM&SH</em>
+<nav><a href="download.php">Téléchargement</a></nav>
 <h2>Qu'est-ce que maxiGos ?</h2>
 <p>MaxiGos est un ensemble de lecteurs sgf permettant d'afficher
 des diagrammes, parties ou problèmes de go dans une page web. </p>
@@ -1042,14 +1044,14 @@ lorsque "Goban" est trop petit.</td>
 <tr>
 <td><span class="parameter">gridMargin</span></td>
 <td><span class="attribute">data-maxigos-grid-margin</span></td>
-<td>Nombre de pixels à ajouter entre le bord de la grille et son contenu.</td>
+<td>Nombre de pixels à ajouter à l'extérieur de la grille.</td>
 <td>Un nombre réel</td>
 <td>0</td>
 </tr>
 <tr>
 <td><span class="parameter">gridPadding</span></td>
 <td><span class="attribute">data-maxigos-grid-padding</span></td>
-<td>Nombre de pixels à ajouter à l'extérieur de la grille.</td>
+<td>Nombre de pixels à ajouter entre le bord de la grille et son contenu.</td>
 <td>Un nombre réel</td>
 <td>0</td>
 </tr>
@@ -1063,8 +1065,7 @@ lorsque "Goban" est trop petit.</td>
 <tr>
 <td><span class="parameter">gobanPadding</span></td>
 <td><span class="attribute">data-maxigos-goban-padding</span></td>
-<td>Nombre de pixels à ajouter entre la grille du goban
-et son conteneur.</td>
+<td>Nombre de pixels à ajouter entre le bord du goban et la grille du goban.</td>
 <td>Un nombre réel</td>
 <td>0</td>
 </tr>

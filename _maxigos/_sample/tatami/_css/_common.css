@@ -1,6 +1,7 @@
 .mxTatamiTheme
 {
 	--gobanMaxWidth:30em;
+	--gobanMinWidth:10em;
 	text-align:left;
 }
 /* general */
@@ -36,6 +37,7 @@
 .mxTatamiTheme
 {
 	max-width:calc(var(--gobanMaxWidth) * 54.5 / 30);
+	min-width:var(--gobanMinWidth);
 	background:#f3f3f3;
 	margin:0 auto;
 }
@@ -69,9 +71,9 @@
 .mxTatamiTheme.mxGameConfig .mxGobanParentDiv,
 .mxTatamiTheme.mxTreeConfig .mxGobanParentDiv
 {
-	min-height:calc(var(--gobanMaxWidth) * 3 / 5);
 	/* to center the goban vertically *
 	/* if it is less hight than bowl */
+	min-height:calc(var(--gobanMaxWidth) * 3 / 5);
 	display:flex;
 	flex-direction:column;
 }
@@ -197,9 +199,7 @@
 }
 .mxTatamiTheme.mxTreeConfig .mxTreeDiv
 {
-	resize:vertical;
 	user-select:none;
-	max-height:42em;
 }
 /* diagram */
 .mxTatamiTheme.mxDiagramConfig .mxNotSeenDiv
@@ -357,6 +357,7 @@
 	position:absolute;
 	max-width:calc(var(--gobanMaxWidth) / 2);
 	height:calc(var(--gobanMaxWidth) * 3 / 5);
+	max-height:100%;
 	overflow:hidden;
 	text-align:center;
 }
@@ -382,7 +383,6 @@
 .mxTatamiTheme .mxPrisonersSpan
 {
 	display:none;
-	width:calc(var(--gobanMaxWidth) / 3);
 }
 .mxTatamiTheme .mxPrisonersStoneSpan
 {

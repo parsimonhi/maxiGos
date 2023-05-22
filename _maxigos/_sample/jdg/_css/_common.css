@@ -119,6 +119,7 @@
 {
 	flex:1;
 	min-height:7em;
+	max-height:14em;
 	margin:0;
 }
 .mxJdgTheme.mxProblemConfig .mxCommentDiv
@@ -147,7 +148,7 @@
 }
 .mxJdgTheme.mxCommentConfig .mxCommentContentDiv,
 .mxJdgTheme.mxTreeConfig .mxCommentContentDiv,
-.mxJdgTheme.mxTreeConfig .mxTreeContentDiv
+.mxJdgTheme .mxTreeContentDiv
 {
 	position:absolute;
 }

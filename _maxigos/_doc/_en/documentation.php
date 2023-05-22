@@ -6,7 +6,10 @@
 <?php include "../../_php/version.php";?>
 <title>Documentation for maxiGos v<?php print $v;?></title>
 <style>
-p.em, p.note {font-style:italic;}
+p.note {font-style:italic;}
+h1+em,
+h1+em+nav {display:block;text-align:center;}
+h1+em+nav {margin-top:0.5em;}
 pre,
 .code
 {
@@ -52,7 +55,6 @@ img.flag
 	width:1.8em;
 	height:auto;
 }
-.download {text-align:center;padding:1em 0 0 0;}
 .classList>div {margin:1em 0;}
 .classList>div div {margin-left:2em;}
 h2 .component,
@@ -102,8 +104,8 @@ figure.maxigosSample
 --><a href="<?php print str_replace("/_fr/","/_en/",$_SERVER["SCRIPT_NAME"]);?>"><img class="flag" src="../../_img/flag/en.svg">English</a><!--
 --><a href="<?php print str_replace("/_en/","/_fr/",$_SERVER["SCRIPT_NAME"]);?>"><img class="flag" src="../../_img/flag/fr.svg">Fran&ccedil;ais</a></p>
 <h1>Documentation for maxiGos v<?php print $v;?></h1>
-<p class="em">Copyright 1998-<?php print date("Y");?> - FM&SH</p>
-<div class="download"><a href="download.php">Click here to go to the download page</a></div>
+<em>Copyright 1998-<?php print date("Y");?> - FM&SH</em>
+<nav><a href="download.php">Download</a></nav>
 <h2>What is maxiGos?</h2>
 <p>MaxiGos is a set of sgf viewers to display
 go diagrams, games or problems in a web page.</p>

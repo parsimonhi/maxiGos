@@ -716,7 +716,7 @@ mxG.G.prototype.checkEditMarkOrLabel=function(x,y,m)
 };
 mxG.G.prototype.doMouseMoveEdit=function(ev)
 {
-	if((this.editTool=="Select")&&(this.inSelect==1)&&!mxG.isAndroid)
+	if((this.editTool=="Select")&&(this.inSelect==1))
 	{
 		if(ev.preventDefault) ev.preventDefault();
 		var c=this.scr.getC(ev);
@@ -725,11 +725,7 @@ mxG.G.prototype.doMouseMoveEdit=function(ev)
 };
 mxG.G.prototype.doMouseDownEditSelect=function(x,y)
 {
-	if(this.inSelect==1)
-	{
-		if(mxG.isAndroid) this.selectGobanArea(x,y);
-		this.inSelect=0;
-	}
+	if(this.inSelect==1) this.inSelect=0;
 	else
 	{
 		this.inSelect=1;
@@ -743,7 +739,7 @@ mxG.G.prototype.doMouseDownEditSelect=function(x,y)
 };
 mxG.G.prototype.doMouseDownEdit=function(ev)
 {
-	if((this.editTool=="Select")&&!mxG.isAndroid)
+	if(this.editTool=="Select")
 	{
 		var c=this.scr.getC(ev);
 		this.doMouseDownEditSelect(c.x,c.y);
@@ -755,7 +751,7 @@ mxG.G.prototype.doMouseUpEditSelect=function(x,y)
 };
 mxG.G.prototype.doMouseUpEdit=function(ev)
 {
-	if((this.editTool=="Select")&&!mxG.isAndroid)
+	if(this.editTool=="Select")
 	{
 		var c=this.scr.getC(ev);
 		this.doMouseUpEditSelect(c.x,c.y);
@@ -763,10 +759,7 @@ mxG.G.prototype.doMouseUpEdit=function(ev)
 };
 mxG.G.prototype.doMouseOutEdit=function(ev)
 {
-	if((this.editTool=="Select")&&!mxG.isAndroid)
-	{
-		this.inSelect=0;
-	}
+	if(this.editTool=="Select") this.inSelect=0;
 };
 mxG.G.prototype.doKeydownSelect=function(x,y)
 {
@@ -795,7 +788,6 @@ mxG.G.prototype.checkEdit=function(x,y)
 		case "Circle": this.checkEditMarkOrLabel(x,y,"CR");break;
 		case "Square": this.checkEditMarkOrLabel(x,y,"SQ");break;
 		case "Label": this.checkEditMarkOrLabel(x,y,"LB");break;
-		case "Select": if(mxG.isAndroid) this.doMouseDownEditSelect(x,y);break;
 	}
 };
 mxG.G.prototype.doClickEdit=function(ev)

@@ -52,8 +52,7 @@ mxG.G.prototype.doScrollTree=function(ev)
 };
 mxG.G.prototype.buildOneTreeBlockContainer=function(x,y)
 {
-	var gr,dd=this.ddT,k=this.k,
-		m=this.treeM,n=this.treeN;
+	var gr,dd=this.ddT,k=this.k,m=this.treeM,n=this.treeN;
 	n=Math.min(n,this.treeRowMax-y);
 	gr=document.createElementNS("http://www.w3.org/2000/svg","svg");
 	gr.setAttribute("id",this.n+"TreeBlockSvg"+this.idt(x,y));
@@ -65,7 +64,8 @@ mxG.G.prototype.buildOneTreeBlockContainer=function(x,y)
 	gr.setAttributeNS(null,"fill","none");
 	gr.setAttributeNS(null,"stroke","none");
 	gr.style.display="block";
-	gr.style.width="calc("+this.treeM+" * 2.5em)";
+	// 2.5em per tree stone and its tree line is the simplest
+	gr.style.width=m*2.5+"em";
 	gr.style.maxWidth="none"; // to be sure (some cms may set it to 100%)
 	gr.getMClick=mxG.getMClick;
 	if(gr.addEventListener)
@@ -401,9 +401,9 @@ mxG.G.prototype.drawTree=function()
 	// draw around current node only
 	for(k=ko-1;k<=ko+1;k++) this.drawTreeBlock(k*this.treeN,nv);
 	km=this.treeBlocks.length;
-	// remove previously appended blocks to TreeContentDiv at the very last moment
+	// remove previously appended blocks to TreeDiv at the very last moment
 	while(e=this.tcd.firstChild) this.tcd.removeChild(e); 
-	// append blocks to TreeContentDiv
+	// append blocks to TreeDiv
 	for(k=0;k<km;k++)
 		this.tcd.appendChild(this.treeBlocks[k]);
 	this.afterDrawTree();
@@ -460,7 +460,7 @@ mxG.G.prototype.isTreeDisabled=function()
 };
 mxG.G.prototype.setTree=function()
 {
-	// remember: remove previous treeContentDiv child at the very last moment
+	// remember: remove previous treeDiv children at the very last moment
 	var k,km=this.rN.Kid.length,aN;
 	this.tree=[];
 	this.treeRowMax=0;
@@ -477,20 +477,6 @@ mxG.G.prototype.setTree=function()
 	this.drawTree();
 	this.treeNodeOnFocus=this.cN;
 	this.hasToSetTree=0;
-};
-mxG.G.prototype.removeAllTreeBlocks=function()
-{
-	var k,km,nv,gr,jo,j,jm;
-	km=this.treeBlocks.length;
-	nv=Math.min(this.treeN,this.treeRowMax);
-	for(k=0;k<km;k++)
-	{
-		gr=this.treeBlocks[k];
-		while(gr.firstChild) gr.removeChild(gr.firstChild);
-		jo=k*nv;
-		jm=jo+nv;
-		for(j=jo;j<jm;j++) this.treeCheck[j]=0;
-	}
 };
 mxG.G.prototype.addVisibleTreeBlocksOnly=function(ko)
 {
@@ -592,9 +578,7 @@ mxG.G.prototype.updateTree=function()
 	if(this.hasToSetTree) this.setTree();
 	else
 	{
-		//let d=new Date().getTime();
 		ko=Math.floor(this.cN.jTree/this.treeN);
-		// this.removeAllTreeBlocks();
 		this.addVisibleTreeBlocksOnly(ko);
 		this.updateTreeEmphasis();
 	}

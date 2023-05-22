@@ -1,6 +1,7 @@
 .mxTigerTheme
 {
 	--gobanMaxWidth:30em;
+	--gobanMinWidth:10em;
 	text-align:left;
 }
 /* general */
@@ -21,87 +22,91 @@
 .mxTigerTheme button text {cursor:pointer;}
 .mxTigerTheme input[type=text][disabled],
 .mxTigerTheme button[disabled] {cursor:default;}
+.mxTigerTheme input[type=file] {visibility:hidden;position:fixed;}
+.mxTigerTheme [data-maxigos-disabled] {opacity:0.5;}
 /* font */
 .mxTigerTheme
 {
 	font-family:sans-serif;
 }
-.mxTigerTheme svg
-{
-	font-family:arial,sans-serif;
-}
+/* don't style svg font-family since */
+/* since minimalist is the default maxigos style set with js */
 .mxTigerTheme button
 {
 	font-family:sans-serif;
 }
 /* layout */
+.mxTigerTheme
+{
+	box-sizing:border-box;
+	max-width:var(--gobanMaxWidth);
+	min-width:var(--gobanMinWidth);
+	margin:0 auto;
+}
+.mxTigerTheme.mxCommentConfig,
+.mxTigerTheme.mxTreeConfig
+{
+	display:flex;
+	flex-wrap:wrap;
+	justify-content:center;
+	align-items:stretch;
+	max-width:calc(var(--gobanMaxWidth) * 2);
+}
 .mxTigerTheme.mxCommentConfig>div,
 .mxTigerTheme.mxTreeConfig>div
 {
 	box-sizing:border-box;
-	display:flex;
-	flex-wrap:wrap;
-	justify-content:center;
-	max-width:calc(var(--gobanMaxWidth) * 2);
-	min-width:9em;
-	margin:0 auto;
-}
-.mxTigerTheme.mxCommentConfig>div>div,
-.mxTigerTheme.mxTreeConfig>div>div
-{
-	box-sizing:border-box;
 	max-width:var(--gobanMaxWidth);
 	flex:1 1 var(--gobanMaxWidth);
-}
-.mxTigerTheme.mxCommentConfig .mxGobanGrandParentDiv,
-.mxTigerTheme.mxTreeConfig .mxGobanGrandParentDiv
-{
-	display:flex;
-	flex-direction:column;
-	justify-content:space-between;
-}
-.mxTigerTheme.mxCommentConfig .mxGobanGrandParentDiv+div,
-.mxTigerTheme.mxTreeConfig .mxGobanGrandParentDiv+div
-{
-	display:flex;
-	flex-direction:column;
-	justify-content:space-between;
+	padding:0.125em;
 }
 .mxTigerTheme.mxCommentConfig .mxGobanParentDiv,
-.mxTigerTheme.mxTreeConfig .mxGobanParentDiv
+.mxTigerTheme.mxTreeConfig .mxGobanParentDiv,
+.mxTigerTheme.mxCommentConfig .mxVersionParentDiv,
+.mxTigerTheme.mxTreeConfig .mxVersionParentDiv
 {
-	flex:1;
 	display:flex;
 	flex-direction:column;
-	border:1px solid #e0e0e0;
-	margin:0.25em;
 }
 .mxTigerTheme.mxCommentConfig .mxGobanDiv,
 .mxTigerTheme.mxTreeConfig .mxGobanDiv
 {
-	margin:auto;
+	flex:auto;
+	display:flex;
+	flex-direction:column;
 	width:100%;
 }
 .mxTigerTheme.mxCommentConfig .mxCommentDiv,
 .mxTigerTheme.mxTreeConfig .mxCommentDiv,
-.mxTigerTheme.mxTreeConfig .mxTreeDiv
+.mxTigerTheme .mxTreeDiv
 {
-	flex:1;
-	min-height:7em;
-	margin:0.25em;
+	height:8em;
+	min-height:2.25em;
+	padding:0.25em;
+	resize:vertical;
+	overflow:auto;
+}
+.mxTigerTheme.mxCommentConfig .mxCommentDiv,
+.mxTigerTheme .mxTreeDiv
+{
+	flex:auto;
+}
+.mxTigerTheme .mxTreeDiv
+{
+	margin:0.25em 0 0 0;
 }
 /* set position:absolute to .mxXxxContentDiv to avoid overflow */
 /* when available space is narrower than --gobanMaxWidth */
 /* and when .mxXxxContentDiv is wider than available space */
 .mxTigerTheme.mxCommentConfig .mxCommentDiv,
 .mxTigerTheme.mxTreeConfig .mxCommentDiv,
-.mxTigerTheme.mxTreeConfig .mxTreeDiv
+.mxTigerTheme .mxTreeDiv
 {
 	position:relative;
 }
 .mxTigerTheme.mxCommentConfig .mxCommentContentDiv,
 .mxTigerTheme.mxTreeConfig .mxCommentContentDiv,
-.mxTigerTheme.mxTreeConfig .mxTreeContentDiv
+.mxTigerTheme .mxTreeContentDiv
 {
 	position:absolute;
 }
@@ -109,16 +114,21 @@
 {
 	box-sizing:border-box;
 	text-align:center;
-	height:2.5em;
-	line-height:2.5em;
+	height:2em;
+	line-height:2em;
 }
 /* common */
+.mxTigerTheme .mxGobanDiv
+{
+	box-sizing:border-box;
+	border:1px solid #e0e0e0;
+}
 .mxTigerTheme .mxInnerGobanDiv
 {
 	/* avoid bad touch effect on mobile */
 	-webkit-tap-highlight-color:rgba(0,0,0,0);
 	user-select:none;
-	margin:0 auto;
+	margin:auto;
 	position:relative;
 }
 .mxTigerTheme .mxGobanDiv svg
@@ -182,9 +192,7 @@
 .mxTigerTheme.mxTreeConfig .mxCommentDiv,
 .mxTigerTheme .mxTreeDiv
 {
-	padding:0.25em;
 	border:1px solid #e0e0e0;
-	overflow:auto;
 }
 .mxTigerTheme .mxCommentDiv h1 {font-family:Arial,sans-serif;font-size:1em;text-align:left;padding-top:0;margin-top:0;}
 .mxTigerTheme .mxHeaderContentDiv {color:#000;font-weight:bold;}
@@ -281,7 +289,7 @@
 /* focus */
 .mxTigerTheme.mxCommentConfig .mxCommentDiv:focus,
 .mxTigerTheme.mxTreeConfig .mxCommentDiv:focus,
-.mxTigerTheme.mxTreeConfig .mxTreeDiv:focus
+.mxTigerTheme .mxTreeDiv:focus
 {
 	border:1px solid #000;
 }

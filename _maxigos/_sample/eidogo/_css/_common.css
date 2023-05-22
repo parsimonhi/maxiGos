@@ -125,10 +125,8 @@
 .mxEidogoTheme.mxCommentConfig .mxNavigationParentDiv,
 .mxEidogoTheme.mxGameConfig .mxNavigationParentDiv,
 .mxEidogoTheme.mxTreeConfig .mxNavigationParentDiv,
-.mxEidogoTheme.mxCommentConfig .mxGotoDiv,
-.mxEidogoTheme.mxTreeConfig .mxGotoDiv,
-.mxEidogoTheme.mxCommentConfig .mxVariationDiv,
-.mxEidogoTheme.mxTreeConfig .mxVariationDiv
+.mxEidogoTheme.mxCommentConfig>*,
+.mxEidogoTheme.mxTreeConfig>*
 {
 	flex:0 0 auto;
 }
@@ -151,7 +149,7 @@
 }
 .mxEidogoTheme.mxCommentConfig .mxCommentContentDiv,
 .mxEidogoTheme.mxTreeConfig .mxCommentContentDiv,
-.mxEidogoTheme.mxTreeConfig .mxTreeContentDiv
+.mxEidogoTheme .mxTreeContentDiv
 {
 	position:absolute;
 }
@@ -189,15 +187,14 @@
 	fill:#a89470;
 	stroke:#a89470;
 }
-.mxEidogoTheme .mxGobanLine
+.mxEidogoTheme .mxGobanLines
 {
 	stroke:#b19655;
 }
-.mxEidogoTheme .mxStar
+.mxEidogoTheme .mxStars
 {
 	fill:#705f36;
 	stroke:none;
-	r:2px;
 }
 .mxEidogoTheme.mxIn3d circle.mxBlack
 {

@@ -1,6 +1,7 @@
 .mxRosewoodTheme
 {
 	--gobanMaxWidth:30em;
+	--gobanMinWidth:10em;
 	text-align:left;
 }
 /* general */
@@ -36,6 +37,7 @@
 .mxRosewoodTheme
 {
 	max-width:var(--gobanMaxWidth);
+	min-width:var(--gobanMinWidth);
 	margin:0 auto;
 }
 .mxRosewoodTheme .mxVersionDiv {display:none;}
@@ -72,7 +74,7 @@
 	stroke:#eca;
 	stroke-width:2px;
 }
-.mxRosewoodTheme .mxGobanDiv svg .mxGobanLine
+.mxRosewoodTheme .mxGobanDiv svg .mxGobanLines
 {
 	stroke:#eca;
 }
@@ -81,11 +83,11 @@
 	stroke:#eca;
 	fill:#eca;
 }
-.mxRosewoodTheme .mxGobanDiv svg .mxStar
+.mxRosewoodTheme .mxGobanDiv svg .mxStars
 {
 	fill:#eca;
-	stroke:none;
-	r:4px;
+	stroke:#eca;
+	stroke-width:5px;
 }
 .mxRosewoodTheme .mxGobanDiv text.mxOnBlack.mxLabel,
 .mxRosewoodTheme .mxGobanDiv text.mxOnBlack.mxVariation

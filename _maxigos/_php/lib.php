@@ -32,12 +32,12 @@ function printOneInternationalizationScriptLine($langCode)
 		else if($langCode=="zh-hant") $l="traditional chinese";
 		else return;
 	}
-	echo "<div>";
+	echo "<li>";
 	if($lang=="fr")
-		echo "<a href='$j' download='$s'>Téléchargement de $s</a> ($l)\n";
+		echo "<a href='$j' download='$s'>Téléchargement de $s</a> ($l)";
 	else 
-		echo "<a href='$j' download='$s'>Download $s</a> ($l)\n";
-	echo "</div>";
+		echo "<a href='$j' download='$s'>Download $s</a> ($l)";
+	echo "</li>\n";
 }
 function printOneDownloadLine($theme,$config)
 {

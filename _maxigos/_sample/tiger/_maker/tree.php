@@ -19,7 +19,7 @@ include "../../../_js/mgosVersion.js";
 include "../_js/tigerPatch.js";
 ?>
 mxG.K++;
-mxG.B=[[[["Goban"],"Navigation","Loop","Variation"],["TigerComment","Header","Tree"]],"Version"];
+mxG.B=[["Goban","Navigation","Loop","Variation"],["TigerComment","Header","Tree","Version"]];
 mxG.D[mxG.K]=new mxG.G(mxG.K,mxG.B);
 mxG.D[mxG.K].theme="<?php echo $theme ?>";
 mxG.D[mxG.K].config="<?php echo $config ?>";

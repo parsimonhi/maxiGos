@@ -1565,6 +1565,7 @@ _sgf/joseki/j2.sgf
 [jj:Centre]
 [cc:Coin]
 [jc:Bord]
+[jp:Bord du bas]
 )
 <?php } else if ($lang=="ja") { ?>
 (
@@ -1597,6 +1598,7 @@ _sgf/joseki/j2.sgf
 [jj:Center]
 [cc:Corner]
 [jc:Edge]
+[jp:Bottom edge]
 )
 <?php } ?>
 </script>

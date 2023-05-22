@@ -13,8 +13,6 @@ mxG.G.prototype.svgToDataURL=function(b)
 	{
 		s=window.getComputedStyle(rect1,null);
 		v=s.getPropertyValue("fill");
-		//alert("v="+v);
-		//alert("mxWholeRect fill="+rect1.getAttributeNS(null,"fill"));
 		rect2=e2.querySelector(".mxWholeRect");
 		rect2.setAttributeNS(null,"fill",v);
 	}

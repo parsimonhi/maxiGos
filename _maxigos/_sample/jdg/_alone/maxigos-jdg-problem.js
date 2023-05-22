@@ -4,7 +4,7 @@
 if(typeof mxG=='undefined') mxG={};
 if(!mxG.V)
 {
-mxG.V="7.04";
+mxG.V="7.05";
 mxG.Y="2023";
 mxG.C="FM&SH";
 mxG.D=[];
@@ -65,7 +65,6 @@ mxG.shuffle=function(a)
 	}
 	return a;
 };
-mxG.isAndroid=(navigator.userAgent.toLowerCase().indexOf("android")>-1);
 mxG.canOpen=function()
 {var r;return !(typeof FileReader=='undefined')&&(r=new FileReader())&&(r.readAsText);};
 mxG.getLang=function(t)
@@ -473,10 +472,8 @@ mxG.S=function(p)
 };
 mxG.S.prototype.star=function(x,y)
 {
-	var DX=this.DX,DY=this.DY;
-	var Ax=4,Bx=DX+1-Ax,Cx=((DX+1)>>1);
-	var Ay=4,By=DY+1-Ay,Cy=((DY+1)>>1);
-	var xok=0,yok=0;
+	let DX=this.DX,DY=this.DY,xok=0,yok=0,
+		Ax=4,Bx=DX+1-Ax,Cx=((DX+1)>>1),Ay=4,By=DY+1-Ay,Cy=((DY+1)>>1);
 	if((DX>11)&&((x==Ax)||(x==Bx))) xok=1;
 	if((DX&1)&&((DX>15)||(x==y))&&(x==Cx)) xok=1;
 	if((DY>11)&&((y==Ay)||(y==By))) yok=1;
@@ -517,7 +514,7 @@ mxG.S.prototype.j2y=function(j)
 };
 mxG.S.prototype.makeText=function(txt,i,j,o)
 {
-	var s,x,y,dx,dy,c,cls,cls2="",wbk,hbk,w,h,dw2,dh2,dz,sw,sx;
+	let s,x,y,dx,dy,c,cls,cls2="",wbk,hbk,w,h,dw2,dh2,dz,sw,sx;
 	cls=o.cls;
 	c=o.c;
 	sw=o.sw;
@@ -568,15 +565,15 @@ mxG.S.prototype.makeText=function(txt,i,j,o)
 	}
 	// font-family, font-size and text-anchor are set in svg tag
 	// bug, cannot use dominant-baseline:central everywhere
-	// then just add 5 to y to center text verticaly
+	// then just add 5 to y to center text vertically
 	s+=" x=\""+x+"\" y=\""+(y+5)+"\">";
-	s+=txt;
+	s+=txt.replace(/</g,"&lt;").replace(/>/g,"&gt;");
 	s+="</text>";
 	return s;
 };
 mxG.S.prototype.make2dStone=function(c,x,y,r,o)
 {
-	var s;
+	let s;
 	s="<circle class=\"mx"+c+"\"";
 	if(o.opacity<1) s+="fill-opacity=\""+o.opacity+"\"";
 	if(!o.ignoreFillAndStroke) // alone stones, animated stones ...
@@ -591,7 +588,7 @@ mxG.S.prototype.make2dStone=function(c,x,y,r,o)
 };
 mxG.S.prototype.makeStoneShadow=function(c,x,y,r,o)
 {
-	var s="",e=this.stoneShadowWidth;
+	let s="",e=this.stoneShadowWidth;
 	s+="<circle class=\"mx"+c+"Shadow\"";
 	// opacity better than rgba() for exporting
 	if(!o.ignoreFillAndStroke) s+=" fill=\"#000\" opacity=\"0.2\"";
@@ -600,7 +597,7 @@ mxG.S.prototype.makeStoneShadow=function(c,x,y,r,o)
 };
 mxG.S.prototype.make3dStone1=function(c,x,y,r,o)
 {
-	var s="",e=this.stoneShadowWidth;
+	let s="",e=this.stoneShadowWidth;
 	if(o.stoneShadowOn) s+=this.makeStoneShadow(c,x,y,r,o);
 	s+="<circle class=\"mx"+c+"\"";
 	if(o.opacity<1) s+="fill-opacity=\""+o.opacity+"\"";
@@ -611,7 +608,7 @@ mxG.S.prototype.make3dStone1=function(c,x,y,r,o)
 mxG.S.prototype.make3dStone2=function(c,x,y,r,o)
 {
 	// do not ignore fill and stroke here
-	var s="",a,rg;
+	let s="",a,rg;
 	if(o.stoneShadowOn) s+=this.makeStoneShadow(c,x,y,r,o);
 	s+="<circle class=\"mx"+c+"\"";
 	if(o.opacity<1) s+="fill-opacity=\""+o.opacity+"\"";
@@ -637,7 +634,7 @@ mxG.S.prototype.makeStone=function(c,x,y,r,o)
 mxG.S.prototype.makeTextOnAloneStone=function(txt,x,y,d,c,o)
 {
 	// assume txt is a number
-	var s,x,y;
+	let s;
 	txt+="";
 	s="<text";
 	s+=" text-anchor=\"middle\"";
@@ -664,7 +661,7 @@ mxG.S.prototype.makeTextOnAloneStone=function(txt,x,y,d,c,o)
 	}
 	// font-family, font-size and text-anchor are set in svg tag
 	// bug, cannot use dominant-baseline:central everywhere
-	// then just add 5 to y to center text verticaly
+	// then just add 5 to y to center text vertically
 	s+=" x=\""+x+"\" y=\""+(y+5)+"\">";
 	s+=txt;
 	s+="</text>";
@@ -672,7 +669,7 @@ mxG.S.prototype.makeTextOnAloneStone=function(txt,x,y,d,c,o)
 };
 mxG.S.prototype.makeTextAfterAloneStone=function(txt,d,c)
 {
-	var s,x,y;
+	let s,x,y;
 	txt+="";
 	x=d+d/8;
 	y=d/2;
@@ -681,7 +678,7 @@ mxG.S.prototype.makeTextAfterAloneStone=function(txt,d,c)
 	if(this.sw4text) s+=" stroke=\""+c+"\" stroke-width=\""+this.sw4text+"\"";
 	// font-family and font-size are set in svg tag
 	// bug, cannot use dominant-baseline:central everywhere
-	// then just add 5 to y to center text verticaly
+	// then just add 5 to y to center text vertically
 	s+=" x=\""+x+"\" y=\""+(y+5)+"\">";
 	s+=txt;
 	s+="</text>";
@@ -689,7 +686,7 @@ mxG.S.prototype.makeTextAfterAloneStone=function(txt,d,c)
 };
 mxG.S.prototype.makeAloneStone=function(nat,n,o)
 {
-	var s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c,t;
+	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c,t;
 	z=(o.in3dOn&&o.stoneShadowOn)?this.stoneShadowWidth:0;
 	s="<svg";
 	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
@@ -713,7 +710,7 @@ mxG.S.prototype.makeAloneStone=function(nat,n,o)
 };
 mxG.S.prototype.makeAloneStoneAndText=function(nat,n,v,o)
 {
-	var s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c,t;
+	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c,t;
 	z=(o.in3dOn&&o.stoneShadowOn)?this.stoneShadowWidth:0;
 	s="<svg";
 	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
@@ -744,7 +741,7 @@ mxG.S.prototype.makeTextSomewhere=function(txt,x,y,c,centered)
 {
 	// x: center of the text if centered, beginning of the text otherwise
 	// y: center of the text
-	var s;
+	let s;
 	txt+="";
 	s="<text class=\"mxTextSomewhere\"";
 	s+=" fill=\""+c+"\"";
@@ -752,7 +749,7 @@ mxG.S.prototype.makeTextSomewhere=function(txt,x,y,c,centered)
 	if(centered) s+=" text-anchor=\"middle\"";
 	// font-family and font-size are set in svg tag
 	// bug, cannot use dominant-baseline:central everywhere
-	// then just add 5 to y to center text verticaly
+	// then just add 5 to y to center text vertically
 	s+=" x=\""+x+"\" y=\""+(y+5)+"\">";
 	s+=txt;
 	s+="</text>";
@@ -760,8 +757,8 @@ mxG.S.prototype.makeTextSomewhere=function(txt,x,y,c,centered)
 };
 mxG.S.prototype.makeNotSeen=function(a,o)
 {
-	var k,km,s="",nw,h4ns,title="",i,j,c,x,y,xo;
-	var d,dd,ddd,z;
+	let k,km,s="",nw,h4ns,title="",i,j,c,x,y,xo;
+	let d,dd,ddd,z;
 	d=this.d;
 	dd=this.d+2;
 	z=(o.in3dOn&&o.stoneShadowOn)?this.stoneShadowWidth:0;
@@ -829,7 +826,7 @@ mxG.S.prototype.makeNotSeen=function(a,o)
 };
 mxG.S.prototype.makeSelectTool=function()
 {
-	var s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c="#000";
+	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c="#000";
 	z=d*3/4;
 	s="<svg";
 	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
@@ -845,7 +842,7 @@ mxG.S.prototype.makeSelectTool=function()
 };
 mxG.S.prototype.makeViewTool=function()
 {
-	var s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c="#000";
+	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c="#000";
 	z=d*3/4;
 	s="<svg";
 	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
@@ -911,8 +908,7 @@ mxG.S.prototype.makeAloneBiStone=function(nat,o)
 };
 mxG.S.prototype.makeMarkOnLast=function(c,x,y,cls)
 {
-	var s,z;
-	z=this.d/6;
+	let s,z=4; // z=this.d/6
 	s="<rect class=\""+cls+"\"";
 	s+=" fill=\""+c+"\"";
 	s+=" x=\""+(x-z)+"\" y=\""+(y-z)+"\"";
@@ -921,7 +917,7 @@ mxG.S.prototype.makeMarkOnLast=function(c,x,y,cls)
 };
 mxG.S.prototype.makeMark=function(c,x,y,cls)
 {
-	var s,x1,y1,x2,y2,z=this.d*0.28;
+	let s,x1,y1,x2,y2,z=6.5; // z=this.d*0.28
 	x1=x-z;
 	y1=y-z;
 	x2=x+z;
@@ -933,7 +929,7 @@ mxG.S.prototype.makeMark=function(c,x,y,cls)
 };
 mxG.S.prototype.makeCircle=function(c,x,y,cls)
 {
-	var s,z=this.d*0.27;
+	let s,z=this.d*0.27;
 	s="<circle class=\""+cls+"\"";
 	s+=" stroke-width=\""+this.sw4mark+"\" stroke=\""+c+"\" fill=\"none\"";
 	s+=" cx=\""+x+"\" cy=\""+y+"\" r=\""+z+"\"/>";
@@ -941,7 +937,7 @@ mxG.S.prototype.makeCircle=function(c,x,y,cls)
 };
 mxG.S.prototype.makeTriangle=function(c,x,y,cls)
 {
-	var s,x1,y1,x2,y2,x3,y3,z=this.d*0.32;
+	let s,x1,y1,x2,y2,x3,y3,z=this.d*0.32;
 	x1=x;
 	y1=y-z;
 	x2=x-z;
@@ -955,7 +951,7 @@ mxG.S.prototype.makeTriangle=function(c,x,y,cls)
 };
 mxG.S.prototype.makeSquare=function(c,x,y,cls)
 {
-	var s,z=this.d*0.27;
+	let s,z=this.d*0.27;
 	s="<rect class=\""+cls+"\"";
 	s+=" stroke-width=\""+this.sw4mark+"\" stroke=\""+c+"\" fill=\"none\"";
 	s+=" x=\""+(x-z)+"\" y=\""+(y-z)+"\"";
@@ -964,7 +960,7 @@ mxG.S.prototype.makeSquare=function(c,x,y,cls)
 };
 mxG.S.prototype.makeAloneMark=function(m)
 {
-	var s,d=this.d,dd=d+2,x=dd/2,y=dd/2,c="#000",cls="mxTool";
+	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,c="#000",cls="mxTool";
 	s="<svg";
 	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
 	s+=" viewBox=\"0 0 "+dd+" "+dd+"\"";
@@ -984,7 +980,7 @@ mxG.S.prototype.makeAloneToolText=function(txt)
 {
 	// for edit tool only
 	// assume text width is smaller than dd
-	var s,d=this.d,dd=d+2,x=dd/2,y=dd/2,c="#000";
+	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,c="#000";
 	s="<svg";
 	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
 	s+=" viewBox=\"0 0 "+dd+" "+dd+"\"";
@@ -1006,14 +1002,14 @@ mxG.S.prototype.makeAloneToolText=function(txt)
 };
 mxG.S.prototype.makeTerritoryMark=function(a,x,y,cls)
 {
-	var c=(a=="_TB_")?"Black":"White",o;
+	let c=(a=="_TB_")?"Black":"White";
 	if(this.p.territoryMark=="MA") return this.makeMark(c,x,y,cls);
 	o={opacity:1,in3dOn:this.in3dOn,stoneShadowOn:this.stoneShadowOn};
-	return this.makeStone(c,x,y,this.d/4.5,o);
+	return this.makeStone(c,x,y,5,o); // d=this.d/4.5
 };
 mxG.S.prototype.makeFocusMark=function(x,y)
 {
-	var s,z=this.d/2;
+	let s,z=this.d/2;
 	s+="<rect class=\"mxFocusMark\" stroke=\"#000\" fill=\"none\"";
 	s+=" x=\""+(x-z)+"\" y=\""+(y-z)+"\"";
 	s+=" width=\""+z*2+"\" height=\""+z*2+"\"/>";
@@ -1021,7 +1017,7 @@ mxG.S.prototype.makeFocusMark=function(x,y)
 };
 mxG.S.prototype.makeStoneNumberOnGrid=function(i,j,nat,a)
 {
-	var s="",c,cls,x,y;
+	let s="",c,cls,x,y;
 	cls="mxOn"+((nat=="B")?"Black":"White");
 	cls+=" mx"+i+"_"+j;
 	cls+=" mxNumber";
@@ -1039,7 +1035,7 @@ mxG.S.prototype.makeStoneNumberOnGrid=function(i,j,nat,a)
 };
 mxG.S.prototype.makeMarkOrLabel=function(i,j,nat,a)
 {
-	var s="",c,cls,x,y;
+	let s="",c,cls,x,y;
 	cls="mxOn"+((nat=="B")?"Black":(nat=="W")?"White":"Empty");
 	cls+=" mx"+i+"_"+j;
 	c=(nat=="B")?"#fff":"#000";
@@ -1076,21 +1072,21 @@ mxG.S.prototype.makeMarkOrLabel=function(i,j,nat,a)
 };
 mxG.S.prototype.k2katakana=function(ko)
 {
-	var k=this.DX-ko,s;
+	let k=this.DX-ko,s;
 	s="イロハニホヘトチリヌルヲワカヨタレソツ";
 	s+="ネナラムウヰノオクヤマケフコエテアサキユメミシヱヒモセス";
 	return (k<s.length)?s.charAt(k):"";
 };
 mxG.S.prototype.k2kanji=function(k)
 {
-	var s="一二三四五六七八九十";
+	let s="一二三四五六七八九十";
 	if(k<11) return s.charAt(k-1);
 	if(k<20) return "十"+s.charAt(k-11);
 	return "";
 };
 mxG.S.prototype.k2okanji=function(s)
 {
-	var k,ko,a,an,b,bn,c,cn;
+	let k,ko,a,an,b,bn,c,cn;
 	s+="";
 	k=parseInt(s);
 	if(!k) return s;
@@ -1122,7 +1118,7 @@ mxG.S.prototype.k2c=function(k)
 {
 	if(this.oldJapaneseIndicesOn) return this.k2katakana(k);
 	if(this.japaneseIndicesOn) return k+"";
-	var r=((k-1)%25)+1;
+	let r=((k-1)%25)+1;
 	return String.fromCharCode(r+((r>8)?65:64))+((k>25)?(k-r)/25:"");
 };
 mxG.S.prototype.getIndices=function(x,y)
@@ -1135,7 +1131,7 @@ mxG.S.prototype.getIndices=function(x,y)
 };
 mxG.S.prototype.makeIndices=function()
 {
-	var s,i,j,cls1,cls2,m;
+	let s,i,j,cls1,cls2,m;
 	cls1="mxIndice mxHorizontal";
 	if(this.japaneseIndicesOn||this.oldJapaneseIndicesOn) cls2="mxIndice mxVertical";
 	else cls2=cls1;
@@ -1192,14 +1188,13 @@ mxG.S.prototype.gridUnder=function(i,j,nat,str)
 };
 mxG.S.prototype.makeGrid=function(vNat,vStr)
 {
-	var s="",m,i,j,k,x,y,a,ds;
-	s+="<g class=\"mxGobanLines\" fill=\"none\">";
+	let s="",m,i,j,k,x,y,a,rs,gi;
+	s+="<path class=\"mxGobanLines\" fill=\"none\" d=\"";
 	for(i=this.xl;i<=this.xr;i++)
 	{
 		x=this.i2x(i);
-		y=((this.yt==1)?this.dh/2:0)+this.gbsyt;
-		s+="<path class=\"mxGobanLine\"";
-		s+=" d=\"M"+x+" "+y;
+		this.yGridMin=y=((this.yt==1)?this.dh/2:0)+this.gbsyt;
+		s+="M"+x+" "+y;
 		if(this.eraseGridUnder)
 		{
 			m="M";
@@ -1230,17 +1225,15 @@ mxG.S.prototype.makeGrid=function(vNat,vStr)
 			}
 		}
 		else m="V";
-		y=this.gbsyt+(this.yb-this.yt+1)*this.dh-((this.yb==this.DY)?this.dh/2:0);
+		this.yGridMax=y=this.gbsyt+(this.yb-this.yt+1)*this.dh-((this.yb==this.DY)?this.dh/2:0);
 		if(m=="V") s+=m+y;
 		else s+=m+x+" "+y;
-		s+="\"/>";
 	}
 	for(j=this.yt;j<=this.yb;j++)
 	{
-		x=((this.xl==1)?this.dw/2:0)+this.gbsxl;
+		this.xGridMin=x=((this.xl==1)?this.dw/2:0)+this.gbsxl;
 		y=this.j2y(j);
-		s+="<path class=\"mxGobanLine\"";
-		s+=" d=\"M"+x+" "+y;
+		s+="M"+x+" "+y;
 		if(this.eraseGridUnder)
 		{
 			m="M";
@@ -1271,13 +1264,13 @@ mxG.S.prototype.makeGrid=function(vNat,vStr)
 			}
 		}
 		else m="H";
-		x=this.gbsxl+(this.xr-this.xl+1)*this.dw-((this.xr==this.DX)?this.dw/2:0);
+		this.xGridMax=x=this.gbsxl+(this.xr-this.xl+1)*this.dw-((this.xr==this.DX)?this.dw/2:0);
 		if(m=="H") s+=m+x;
 		else s+=m+x+" "+y;
-		s+="\"/>";
 	}
-	s+="</g><g class=\"mxStars\" fill=\"#000\">";
-	ds=this.d/9;
+	s+="\"/>";
+	rs=2*this.sw4grid;
+	s+="<path class=\"mxStars\" fill=\"#000\" d=\"";
 	for(i=this.xl;i<=this.xr;i++)
 		for(j=this.yt;j<=this.yb;j++)
 			if(this.star(i,j))
@@ -1285,16 +1278,19 @@ mxG.S.prototype.makeGrid=function(vNat,vStr)
 				k=this.p.xy(i,j);
 				if(!this.eraseGridUnder||this.gridUnder(i,j,vNat[k],vStr[k]))
 				{
-					s+="<circle class=\"mxStar mxStar"+i+"_"+j+"\"";
-					s+=" cx=\""+this.i2x(i)+"\" cy=\""+this.j2y(j)+"\" r=\""+ds+"\"/>";
+					x=this.i2x(i);
+					y=this.j2y(j);
+					s+="M"+(x+rs)+" "+y+"A"+rs+" "+rs+" 0 1 0 "+(x-rs)+" "+y;
+					// Z is important otherwise the path is not well closed
+					s+="A"+rs+" "+rs+" 0 1 0 "+(x+rs)+" "+y+"Z";
 				}
 			}
-	s+="</g>";
+	s+="\"/>";
 	return s;
 };
 mxG.S.prototype.makeBackground=function(r)
 {
-	var s,x,y,a,b,cls;
+	let s,x,y,a,b,cls;
 	b=this.indicesOn?this.gobp+this.db+this.grim:0; // indices width
 	if(r=="Outer")
 	{
@@ -1332,18 +1328,18 @@ mxG.S.prototype.makeBackground=function(r)
 mxG.S.prototype.getWRatio=function()
 {
 	// get ratio from goban svg to deal the case where no css
-	var b=this.p.getE("GobanSvg").getBoundingClientRect();
+	let b=this.p.getE("GobanSvg").getBoundingClientRect();
 	return this.w/b.width;
 };
 mxG.S.prototype.getHRatio=function()
 {
 	// get ratio from goban svg to deal the case where no css
-	var b=this.p.getE("GobanSvg").getBoundingClientRect();
+	let b=this.p.getE("GobanSvg").getBoundingClientRect();
 	return this.h/b.height;
 };
 mxG.S.prototype.getC=function(ev)
 {
-	var x,y,c=this.ig.getMClick(ev);
+	let x,y,c=this.ig.getMClick(ev);
 	c.x=c.x*this.getWRatio()-this.gbsxl;
 	c.y=c.y*this.getHRatio()-this.gbsyt;
 	x=Math.max(Math.min(Math.floor(c.x/this.dw)+this.xl,this.xr),this.xl);
@@ -1356,7 +1352,7 @@ mxG.S.prototype.setMagicGobanWidth=function(e)
 	// calculate a reduction ratio wr used to display a small gobans or part of a goban
 	// with stones of the same diameter as the stone diameter of a reference goban
 	// the reduction is applied to e which is ig or one of its ancestors
-	var wr,z;
+	let wr,z;
 	if((this.xr-this.xl+1)<=this.pointsNumMax)
 	{
 		z=this.gbsxl+this.gbsxr;
@@ -1374,7 +1370,7 @@ mxG.S.prototype.setMagicGobanWidth=function(e)
 mxG.S.prototype.makeGradient1=function(c)
 {
 	// glass stones
-	var s,r,c1,c2,c3;
+	let s,r,c1,c2,c3;
 	r=(c=="Black")?50:100;
 	c1=(c=="Black")?"#999":"#fff";
 	c2=(c=="Black")?"#333":"#ccc";
@@ -1390,7 +1386,7 @@ mxG.S.prototype.makeGradient1=function(c)
 };
 mxG.S.prototype.makeShellEffect=function(o)
 {
-	var s,s1="<stop stop-color=\"#000\" offset=\"",s2="\" stop-opacity=\"",s3="\"/>";
+	let s,s1="<stop stop-color=\"#000\" offset=\"",s2="\" stop-opacity=\"",s3="\"/>";
 	s=s1+(o-0.03)+s2+"0"+s3;
 	s+=s1+(o-0.02)+s2+"0.0125"+s3;
 	s+=s1+o+s2+"0.0375"+s3;
@@ -1401,7 +1397,7 @@ mxG.S.prototype.makeShellEffect=function(o)
 mxG.S.prototype.makeGradient2=function(c)
 {
 	// slate and shell stones
-	var s,k,l,rg;
+	let s,k,l,rg;
 	s=this.makeGradient1(c);
 	s+="<radialGradient id=\""+this.p.n+c[0]+"RGA\"";
 	s+=" class=\"mx"+c[0]+"RGA\"";
@@ -1459,7 +1455,7 @@ mxG.S.prototype.makeGradient=function(c)
 };
 mxG.S.prototype.addAnimatedGoban=function(c)
 {
-	var s,tpl,list,k,km,co,xo,yo,xn,yn,z,r=this.d/2,o;
+	let s,tpl,list,k,km,co,xo,yo,xn,yn,z,r=this.d/2,o;
 	s="<svg";
 	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
 	s+=" viewBox=\"0 0 "+this.w+" "+this.h+"\"";
@@ -1489,14 +1485,14 @@ mxG.S.prototype.addAnimatedGoban=function(c)
 };
 mxG.S.prototype.removeAnimatedGoban=function(c)
 {
-	var e=this.ig.querySelector("svg:nth-of-type(2)");
+	let e=this.ig.querySelector("svg:nth-of-type(2)");
 	if(e) this.ig.removeChild(e);
 };
 mxG.S.prototype.makeGoban=function()
 {
-	var s,c,p;
-	var i,j;
-	var x,y,x1,y1,x2,y2,w,h,wmax,wr,z,a;
+	let s,c,p;
+	let i,j;
+	let x,y,x1,y1,x2,y2,w,h,wmax,wr,z,a;
 	this.vNat=[];
 	this.vStr=[];
 	this.w=this.dw*(this.xr-this.xl+1)+this.gbsxl+this.gbsxr;
@@ -1543,7 +1539,7 @@ mxG.S.prototype.makeGoban=function()
 	if(this.indicesOn) s+=this.makeIndices();
 	s+=this.makeBackground("Inner");
 	s+="<g id=\""+this.p.n+"Grid\" class=\"mxGrid\"";
-	s+=" stroke=\"#000\" stroke-width=\""+this.sw4grid+"\"></g>";
+	s+=" stroke-width=\""+this.sw4grid+"\" stroke=\"#000\"></g>";
 	s+="<g id=\""+this.p.n+"Points\" class=\"mxPoints\"></g>";
 	s+="<g id=\""+this.p.n+"Focus\" class=\"mxFocus\"></g>";
 	s+="</svg>";
@@ -1552,7 +1548,7 @@ mxG.S.prototype.makeGoban=function()
 mxG.S.prototype.setInternalParameters=function()
 {
 	// internal parameters
-	var stretchingArray=this.stretching.split(",");
+	let stretchingArray=this.stretching.split(",");
 	this.in3dWidthStretch=parseInt(stretchingArray[0]+"");
 	this.in3dHeightStretch=parseInt(stretchingArray[1]+"");
 	this.in2dWidthStretch=parseInt(stretchingArray[2]+"");
@@ -1587,7 +1583,7 @@ mxG.S.prototype.setInternalParameters=function()
 };
 mxG.S.prototype.init=function()
 {
-	var p=this.p;
+	let p=this.p;
 	this.ig=p.getE("InnerGobanDiv"); // DIV where goban displays
 	this.stoneShadowOn=p.stoneShadowOn;
 	this.pointsNumMax=p.pointsNumMax;
@@ -1607,32 +1603,28 @@ mxG.S.prototype.init=function()
 };
 mxG.S.prototype.getLabelLen=function(a,str)
 {
-	var len=a.getComputedTextLength();
+	let len=a.getComputedTextLength();
 	len=(str.length>2)?0.8*len:(str.length>1)?len=0.9*len:len;
 	len+=0.15*this.dw;
 	return Math.max(0.85*this.dw,len);
 };
-mxG.S.prototype.getHorizontalGridLine=function(j)
-{
-	var g=this.p.getE("Grid"),list;
-	list=g.querySelectorAll("path");
-	return list[this.xr-this.xl+1+j-this.yt];
-};
 mxG.S.prototype.getVerticalGridLine=function(i)
 {
-	var g=this.p.getE("Grid"),list;
+	let g=this.p.getE("Grid"),list;
 	list=g.querySelectorAll("path");
 	return list[i-this.xl];
 };
 mxG.S.prototype.eraseVerticalGridSegment=function(i,y)
 {
-	var e,d1,d2,a,b,k,km,x,y1,y2,f1,f2;
-	e=this.getVerticalGridLine(i);
-	d1=e.getAttributeNS(null,"d");
+	let e,d0,d1,d2,a,b,k,km,x,y1,y2,f1,f2;
+	x=this.i2x(i);
+	e=this.p.getE("Grid").querySelector("path");
+	d0=e.getAttributeNS(null,"d");
+	re=new RegExp("M"+x+" "+this.yGridMin+"[^H]*?V"+this.yGridMax);
+	d1=d0.match(re)[0];
 	a=d1.match(/[^M0-9.-][0-9.-]+/g);
 	km=a.length;
 	b=[];
-	x=this.i2x(i);
 	for(k=0;k<km;k++)
 	{
 		b[k]=parseFloat(a[k].substring(1));
@@ -1673,11 +1665,11 @@ mxG.S.prototype.eraseVerticalGridSegment=function(i,y)
 			else d2+="M"+x+" "+b[k];			
 		}
 	}
-	if(d1!=d2) e.setAttributeNS(null,"d",d2);
+	if(d1!=d2) e.setAttributeNS(null,"d",d0.replace(d1,d2));
 };
 mxG.S.prototype.eraseVerticalGridSegments=function(i,j,x,y,w)
 {
-	var i,i1,i2,ik,e;
+	let i1,i2,ik,e;
 	i1=Math.max(this.xl,i-Math.floor(w/2/this.dw));
 	i2=Math.min(this.xr,i+Math.floor(w/2/this.dw));
 	// if (ik==i) the job was done when making the grid
@@ -1697,9 +1689,11 @@ mxG.S.prototype.eraseVerticalGridSegments=function(i,j,x,y,w)
 mxG.S.prototype.eraseLongGridSegment=function(i,j,x,y,w)
 {
 	// is executed only when long label (i.e. almost never)
-	var e,d1,d2,a,b,k,km,x1,x2,m;
-	e=this.getHorizontalGridLine(j);
-	d1=e.getAttributeNS(null,"d");
+	let e,d0,d1,d2,a,b,k,km,x1,x2,m,re;
+	e=this.p.getE("Grid").querySelector("path");
+	d0=e.getAttributeNS(null,"d");
+	re=new RegExp("M"+this.xGridMin+" "+y+"[^V]+?H"+this.xGridMax);
+	d1=d0.match(re)[0];
 	a=d1.match(/(M|H)[0-9.-]+/g);
 	km=a.length;
 	b=[];
@@ -1744,12 +1738,12 @@ mxG.S.prototype.eraseLongGridSegment=function(i,j,x,y,w)
 		}
 		// else wait for next segment
 	}
-	if(d1!=d2) e.setAttributeNS(null,"d",d2);
+	if(d1!=d2) e.setAttributeNS(null,"d",d0.replace(d1,d2));
 	this.eraseVerticalGridSegments(i,j,x,y,w);
 };
 mxG.S.prototype.addPointBackground=function(i,j,nat,str)
 {
-	var a,b,p,cls,x,y,h,w,vof=0;
+	let a,b,p,cls,x,y,h,w,vof=0;
 	if(this.isLabel(str)||this.isVariation(str))
 	{
 		p=this.p.getE("Points");
@@ -1790,7 +1784,7 @@ mxG.S.prototype.addPointBackground=function(i,j,nat,str)
 };
 mxG.S.prototype.draw=function(vNat,vStr,pFocus)
 {
-	var i,j,k,km,s="",opacity,nat,str,list,a,b,c,xf,yf,o,z,s1,s2,s3,s4,s5,s6;
+	let i,j,k,km,s="",opacity,nat,str,list,a,b,c,xf,yf,o,z,s1,s2,s3,s4,s5,s6;
 	this.p.getE("Grid").innerHTML=this.makeGrid(vNat,vStr);
 	this.pNat=this.vNat;
 	this.pStr=this.vStr;
@@ -1798,11 +1792,7 @@ mxG.S.prototype.draw=function(vNat,vStr,pFocus)
 	this.vStr=vStr;
 	this.pFocus=pFocus;
 	// group elements to reduce final svg size
-	s1="";
-	s2="";
-	s3="";
-	s4="";
-	s5="";
+	s1=s2=s3=s4=s5="";
 	for(i=this.xl;i<=this.xr;i++)
 		for(j=this.yt;j<=this.yb;j++)
 		{
@@ -1921,13 +1911,13 @@ mxG.S.prototype.makeBtnRectangle=function(x)
 };
 mxG.S.prototype.makeBtnTriangle=function(x,a)
 {
-	var z=a*52;
+	let z=a*52;
 	return "<polygon points=\""+x+" 64 "+(x+z)+" 128 "+(x+z)+" 0\"/>";
 };
 mxG.S.prototype.makeBtnContent=function(a,t)
 {
 	// convenient width and height should be set in css
-	var s="<svg";
+	let s="<svg";
 	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
 	s+=" viewBox=\"0 0 128 128\"";
 	s+=" width=\"40\" height=\"40\">"; // acceptable size if no css
@@ -1936,73 +1926,73 @@ mxG.S.prototype.makeBtnContent=function(a,t)
 };
 mxG.S.prototype.makeFirstBtn=function()
 {
-	var s=this.makeBtnRectangle(26)+this.makeBtnTriangle(50,1);
+	let s=this.makeBtnRectangle(26)+this.makeBtnTriangle(50,1);
 	return this.makeBtnContent(s,"First");
 };
 mxG.S.prototype.makeTenPredBtn=function()
 {
-	var s=this.makeBtnTriangle(4,1)+this.makeBtnTriangle(56,1);
+	let s=this.makeBtnTriangle(4,1)+this.makeBtnTriangle(56,1);
 	return this.makeBtnContent(s,"10 Previous");
 };
 mxG.S.prototype.makePredBtn=function()
 {
-	var s=this.makeBtnTriangle(30,1);
+	let s=this.makeBtnTriangle(30,1);
 	return this.makeBtnContent(s,"Previous");
 };
 mxG.S.prototype.makeNextBtn=function()
 {
-	var s=this.makeBtnTriangle(98,-1);
+	let s=this.makeBtnTriangle(98,-1);
 	return this.makeBtnContent(s,"Next");
 };
 mxG.S.prototype.makeTenNextBtn=function()
 {
-	var s=this.makeBtnTriangle(72,-1)+this.makeBtnTriangle(124,-1);
+	let s=this.makeBtnTriangle(72,-1)+this.makeBtnTriangle(124,-1);
 	return this.makeBtnContent(s,"10 Next");
 };
 mxG.S.prototype.makeLastBtn=function()
 {
-	var s=this.makeBtnTriangle(78,-1)+this.makeBtnRectangle(78);
+	let s=this.makeBtnTriangle(78,-1)+this.makeBtnRectangle(78);
 	return this.makeBtnContent(s,"Last");
 };
 mxG.S.prototype.makeAutoBtn=function()
 {
-	var s=this.makeBtnTriangle(0,1)+this.makeBtnTriangle(128,-1);
+	let s=this.makeBtnTriangle(0,1)+this.makeBtnTriangle(128,-1);
 	return this.makeBtnContent(s,"Auto");
 };
 mxG.S.prototype.makePauseBtn=function()
 {
-	var s=this.makeBtnRectangle(24)+this.makeBtnRectangle(80);
+	let s=this.makeBtnRectangle(24)+this.makeBtnRectangle(80);
 	return this.makeBtnContent(s,"Pause");
 };
 mxG.S.prototype.makeRetryBtn=function()
 {
-	var s;
+	let s;
 	s="<path d=\"M0 64L64 64L32 92L0 64Z\"/>";
 	s+="<path d=\"M24 64A50 50 0 1 1 49 107L57 94A34 34 0 1 0 40 64Z\"/>";
 	return this.makeBtnContent(s,"Retry");
 };
 mxG.S.prototype.makeUndoBtn=function()
 {
-	var s;
+	let s;
 	s="<path d=\"M20,105H108C114.6,105 120,99 120,93V44C120,37 114,32 108,32H40V8L8,40 40,72V48H96C100,48 104,51 104,56V81C104,85 100,89 96,89H20 Z\"/>";
 	return this.makeBtnContent(s,"Undo");
 };
 mxG.S.prototype.makeHintBtn=function()
 {
-	var s;
+	let s;
 	s="<rect x=\"54\" y=\"10\" width=\"20\" height=\"64\" rx=\"5\" ry=\"5\"/>";
 	s+="<circle cx=\"64\" cy=\"104\" r=\"14\"/>";
 	return this.makeBtnContent(s,"Hint");
 };
 mxG.S.prototype.makePassBtn=function()
 {
-	var s;
+	let s;
 	s="<path fill-rule=\"evenodd\" d=\"M 64,10 L 118,64 L 64,118 L 10,64 Z M 64,35 L 93,64 L 64,93 L 35,64 Z\"/>";
 	return this.makeBtnContent(s,"Pass");
 };
 mxG.S.prototype.makeFromPath=function(p)
 {
-	var s="<svg";
+	let s="<svg";
 	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
 	s+=" viewBox=\"0 0 1024 1024\"";
 	s+=" width=\"40\" height=\"40\">"; // acceptable size if no css
@@ -2010,7 +2000,7 @@ mxG.S.prototype.makeFromPath=function(p)
 };
 mxG.S.prototype.addSelect=function(i,j)
 {
-	var b,x,y,w,h,cls;
+	let b,x,y,w,h,cls;
 	w=this.dw;
 	h=this.dh;
 	if(i==this.xl)
@@ -2058,7 +2048,7 @@ mxG.S.prototype.addSelect=function(i,j)
 };
 mxG.S.prototype.removeSelect=function(i,j)
 {
-	var a,b;
+	let a,b;
 	a=this.ig.firstChild;
 	b=a.querySelector(".mxSelect.mx"+i+"_"+j);
 	if(b) a.removeChild(b);
@@ -2066,7 +2056,7 @@ mxG.S.prototype.removeSelect=function(i,j)
 mxG.S.prototype.makeOneStone4Bowl=function(nat,x,y,d,o)
 {
 	// no shadow inside the bowl
-	var s="",o2={};
+	let s="",o2={};
 	// todo: why without o2, o keeps changes below outside this function?
 	if (o.hasOwnProperty("opacity")) o2.opacity=o.opacity;
 	if (o.hasOwnProperty("stoneShadowOn")) o2.stoneShadowOn=o.stoneShadowOn;
@@ -2083,7 +2073,7 @@ mxG.S.prototype.makeOneStone4Bowl=function(nat,x,y,d,o)
 mxG.S.prototype.makeBowl=function(nat,o)
 {
 	// no svg shadow for the bowl
-	var s="",x,y,r,i,j,k,km,km2,dk,rk,magicNum;
+	let s="",x,y,r,i,j,k,km,km2,dk,rk,magicNum;
 	magicNum=this.w/this.d*100/this.wr;
 	dk=this.bowlW/magicNum*3;
 	rk=dk/2;
@@ -2120,7 +2110,7 @@ mxG.S.prototype.makeBowl=function(nat,o)
 mxG.S.prototype.makeCap=function(nat,n,o)
 {
 	// no svg shadow for the cap
-	var s="",x,y,r,c=(nat=="B")?"Black":"White";
+	let s="",x,y,r,c=(nat=="B")?"Black":"White";
 	x=this.bowlW/2;
 	y=(nat=="W")?this.bowlW+this.capW/2:this.capW/2;
 	dy=this.capW*5/42;
@@ -2139,7 +2129,7 @@ mxG.S.prototype.makeCap=function(nat,n,o)
 };
 mxG.S.prototype.makeBowlAndCap=function(nat,n,o)
 {
-	var s="";
+	let s="";
 	this.bowlW=5*this.d;
 	this.capW=4*this.d;
 	s+="<svg";
@@ -3956,7 +3946,7 @@ mxG.B=[[["Goban"],"Solve","Pass"],["Comment","Version"]];
 mxG.D[mxG.K]=new mxG.G(mxG.K,mxG.B);
 mxG.D[mxG.K].theme="Jdg";
 mxG.D[mxG.K].config="Problem";
-mxG.D[mxG.K].style=".mxJdgTheme{--gobanMaxWidth:23em;--gobanMinWidth:6em;--fontFamily:\"Open sans\",Arial,sans-serif;--fontWeight:500;--mainBk:transparent;--gobanBk:#ecbe69;--navigationBk:transparent;--navigationBtnBk:transparent;--navigationBtnColor:#404040;--solveBk:transparent;--solveBtnBk:transparent;--solveBtnColor:#404040;--versionBk:transparent;--versionColor:#404040;--gBoxBk:transparent;--commentBk:#f3f3f3;--commentColor:#404040;--headerBk:#f3f3f3;--headerColor:#404040;--treeBk:#f3f3f3;--treeColor:#404040;--focusCommentBk:#e6e6e6;--focusCommentColor:#404040;--focusTreeBk:#e6e6e6;--focusTreeColor:#404040;--focusNavigationBtnBk:transparent;--focusNavigationBtnColor:#f00;--focusSolveBtnBk:transparent;--focusSolveBtnColor:#f00;text-align:left;}.mxJdgTheme div::-moz-focus-inner,.mxJdgTheme button::-moz-focus-inner{padding:0;border:0;}.mxJdgTheme div:focus,.mxJdgTheme button:focus{outline:none;}.mxJdgTheme button{cursor:pointer;}.mxJdgTheme button[disabled]{cursor:default;}.mxJdgTheme button[disabled]{opacity:0.5;}.mxJdgTheme{font-family:var(--fontFamily);}.mxJdgTheme svg{font-family:var(--fontFamily);font-weight:var(--fontWeight);}.mxJdgTheme button{font-family:var(--fontFamily);}.mxJdgTheme{max-width:var(--gobanMaxWidth);min-width:var(--gobanMinWidth);margin:0 auto;}.mxJdgTheme.mxCommentConfig,.mxJdgTheme.mxProblemConfig,.mxJdgTheme.mxTreeConfig{display:flex;flex-wrap:wrap;justify-content:center;max-width:calc(var(--gobanMaxWidth) * 2);}.mxJdgTheme.mxCommentConfig>div,.mxJdgTheme.mxProblemConfig>div,.mxJdgTheme.mxTreeConfig>div{max-width:var(--gobanMaxWidth);flex:1 1 var(--gobanMaxWidth);}.mxJdgTheme.mxCommentConfig .mxGobanGrandParentDiv,.mxJdgTheme.mxProblemConfig .mxGobanGrandParentDiv,.mxJdgTheme.mxTreeConfig .mxGobanGrandParentDiv{display:flex;flex-direction:column;justify-content:space-between;}.mxJdgTheme.mxCommentConfig .mxCommentParentDiv,.mxJdgTheme.mxProblemConfig .mxCommentParentDiv,.mxJdgTheme.mxTreeConfig .mxTreeParentDiv{display:flex;flex-direction:column;justify-content:space-between;}.mxJdgTheme.mxCommentConfig .mxGobanParentDiv,.mxJdgTheme.mxProblemConfig .mxGobanParentDiv,.mxJdgTheme.mxTreeConfig .mxGobanParentDiv{flex:1;display:flex;flex-direction:column;}.mxJdgTheme.mxCommentConfig .mxGobanDiv,.mxJdgTheme.mxProblemConfig .mxGobanDiv,.mxJdgTheme.mxTreeConfig .mxGobanDiv{margin:auto;width:100%;}.mxJdgTheme.mxCommentConfig .mxCommentDiv,.mxJdgTheme.mxTreeConfig .mxCommentDiv,.mxJdgTheme .mxTreeDiv{flex:1;min-height:7em;margin:0;}.mxJdgTheme.mxProblemConfig .mxCommentDiv{flex:1;min-height:2.5em;margin:0;text-align:center;}.mxJdgTheme.mxCommentConfig .mxCommentDiv,.mxJdgTheme.mxTreeConfig .mxCommentDiv,.mxJdgTheme.mxTreeConfig .mxTreeDiv{position:relative;}.mxJdgTheme.mxProblemConfig .mxCommentDiv{position:relative;display:flex;flex-direction:column;justify-content:center;align-items:center;}.mxJdgTheme.mxCommentConfig .mxCommentContentDiv,.mxJdgTheme.mxTreeConfig .mxCommentContentDiv,.mxJdgTheme.mxTreeConfig .mxTreeContentDiv{position:absolute;}.mxJdgTheme.mxProblemConfig .mxCommentContentDiv{position:relative;display:inline-block;text-align:left;}.mxJdgTheme .mxVersionDiv{text-align:center;height:3em;line-height:3em;color:var(--versionColor);background:var(--versionBk);}.mxJdgTheme .mxInnerGobanDiv{-webkit-tap-highlight-color:rgba(0,0,0,0);user-select:none;margin:0 auto;position:relative;}.mxJdgTheme .mxGobanDiv svg{display:block;width:100%;height:100%;pointer-events:none;background:url(\"data:image/jpeg;base64,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\");background-size:100% 100%;background-repeat:no-repeat;}.mxJdgTheme .mxBlackRadialGradient stop:nth-of-type(1){stop-color:#666;}.mxJdgTheme .mxBlackRadialGradient stop:nth-of-type(2){stop-color:#222;}.mxJdgTheme .mxBlackRadialGradient stop:nth-of-type(3){stop-color:#000;}.mxJdgTheme .mxWhiteRadialGradient stop:nth-of-type(1){stop-color:#fff;}.mxJdgTheme .mxWhiteRadialGradient stop:nth-of-type(2){stop-color:#ddd;}.mxJdgTheme .mxWhiteRadialGradient stop:nth-of-type(3){stop-color:#999;}.mxJdgTheme.mxIn2d .mxBlack{stroke:rgba(0,0,0,1);}.mxJdgTheme.mxIn2d .mxWhite{stroke:rgba(0,0,0,1);}.mxJdgTheme text{stroke-width:0.5px;}.mxJdgTheme text.mxOnBlack{fill:#fff;stroke:#fff;}.mxJdgTheme text.mxOnWhite,.mxJdgTheme text.mxOnEmpty{fill:#000;stroke:#000;}.mxJdgTheme .mxGobanDiv .mxVariation.mxOnFocus:not(.mxPointBackground){fill:#f00;stroke:#f00;}.mxJdgTheme rect.mxPointBackground.mxVariation.mxOnFocus{fill:none;stroke:none;}.mxJdgTheme .mxTitleH1{font-size:1em;padding:0;margin:0 0 0.25em 0;}.mxJdgTheme .mxMarkOnLast{fill:#f00;stroke:#f00;}.mxJdgTheme .mxFocusMark{fill:none;stroke:#f00;stroke-width:1px;}.mxJdgTheme .mxP:not(:first-child){padding-top:0.5em;}.mxJdgTheme.mxBasicConfig{background:var(--mainBk);}.mxJdgTheme.mxCommentConfig>div,.mxJdgTheme.mxProblemConfig>div,.mxJdgTheme.mxTreeConfig>div{background:var(--mainBk);}.mxJdgTheme.mxCommentConfig .mxCommentDiv,.mxJdgTheme.mxProblemConfig .mxCommentDiv,.mxJdgTheme.mxTreeConfig .mxCommentDiv,.mxJdgTheme .mxTreeDiv{overflow:auto;}.mxJdgTheme.mxCommentConfig .mxCommentDiv .mxCommentContentDiv,.mxJdgTheme.mxProblemConfig .mxCommentDiv .mxCommentContentDiv,.mxJdgTheme.mxTreeConfig .mxCommentDiv .mxCommentContentDiv{padding:0.5em;}.mxJdgTheme.mxCommentConfig .mxCommentDiv,.mxJdgTheme.mxProblemConfig .mxCommentDiv,.mxJdgTheme.mxTreeConfig .mxCommentDiv{background:var(--commentBk);color:var(--commentColor);}.mxJdgTheme .mxTreeDiv{background:var(--treeBk);color:var(--treeColor);margin-top:0.25em;}.mxJdgTheme.mxTreeConfig .mxTreeDiv svg .mxFocus{fill:#f00;opacity:1;}.mxJdgTheme .mxTreeDiv{user-select:none;}.mxJdgTheme.mxDiagramConfig{background:var(--mainBk);}.mxJdgTheme .mxInnerNotSeenDiv:not(:empty){margin:0.5em auto 0 auto;}.mxJdgTheme .mxInnerNotSeenDiv{margin:0 auto;}.mxJdgTheme .mxNotSeenSvg{width:100%;height:100%;display:block;}.mxJdgTheme.mxGameConfig{background:var(--mainBk);}.mxJdgTheme.mxGameConfig .mxHeaderDiv{padding:0.5em;background:var(--headerBk);color:var(--headerColor);}.mxJdgTheme.mxGameConfig .mxHeaderDiv h1{font-size:1em;font-weight:bold;}.mxJdgTheme.mxTreeConfig .mxCommentDiv:focus{background:var(--focusCommentBk);color:var(--focusCommentColor);}.mxJdgTheme.mxTreeConfig .mxTreeDiv:focus{background:var(--focusTreeBk);color:var(--focusTreeColor);}.mxJdgTheme .mxNavigationDiv button:focus{background:var(--focusNavigationBtnBk);}.mxJdgTheme .mxNavigationDiv button:focus svg{fill:var(--focusNavigationBtnColor);}.mxJdgTheme .mxSolveDiv button:focus{background:var(--focusSolveBtnBk);}.mxJdgTheme .mxSolveDiv button:focus svg{fill:var(--focusSolveBtnColor);}.mxJdgTheme .mxNavigationDiv{display:flex;justify-content:space-around;align-items:center;height:3em;background:var(--navigationBk);}.mxJdgTheme .mxNavigationDiv:empty{display:none;}.mxJdgTheme .mxNavigationDiv button{font-size:1em;flex:1;background:var(--navigationBtnBk);border:0;margin:0 2%;padding:0;height:3em;width:3em;}.mxJdgTheme .mxNavigationDiv button svg{display:block;margin:0 auto;width:100%;max-width:100%;height:1.5em;fill:var(--navigationBtnColor);}.mxJdgTheme .mxSolveDiv{text-align:center;background:var(--solveBk);height:3em;}.mxJdgTheme .mxSolveDiv:empty{display:none;}.mxJdgTheme .mxSolveDiv button{font-size:1em;border:0;background:var(--solveBtnBk);margin:0 1em;padding:0;width:3em;height:3em;}.mxJdgTheme .mxSolveDiv button svg{display:block;width:100%;height:100%;fill:var(--solveBtnColor);}";
+mxG.D[mxG.K].style=".mxJdgTheme{--gobanMaxWidth:23em;--gobanMinWidth:6em;--fontFamily:\"Open sans\",Arial,sans-serif;--fontWeight:500;--mainBk:transparent;--gobanBk:#ecbe69;--navigationBk:transparent;--navigationBtnBk:transparent;--navigationBtnColor:#404040;--solveBk:transparent;--solveBtnBk:transparent;--solveBtnColor:#404040;--versionBk:transparent;--versionColor:#404040;--gBoxBk:transparent;--commentBk:#f3f3f3;--commentColor:#404040;--headerBk:#f3f3f3;--headerColor:#404040;--treeBk:#f3f3f3;--treeColor:#404040;--focusCommentBk:#e6e6e6;--focusCommentColor:#404040;--focusTreeBk:#e6e6e6;--focusTreeColor:#404040;--focusNavigationBtnBk:transparent;--focusNavigationBtnColor:#f00;--focusSolveBtnBk:transparent;--focusSolveBtnColor:#f00;text-align:left;}.mxJdgTheme div::-moz-focus-inner,.mxJdgTheme button::-moz-focus-inner{padding:0;border:0;}.mxJdgTheme div:focus,.mxJdgTheme button:focus{outline:none;}.mxJdgTheme button{cursor:pointer;}.mxJdgTheme button[disabled]{cursor:default;}.mxJdgTheme button[disabled]{opacity:0.5;}.mxJdgTheme{font-family:var(--fontFamily);}.mxJdgTheme svg{font-family:var(--fontFamily);font-weight:var(--fontWeight);}.mxJdgTheme button{font-family:var(--fontFamily);}.mxJdgTheme{max-width:var(--gobanMaxWidth);min-width:var(--gobanMinWidth);margin:0 auto;}.mxJdgTheme.mxCommentConfig,.mxJdgTheme.mxProblemConfig,.mxJdgTheme.mxTreeConfig{display:flex;flex-wrap:wrap;justify-content:center;max-width:calc(var(--gobanMaxWidth) * 2);}.mxJdgTheme.mxCommentConfig>div,.mxJdgTheme.mxProblemConfig>div,.mxJdgTheme.mxTreeConfig>div{max-width:var(--gobanMaxWidth);flex:1 1 var(--gobanMaxWidth);}.mxJdgTheme.mxCommentConfig .mxGobanGrandParentDiv,.mxJdgTheme.mxProblemConfig .mxGobanGrandParentDiv,.mxJdgTheme.mxTreeConfig .mxGobanGrandParentDiv{display:flex;flex-direction:column;justify-content:space-between;}.mxJdgTheme.mxCommentConfig .mxCommentParentDiv,.mxJdgTheme.mxProblemConfig .mxCommentParentDiv,.mxJdgTheme.mxTreeConfig .mxTreeParentDiv{display:flex;flex-direction:column;justify-content:space-between;}.mxJdgTheme.mxCommentConfig .mxGobanParentDiv,.mxJdgTheme.mxProblemConfig .mxGobanParentDiv,.mxJdgTheme.mxTreeConfig .mxGobanParentDiv{flex:1;display:flex;flex-direction:column;}.mxJdgTheme.mxCommentConfig .mxGobanDiv,.mxJdgTheme.mxProblemConfig .mxGobanDiv,.mxJdgTheme.mxTreeConfig .mxGobanDiv{margin:auto;width:100%;}.mxJdgTheme.mxCommentConfig .mxCommentDiv,.mxJdgTheme.mxTreeConfig .mxCommentDiv,.mxJdgTheme .mxTreeDiv{flex:1;min-height:7em;max-height:14em;margin:0;}.mxJdgTheme.mxProblemConfig .mxCommentDiv{flex:1;min-height:2.5em;margin:0;text-align:center;}.mxJdgTheme.mxCommentConfig .mxCommentDiv,.mxJdgTheme.mxTreeConfig .mxCommentDiv,.mxJdgTheme.mxTreeConfig .mxTreeDiv{position:relative;}.mxJdgTheme.mxProblemConfig .mxCommentDiv{position:relative;display:flex;flex-direction:column;justify-content:center;align-items:center;}.mxJdgTheme.mxCommentConfig .mxCommentContentDiv,.mxJdgTheme.mxTreeConfig .mxCommentContentDiv,.mxJdgTheme .mxTreeContentDiv{position:absolute;}.mxJdgTheme.mxProblemConfig .mxCommentContentDiv{position:relative;display:inline-block;text-align:left;}.mxJdgTheme .mxVersionDiv{text-align:center;height:3em;line-height:3em;color:var(--versionColor);background:var(--versionBk);}.mxJdgTheme .mxInnerGobanDiv{-webkit-tap-highlight-color:rgba(0,0,0,0);user-select:none;margin:0 auto;position:relative;}.mxJdgTheme .mxGobanDiv svg{display:block;width:100%;height:100%;pointer-events:none;background:url(\"data:image/jpeg;base64,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\");background-size:100% 100%;background-repeat:no-repeat;}.mxJdgTheme .mxBlackRadialGradient stop:nth-of-type(1){stop-color:#666;}.mxJdgTheme .mxBlackRadialGradient stop:nth-of-type(2){stop-color:#222;}.mxJdgTheme .mxBlackRadialGradient stop:nth-of-type(3){stop-color:#000;}.mxJdgTheme .mxWhiteRadialGradient stop:nth-of-type(1){stop-color:#fff;}.mxJdgTheme .mxWhiteRadialGradient stop:nth-of-type(2){stop-color:#ddd;}.mxJdgTheme .mxWhiteRadialGradient stop:nth-of-type(3){stop-color:#999;}.mxJdgTheme.mxIn2d .mxBlack{stroke:rgba(0,0,0,1);}.mxJdgTheme.mxIn2d .mxWhite{stroke:rgba(0,0,0,1);}.mxJdgTheme text{stroke-width:0.5px;}.mxJdgTheme text.mxOnBlack{fill:#fff;stroke:#fff;}.mxJdgTheme text.mxOnWhite,.mxJdgTheme text.mxOnEmpty{fill:#000;stroke:#000;}.mxJdgTheme .mxGobanDiv .mxVariation.mxOnFocus:not(.mxPointBackground){fill:#f00;stroke:#f00;}.mxJdgTheme rect.mxPointBackground.mxVariation.mxOnFocus{fill:none;stroke:none;}.mxJdgTheme .mxTitleH1{font-size:1em;padding:0;margin:0 0 0.25em 0;}.mxJdgTheme .mxMarkOnLast{fill:#f00;stroke:#f00;}.mxJdgTheme .mxFocusMark{fill:none;stroke:#f00;stroke-width:1px;}.mxJdgTheme .mxP:not(:first-child){padding-top:0.5em;}.mxJdgTheme.mxBasicConfig{background:var(--mainBk);}.mxJdgTheme.mxCommentConfig>div,.mxJdgTheme.mxProblemConfig>div,.mxJdgTheme.mxTreeConfig>div{background:var(--mainBk);}.mxJdgTheme.mxCommentConfig .mxCommentDiv,.mxJdgTheme.mxProblemConfig .mxCommentDiv,.mxJdgTheme.mxTreeConfig .mxCommentDiv,.mxJdgTheme .mxTreeDiv{overflow:auto;}.mxJdgTheme.mxCommentConfig .mxCommentDiv .mxCommentContentDiv,.mxJdgTheme.mxProblemConfig .mxCommentDiv .mxCommentContentDiv,.mxJdgTheme.mxTreeConfig .mxCommentDiv .mxCommentContentDiv{padding:0.5em;}.mxJdgTheme.mxCommentConfig .mxCommentDiv,.mxJdgTheme.mxProblemConfig .mxCommentDiv,.mxJdgTheme.mxTreeConfig .mxCommentDiv{background:var(--commentBk);color:var(--commentColor);}.mxJdgTheme .mxTreeDiv{background:var(--treeBk);color:var(--treeColor);margin-top:0.25em;}.mxJdgTheme.mxTreeConfig .mxTreeDiv svg .mxFocus{fill:#f00;opacity:1;}.mxJdgTheme .mxTreeDiv{user-select:none;}.mxJdgTheme.mxDiagramConfig{background:var(--mainBk);}.mxJdgTheme .mxInnerNotSeenDiv:not(:empty){margin:0.5em auto 0 auto;}.mxJdgTheme .mxInnerNotSeenDiv{margin:0 auto;}.mxJdgTheme .mxNotSeenSvg{width:100%;height:100%;display:block;}.mxJdgTheme.mxGameConfig{background:var(--mainBk);}.mxJdgTheme.mxGameConfig .mxHeaderDiv{padding:0.5em;background:var(--headerBk);color:var(--headerColor);}.mxJdgTheme.mxGameConfig .mxHeaderDiv h1{font-size:1em;font-weight:bold;}.mxJdgTheme.mxTreeConfig .mxCommentDiv:focus{background:var(--focusCommentBk);color:var(--focusCommentColor);}.mxJdgTheme.mxTreeConfig .mxTreeDiv:focus{background:var(--focusTreeBk);color:var(--focusTreeColor);}.mxJdgTheme .mxNavigationDiv button:focus{background:var(--focusNavigationBtnBk);}.mxJdgTheme .mxNavigationDiv button:focus svg{fill:var(--focusNavigationBtnColor);}.mxJdgTheme .mxSolveDiv button:focus{background:var(--focusSolveBtnBk);}.mxJdgTheme .mxSolveDiv button:focus svg{fill:var(--focusSolveBtnColor);}.mxJdgTheme .mxNavigationDiv{display:flex;justify-content:space-around;align-items:center;height:3em;background:var(--navigationBk);}.mxJdgTheme .mxNavigationDiv:empty{display:none;}.mxJdgTheme .mxNavigationDiv button{font-size:1em;flex:1;background:var(--navigationBtnBk);border:0;margin:0 2%;padding:0;height:3em;width:3em;}.mxJdgTheme .mxNavigationDiv button svg{display:block;margin:0 auto;width:100%;max-width:100%;height:1.5em;fill:var(--navigationBtnColor);}.mxJdgTheme .mxSolveDiv{text-align:center;background:var(--solveBk);height:3em;}.mxJdgTheme .mxSolveDiv:empty{display:none;}.mxJdgTheme .mxSolveDiv button{font-size:1em;border:0;background:var(--solveBtnBk);margin:0 1em;padding:0;width:3em;height:3em;}.mxJdgTheme .mxSolveDiv button svg{display:block;width:100%;height:100%;fill:var(--solveBtnColor);}";
 // general
 mxG.D[mxG.K].a.in3dOn=1; // (0,1) default 1
 mxG.D[mxG.K].a.htmlParenthesis=1; // (0,1) default 0
