@@ -132,9 +132,45 @@ chapter of the documentation for more details.</p>
 <?=printOneInternationalizationScriptLine('zh-hans')?>
 <?=printOneInternationalizationScriptLine('zh-hant')?>
 </ul>
-
-<h2>Warning for those who used previous versions of maxiGos</h2>
-<p>Many changes were done from v6 to v7. Please check the documentation.</p>
+<h2>What is new in the 8.00 version?</h2>
+<ul>
+<li>Priority to use "data-maxigos-sgf" attribute to insert a sgf (the w3c validator wants it).
+Need to replace any double-quote (or single-quote)
+by its html entity &amp;quote;/&amp;#34; (or &amp;#39;)
+when inserting a sgf record as value of the "data-maxigos-sgf" attribute
+(this replacement is not necessary if the sgf is in a sgf file).
+Inserting a sgf between &lt;script&gt; and &lt;/script&gt; tags still works but is deprecated</li>
+<li>Reduced code size</li>
+<li>Improved processing speed</li>
+<li>Improved goban lines sharpness</li>
+<li>Add a description of the goban content for screen readers</li>
+<li>Simplified internal html (such as button content)</li>
+<li>Made significant css changes</li>
+<li>Automatically cut css in several parts for a given theme to reduce code size.
+Done for "Edit", "Lesson" and "Problem" configs</li>
+<li>Improve tree blocks display (in particular when the tree container is very hight).
+Always add enough blocks to cover the part of the tree that the user can see
+excepting when style is disabled in the browser.
+In this case, when the tree is very high, the user has to click on the tree
+to add tree blocks (generating automatically all the tree could be long)</li>
+<li>Replace the GBox (which was a kind of homemade dialog) by a html dialog tag</li>
+<li>Replace internal tags of "GotoDiv" by an input[type=range] tag</li>
+<li>Replace internal tags of "GuessDiv" by a meter tag</li>
+<li>Replace internal tags of "SpeedDiv" by an input[type=range] tag</li>
+<li>Display marks or labels (if any on the goban) in the notSeen list.
+Previously only stone numbers or coordinates were displayed</li>
+<li>Replace concatXxx parameters by concatInHeader parameter</li>
+<li>Replace hideXxx parameters by hideInHeader and hideInOptions parameters</li>
+<li>Remove mainVariationOnlyLoop, htmlParenthesis, gotoInputOn, gotoInputBefore
+and magicParentNum parameters</li>
+<li>Rename the "Option" component in "Options"</li>
+<li>XxxParentDiv, XxxGrandParentDiv, XxxGreatGrandParentDiv, etc. classes are no longer added
+	to the global box. They are only added to grouping boxes.</li>
+<li>Remove the Title component (move its code in the Header component)</li>
+<li>Add the "Reset" and "Thickness" items in the "View" menu.</li>
+<li>Simplify focus management (use :focus-visible in the css to show/hide the focus mark on the goban)</li>
+<li>Fix various minor bugs.</li>
+</ul>
 <h2>What is new in the 7.05 version?</h2>
 <ul>
 <li>The goban grid is now drawn with only two svg path
