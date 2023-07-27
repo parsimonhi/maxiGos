@@ -2,48 +2,19 @@
 /* (with the permission of Justin Kramer) */
 .mxEidogoTheme
 {
-	--gobanMaxWidth:30em;
+	--gobanMaxWidth:calc(1em * 527 / 16);
 	text-align:left;
 }
+.mxEidogoTheme.mxIndicesOff {--gobanMaxWidth:calc(1em * 459 / 16);}
 /* general */
-.mxEidogoTheme div::-moz-focus-inner,
-.mxEidogoTheme button::-moz-focus-inner,
-.mxEidogoTheme input[type=text]::-moz-focus-inner,
-.mxEidogoTheme a::-moz-focus-inner {padding:0;border:0;}
-.mxEidogoTheme div:focus,
-.mxEidogoTheme button:focus,
-.mxEidogoTheme input[type=text]:focus,
-.mxEidogoTheme a:focus {outline:none;}
-.mxEidogoTheme button,
-.mxEidogoTheme input[type=button],
-.mxEidogoTheme textarea {-webkit-appearance:none;-moz-appearance:none;}
+.mxEidogoTheme button {-webkit-appearance:none;-moz-appearance:none;}
 .mxEidogoTheme text {cursor:default;}
-.mxEidogoTheme input[type=button],
-.mxEidogoTheme button {cursor:pointer;}
 .mxEidogoTheme input[type=text][disabled],
 .mxEidogoTheme button[disabled] {cursor:default;}
-/* font */
-.mxEidogoTheme
-{
-	font-family:sans-serif;
-}
-.mxEidogoTheme svg
-{
-	font-family:arial,sans-serif;
-}
-.mxEidogoTheme button
-{
-	font-family:sans-serif;
-}
+.mxEidogoTheme svg {display:block;width:100%;height:100%;}
+.mxEidogoTheme,
+.mxEidogoTheme button {font-family:sans-serif;}
 /* layout */
-.mxEidogoTheme>.mxVersionDiv
-{
-	font-size:0.75em;
-	color:#998;
-	text-align:center;
-	height:2em;
-	line-height:2em;
-}
 .mxEidogoTheme
 {
 	box-sizing:border-box;
@@ -57,7 +28,6 @@
 	max-width:calc(var(--gobanMaxWidth) * 2);
 }
 .mxEidogoTheme.mxBasicConfig>div:first-of-type,
-.mxEidogoTheme.mxDiagramConfig>div:first-of-type,
 .mxEidogoTheme.mxProblemConfig>div:first-of-type
 {
 	box-sizing:border-box;
@@ -125,8 +95,8 @@
 .mxEidogoTheme.mxCommentConfig .mxNavigationParentDiv,
 .mxEidogoTheme.mxGameConfig .mxNavigationParentDiv,
 .mxEidogoTheme.mxTreeConfig .mxNavigationParentDiv,
-.mxEidogoTheme.mxCommentConfig>*,
-.mxEidogoTheme.mxTreeConfig>*
+.mxEidogoTheme.mxCommentConfig>div,
+.mxEidogoTheme.mxTreeConfig>div
 {
 	flex:0 0 auto;
 }
@@ -135,44 +105,30 @@
 .mxEidogoTheme.mxTreeConfig .mxCommentDiv,
 .mxEidogoTheme.mxTreeConfig .mxTreeDiv
 {
-	flex:1;
-	min-height:6em;
+	box-sizing:border-box;
+	height:8em;
+	min-height:2em;
+	margin:0 auto;
+	padding:0.25em;
+	resize:vertical;
+	overflow:auto;
+	min-width:min(100%,99vw); /* has priority to max-width */
+	max-width:1px; /* minimize as much as possible (try narrow viewport and big zoom) */
 }
-/* set position:absolute to .mxXxxContentDiv to avoid overflow */
-/* when available space is narrower than --gobanMaxWidth */
-/* and when .mxXxxContentDiv is wider than available space */
+
+.mxEidogoTheme.mxGameConfig .mxHeaderDiv,
 .mxEidogoTheme.mxCommentConfig .mxCommentDiv,
-.mxEidogoTheme.mxTreeConfig .mxCommentDiv,
 .mxEidogoTheme.mxTreeConfig .mxTreeDiv
 {
-	position:relative;
-}
-.mxEidogoTheme.mxCommentConfig .mxCommentContentDiv,
-.mxEidogoTheme.mxTreeConfig .mxCommentContentDiv,
-.mxEidogoTheme .mxTreeContentDiv
-{
-	position:absolute;
+	/* do not flex:auto on .mxTreeConfig .mxCommentDiv */
+	/* otherwise side effect when the user resizes .mxCommentDiv or .mxTreeDiv */
+	flex:auto;
 }
 /* common */
-.mxEidogoTheme .mxGobanDiv
-{
-	background:#aa9;
-	margin:0 auto;
-}
+.mxEidogoTheme .mxGobanDiv,
 .mxEidogoTheme .mxInnerGobanDiv
 {
-	/* avoid bad touch effect on mobile */
-	-webkit-tap-highlight-color:rgba(0,0,0,0);
-	user-select:none;
 	margin:0 auto;
-	position:relative;
-}
-.mxEidogoTheme .mxGobanDiv svg
-{
-	display:block;
-	width:100%;
-	height:100%;
-	pointer-events:none;
 }
 .mxEidogoTheme .mxOuterRect
 {
@@ -182,10 +138,11 @@
 {
 	fill:#ddbc6b;
 }
-.mxEidogoTheme .mxIndice
+.mxEidogoTheme .mxIndices
 {
 	fill:#a89470;
 	stroke:#a89470;
+	stroke-width:0.5px;
 }
 .mxEidogoTheme .mxGobanLines
 {
@@ -217,6 +174,7 @@
 {
 	fill:#ec2025;
 	stroke:#ec2025;
+	stroke-width:0.5px;
 }
 .mxEidogoTheme text.mxVariation,
 .mxEidogoTheme text.mxVariation.mxLabel
@@ -224,41 +182,32 @@
 	fill:#831;
 	stroke:#831;
 }
+.mxEidogoTheme .mxMark.mxVariation
+{
+	fill:none;
+	stroke:#831;
+}
 .mxEidogoTheme .mxPointBackground.mxVariation
 {
 	fill:#ee974b;
 	stroke:#ee974b;
 }
-.mxEidogoTheme text.mxVariation.mxOnFocus,
-.mxEidogoTheme text.mxVariation.mxLabel.mxOnFocus
-{
-	fill:#000;
-	stroke:#000;
-}
 .mxEidogoTheme .mxPointBackground.mxVariation.mxOnFocus
 {
+	fill:#fea75b;
+	stroke:#fea75b;
 }
-.mxEidogoTheme text.mxVariation:not(.mxOnFocus),
-.mxEidogoTheme text.mxVariation.mxLabel:not(.mxOnFocus)
+.mxEidogoTheme .mxPointBackground
 {
-}
-.mxEidogoTheme .mxPointBackground.mxVariation:not(.mxOnFocus)
-{
+	stroke:none;
 }
 .mxEidogoTheme .mxFocusMark
 {
 	stroke:#ec1d24;
 }
-.mxEidogoTheme .mxCommentDiv h1,
-.mxEidogoTheme .mxHeaderDiv h1
+.mxEidogoTheme .mxTitleP
 {
-	font-size:1em;
-	padding:0;
-	margin:0 0 0.25em 0;
-}
-.mxEidogoTheme .mxP:not(:first-child)
-{
-	padding-top:0.5em;
+	font-weight:bold
 }
 .mxEidogoTheme .mxWhiteRadialGradient stop:nth-of-type(1)
 {
@@ -273,27 +222,26 @@
 	stop-color:#999;
 }
 /* basic, comment, game and tree*/
+.mxEidogoTheme.mxBasicConfig .mxGobanDiv,
+.mxEidogoTheme.mxProblemConfig .mxGobanDiv
+{
+	background:#aa9;
+}
 .mxEidogoTheme.mxCommentConfig .mxCommentDiv,
 .mxEidogoTheme.mxGameConfig .mxHeaderDiv,
 .mxEidogoTheme.mxTreeConfig .mxCommentDiv
 {
-	padding:0.5em;
 	background:#bba;
-	border:1px solid #bba;
-	overflow:auto;
 	font-size:0.875em;
-}
-.mxEidogoTheme.mxCommentConfig .mxCommentDiv,
-.mxEidogoTheme.mxGameConfig .mxHeaderDiv
-{
-	height:6em;
 }
 .mxEidogoTheme.mxTreeConfig .mxTreeDiv
 {
-	padding:0.5em;
 	background:#333;
-	border:1px solid #333;
-	overflow:auto;
+}
+.mxEidogoTheme .mxTreeDiv svg
+{
+	width:unset;
+	height:unset;
 }
 .mxEidogoTheme.mxTreeConfig .mxTreeDiv svg .mxFocus
 {
@@ -308,13 +256,6 @@
 {
 	stroke:#ccc;
 }
-.mxEidogoTheme.mxCommentConfig .mxCommentDiv:focus,
-.mxEidogoTheme.mxGameConfig .mxHeaderDiv:focus,
-.mxEidogoTheme.mxTreeConfig .mxCommentDiv:focus,
-.mxEidogoTheme.mxTreeConfig .mxTreeDiv:focus
-{
-	border:1px solid rgba(255,255,255,0.5);
-}
 .mxEidogoTheme.mxCommentConfig .mxVariationDiv,
 .mxEidogoTheme.mxTreeConfig .mxVariationDiv
 {
@@ -322,11 +263,11 @@
 	min-height:2em;
 	line-height:2em;
 	margin:0;
-	padding:0.5em;
+	padding:0 0.5em;
 	color:#aac8c2;
 }
-.mxEidogoTheme.mxCommentConfig .mxVariationDiv [type=button],
-.mxEidogoTheme.mxTreeConfig .mxVariationDiv [type=button]
+.mxEidogoTheme.mxCommentConfig .mxVariationDiv button,
+.mxEidogoTheme.mxTreeConfig .mxVariationDiv button
 {
 	font-size:1em;
 	font-weight:bold;
@@ -340,27 +281,63 @@
 	height:1.75em;
 	line-height:1.75;
 }
+/* goto */
 .mxEidogoTheme .mxGotoDiv
 {
-	margin:0.25em 0.5em 0 0.5em;
-	user-select:none;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	margin:0 0.375em;
 }
-.mxEidogoTheme .mxGotoDiv svg
+.mxEidogoTheme .mxGotoDiv [type=range]
+{
+	flex:1;
+	padding:0;
+	width:100%;
+	height:1.5em;
+	border:0;
+	border-radius:0;
+	background:transparent;
+}
+.mxEidogoTheme .mxGotoDiv [type=range], [type=range]::-webkit-slider-thumb
+{
+	-webkit-appearance:none;
+}
+.mxEidogoTheme .mxGotoDiv [type=range]::-webkit-slider-runnable-track
 {
 	box-sizing:border-box;
-	display:block;
-	margin:0 auto;
+	height:1em;
+	border:1px solid #122;
+	border-radius:0;
+	background:#244;
 }
-.mxEidogoTheme .mxGotoBar
+.mxEidogoTheme .mxGotoDiv [type=range]::-moz-range-track
 {
-	fill:#244;
-	stroke:#122;
+	box-sizing:border-box;
+	height:1em;
+	border:1px solid #122;
+	border-radius:0;
+	background:#244;
 }
-.mxEidogoTheme .mxGotoCursor
+.mxEidogoTheme .mxGotoDiv [type=range]::-webkit-slider-thumb
 {
-	fill:#ec1d24;
-	stroke:#ec1d24;
-	cursor:pointer;
+	margin:0;
+	box-sizing:border-box;
+	width:calc(1em - 2px);
+	height:calc(1em - 2px);
+	outline:1px solid #ec1d24;
+	border:0;
+	border-radius:0;
+	background:#ec1d24;
+}
+.mxEidogoTheme .mxGotoDiv [type=range]::-moz-range-thumb
+{
+	box-sizing:border-box;
+	width:1em;
+	height:1em;
+	border:0;
+	border-radius:0;
+	background:#ec1d24;
 }
 .mxEidogoTheme.mxBasicConfig .mxNavigationParentDiv,
 .mxEidogoTheme.mxCommentConfig .mxNavigationParentDiv,
@@ -372,6 +349,7 @@
 	flex-wrap:wrap;
 	justify-content:space-between;
 	align-items:center;
+	gap:0.125em;
 }
 .mxEidogoTheme.mxBasicConfig .mxNavigationDiv,
 .mxEidogoTheme.mxCommentConfig .mxNavigationDiv,
@@ -379,34 +357,24 @@
 .mxEidogoTheme.mxProblemConfig .mxSolveDiv,
 .mxEidogoTheme.mxTreeConfig .mxNavigationDiv
 {
-	flex:4;
+	flex:auto;
 	text-align:left;
 }
 .mxEidogoTheme.mxCommentConfig .mxMoveInfoDiv,
 .mxEidogoTheme.mxTreeConfig .mxMoveInfoDiv
 {
-	flex:2;
+	flex:auto;
 	text-align:center;
 }
-.mxEidogoTheme.mxBasicConfig .mxPassDiv,
-.mxEidogoTheme.mxCommentConfig .mxPassDiv,
-.mxEidogoTheme.mxGameConfig .mxPassDiv,
-.mxEidogoTheme.mxProblemConfig .mxPassDiv,
-.mxEidogoTheme.mxTreeConfig .mxPassDiv
+.mxEidogoTheme .mxPassDiv
 {
-	flex:1;
+	flex:auto;
 	text-align:right;
 }
-.mxEidogoTheme.mxBasicConfig .mxMoveInfoDiv svg,
-.mxEidogoTheme.mxCommentConfig .mxMoveInfoDiv svg,
-.mxEidogoTheme.mxGameConfig .mxMoveInfoDiv svg,
-.mxEidogoTheme.mxTreeConfig .mxMoveInfoDiv svg
+.mxEidogoTheme .mxMoveInfoDiv svg
 {
-	display:block;
-	width:100%;
-	height:100%;
-	max-height:1.75em;
-	min-width:3em;
+	width:unset;
+	height:unset;
 }
 .mxEidogoTheme.mxBasicConfig .mxMoveInfoDiv text:not(:first-of-type),
 .mxEidogoTheme.mxCommentConfig .mxMoveInfoDiv text:not(:first-of-type),
@@ -415,10 +383,6 @@
 {
 	fill:#aac8c2;
 	stroke:#aac8c2;
-}
-.mxEidogoTheme.mxTreeConfig .mxTreeDiv
-{
-	user-select:none;
 }
 /* diagram */
 .mxEidogoTheme.mxDiagramConfig .mxNotSeenDiv
@@ -436,41 +400,26 @@
 {
 	margin:0 auto;
 }
-.mxEidogoTheme .mxNotSeenSvg
-{
-	width:100%;
-	height:100%;
-	display:block;
-}
 /* problem */
 .mxEidogoTheme.mxProblemConfig .mxCommentDiv
 {
 	margin:0 auto;
     background:#bba;
+	min-height:3em;
 }
-.mxEidogoTheme.mxProblemConfig .mxCommentDiv
+.mxEidogoTheme.mxProblemConfig .mxCommentContentDiv p
 {
-	height:2.3em;
+	margin:0;
 	padding:0.25em;
-	background:#bba;
-	border:1px solid #bba;
-	overflow:auto;
+	line-height:1.25em;
 }
-.mxEidogoTheme.mxProblemConfig .mxCommentDiv:focus
-{
-	border:1px solid rgba(255,255,255,0.5);
-}
-/* Navigation and Solve */
+/* navigation and solve */
 .mxEidogoTheme .mxNavigationDiv,
 .mxEidogoTheme .mxSolveDiv
 {
 	margin:0;
 	display:flex;
 	flex-wrap:wrap;
-}
-.mxEidogoTheme .mxPassDiv
-{
-	margin:0;
 }
 .mxEidogoTheme .mxNavigationDiv:empty,
 .mxEidogoTheme .mxSolveDiv:empty
@@ -496,19 +445,23 @@
 .mxEidogoTheme .mxNavigationDiv button,
 .mxEidogoTheme .mxSolveDiv button
 {
-	flex:0 1 3em;
 	height:2em;
-	max-width:3em;
-	min-width:2em;
+	width:3em;
 	padding:0;
 }
-.mxEidogoTheme .mxNavigationDiv button span,
-.mxEidogoTheme .mxSolveDiv button span
+.mxEidogoTheme .mxNavigationDiv button svg,
+.mxEidogoTheme .mxSolveDiv button svg
 {
-	display:block;
-	width:50%;
-	max-width:1.125em;
+	width:1.125em;
+	height:auto;
 	margin:0 auto;
+}
+.mxEidogoTheme .mxNavigationDiv button svg polygon,
+.mxEidogoTheme .mxNavigationDiv button svg rect,
+.mxEidogoTheme .mxSolveDiv button svg polygon,
+.mxEidogoTheme .mxSolveDiv button svg rect
+{
+	fill:#ec1e24;
 }
 .mxEidogoTheme .mxPassDiv button
 {
@@ -518,27 +471,7 @@
 .mxEidogoTheme .mxPassDiv button span
 {
 	margin:0 auto;
-}
-.mxEidogoTheme .mxNavigationDiv button svg,
-.mxEidogoTheme .mxSolveDiv button svg
-{
-	display:block;
-	width:100%;
-	height:100%;
-}
-.mxEidogoTheme .mxPassDiv button span
-{
 	white-space:no-break;
-}
-.mxEidogoTheme .mxNavigationDiv button svg polygon,
-.mxEidogoTheme .mxNavigationDiv button svg rect,
-.mxEidogoTheme .mxSolveDiv button svg polygon,
-.mxEidogoTheme .mxSolveDiv button svg rect
-{
-	fill:#ec1e24;
-}
-.mxEidogoTheme .mxPassDiv button span
-{
 	color:#444;
 }
 .mxEidogoTheme .mxPassDiv button.mxOnVariationPassBtn span
@@ -556,10 +489,45 @@
 {
 	color:#999;
 }
-.mxEidogoTheme .mxNavigationDiv button:focus,
-.mxEidogoTheme .mxSolveDiv button:focus,
-.mxEidogoTheme .mxPassDiv button:focus,
-.mxEidogoTheme .mxVariationDiv input[type=button]:focus
+/* focus, hover and cursor */
+.mxEidogoTheme *:focus {outline:none;}
+.mxEidogoTheme .mxGobanSvg:not(:focus-visible) .mxFocus {display:none;}
+.mxEidogoTheme.mxCommentConfig .mxCommentDiv:focus-visible,
+.mxEidogoTheme.mxGameConfig .mxHeaderDiv:focus-visible,
+.mxEidogoTheme.mxTreeConfig .mxCommentDiv:focus-visible,
+.mxEidogoTheme.mxProblemConfig .mxCommentDiv:focus-visible
 {
-	outline:1px solid rgba(255,255,255,0.5);
+	background:#ddc;
 }
+.mxEidogoTheme.mxTreeConfig .mxTreeDiv:focus-visible
+{
+	background:#444;
+}
+.mxEidogoTheme .mxVariationDiv button:focus-visible
+{
+	outline:1px solid #fff7;
+}
+.mxEidogoTheme .mxNavigationDiv button:focus-visible,
+.mxEidogoTheme .mxSolveDiv button:focus-visible,
+.mxEidogoTheme .mxPassDiv button:focus-visible
+{
+	outline:1px solid #fff;
+	outline-offset:1px;
+}
+.mxEidogoTheme .mxGotoDiv [type=range]:focus-visible::-webkit-slider-runnable-track
+{
+	outline:1px solid #122;
+	outline-offset:1px;
+}
+.mxEidogoTheme .mxGotoDiv [type=range]:focus-visible::-moz-range-track
+{
+	outline:1px solid #fff7;
+	outline-offset:1px;
+}
+.mxEidogoTheme button,
+.mxEidogoTheme [type=range],
+.mxEidogoTheme:not(.mxDiagramConfig) .mxGobanDiv svg,
+.mxEidogoTheme .mxTreeDiv svg circle,
+.mxEidogoTheme .mxTreeDiv svg polygon,
+.mxEidogoTheme .mxTreeDiv svg rect,
+.mxEidogoTheme .mxTreeDiv svg text {cursor:pointer;}

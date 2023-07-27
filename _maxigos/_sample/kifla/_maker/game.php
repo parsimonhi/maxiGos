@@ -18,7 +18,7 @@ include "../../../_js/mgosMoveInfo.js";
 include "../../../_js/mgosCartouche.js";
 include "../../../_js/mgosAbout.js";
 include "../../../_js/mgosHeader.js";
-include "../../../_js/mgosOption.js";
+include "../../../_js/mgosOptions.js";
 include "../../../_js/mgosSgf.js";
 include "../../../_js/mgosVersion.js";
 ?>
@@ -31,19 +31,18 @@ mxG.B=
 				"MoveInfo",
 				["BlackCartouche","WhiteCartouche"]
 			],
-			["About","Header","Option","Sgf"],
+			["About","Header","Options","Sgf"],
 			"Version"
 		]
 	];
 mxG.D[mxG.K]=new mxG.G(mxG.K,mxG.B);
-mxG.D[mxG.K].theme="<?php echo $theme ?>";
-mxG.D[mxG.K].config="<?php echo $config ?>";
+mxG.D[mxG.K].theme="<?=$theme?>";
+mxG.D[mxG.K].config="<?=$config?>";
 <?php
 include "../../_php/insertCss.php";
 ?>
 // general
-mxG.D[mxG.K].a.in3dOn=1; // (0,1) default 1
-mxG.D[mxG.K].a.htmlParenthesis=1; // (0,1) default 0
+mxG.D[mxG.K].a.in3dOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.allowStringAsSource=1; // (0,1) default 1
 mxG.D[mxG.K].a.allowFileAsSource=1; // (0,1) default 1
 // mxG.D[mxG.K].a.sourceFilter=""; // (str) default ""
@@ -59,7 +58,7 @@ mxG.D[mxG.K].a.gobanMargin=2; // (float) default 0
 mxG.D[mxG.K].a.indicesOn=1; // (0,1,null), default null
 mxG.D[mxG.K].a.numberingOn=0; // (0,1,2,null) default null
 mxG.D[mxG.K].a.asInBookOn=0; // (0,1,null) default null
-mxG.D[mxG.K].a.marksAndLabelsOn=0; // (0,1) default 0
+mxG.D[mxG.K].a.marksAndLabelsOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.markOnLastOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.numAsMarkOnLastOn=0; // (0,1) default 0 (require markOnLastOn=1)
 mxG.D[mxG.K].a.japaneseIndicesOn=0; // (0,1) default 0 (require indicesOn=1)
@@ -74,13 +73,13 @@ mxG.D[mxG.K].a.cartoucheBoxOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.shortHeaderOn=0; // (0,1) default 0
 // Header
 mxG.D[mxG.K].a.headerBtnOn=1; // (0,1) default 0
-mxG.D[mxG.K].a.hideNumOfMoves=1; // (0,1) default 0
+mxG.D[mxG.K].a.hideInHeader="NumOfMoves"; // (set) default ""
 // MoveInfo
 mxG.D[mxG.K].a.onlyMoveNumber=1; // (0,1) default 0
 // Navigation
-mxG.D[mxG.K].a.navigations="First,TenPred,Pred,Loop,Next,TenNext,Last"; // (list) default "First,TenPred,Pred,Next,TenNext,Last"
-// Option
-mxG.D[mxG.K].a.optionBtnOn=1; // (0,1) default 0
+mxG.D[mxG.K].a.navigations="First,TenPred,Pred,Loop,Next,TenNext,Last"; // (set) default "First,TenPred,Pred,Next,TenNext,Last"
+// options
+mxG.D[mxG.K].a.optionsBtnOn=1; // (0,1) default 0
 // Sgf
 mxG.D[mxG.K].a.sgfBtnOn=1; // (0,1) default 0
 // Variation

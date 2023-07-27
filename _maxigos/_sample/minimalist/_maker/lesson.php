@@ -19,14 +19,13 @@ include "../../../_js/mgosSpeed.js";
 mxG.K++;
 mxG.B=[["Lesson","Speed"],["Goban","Navigation","Loop","Variation"]];
 mxG.D[mxG.K]=new mxG.G(mxG.K,mxG.B);
-mxG.D[mxG.K].theme="<?php echo $theme ?>";
-mxG.D[mxG.K].config="<?php echo $config ?>";
+mxG.D[mxG.K].theme="<?=$theme?>";
+mxG.D[mxG.K].config="<?=$config?>";
 <?php
 include "../../_php/insertCss.php";
 ?>
 // general
-mxG.D[mxG.K].a.in3dOn=0; // (0,1) default 1
-mxG.D[mxG.K].a.htmlParenthesis=1; // (0,1) default 0
+mxG.D[mxG.K].a.in3dOn=0; // (0,1) default 0
 mxG.D[mxG.K].a.allowStringAsSource=1; // (0,1) default 1
 mxG.D[mxG.K].a.allowFileAsSource=1; // (0,1) default 1
 // mxG.D[mxG.K].a.sourceFilter=""; // (str) default ""
@@ -51,7 +50,7 @@ mxG.D[mxG.K].a.eraseGridUnder=1; // (0,1) default 0
 // Loop
 mxG.D[mxG.K].a.loopTime=1000; // (positive integer) default 1000
 // Navigation
-mxG.D[mxG.K].a.navigations="First,TenPred,Pred,Loop,Next,TenNext,Last"; // (list) default "First,TenPred,Pred,Next,TenNext,Last"
+mxG.D[mxG.K].a.navigations="First,TenPred,Pred,Loop,Next,TenNext,Last"; // (set) default "First,TenPred,Pred,Next,TenNext,Last"
 // Variation
 mxG.D[mxG.K].a.variationMarksOn=1; // (0,1,null) default 0
 mxG.D[mxG.K].a.siblingsOn=0; // (0,1,null) default 0

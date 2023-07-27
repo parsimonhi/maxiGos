@@ -1,4 +1,4 @@
-// maxiGos v7 > mgosNavigation.js
+// maxiGos v8 > mgosNavigation.js
 if(!mxG.G.prototype.createNavigation)
 {
 mxG.fr("First","Début");
@@ -7,15 +7,90 @@ mxG.fr("Previous","Précédent");
 mxG.fr("Next","Suivant");
 mxG.fr("10 Next","10 suivants");
 mxG.fr("Last","Fin");
+
+// mxG.S section
+mxG.S.prototype.makeBtnRect=function(x)
+{
+	return "<rect x=\""+x+"\" y=\"0\" width=\"24\" height=\"128\"/>";
+};
+mxG.S.prototype.makeBtnTriangle=function(x,a)
+{
+	let z=a*52;
+	return "<polygon points=\""+x+" 64 "+(x+z)+" 128 "+(x+z)+" 0\"/>";
+};
+mxG.S.prototype.makeFirstBtn=function()
+{
+	return this.makeBtnIcon(this.makeBtnRect(26)+this.makeBtnTriangle(50,1),"First");
+};
+mxG.S.prototype.makeTenPredBtn=function()
+{
+	return this.makeBtnIcon(this.makeBtnTriangle(4,1)+this.makeBtnTriangle(56,1),"10 Previous");
+};
+mxG.S.prototype.makePredBtn=function()
+{
+	return this.makeBtnIcon(this.makeBtnTriangle(30,1),"Previous");
+};
+mxG.S.prototype.makeNextBtn=function()
+{
+	return this.makeBtnIcon(this.makeBtnTriangle(98,-1),"Next");
+};
+mxG.S.prototype.makeTenNextBtn=function()
+{
+	return this.makeBtnIcon(this.makeBtnTriangle(72,-1)+this.makeBtnTriangle(124,-1),"10 Next");
+};
+mxG.S.prototype.makeLastBtn=function()
+{
+	return this.makeBtnIcon(this.makeBtnTriangle(78,-1)+this.makeBtnRect(78),"Last");
+};
+mxG.S.prototype.makeAutoBtn=function()
+{
+	return this.makeBtnIcon(this.makeBtnTriangle(0,1)+this.makeBtnTriangle(128,-1),"Auto");
+};
+mxG.S.prototype.makePauseBtn=function()
+{
+	return this.makeBtnIcon(this.makeBtnRect(24)+this.makeBtnRect(80),"Pause");
+};
+
+// mxG.G section
 mxG.G.prototype.setNFocus=function(b)
 {
-	var a,e,g;
+	var a,e;
 	a=document.activeElement;
-	g=this.ig;
-	if(g==a) return;
+	if((this.getE("GobanSvg")==a)||(this.getE("TreeDiv")==a)) return;
 	e=this.getE(b+"Btn");
-	if(e&&!e.disabled&&(a==e)) return;
+	if(e&&!e.disabled) {if(a!=e) e.focus();return;}
 	this.getE("NavigationDiv").focus();
+};
+mxG.G.prototype.moveFocusMarkOnLast=function()
+{
+	let a,e,g,m=this.gor.play;
+	if(this.gor.getAct(m)=="")
+	{
+		this.xFocus=this.gor.getX(m);
+		this.yFocus=this.gor.getY(m);
+		this.moveFocusInView();
+	}
+	this.scr.setGobanFocusTitleDesc(0);
+};
+mxG.G.prototype.moveFocusMarkOnVariationOnFocus=function()
+{
+	let g=this.getE("GobanSvg"),e;
+	e=g.querySelector(".mxVariation.mxOnFocus[data-maxigos-ij]");
+	if(e)
+	{
+		let v=e.getAttribute("data-maxigos-ij");
+		if(v)
+		{
+			let c=v.split("_");
+			if(c&&(c.length==2))
+			{
+				this.xFocus=-(-c[0]);
+				this.yFocus=-(-c[1]);
+				this.moveFocusInView();
+				this.scr.setGobanFocusTitleDesc(0);
+			}
+		}
+	}
 };
 mxG.G.prototype.doFirst=function()
 {
@@ -25,7 +100,7 @@ mxG.G.prototype.doFirst=function()
 };
 mxG.G.prototype.doTenPred=function()
 {
-	var k,aN=this.cN;
+	let k,aN=this.cN;
 	for(k=0;k<10;k++)
 	{
 		if(aN.Dad!=this.rN) aN=aN.Dad;else break;
@@ -41,7 +116,7 @@ mxG.G.prototype.doTenPred=function()
 };
 mxG.G.prototype.doPred=function()
 {
-	var aN=this.cN.Dad;
+	let aN=this.cN.Dad;
 	this.backNode((aN==this.rN)?this.kidOnFocus(aN):aN);
 	this.updateAll();
 	this.setNFocus("Pred");
@@ -54,7 +129,7 @@ mxG.G.prototype.doNext=function()
 };
 mxG.G.prototype.doTenNext=function()
 {
-	for(var k=0;k<10;k++)
+	for(let k=0;k<10;k++)
 	{
 		if(this.kidOnFocus(this.cN)) this.placeNode();else break;
 		if(this.hasC("Variation")&&!(this.styleMode&2))
@@ -75,15 +150,30 @@ mxG.G.prototype.doLast=function()
 };
 mxG.G.prototype.doTopVariation=function(s)
 {
-	// if(s) it means shift key is pressed
-	// used to change of sgf record in case of collection
-	var aN,k,km;
+	// if(s) shift key is pressed
+	// useful to change of sgf record in case of collection
+	let aN,k,km;
 	if((this.styleMode&1)||s) aN=this.cN.Dad;else aN=this.cN;
 	k=aN.Focus;
 	km=aN.Kid.length;
 	if(km>1)
 	{
 		aN.Focus=(k>1)?k-1:km;
+		if((this.styleMode&1)||s) this.backNode(this.kidOnFocus(aN));
+		this.updateAll();
+	}
+};
+mxG.G.prototype.doBottomVariation=function(s)
+{
+	// if(s) it means shift key is pressed
+	// used to change of sgf record in case of collection
+	let aN,bN,k,km;
+	if((this.styleMode&1)||s) aN=this.cN.Dad;else aN=this.cN;
+	k=aN.Focus;
+	km=aN.Kid.length;
+	if(km>1)
+	{
+		aN.Focus=(k<km)?k+1:1;
 		if((this.styleMode&1)||s) this.backNode(this.kidOnFocus(aN));
 		this.updateAll();
 	}
@@ -98,51 +188,39 @@ mxG.G.prototype.hasNext=function()
 };
 mxG.G.prototype.hasVariation=function(s)
 {
-	var aN=this.cN;
+	let aN=this.cN;
 	if((this.styleMode&1)||s) aN=aN.Dad;
 	return aN.Kid.length>1;
-};
-mxG.G.prototype.doBottomVariation=function(s)
-{
-	// if(s) it means shift key is pressed
-	// used to change of sgf record in case of collection
-	var aN,bN,k,km;
-	if((this.styleMode&1)||s) aN=this.cN.Dad;else aN=this.cN;
-	k=aN.Focus;
-	km=aN.Kid.length;
-	if(km>1)
-	{
-		aN.Focus=(k<km)?k+1:1;
-		if((this.styleMode&1)||s) this.backNode(this.kidOnFocus(aN));
-		this.updateAll();
-	}
 };
 mxG.G.prototype.doKeydownNavigation=function(ev)
 {
 	if(this.hasC("Score")&&this.canPlaceScore) return false;
-	var r=0,s=ev.shiftKey?1:0;
-	switch(mxG.getKCode(ev))
+	let r=0,s=ev.shiftKey?1:0;
+	if(ev.altKey||ev.key.match(/^[FGHJKLUN]$/i)) switch(ev.key)
 	{
-		case 36:case 70:
-			if(this.cN.Dad!=this.rN) {this.doFirst();r=1;} break;
-		case 33:case 71:
-			if(this.cN.Dad!=this.rN) {this.doTenPred();r=1;} break;
-		case 37:case 72:
-			if(this.cN.Dad!=this.rN) {this.doPred();r=1;} break;
-		case 39:case 74:
+		case "Home":case "F":case "f":
+			if(this.hasPred()) {this.doFirst();r=1;} break;
+		case "PageUp":case "G":case "g":
+			if(this.hasPred()) {this.doTenPred();r=1;} break;
+		case "ArrowLeft":case "H":case "h":
+			if(this.hasPred()) {this.doPred();r=1;} break;
+		case "ArrowRight":case "J":case "j":
 			if(this.hasNext()) {this.doNext();r=1;} break;
-		case 34:case 75:
+		case "PageDown":case "K":case "k":
 			if(this.hasNext()) {this.doTenNext();r=1;} break;
-		case 35:case 76:
+		case "End":case "L":case "l":
 			if(this.hasNext()) {this.doLast();r=1;} break;
-		case 38:case 85:
-			if(this.hasVariation(s)) {this.doTopVariation(s);r=1;} break;
-		case 40:case 78:
-			if(this.hasVariation(s)) {this.doBottomVariation(s);r=1;} break;
-		case 187:
-			if(this.hasC("Pass")) {this.doPass2();r=5;} break;
+		case "ArrowUp":case "N":case "n":
+			if(this.hasVariation(s)) {this.doTopVariation(s);r=2;} break;
+		case "ArrowDown":case "U":case "u":
+			if(this.hasVariation(s)) {this.doBottomVariation(s);r=2;} break;
 	}
-	if(r) ev.preventDefault();
+	if(r)
+	{
+		if(r&1) this.moveFocusMarkOnLast();
+		else this.moveFocusMarkOnVariationOnFocus();
+		ev.preventDefault();
+	}
 };
 mxG.G.prototype.wheelPred=function()
 {
@@ -157,8 +235,6 @@ mxG.G.prototype.wheelNext=function()
 mxG.G.prototype.wheelAction=function(ev,a)
 {
 	// wheel event is like mouse event
-	// means stop keyboard navigation
-	if(this.gobanFocusVisible) this.hideGobanFocus();
 	if(this.deltaYc===undefined) this.deltaYc=0;
 	this.deltaY=Math.abs(ev.deltaY);
 	if(!this.deltaYm)
@@ -184,7 +260,7 @@ mxG.G.prototype.wheelAction=function(ev,a)
 };
 mxG.G.prototype.doWheelNavigation=function(ev)
 {
-	var t,d=500,deltaY;
+	let t,d=500,deltaY;
 	if(this.hasC("Score")&&this.canPlaceScore) return false;
 	if(this.deltaYm===undefined) this.deltaYm=0;
 	if(ev.deltaY>0)
@@ -207,81 +283,67 @@ mxG.G.prototype.doWheelNavigation=function(ev)
 };
 mxG.G.prototype.updateNavigation=function()
 {
-	if(this.gBox||(this.hasC("Score")&&this.canPlaceScore))
+	if(this.cN.Kid.length)
 	{
-		this.disableBtn("First");
-		this.disableBtn("Pred");
-		this.disableBtn("TenPred");
+		this.enableBtn("Next");
+		this.enableBtn("TenNext");
+		this.enableBtn("Last");
+	}
+	else
+	{
 		this.disableBtn("Next");
 		this.disableBtn("TenNext");
 		this.disableBtn("Last");
 	}
+	if(this.cN.Dad==this.rN)
+	{
+		this.disableBtn("First");
+		this.disableBtn("TenPred");
+		this.disableBtn("Pred");
+	}
 	else
 	{
-		if(this.cN.Kid.length)
-		{
-			this.enableBtn("Next");
-			this.enableBtn("TenNext");
-			this.enableBtn("Last");
-		}
-		else
-		{
-			this.disableBtn("Next");
-			this.disableBtn("TenNext");
-			this.disableBtn("Last");
-		}
-		if(this.cN.Dad==this.rN)
-		{
-			this.disableBtn("First");
-			this.disableBtn("TenPred");
-			this.disableBtn("Pred");
-		}
-		else
-		{
-			this.enableBtn("First");
-			this.enableBtn("TenPred");
-			this.enableBtn("Pred");
-		}
+		this.enableBtn("First");
+		this.enableBtn("TenPred");
+		this.enableBtn("Pred");
 	}
 };
 mxG.G.prototype.initNavigation=function()
 {
-	var e,k=this.k,b,bk,bm;
-	this.ig.addEventListener("wheel",function(ev){mxG.D[k].doWheelNavigation(ev);},false);
-	e=this.getE("NavigationDiv");
-	e.addEventListener("keydown",function(ev){mxG.D[k].doKeydownNavigation(ev);},false);
-	b=this.navigations;
-	bm=b.length;
-	for(bk=0;bk<bm;bk++)
+	let e=this.getE("NavigationDiv"),k=this.k;
+	e.addEventListener("keydown",function(ev){mxG.D[k].doKeydownNavigation(ev);});
+	for(let b of this.navigations)
 	{
-		if(b[bk]=="First")
+		if(b=="First")
 			this.addBtn(e,{n:"First",v:this.scr.makeFirstBtn(),t:this.local("First")});
-		else if(b[bk]=="TenPred")
+		else if(b=="TenPred")
 			this.addBtn(e,{n:"TenPred",v:this.scr.makeTenPredBtn(),t:this.local("10 Previous")});
-		else if(b[bk]=="Pred")
+		else if(b=="Pred")
 			this.addBtn(e,{n:"Pred",v:this.scr.makePredBtn(),t:this.local("Previous")});
-		else if(b[bk]=="Next")
+		else if(b=="Next")
 			this.addBtn(e,{n:"Next",v:this.scr.makeNextBtn(),t:this.local("Next")});
-		else if(b[bk]=="TenNext")
+		else if(b=="TenNext")
 			this.addBtn(e,{n:"TenNext",v:this.scr.makeTenNextBtn(),t:this.local("10 Next")});
-		else if(b[bk]=="Last")
+		else if(b=="Last")
 			this.addBtn(e,{n:"Last",v:this.scr.makeLastBtn(),t:this.local("Last")});
-		else if((b[bk]=="Loop")&&this.hasC("Loop"))
+		else if(b=="Loop")
 		{
 			this.loopBtnOn=1;
 			this.addBtn(e,{n:"Auto",v:this.scr.makeAutoBtn(),t:this.local("Auto")});
 			this.addBtn(e,{n:"Pause",v:this.scr.makePauseBtn(),t:this.local("Pause")});
 		}
+		else if(b=="Goto")
+		{
+			this.gotoInputOn=1;
+			this.addGotoInput();
+		}
 	}
 };
 mxG.G.prototype.createNavigation=function()
 {
-	var a=["First","TenPred","Pred","Next","TenNext","Last"],s="";
-	this.navigations=this.setA("navigations",a,"list");
-	s+="<div class=\"mxNavigationDiv\" id=\""+this.n+"NavigationDiv\"";
-	// "NavigationDiv" takes the focus via this.setNFocus()
+	let a=new Set(["First","TenPred","Pred","Next","TenNext","Last"]);
+	this.navigations=this.setA("navigations",a,"set");
 	// buttons are inserted in this.initNavigation()
-	s+=" tabindex=\"-1\"></div>";
-	return s;
+	return "<div class=\"mxNavigationDiv\" id=\""+this.n+"NavigationDiv\" tabindex=\"-1\"></div>";
 };
 }

@@ -3,7 +3,7 @@
 include "../_php/lib.php";
 $lang=(isset($_GET["lang"])?safeValue($_GET["lang"]):"en");
 ?>
-<html lang="<?php echo $lang;?>">
+<html lang="<?=$lang?>">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -38,57 +38,52 @@ p {padding:0.25em;}
 {
 	margin:1em auto;
 }
-.topLink {text-align:center;margin-bottom:1em;}
-.bottomLink {text-align:center;margin-top:1em;}
+.topLink {display:block;text-align:center;margin-bottom:1em;}
+.bottomLink {display:block;text-align:center;margin-top:1em;}
 </style>
-<title><?php print $title;?></title>
+<title><?=$title?></title>
 </head>
 <body>
-<div class="topLink"><a href="../?sample=Charset&lang=<?php echo $lang;?>">Index</a></div>
-<h1><?php print $title;?></h1>
-<p>This page is encoded UTF-8.<br>
+<a class="topLink" href="../?sample=Charset&lang=<?=$lang?>">Index</a>
+<h1><?=$title?></h1>
+<p>This page is encoded in UTF-8.<br>
 <h2>Sgf filename encode in UTF-8</h2>
-<script src="../minimalist/_maker/comment.php">
-_sgf/UTF-8.sgf
+<script src="../minimalist/_maker/comment.php"
+		data-maxigos-sgf="_sgf/UTF-8.sgf">
 </script>
 <h2>Sgf filename encode in Big5</h2>
-<script charset="UTF-8"
-		src="../minimalist/_maker/comment.php">
-_sgf/Big5.sgf
+<script src="../minimalist/_maker/comment.php"
+		data-maxigos-sgf="_sgf/Big5.sgf">
 </script>
 <h2>Sgf filename encode in GB18030</h2>
-<script charset="UTF-8"
-		src="../minimalist/_maker/comment.php">
-_sgf/GB18030.sgf
+<script src="../minimalist/_maker/comment.php"
+		data-maxigos-sgf="_sgf/GB18030.sgf">
 </script>
 <h2>Sgf filename encode in Shift_JIS</h2>
-<script charset="UTF-8"
-		src="../minimalist/_maker/comment.php">
-_sgf/Shift_JIS.sgf
+<script src="../minimalist/_maker/comment.php"
+		data-maxigos-sgf="_sgf/Shift_JIS.sgf">
 </script>
 <h2>Sgf filename encode in ISO-8859-1</h2>
-<script charset="UTF-8"
-		src="../minimalist/_maker/comment.php">
-_sgf/ISO-8859-1.sgf
+<script src="../minimalist/_maker/comment.php"
+		data-maxigos-sgf="_sgf/ISO-8859-1.sgf">
 </script>
 <h2>Sgf filename encode in ISO-8859-1 but no charset specified in sgf</h2>
-<script charset="UTF-8"
-		src="../minimalist/_maker/comment.php">
-_sgf/NO-CHARSET.sgf
+<script src="../minimalist/_maker/comment.php"
+		data-maxigos-sgf="_sgf/NO-CHARSET.sgf">
 </script>
 <h2>Sgf record</h2>
-<script charset="UTF-8"
-		src="../minimalist/_maker/comment.php">
-(;
-FF[4]
-CA[UTF-8]
-GM[1]
-SZ[19]
-C[héhé 石田
-CA property value in sgf record is ignored by maxiGos \
-in this case, since the sgf record is in the code of the page.])
+<script src="../minimalist/_maker/comment.php"
+		data-maxigos-sgf="
+			(;
+			FF[4]
+			CA[ISO-8859-1]
+			GM[1]
+			SZ[19]
+			C[héhé &#30707;&#30000;
+			CA property value in sgf record is ignored by maxiGos \
+			in this case, since the sgf record is in the code of the page.])">
 </script>
 
-<div class="bottomLink"><a href="../?sample=Charset&lang=<?php echo $lang;?>">Index</a></div>
+<a class="bottomLink" href="../?sample=Charset&lang=<?=$lang?>">Index</a>
 </body>
 </html>

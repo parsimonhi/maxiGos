@@ -8,9 +8,10 @@ include "../../../_js/mgos.js";
 include "../../../_js/mgosGoban.js";
 include "../../../_js/mgosNavigation.js";
 include "../../../_js/mgosVariation.js";
+include "../_js/cute.js";
 ?>
 mxG.K++;
-mxG.B=["Goban","Navigation","Variation"];
+mxG.B=["Cute","Goban","Navigation","Variation"];
 mxG.D[mxG.K]=new mxG.G(mxG.K,mxG.B);
 mxG.D[mxG.K].theme="Ephemeral";
 mxG.D[mxG.K].config="Simple";
@@ -21,5 +22,5 @@ mxG.D[mxG.K].a.eraseGridUnder=1;
 mxG.D[mxG.K].a.in3dOn=1;
 mxG.D[mxG.K].a.hideSingleVariationMarkOn=1;
 mxG.D[mxG.K].a.canPlaceVariation=1;
-mxG.D[mxG.K].a.initMethod="3";
+mxG.D[mxG.K].a.initMethod="42";
 mxG.D[mxG.K].start();

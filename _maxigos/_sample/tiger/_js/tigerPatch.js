@@ -1,4 +1,4 @@
-// maxiGos v7 > tigerPatch.js
+// maxiGos v8 > tigerPatch.js
 
 if(!mxG.G.prototype.createTigerComment){
 
@@ -6,12 +6,12 @@ mxG.fr("pass","passe");
 
 mxG.G.prototype.removeTigerCommentMove=function(c)
 {
-	return c.replace(/^[0-9]*\s*:\s*([^\s])/,"$1").ucFirst();
+	return c.replace(/^[0-9]*\s*:\s*([^\s])/,"$1").ucF();
 };
 
 mxG.G.prototype.doTigerCommentMoveClick=function(s)
 {
-	var aN=this.rN,k,km=s.length;
+	let aN=this.rN,k,km=s.length;
 	for(k=0;k<km;k++) aN=aN.Kid[parseInt(s.charAt(k))-1];
 	this.backNode(aN);
 	this.updateAll();
@@ -19,10 +19,10 @@ mxG.G.prototype.doTigerCommentMoveClick=function(s)
 
 mxG.G.prototype.buildTigerCommentMove=function(aN,k,l)
 {	
-	var c,s,x,y,r="",id=this.n+l+"Span",a=0;
+	let c,s,x,y,r="",id=this.n+l+"Span",a=0;
 	if(aN==this.cN) this.currentNodeRef=l;
-	if(aN.P.B) {s=aN.P.B[0];c="<span class=\"mxCommentCircleSpan mxBlack\">●</span>";} // ●
-	else if(aN.P.W) {s=aN.P.W[0];c="<span class=\"mxCommentCircleSpan mxWhite\">○</span>";} // ○
+	if(aN.P.B) {s=aN.P.B[0];c="<span class=\"mxTigerCommentCircleSpan mxBlack\">●</span>";} // ●
+	else if(aN.P.W) {s=aN.P.W[0];c="<span class=\"mxTigerCommentCircleSpan mxWhite\">○</span>";} // ○
 	else s="...";
 	if(s!="...")
 	{
@@ -32,10 +32,10 @@ mxG.G.prototype.buildTigerCommentMove=function(aN,k,l)
 			y=s.c2n(1);
 		}
 		else {x=0;y=0;}
-		r="<span class=\"mxCommentNumberSpan\">"+k+"."+"</span>";
-		r+="<span id=\""+id+"\" onclick=\""+this.g+".doTigerCommentMoveClick('"+l+"');\" class=\"mxComment"+((aN!=this.cN)?"No":"")+"FocusSpan\">";
+		r="<span class=\"mxTigerCommentNumberSpan\">"+k+"."+"</span>";
+		r+="<span id=\""+id+"\" onclick=\""+this.g+".doTigerCommentMoveClick('"+l+"');\" class=\"mxTigerComment"+((aN!=this.cN)?"No":"")+"FocusSpan\">";
 		r+=this.local(c);
-		r+="<span class=\"mxCommentCoordinatesSpan\">";
+		r+="<span class=\"mxTigerCommentCoordinatesSpan\">";
 		if(x&&y) r+=""+this.scr.k2c(x)+this.scr.k2n(y);
 		else r+=this.local("pass");
 		r+="</span> ";
@@ -44,26 +44,26 @@ mxG.G.prototype.buildTigerCommentMove=function(aN,k,l)
 	}
 	else if(aN.Dad!=this.rN)
 	{
-		r="<span id=\""+id+"\" onclick=\""+this.g+".doTigerCommentMoveClick('"+l+"');\" class=\"mxComment"+((aN!=this.cN)?"No":"")+"FocusSpan\">";
+		r="<span id=\""+id+"\" onclick=\""+this.g+".doTigerCommentMoveClick('"+l+"');\" class=\"mxTigerComment"+((aN!=this.cN)?"No":"")+"FocusSpan\">";
 		r+=s;
 		r+="</span> ";
 		a=2;
 	}
 	else r="<span id=\""+id+"\" style=\"position:absolute;\"> </span>";
-	return a?"<span class=\"mxComment"+((a==2)?"No":"")+"MoveSpan\">"+r+"</span> ":r;
+	return a?"<span class=\"mxTigerComment"+((a==2)?"No":"")+"MoveSpan\">"+r+"</span> ":r;
 };
 
 mxG.G.prototype.getOneTigerComment=function(aN)
 {
-	var c=(aN.P.C?aN.P.C[0]:"");
-	c=this.htmlProtect(c);
+	let c=(aN.P.C?aN.P.C[0]:"");
+	c=c.noT();
 	if(this.hasC("Header")&&this.headerInComment&&(aN.Dad==this.rN)) c=this.buildHeader()+c;
 	return c.replace(/\n/g,"<br>");
 };
 
 mxG.G.prototype.getAllTigerComment=function(dN,k,l,v)
 {
-	var aN,s="",c,ko,lo,k1=0,l1="",k2=0,l2="",m,mm;
+	let aN,s="",c,ko,lo,k1=0,l1="",k2=0,l2="",m,mm;
 	mm=dN.Kid.length;
 	ko=k;
 	lo=l;
@@ -71,8 +71,8 @@ mxG.G.prototype.getAllTigerComment=function(dN,k,l,v)
 	{
 		k1=ko;
 		l1=lo;
-		if(v||(m>0)) s+="<div class=\"mxCommentVariationDiv\">";
-		else s+="<div class=\"mxCommentMainDiv\">";
+		if(v||(m>0)) s+="<div class=\"mxTigerCommentVariationDiv\">";
+		else s+="<div class=\"mxTigerCommentMainDiv\">";
 		aN=dN.Kid[m];
 		if(aN.P.B||aN.P.W) {k1++;if((aN.P.B&&aN.Dad.P.B)||(aN.P.W&&aN.Dad.P.W)) k1++;}
 		else if(aN.P.AB||aN.P.AW||aN.P.AE) k1=0;
@@ -85,7 +85,7 @@ mxG.G.prototype.getAllTigerComment=function(dN,k,l,v)
 			if(aN.Dad!=this.rN)
 			{
 				s+="</div><br>";
-				s+="<div class=\"mxComment"+((v||(m>0))?"Variation":"Main")+"TextDiv\">";
+				s+="<div class=\"mxTigerComment"+((v||(m>0))?"Variation":"Main")+"TextDiv\">";
 			}
 			s+=this.removeTigerCommentMove(c);
 		}
@@ -110,46 +110,46 @@ mxG.G.prototype.getTigerComment=function()
 
 mxG.G.prototype.updateTigerComment=function()
 {
-	var c="",e=this.getE("CommentDiv");
+	let c="",e=this.getE("TigerCommentDiv"),f;
 	if(this.hasC("Solve")&&this.canPlaceSolve) return;
 	c=this.getTigerComment();
-	if(this.cN.P.BM) e.className="mxCommentDiv mxBM";
-	else if(this.cN.P.DO) e.className="mxCommentDiv mxDO";
-	else if(this.cN.P.IT) e.className="mxCommentDiv mxIT";
-	else if(this.cN.P.TE) e.className="mxCommentDiv mxTE";
-	else e.className="mxCommentDiv";
-	this.getE("CommentContentDiv").innerHTML=(c?c:"&nbsp;");
+	if(this.cN.P.BM) e.className="mxTigerCommentDiv mxBM";
+	else if(this.cN.P.DO) e.className="mxTigerCommentDiv mxDO";
+	else if(this.cN.P.IT) e.className="mxTigerCommentDiv mxIT";
+	else if(this.cN.P.TE) e.className="mxTigerCommentDiv mxTE";
+	else e.className="mxTigerCommentDiv";
+	this.getE("TigerCommentContentDiv").innerHTML=(c?c:"&nbsp;");
 	if(this.currentNodeRef)
 	{
 		f=this.getE(this.currentNodeRef+"Span");
 		if(f&&(f.offsetTop<e.scrollTop))
 			e.scrollTop=f.offsetTop;
-		if(f&&((f.offsetTop+1.5*f.getBoundingClientRect().height)>(e.scrollTop+e.getBoundingClientRect().height)))
+		if(f&&((f.offsetTop+3*f.getBoundingClientRect().height)>(e.scrollTop+e.getBoundingClientRect().height)))
 			e.scrollTop=f.offsetTop;
 	}
 };
 
 mxG.G.prototype.initTigerComment=function()
 {
-	this.getE("CommentDiv").scrollTop=0;
+	this.getE("TigerCommentDiv").scrollTop=0;
 };
 
 mxG.G.prototype.createTigerComment=function()
 {
-	var s="",a;
+	let s="",a;
 	this.headerInComment=this.setA("headerInComment",0,"bool");
 	this.canCommentFocus=this.setA("canCommentFocus",0,"bool");
 	this.commentLabelOn=this.setA("commentLabelOn",0,"bool");
 	this.allInComment=this.setA("allInComment",0,"bool");
 	if(this.commentLabelOn)
 	{
-		s+="<div class=\"mxCommentLabelDiv\" id=\""+this.n+"CommentLabelDiv\">";
+		s+="<div class=\"mxTigerCommentLabelDiv\" id=\""+this.n+"TigerCommentLabelDiv\">";
 		s+=this.local("Comments");
 		s+="</div>";
 	}
 	a=this.canCommentFocus?" tabindex=\"0\"":"";
-	s+="<div class=\"mxCommentDiv\" id=\""+this.n+"CommentDiv\""+a+">";
-	s+="<div class=\"mxCommentContentDiv\" id=\""+this.n+"CommentContentDiv\">";
+	s+="<div class=\"mxTigerCommentDiv\" id=\""+this.n+"TigerCommentDiv\""+a+">";
+	s+="<div class=\"mxTigerCommentContentDiv\" id=\""+this.n+"TigerCommentContentDiv\">";
 	s+="</div>";
 	s+="</div>";
 	return s;

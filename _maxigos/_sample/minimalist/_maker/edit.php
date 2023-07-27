@@ -28,14 +28,13 @@ include "../../../_js/mgosVersion.js";
 mxG.K++;
 mxG.B=[["Menu","File","View","Goban","Navigation","Variation"],[["Help","Sgf","Image","Score","Pass"],"Edit","Info","Tree","Version"],"AfterView"];
 mxG.D[mxG.K]=new mxG.G(mxG.K,mxG.B);
-mxG.D[mxG.K].theme="<?php echo $theme ?>";
-mxG.D[mxG.K].config="<?php echo $config ?>";
+mxG.D[mxG.K].theme="<?=$theme?>";
+mxG.D[mxG.K].config="<?=$config?>";
 <?php
 include "../../_php/insertCss.php";
 ?>
 // general
-mxG.D[mxG.K].a.in3dOn=0; // (0,1) default 1
-mxG.D[mxG.K].a.htmlParenthesis=1; // (0,1) default 0
+mxG.D[mxG.K].a.in3dOn=0; // (0,1) default 0
 mxG.D[mxG.K].a.allowStringAsSource=1; // (0,1) default 1
 mxG.D[mxG.K].a.allowFileAsSource=1; // (0,1) default 1
 // mxG.D[mxG.K].a.sourceFilter=""; // (str) default ""
@@ -60,12 +59,9 @@ mxG.D[mxG.K].a.eraseGridUnder=1; // (0,1) default 0
 // Comment
 mxG.D[mxG.K].a.headerInComment=1; // (0,1) default 0
 mxG.D[mxG.K].a.canCommentFocus=1; // (0,1) default 0
-// Edit
-// File
 // Header
-mxG.D[mxG.K].a.headerBoxOn=0; // (0,1) default 0
-mxG.D[mxG.K].a.headerBtnOn=0; // (0,1) default 0
-mxG.D[mxG.K].a.hideNumOfMoves=1; // (0,1) default 0
+mxG.D[mxG.K].a.hideInHeader="NumOfMoves"; // (set) default ""
+// Help
 mxG.D[mxG.K].a.helpBtnOn=1; // (0,1) default 0
 // Image
 mxG.D[mxG.K].a.pngBtnOn=1; // (0,1) default 0

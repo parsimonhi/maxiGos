@@ -1,120 +1,64 @@
 .mxFmTheme
 {
 	--gobanMaxWidth:30em;
+	--gobanMinWidth:15em;
 	text-align:left;
 }
 /* general */
-.mxFmTheme div::-moz-focus-inner,
-.mxFmTheme button::-moz-focus-inner,
-.mxFmTheme input[type="text"]::-moz-focus-inner,
-.mxFmTheme a::-moz-focus-inner {padding:0;border:0;}
-.mxFmTheme div:focus,
-.mxFmTheme button:focus,
-.mxFmTheme input[type="text"]:focus,
-.mxFmTheme a:focus {outline:none;}
-.mxFmTheme button,
-.mxFmTheme input[type="button"],
-.mxFmTheme textarea {-webkit-appearance:none;-moz-appearance:none;}
+.mxFmTheme button {-webkit-appearance:none;-moz-appearance:none;}
 .mxFmTheme text {cursor:default;}
-.mxFmTheme button {cursor:pointer;}
-.mxFmTheme input[type="text"][disabled],
+.mxFmTheme input[type=text][disabled],
 .mxFmTheme button[disabled] {cursor:default;}
-/* font */
-.mxFmTheme
-{
-	font-family:sans-serif;
-}
-.mxFmTheme svg
-{
-	font-family:arial,sans-serif;
-}
-.mxFmTheme button
-{
-	font-family:sans-serif;
-}
+.mxFmTheme fieldset{border:0;margin:0;padding:0;}
+.mxFmTheme svg {display:block;}
+.mxFmTheme,
+.mxFmTheme button {font-family:sans-serif;}
 /* layout */
 .mxFmTheme
 {
 	box-sizing:border-box;
 	max-width:var(--gobanMaxWidth);
+	min-width:var(--gobanMinWidth);
 	margin:0 auto;
 }
-.mxFmTheme.mxCommentConfig,
-.mxFmTheme.mxGameConfig,
-.mxFmTheme.mxTreeConfig
+.mxFmTheme>:not(dialog)
+{
+	margin:0.5em;
+}
+.mxFmTheme.mxGameConfig
 {
 	display:flex;
 	flex-wrap:wrap;
 	justify-content:center;
+	align-items:center;
 	max-width:calc((var(--gobanMaxWidth) * 7 / 4) + 2em);
 }
-.mxFmTheme.mxCommentConfig>div,
-.mxFmTheme.mxGameConfig>div,
-.mxFmTheme.mxTreeConfig>div
+.mxFmTheme.mxGameConfig .mxGobanParentDiv
 {
 	box-sizing:border-box;
 	max-width:var(--gobanMaxWidth);
 	flex:4 1 var(--gobanMaxWidth);
-}
-.mxFmTheme.mxCommentConfig .mxGobanGrandParentDiv,
-.mxFmTheme.mxGameConfig .mxGobanGrandParentDiv,
-.mxFmTheme.mxTreeConfig .mxGobanGrandParentDiv
-{
 	display:flex;
 	flex-direction:column;
 	justify-content:center;
+	align-items:center;
 }
-.mxFmTheme.mxCommentConfig .mxCommentParentDiv,
-.mxFmTheme.mxGameConfig .mxHeaderParentDiv,
-.mxFmTheme.mxTreeConfig .mxTreeParentDiv
+.mxFmTheme.mxGameConfig .mxHeaderParentDiv
 {
 	box-sizing:border-box;
 	/* when vertical layout, both columns have the same width */
 	max-width:var(--gobanMaxWidth);
 	/* when horizontal layout, 2nd column is narrower */
 	flex:3 1 calc(var(--gobanMaxWidth) * 3 / 4);
-	margin:0 1em;
 	display:flex;
 	flex-direction:column;
 	justify-content:space-between;
 }
-.mxFmTheme.mxCommentConfig .mxGobanParentDiv,
-.mxFmTheme.mxGameConfig .mxGobanParentDiv,
-.mxFmTheme.mxTreeConfig .mxGobanParentDiv
-{
-	/* cannot use flex:0 below (bug on Android?) */
-	flex:1;
-	display:flex;
-	flex-direction:column;
-}
-.mxFmTheme.mxCommentConfig .mxGobanDiv,
-.mxFmTheme.mxGameConfig .mxGobanDiv,
-.mxFmTheme.mxTreeConfig .mxGobanDiv
+.mxFmTheme.mxGameConfig .mxGobanDiv
 {
 	margin:auto;
 	width:100%;
-}
-.mxFmTheme.mxCommentConfig .mxCommentDiv,
-.mxFmTheme.mxTreeConfig .mxCommentDiv,
-.mxFmTheme.mxTreeConfig .mxTreeDiv
-{
-	flex:1;
-	min-height:7em;
-}
-/* set position:absolute to .mxXxxContentDiv to avoid overflow */
-/* when available space is narrower than --gobanMaxWidth */
-/* and when .mxXxxContentDiv is wider than available space */
-.mxFmTheme.mxCommentConfig .mxCommentDiv,
-.mxFmTheme.mxTreeConfig .mxCommentDiv,
-.mxFmTheme.mxTreeConfig .mxTreeDiv
-{
-	position:relative;
-}
-.mxFmTheme.mxCommentConfig .mxCommentContentDiv,
-.mxFmTheme.mxTreeConfig .mxCommentContentDiv,
-.mxFmTheme.mxTreeConfig .mxTreeContentDiv
-{
-	position:absolute;
+	background:#0f09;
 }
 .mxFmTheme.mxGameConfig .mxSgfParentDiv
 {
@@ -134,78 +78,44 @@
 /* common */
 .mxFmTheme .mxInnerGobanDiv
 {
-	/* avoid bad touch effect on mobile */
-	-webkit-tap-highlight-color:rgba(0,0,0,0);
-	user-select:none;
 	margin:0 auto;
-	position:relative;
 }
 .mxFmTheme.mxIn3d .mxInnerGobanDiv
 {
 	box-shadow:0 0.25em 0.5em rgba(0,0,0,0.3);
 }
-.mxFmTheme.mxIn3d .mxGobanDiv.mxUnder .mxInnerGobanDiv
-{
-	box-shadow:none;
-}
 .mxFmTheme .mxGobanDiv svg
 {
 	box-sizing:border-box;
-	display:block;
 	width:100%;
 	height:100%;
-	pointer-events:none;
 	/* set goban background below */
 	background:#fc9;
 }
 .mxFmTheme text
 {
 	stroke-width:0.5px;
+	stroke:#000;
 }
-.mxFmTheme text.mxOnBlack
+.mxFmTheme text.mxOnBlack,
+.mxFmTheme .mxBlack+text
 {
-	fill:#fff;
 	stroke:#fff;
 }
-.mxFmTheme text.mxOnWhite,
-.mxFmTheme text.mxOnEmpty
+.mxFmTheme .mxTitleP
 {
-	fill:#000;
-	stroke:#000;
-}
-.mxFmTheme rect.mxPointBackground.mxVariation.mxOnFocus
-{
-	fill:none;
-	stroke:#000;
-}
-.mxFmTheme .mxTitleH1
-{
-	font-size:1em;
-	padding:0;
-	margin:0 0 0.25em 0;
 	color:#900;
+	font-weight:bold;
 	text-align:center;
 }
-.mxFmTheme .mxP:not(:first-child)
+.mxFmTheme p
+{
+	margin:0;
+	padding:0;
+}
+.mxFmTheme p:not(:first-child)
 {
 	padding-top:0.5em;
-}
-/* comment, edit and tree*/
-.mxFmTheme.mxCommentConfig .mxCommentDiv,
-.mxFmTheme.mxTreeConfig .mxCommentDiv,
-.mxFmTheme.mxTreeConfig .mxTreeDiv
-{
-	padding:0.25em;
-	border:1px solid rgba(0,0,0,0.3);
-	overflow:auto;
-}
-.mxFmTheme.mxTreeConfig .mxTreeDiv
-{
-	margin-top:0.25em;
-}
-.mxFmTheme.mxTreeConfig .mxTreeDiv
-{
-	user-select:none;
 }
 /* diagram */
 .mxFmTheme.mxDiagramConfig .mxInnerNotSeenDiv
@@ -222,6 +132,8 @@
 }
 .mxFmTheme.mxDiagramConfig .mxInnerNotSeenDiv svg
 {
+	width:100%;
+	height:100%;
 	margin:0.125em 0;
 }
 /* game */
@@ -230,30 +142,42 @@
 	padding:0.25em 0.25em 0.25em 0.75em;
 	margin-bottom:0.25em;
 }
-.mxFmTheme.mxGameConfig .mxHeaderDiv h1
-{
-	font-size:1em;
-	font-weight:bold;
-}
 .mxFmTheme.mxGameConfig .mxGuessDiv
 {
-	margin-top:0.5em;
-	box-sizing:border-box;
-	border:1px solid #666;
-	background:#fff;
+	width:100%;
+	margin:0.5em;
 }
-.mxFmTheme.mxGameConfig .mxGuessOMeterDiv
-{
-	background:#900;
-}
-.mxFmTheme.mxGameConfig .mxGuessSvg
+.mxFmTheme.mxGameConfig meter
 {
 	display:block;
+	font-size:1em;
+	margin:0;
+	padding:0;
+	width:100%;
+	height:0.5em;
+	border:0;
+	border-radius:0.25em;
+	overflow:hidden;
+	background:#900; /* set "bad" color */
 }
-.mxFmTheme.mxGameConfig .mxGuessBar
+/* do not reunite ::-selectors below, otherwise error in webkit browsers */
+.mxFmTheme.mxGameConfig ::-moz-meter-bar
 {
-	fill:#090;
+	width:100%;
+    height:0.5em;
+    border:0;
+	background:#0000;
 }
+.mxFmTheme.mxGameConfig ::-webkit-meter-bar
+{
+    width:100%;
+    height:0.5em;
+    border:0;
+	border-radius:0;
+    background:#0000;
+}
+.mxFmTheme.mxGameConfig .mxGuessDiv :-moz-meter-optimum::-moz-meter-bar {background:#090;}
+.mxFmTheme.mxGameConfig .mxGuessDiv ::-webkit-meter-optimum-value {background:#090;}
 /* problem */
 .mxFmTheme.mxProblemConfig .mxCommentDiv
 {
@@ -267,13 +191,18 @@
 	display:inline-block;
 	text-align:justify;
 }
+.mxFmTheme.mxProblemConfig .mxCommentContentDiv p
+{
+	margin:0;
+}
 /* buttons and inputs */
-.mxFmTheme input[type="text"][disabled],
+.mxFmTheme input[type=text][disabled],
 .mxFmTheme button[disabled] {opacity:0.3;}
-.mxFmTheme .mxSgfParentDiv button 
+.mxFmTheme button 
 {
 	box-sizing:border-box;
-	border:1px solid #000;
+	font-size:1em;
+	border:1px solid rgba(0,0,0,0.3);
 	border-radius:0.25em;
 	background:#fff;
 	margin:0.125em;
@@ -282,71 +211,82 @@
 	height:1.5em;
 	line-height:1.5em;
 }
-/* focus */
-.mxFmTheme.mxCommentConfig .mxCommentDiv:focus,
-.mxFmTheme.mxEditConfig .mxTreeDiv:focus,
-.mxFmTheme.mxTreeConfig .mxCommentDiv:focus,
-.mxFmTheme.mxTreeConfig .mxTreeDiv:focus
+/* comment */
+.mxFmTheme.mxProblemConfig .mxCommentDiv
 {
-	background:rgba(0,0,0,0.05);
+	padding:0.5em;
 }
-.mxFmTheme .mxNavigationDiv button:focus,
-.mxFmTheme .mxSolveDiv button:focus
-{
-	background:rgba(0,0,0,0.1);
-}
-.mxFmTheme .mxSgfParentDiv button:focus
-{
-	background:rgba(0,0,0,0.1);
-}
-/* gbox */
-.mxFmTheme .mxGBoxDiv
+/* dialog */
+.mxFmTheme dialog,
+.mxFmTheme dialog *
 {
 	box-sizing:border-box;
+}
+.mxFmTheme dialog::backdrop
+{
+  background: rgba(0,0,0,0.5);
+}
+.mxFmTheme dialog
+{
+	min-width:min(50vw,19em);
+	border:1px solid #000;
 	background:#fff;
+	text-align:left;
+	padding:0;
 }
-.mxFmTheme.mxIn3d .mxGBoxDiv
+.mxFmTheme dialog.mxShowSgfDialog,
+.mxFmTheme dialog.mxShowSvgDialog
 {
-	box-shadow:0 0.25em 0.5em rgba(0,0,0,0.3);
+	width:calc(var(--gobanMaxWidth) * 3 / 2);
 }
-.mxFmTheme.mxIn2d .mxGBoxDiv
+.mxFmTheme dialog form
 {
-	border:1px solid #ccc;
+	margin:0;
+	padding:0;
+	min-width:var(--gobanMinWidth);
 }
-.mxFmTheme .mxGBoxDiv .mxShowContentDiv
+.mxFmTheme dialog .mxContentFieldset
 {
-	box-sizing:border-box;
-	position:absolute;
-	top:0;
-	left:0;
-	right:0;
-	bottom:3em;
-	background:#fff;
-	padding:0.25em;
-	overflow:auto;
-	z-index:2;
-	border:1px solid transparent;
+	padding:0.5em;
+	min-width:100%;
 }
-.mxFmTheme .mxGBoxDiv.mxShowSgfDiv
+.mxFmTheme dialog .mxMenuFieldset
 {
-	font-family:monospace;
+	background:#f3f3f3;
+	min-height:3em;
+	line-height:3em;
+	text-align:center;
+}
+.mxFmTheme dialog label:not([for])
+{
+	display:block;
+}
+.mxFmTheme dialog input[type=text]
+{
+	max-width:100%;
+}
+.mxFmTheme dialog img
+{
+	display:block;
+	margin:0 auto;
+	max-width:100%;
+	height:auto;
+	border:0;
+}
+.mxFmTheme dialog.mxShowSgfDialog .mxContentFieldset
+{
+	font-family:monospace; /* for Safari? */
 	white-space:pre-wrap;
+	min-height:var(--gobanMaxWidth);
 }
-.mxFmTheme .mxOKDiv
+/* options */
+.mxFmTheme .mxOptionsDiv
 {
-	box-sizing:border-box;
-	background:#ddd;
-	position:absolute;
-	bottom:0;
-	width:100%;
-	height:3em;
-	display:flex;
-	justify-content:center;
-	align-items:center;
+	line-height:1.5em;
 }
-.mxFmTheme .mxShowOptionDiv
+.mxFmTheme .mxOptionsDiv label:not([for])
 {
-	line-height:1.75em;
+	display:block;
 }
 .mxFmTheme .mxNumFromTextSpan,
 .mxFmTheme .mxNumWithTextSpan
@@ -360,10 +300,6 @@
 	content:"\a";
 	white-space:pre-line;
 }
-.mxFmTheme .mxShowOptionDiv input[type="text"]
-{
-	font-size:1em;
-}
 .mxFmTheme input:not(:checked)~.mxNumFromTextSpan,
 .mxFmTheme input:not(:checked)~.mxNumWithTextSpan
 {
@@ -373,34 +309,44 @@
 {
 	color:#000;
 }
-.mxFmTheme [data-maxigos-disabled] {opacity:0.5;}
-/* navigation and solve*/
-.mxFmTheme:not(.mxLoopConfig) .mxNavigationDiv
+/* navigation */
+.mxFmTheme .mxNavigationDiv
 {
+	margin-top:0.5em;
+	width:100%;
+	height:2em;
 	box-sizing:border-box;
 	display:flex;
-	justify-content:space-around;
+	justify-content:space-between;
 	align-items:center;
-	height:2.5em;
-	border:0;
 }
 .mxFmTheme .mxNavigationDiv button
 {
 	flex:1;
 	font-size:1em;
 	border:0;
-	background:none;
-	margin:0 2%;
+	background:transparent;
+	margin:min(1%,0.25em);
 	padding:0;
+	display:flex;
+	justify-content:center;
+	align-items:center;
 }
 .mxFmTheme .mxNavigationDiv button svg
 {
-	display:block;
-	margin:10% auto;
-	max-width:50%;
+	flex:1;
+	max-width:60%;
+	max-height:80%;
 	width:100%;
 	height:100%;
+	margin:auto;
 }
+.mxFmTheme .mxNavigationDiv button.mxAutoBtn[disabled],
+.mxFmTheme .mxNavigationDiv button.mxPauseBtn[disabled]
+{
+	display:none;
+}
+/* solve */
 .mxFmTheme .mxSolveDiv
 {
 	margin:0.5em auto;
@@ -414,11 +360,11 @@
 	border:0;
 	background:none;
 	width:10%;
-	min-width:3em;
+	min-width:1.5cm;
+	min-height:1.5cm;
 }
 .mxFmTheme .mxSolveDiv button svg
 {
-	display:block;
 	width:100%;
 	height:100%;
 }
@@ -427,64 +373,19 @@
 {
 	display:flex;
 	align-items:center;
+	margin:0.5em 0;
 }
-.mxFmTheme .mxSpeedDiv button
-{
-	flex:0;
-	font-size:1em;
-	margin:0;
-	padding:0;
-	border:1px solid transparent;
-	background:none;
-}
-.mxFmTheme .mxSpeedDiv svg
+.mxFmTheme .mxSpeedDiv input
 {
 	flex:1;
-	margin:0 0.5em;
 }
-.mxFmTheme .mxSpeedDiv button span
-{
-	display:block;
-	margin:auto;
-	width:1.5em;
-	height:1.5em;
-	line-height:1.5em;
-	color:transparent;
-	position:relative;
-}
-.mxFmTheme .mxSpeedDiv button:focus span,
-.mxFmTheme .mxSpeedDiv button:hover span
-{
-	background:rgba(0,0,0,0.05);
-}
-.mxFmTheme .mxSpeedDiv button span:before
-{
-	content:"";
-	display:block;
-	position:absolute;
-	top:calc(50% - 1px);
-	left:25%;
-	bottom:0;
-	right:25%;
-	border-top:2px solid #000;
-	z-index:1;
-}
-.mxFmTheme .mxSpeedDiv button.mxSpeedPlusBtn span:after
-{
-	content:"";
-	display:block;
-	position:absolute;
-	top:25%;
-	left:calc(50% - 1px);
-	bottom:25%;
-	right:0;
-	border-left:2px solid #000;
-	z-index:1;
-}
-.mxFmTheme .mxSpeedDiv .mxSpeedBar,
-.mxFmTheme .mxSpeedDiv .mxSpeedCursor
-{
-	stroke:#000;
-	stroke-width:0.25px;
-	cursor:pointer;
-}
+/* focus, hover and cursor */
+.mxFmTheme .mxGobanSvg:not(:focus-visible) .mxFocus {display:none;}
+.mxFmTheme button,
+.mxFmTheme [type=range],
+.mxFmTheme:not(.mxDiagramConfig) .mxGobanDiv svg,
+.mxFmTheme .mxTreeDiv svg circle,
+.mxFmTheme .mxTreeDiv svg polygon,
+.mxFmTheme .mxTreeDiv svg rect,
+.mxFmTheme .mxTreeDiv svg text {cursor:pointer;}
+

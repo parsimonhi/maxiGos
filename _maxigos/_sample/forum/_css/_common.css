@@ -1,36 +1,28 @@
 .mxForumTheme
 {
-	--gobanMaxWidth:30em;
-	--globalBackground:#CADCEB;
-	--outerGobanBackground:transparent;
-	--barBackground:#2D99CF;
-	--barColor:#000;
+	--gobanMaxWidth:calc(1em * 491 / 16);
+	--globalBk:transparent;
+	--outerGobanBk:#0688C822;
+	--barBk:#0688C8CC;
+	--barColor:#000000;
 	--focusColor:#bd2a4d;
 	--onBlackColor:#fff;
 	--onWhiteColor:#000;
-	--commentBackground:transparent;
-	--headerBackground:#A3CBE4;
-	--treeBackground:#A3CBE4;
-	--gBoxBackground:#CADCEB;
-	--gBoxBarBackground:#A3CBE4;
+	--commentBk:#0688C822;
+	--headerBk:#0688C844;
+	--treeBk:#0688C844;
+	--dialogBk:#0688C822;
+	--dialogMenuBk:#0688C822;
 	text-align:left;
 }
+.mxForumTheme.mxIndicesOff {--gobanMaxWidth:calc(1em * 445 / 16);}
 /* general */
-.mxForumTheme div::-moz-focus-inner,
-.mxForumTheme button::-moz-focus-inner,
-.mxForumTheme input[type=text]::-moz-focus-inner,
-.mxForumTheme a::-moz-focus-inner {padding:0;border:0;}
-.mxForumTheme div:focus,
-.mxForumTheme button:focus,
-.mxForumTheme input[type=text]:focus,
-.mxForumTheme a:focus {outline:none;}
-.mxForumTheme button,
-.mxForumTheme input[type=button],
-.mxForumTheme textarea {-webkit-appearance:none;-moz-appearance:none;}
+.mxForumTheme button {-webkit-appearance:none;-moz-appearance:none;}
 .mxForumTheme text {cursor:default;}
-.mxForumTheme button {cursor:pointer;}
 .mxForumTheme input[type=text][disabled],
 .mxForumTheme button[disabled] {cursor:default;}
+.mxForumTheme fieldset{border:0;margin:0;padding:0;}
+.mxForumTheme svg {display:block;}
 /* font */
 .mxForumTheme
 {
@@ -50,34 +42,24 @@
 	max-width:var(--gobanMaxWidth);
 	margin:0 auto;
 }
-.mxForumTheme .mxVersionDiv {display:none;}
 /* common */
-.mxForumTheme h1
+.mxForumTheme .mxTitleP
 {
-	font-size:1em;
-	font-weight:bold;
-	margin:0 0 0.125em 0;
+	font-weight:bold
 }
 .mxForumTheme .mxInnerGobanDiv
 {
-	/* avoid bad touch effect on mobile */
-	-webkit-tap-highlight-color:rgba(0,0,0,0);
-	user-select:none;
 	margin:0 auto;
-	position:relative;
 }
 .mxForumTheme.mxIn3d.mxDiagramConfig .mxInnerGobanDiv,
 .mxForumTheme.mxIn3d.mxProblemConfig .mxInnerGobanDiv
 {
 	box-shadow:0 0.1em 0.2em rgba(0,0,0,0.2);
 }
-.mxForumTheme.mxIn3d .mxInnerGobanDiv[data-maxigos-disabled] {box-shadow:none;}
 .mxForumTheme .mxGobanDiv svg
 {
-	display:block;
 	width:100%;
 	height:100%;
-	pointer-events:none;
 	/* background:url(forum-goban.png); */
 	background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAABCAIAAABYG7kIAAAAAXNSR0IArs4c6QAAACVJREFUCNdjvLMpmoOdmYGB4c+ff3/+/oewf/36y8DAwMaGRRwA1rMT7jfYpPIAAAAASUVORK5CYII=);
 	background-repeat:repeat;
@@ -103,22 +85,16 @@
 	stroke:var(--onBlackColor);
 	font-weight:bold;
 }
-.mxForumTheme text.mxOnBlack.mxVariation.mxOnFocus,
-.mxForumTheme text.mxOnWhite.mxVariation.mxOnFocus
-{
-	fill:var(--focusColor);
-	stroke:var(--focusColor);
-}
 .mxForumTheme text.mxOnEmpty.mxVariation.mxOnFocus
 {
 	fill:var(--focusColor);
 	stroke:var(--onBlackColor);
 }
-.mxForumTheme rect.mxOnEmpty.mxVariation.mxOnFocus
+.mxForumTheme .mxMark.mxOnEmpty.mxVariation.mxOnFocus
 {
-	stroke:none;
+	stroke:var(--focusColor);
 }
-.mxClassicTheme rect.mxOnEmpty.mxVariation.mxOnFocus
+.mxForumTheme .mxPointBackground.mxOnEmpty.mxVariation.mxOnFocus
 {
 	stroke:none;
 }
@@ -132,10 +108,6 @@
 	fill:none;
 	stroke:var(--focusColor);
 	stroke-width:2px;
-}
-.mxForumTheme .mxP:not(:first-child)
-{
-	padding-top:0.5em;
 }
 .mxForumTheme .mxWhiteRadialGradient stop:nth-of-type(2)
 {
@@ -151,7 +123,7 @@
 .mxForumTheme.mxGameConfig,
 .mxForumTheme.mxTreeConfig
 {
-	background:var(--globalBackground);
+	background:var(--globalBk);
 }
 .mxForumTheme.mxCommentConfig .mxCommentDiv,
 .mxForumTheme.mxTreeConfig .mxCommentDiv,
@@ -162,34 +134,33 @@
 	padding:0.25em;
 	overflow:auto;
 	resize:vertical;
-	background:var(--commentBackground);
+	background:var(--commentBk);
+}
+.mxForumTheme.mxTreeConfig .mxTreeDiv
+{
+	margin:0;
+	max-height:42em;
 }
 .mxForumTheme.mxBasicConfig .mxGobanDiv,
 .mxForumTheme.mxCommentConfig .mxGobanDiv,
 .mxForumTheme.mxGameConfig .mxGobanDiv,
 .mxForumTheme.mxTreeConfig .mxGobanDiv
 {
-	background:var(--outerGobanBackground);
+	background:var(--outerGobanBk);
 }
 .mxForumTheme.mxGameConfig .mxHeaderDiv
 {
 	padding:0.25em;
-	background:var(--headerBackground);
+	background:var(--headerBk);
 }
 .mxForumTheme.mxTreeConfig .mxTreeDiv
 {
-	background:var(--treeBackground);
+	background:var(--treeBk);
 }
 .mxForumTheme.mxTreeConfig .mxTreeDiv svg .mxFocus
 {
 	fill:var(--focusColor);
 	opacity:1;
-}
-.mxForumTheme.mxTreeConfig .mxTreeDiv
-{
-	resize:vertical;
-	user-select:none;
-	max-height:42em;
 }
 /* diagram */
 .mxForumTheme .mxInnerNotSeenDiv:not(:empty)
@@ -218,9 +189,13 @@
 	display:inline-block;
 	text-align:justify;
 }
+.mxForumTheme.mxProblemConfig .mxCommentContentDiv p
+{
+	margin:0;
+}
 /* buttons and inputs */
-.mxForumTheme .mxOKDiv button,
-.mxForumTheme .mxOptionDiv button,
+.mxForumTheme .mxMenuFieldset button,
+.mxForumTheme .mxOptionsDiv button,
 .mxForumTheme .mxPassDiv button
 {
 	font-weight:bold;
@@ -233,34 +208,9 @@
 	background:linear-gradient(to top,#dfdfdf,#ffffff);
 	padding:0.375em 1em 0.25em 1em;
 }
-.mxForumTheme .mxOKDiv button:hover,
-.mxForumTheme .mxOKDiv button:focus,
-.mxForumTheme .mxOptionDiv button:hover,
-.mxForumTheme .mxOptionDiv button:focus,
-.mxForumTheme .mxPassDiv button:hover,
-.mxForumTheme .mxPassDiv button:focus
-{
-	background:#f1f1f1;
-	background:linear-gradient(to top,#ffffff,#dfdfdf);
-}
-.mxForumTheme .mxOKDiv button:hover,
-.mxForumTheme .mxOptionDiv button:hover,
-.mxForumTheme .mxPassDiv button:hover,
-.mxForumTheme input[type=text]:hover
-{
-	border:1px solid #5195d1;
-}
-.mxForumTheme .mxOKDiv button:focus,
-.mxForumTheme .mxOptionDiv button:focus,
-.mxForumTheme .mxPassDiv button:focus,
-.mxForumTheme input[type=text]:focus
-{
-	border:1px solid #000;
-}
 .mxForumTheme :not(.mxSolveDiv):not(.mxPassDiv) button[disabled] {opacity:0.3;}
 .mxForumTheme .mxPassDiv button[disabled] {color:#999;}
 .mxForumTheme .mxSolveDiv button[disabled] svg {fill:#999;}
-.mxForumTheme .mxSolveDiv button:focus {border:1px solid #000;}
 .mxForumTheme input[type=text]
 {
 	text-align:center;
@@ -268,7 +218,7 @@
 /* cartouche */
 .mxForumTheme .mxCartoucheDiv
 {
-	background:var(--barBackground);
+	background:var(--barBk);
 	color:var(--barColor);
 	position:relative;
 	min-height:2.5em;
@@ -277,7 +227,7 @@
 }
 .mxForumTheme .mxCartoucheDiv:first-of-type
 {
-	margin-bottom:0.25em;
+	margin-bottom:1px;
 }
 .mxForumTheme .mxCartoucheDiv .mxPlayerStoneDiv
 {
@@ -327,94 +277,69 @@
 }
 .mxForumTheme .mxCartoucheDiv .mxPrisonersStoneSpan svg
 {
-	display:block;
 	width:1em;
 	height:1em;
 	margin:auto;
 }
 .mxForumTheme .mxCartoucheDiv .mxPrisonersSpan
 {
-	display:block;
 	height:2em;
 	line-height:2em;
 }
-/* focus */
-.mxForumTheme .mxGBoxDiv .mxShowContentDiv:focus,
-.mxForumTheme.mxCommentConfig .mxCommentDiv:focus,
-.mxForumTheme.mxTreeConfig .mxCommentDiv:focus,
-.mxForumTheme.mxTreeConfig .mxTreeDiv:focus,
-.mxForumTheme.mxProblemConfig .mxCommentDiv:focus
-{
-	border:1px solid #000;
-}
-/* gBox */
-.mxForumTheme .mxGBoxDiv
+/* dialog */
+.mxForumTheme dialog,
+.mxForumTheme dialog *
 {
 	box-sizing:border-box;
-	background:var(--gBoxBackground);
 }
-.mxForumTheme .mxGBoxDiv .mxShowContentDiv
+.mxForumTheme dialog::backdrop
 {
-	position:relative;
-	box-sizing:border-box;
-	background:var(--gBoxBackground);
-	padding:0.25em;
-	overflow:auto;
-	height:calc(100% - 3em);
-	z-index:2;
-	border:1px solid transparent;
+  background: rgba(0,0,0,0.5);
 }
-.mxForumTheme .mxOKDiv
+.mxForumTheme dialog
 {
-	box-sizing:border-box;
-	background:var(--gBoxBarBackground);
-	position:absolute;
-	bottom:0;
-	height:3em;
+	min-width:min(50vw,19em);
+	border:1px solid #999;
+	text-align:left;
+	padding:0;
+	background:#fff;
+}
+.mxForumTheme dialog form
+{
+	margin:0;
+	padding:0;
+	background:var(--dialogBk);
+}
+.mxForumTheme dialog .mxContentFieldset
+{
+	padding:0.5em;
+	min-width:100%;
+}
+.mxForumTheme dialog.mxEditOptionsDialog .mxContentFieldset
+{
+	line-height:1.5em;
+}
+.mxForumTheme dialog .mxMenuFieldset
+{
+	background:var(--dialogMenuBk);
+	min-height:3em;
 	line-height:3em;
 	text-align:center;
-	width:100%;
-	z-index:1;
 }
-.mxForumTheme .mxShowOptionDiv
+.mxForumTheme dialog label:not([for])
 {
-	line-height:1.75em;
-}
-.mxForumTheme .mxNumFromTextSpan,
-.mxForumTheme .mxNumWithTextSpan
-{
-	position:relative;
-	left:2em;
-	white-space:nowrap;
-}
-.mxForumTheme .mxNumFromTextSpan:before
-{
-	content:"\a";
-	white-space:pre-line;
-}
-.mxForumTheme .mxShowOptionDiv input[type=text]
-{
-	font-size:1em;
+	display:block;
 }
 .mxForumTheme input:not(:checked)~.mxNumFromTextSpan,
 .mxForumTheme input:not(:checked)~.mxNumWithTextSpan
 {
 	display:none;
 }
-.mxForumTheme a
-{
-	color:#000;
-}
-.mxForumTheme a:focus
-{
-	color:var(--focusColor);
-}
-.mxForumTheme [data-maxigos-disabled] {opacity:0.5;}
 /* navigation */
 .mxForumTheme.mxBasicConfig .mxNavigationDiv,
 .mxForumTheme.mxGameConfig .mxNavigationDiv
 {
-	background:var(--barBackground);
+	background:var(--barBk);
 	padding:0 0.25em;
 	min-height:3em;
 	line-height:3em;
@@ -422,7 +347,7 @@
 .mxForumTheme.mxCommentConfig .mxNavigationParentDiv,
 .mxForumTheme.mxTreeConfig .mxNavigationParentDiv
 {
-	background:var(--barBackground);
+	background:var(--barBk);
 	display:flex;
 	align-items:center;
 	justify-content:space-between;
@@ -438,7 +363,7 @@
 {
 	box-shadow:0 0.1em 0.2em rgba(0,0,0,0.2);
 }
-.mxForumTheme.mxCommentConfig .mxOptionDiv,
+.mxForumTheme.mxCommentConfig .mxOptionsDiv,
 .mxForumTheme.mxCommentConfig .mxPassDiv
 {
 	flex:0;
@@ -459,6 +384,9 @@
 {
 	font-size:1em;
 	flex:1 1;
+	display:flex;
+	justify-content:center;
+	align-items:center;
 	border:0.25em solid transparent;
 	border-radius:0.5em;
 	background:transparent;
@@ -467,7 +395,100 @@
 	max-width:3em;
 	min-width:2em;
 	height:2.5em;
-	line-height:2.5em;
+}
+.mxForumTheme .mxNavigationDiv button svg
+{
+	width:2em;
+	height:2em;
+	fill:none;
+	background-size:contain;
+	background-position:center;
+	background-repeat:no-repeat;
+}
+.mxForumTheme .mxNavigationDiv .mxFirstBtn,
+.mxForumTheme .mxNavigationDiv .mxTenPredBtn,
+.mxForumTheme .mxNavigationDiv .mxPredBtn
+{
+	transform:scaleX(-1);
+}
+.mxForumTheme .mxNavigationDiv .mxPredBtn svg,
+.mxForumTheme .mxNavigationDiv .mxNextBtn svg
+{
+	background-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 1000 1000' height='1000' width='1000'><path d='M786,523C804,506 803,485 786,473L358,207C323,184 300,211 300,241V755C299,794 331,806 358,789Z'/></svg>");
+}
+.mxForumTheme .mxNavigationDiv .mxTenPredBtn svg,
+.mxForumTheme .mxNavigationDiv .mxTenNextBtn svg
+{
+	background-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 1000 1000' height='1000' width='1000'><path d='M976,521C994,506 994,485 976,475L604,227C572,206 552,229 552,257V739C551,775 580,783 604,769ZM522,521C540,506 540,485 522,475L162,227C131,206 110,230 110,257V739C109,774 138,784 162,769Z'/></svg>");
+}
+.mxForumTheme .mxNavigationDiv .mxFirstBtn svg,
+.mxForumTheme .mxNavigationDiv .mxLastBtn svg
+{
+	background-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 1000 1000' height='1000' width='1000'><path d='M612,521C631,505 629,487 612,475L250,247C219,227 200,250 200,277V719C199,754 226,763 250,749ZM726,789C775,789 800,769 800,731V265C800,226 775,207 726,207 675,207 650,226 650,265V731C650,769 675,789 726,789Z'/></svg>");
+}
+.mxForumTheme .mxNavigationDiv .mxPauseBtn svg
+{
+	background-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 1000 1000' height='1000' width='1000'><path d='M626,789Q700,789 700,731V265Q700,207 626,207 550,207 550,265V731Q550,789 626,789ZM374,789Q300,789 300,731V265Q300,207 374,207 450,207 450,265V731Q450,789 374,789Z'/></svg>");
+}
+.mxForumTheme .mxNavigationDiv .mxAutoBtn svg
+{
+	background-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 1000 1000' height='1000' width='1000'><path d='M901,521C919,506 919,485 901,475L629,227C597,206 577,229 577,257V739C576,775 605,783 629,769ZM99,521C80,506 80,485 99,475L371,227C402,206 422,229 423,257V739C423,775 394,783 371,769Z'/></svg>");
+}
+.mxForumTheme .mxNavigationDiv button.mxAutoBtn[disabled],
+.mxForumTheme .mxNavigationDiv button.mxPauseBtn[disabled]
+{
+	display:none;
+}
+.mxForumTheme .mxNavigationDiv .mxGotoInput
+{
+	font-size:1em;
+	width:2.5em;
+	height:1.75em;
+	border:1px solid #ccc;
+	text-align:center;
+	margin:0.125em 0;
+}
+.mxForumTheme .mxSolveDiv
+{
+	margin:0.25em auto;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+.mxForumTheme .mxSolveDiv button
+{
+	flex:1;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	max-width:4em;
+	height:4em;
+	padding:0;
+	margin:0.125em;
+	border-radius:0.4em;
+	border:1px solid #c7c3be;
+	background:#f1f1f1;
+	background:linear-gradient(to bottom,#fcfcfc,#f1f1f1,#e8e8e8);
+}
+.mxForumTheme .mxSolveDiv button svg
+{
+	width:3em;
+	height:3em;
+	fill:#bc2a4d;
+}
+/* focus */
+.mxForumTheme *:not([type=radio]):not([type=checkbox]):focus {outline:none;}
+.mxForumTheme .mxGobanSvg:not(:focus-visible) .mxFocus {display:none;}
+.mxForumTheme.mxCommentConfig .mxCommentDiv:focus,
+.mxForumTheme.mxTreeConfig .mxCommentDiv:focus,
+.mxForumTheme.mxTreeConfig .mxTreeDiv:focus,
+.mxForumTheme.mxProblemConfig .mxCommentDiv:focus
+{
+	border:1px solid #000;
+}
+.mxForumTheme .mxNavigationDiv .mxGotoInput:focus
+{
+	border:1px solid #000;
 }
 .mxForumTheme .mxNavigationDiv button:focus
 {
@@ -481,108 +502,35 @@
 {
 	border:0.25em solid #0006;
 }
-.mxForumTheme .mxNavigationDiv button>span
+.mxForumTheme .mxMenuFieldset button:hover,
+.mxForumTheme .mxMenuFieldset button:focus,
+.mxForumTheme .mxOptionsDiv button:hover,
+.mxForumTheme .mxOptionsDiv button:focus,
+.mxForumTheme .mxPassDiv button:hover,
+.mxForumTheme .mxPassDiv button:focus
 {
-	display:block;
-	width:2em;
-	height:2em;
-	margin:0 auto;
-}
-.mxForumTheme .mxSolveDiv
-{
-	margin:0.25em auto;
-	display:flex;
-	justify-content:center;
-	align-items:center;
-}
-.mxForumTheme .mxSolveDiv button
-{
-	flex:1;
-	display:flex;
-	max-width:4em;
-	height:4em;
-	padding:0;
-	margin:0.125em;
-	border-radius:0.4em;
-	border:1px solid #c7c3be;
 	background:#f1f1f1;
-	background:linear-gradient(to bottom,#fcfcfc,#f1f1f1,#e8e8e8);
-	vertical-align:middle;
+	background:linear-gradient(to top,#ffffff,#dfdfdf);
 }
-.mxForumTheme .mxSolveDiv button span
+.mxForumTheme .mxMenuFieldset button:hover,
+.mxForumTheme .mxOptionsDiv button:hover,
+.mxForumTheme .mxPassDiv button:hover,
+.mxForumTheme input[type=text]:hover
 {
-	display:block;
-	margin:auto;
-	width:3em;
-	height:3em;
+	border:1px solid #5195d1;
 }
-.mxForumTheme .mxSolveDiv button svg
-{
-	display:block;
-	width:100%;
-	height:100%;
-	fill:#bc2a4d;
-}
-.mxForumTheme .mxNavigationDiv .mxGotoInput
-{
-	font-size:1em;
-	width:2.5em;
-	height:1.75em;
-	border:1px solid #ccc;
-	text-align:center;
-	margin:0.125em 0;
-}
-.mxForumTheme .mxNavigationDiv .mxGotoInput:focus
+.mxForumTheme .mxMenuFieldset button:focus,
+.mxForumTheme .mxOptionsDiv button:focus,
+.mxForumTheme .mxPassDiv button:focus,
+.mxForumTheme input[type=text]:focus
 {
 	border:1px solid #000;
 }
-.mxForumTheme .mxNavigationDiv button span svg {display:none;}
-.mxForumTheme .mxNavigationDiv button span
-{
-	border:1px solid transparent;
-}
-.mxForumTheme .mxNavigationDiv .mxFirstBtn span,
-.mxForumTheme .mxNavigationDiv .mxTenPredBtn span,
-.mxForumTheme .mxNavigationDiv .mxPredBtn span
-{
-	-webkit-transform:scaleX(-1);
-	transform:scaleX(-1);
-}
-.mxForumTheme .mxNavigationDiv .mxPredBtn span,
-.mxForumTheme .mxNavigationDiv .mxNextBtn span
-{
-	background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 1000 1000' height='1000' width='1000'%3E %3Cpath transform='translate(50 0)' d='M736,523Q750,513 750,497 750,483 736,473L308,207Q284,191 267,201 250,211 250,241L250,755Q250,785 267,795 284,805 308,789Z'/%3E %3C/svg%3E");
-	background-size:contain;
-	background-position:center;
-	background-repeat:no-repeat;
-}
-.mxForumTheme .mxNavigationDiv .mxTenPredBtn span,
-.mxForumTheme .mxNavigationDiv .mxTenNextBtn span
-{
-	background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 1000 1000' height='1000' width='1000'%3E %3Cpath transform='translate(50 0)' d='M 926,521Q940,511 940,497 940,483 926,475L554,227Q532,213 517,221 502,229 502,257L502,739Q502,767 517,775 532,783 554,769ZM472,521Q486,511 486,497 486,483 472,475L112,227Q92,213 76,221 60,229 60,257L60,739Q60,767 76,775 92,783 112,769Z'/%3E %3C/svg>");
-	background-size:contain;
-	background-position:center;
-	background-repeat:no-repeat;
-}
-.mxForumTheme .mxNavigationDiv .mxFirstBtn span,
-.mxForumTheme .mxNavigationDiv .mxLastBtn span
-{
-	background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 1000 1000' height='1000' width='1000'%3E %3Cpath d='M 612,521 Q 626,511 626,497 626,485 612,475 L 250,247 Q 228,233 214,242 200,251 200,277 L 200,719 Q 200,745 214,754 228,763 250,749 Z M 726,789 Q 800,789 800,731 L 800,265 Q 800,207 726,207 650,207 650,265 L 650,731 Q 650,789 726,789Z'/%3E %3C/svg>");
-	background-size:contain;
-	background-position:center;
-	background-repeat:no-repeat;
-}
-.mxForumTheme .mxNavigationDiv .mxPauseBtn span
-{
-	background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 1000 1000' height='1000' width='1000'%3E %3Cpath transform='translate(-100 0)' d='M 726,789 Q 800,789 800,731 L 800,265 Q 800,207 726,207 650,207 650,265 L 650,731 Q 650,789 726,789Z'/%3E %3Cpath transform='translate(1000 0) scale(-1 1) translate(-100 0)' d='M 726,789 Q 800,789 800,731 L 800,265 Q 800,207 726,207 650,207 650,265 L 650,731 Q 650,789 726,789Z'/%3E %3C/svg>");
-	background-size:contain;
-	background-position:center;
-	background-repeat:no-repeat;
-}
-.mxForumTheme .mxNavigationDiv .mxAutoBtn span
-{
-	background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 1000 1000' height='1000' width='1000'%3E %3Cpath transform='translate(75 0)' d='M 826,521Q840,511 840,497 840,483 826,475L554,227Q532,213 517,221 502,229 502,257L502,739Q502,767 517,775 532,783 554,769Z'/%3E %3Cpath transform='translate(1000 0) scale(-1 1) translate(75 0)' d='M 826,521Q840,511 840,497 840,483 826,475L554,227Q532,213 517,221 502,229 502,257L502,739Q502,767 517,775 532,783 554,769Z'/%3E %3C/svg>");
-	background-size:contain;
-	background-position:center;
-	background-repeat:no-repeat;
-}
+.mxForumTheme .mxSolveDiv button:focus {border:1px solid #000;}
+.mxForumTheme button,
+.mxForumTheme:not(.mxDiagramConfig) .mxGobanDiv svg,
+.mxForumTheme .mxTreeDiv svg circle,
+.mxForumTheme .mxTreeDiv svg polygon,
+.mxForumTheme .mxTreeDiv svg rect,
+.mxForumTheme .mxTreeDiv svg text {cursor:pointer;}
+

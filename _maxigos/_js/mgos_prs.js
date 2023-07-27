@@ -1,4 +1,4 @@
-// maxiGos v7 > mgos_prs.js
+// maxiGos v8 > mgos_prs.js
 // sgf parser
 // mxG.N class (N=Node, P=Property, V=Value)
 if(!mxG.N)
@@ -12,7 +12,7 @@ mxG.N=function(n,p,v)
 	if(n) {n.Kid.push(this);if(!n.Focus) n.Focus=1;}
 	if(p) this.P[p]=[v];
 };
-mxG.N.prototype.TakeOff=function(p,k)
+mxG.N.prototype.takeOff=function(p,k)
 {
 	if(this.P[p])
 	{
@@ -20,19 +20,18 @@ mxG.N.prototype.TakeOff=function(p,k)
 		if(!this.P[p].length) delete this.P[p];
 	}
 };
-mxG.N.prototype.Set=function(p,v)
+mxG.N.prototype.put=function(p,v)
 {
-	if(typeof(v)=="object") this.P[p]=v;
-	else this.P[p]=[v];
+	this.P[p]=(typeof(v)=="object")?v:[v];
 };
-mxG.N.prototype.Clone=function(dad)
+mxG.N.prototype.clone=function(dad)
 {
-	var p,k,bN=new mxG.N(dad,null,null);
+	let p,k,bN=new mxG.N(dad,null,null);
 	// better to check e.hasOwnProperty(p) when using for...in
 	for(p in this.P) if(p.match(/^[A-Z]+$/)&&this.P.hasOwnProperty(p))
 		bN.P[p]=this.P[p].concat();
 	for(k=0;k<this.Kid.length;k++)
-		bN.Kid[k]=this.Kid[k].Clone(bN);
+		bN.Kid[k]=this.Kid[k].clone(bN);
 	bN.Focus=this.Focus;
 	return bN;
 };
@@ -47,13 +46,12 @@ mxG.P=function(s,coreOnly,mainOnly)
 	this.coreOnly=coreOnly;
 	this.mainOnly=mainOnly;
 	this.parseSgf(s);
-	if(!this.rN.Focus)
-		this.parseSgf("(;FF[4]CA[UTF-8]GM[1]SZ[19])");
+	if(!this.rN.Focus) this.parseSgf("(;FF[4]CA[UTF-8]GM[1]SZ[19])");
 	return this.rN;
 };
 mxG.P.prototype.keep=function(a,p,v)
 {
-	if(this.coreOnly&&((a=="N")||(a=="P")||(a=="V")))
+	if((a=="N")||(a=="P")||(a=="V"))
 		return (p=="B")||(p=="W")||(p=="AB")||(p=="AW")||(p=="AE")
 			 ||(p=="FF")||(p=="CA")||(p=="GM")||(p=="SZ")
 			 ||(p=="EV")||(p=="RO")||(p=="DT")||(p=="PC")
@@ -64,7 +62,7 @@ mxG.P.prototype.keep=function(a,p,v)
 };
 mxG.P.prototype.out=function(a,p,v)
 {
-	if(this.keep(a,p,v))
+	if(!this.coreOnly||this.keep(a,p,v))
 		switch(a)
 		{
 			case "N":this.nN=new mxG.N(this.nN,p,v);break;
@@ -77,25 +75,18 @@ mxG.P.prototype.out=function(a,p,v)
 };
 mxG.P.prototype.clean=function(s)
 {
-	var r=s;
 	// odd number of \ before \n or \r => sgf soft break
-	// remove one \ and the next \n\r, \r\n, \n or \r
-	r=r.replace(/([^\\])((\\\\)*)\\((\n\r)|(\r\n)|\r|\n)/g,'$1$2');
-	r=r.replace(/^((\\\\)*)\\((\n\r)|(\r\n)|\r|\n)/g,'$1');
-	// remove \ preceded by even number of \
-	r=r.replace(/([^\\])((\\\\)*)\\/g,'$1$2');
-	r=r.replace(/^((\\\\)*)\\/g,'$1');
-	// remove \ preceded by \
-	r=r.replace(/\\\\/g,'\\');
+	// replace one \ and the next \n\r, \r\n, \n or \r by a space
+	s=s.replace(/(^|[^\\])((\\\\)*)\\((\n\r)|(\r\n)|\r|\n)/g,'$1$2 ');
+	// remove \ preceded by even number of \, then remove \ preceded by \
+	// \] replaced by ], \: replaced by :, \\ replaced by \
+	s=s.replace(/(^|[^\\])((\\\\)*)\\/g,'$1$2').replace(/\\\\/g,'\\');
 	// replace \n\r, \r\n, and \r by \n
-	r=r.replace(/(\n\r)|(\r\n)|\r/g,"\n");
-	// strip html tags
-	// r=r.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi,'');
-	return r;
+	return s.replace(/(\n\r)|(\r\n)|\r/g,"\n");
 };
 mxG.P.prototype.parseValue=function(p,K,c)
 {
-	var v="",a;
+	let v="",a;
 	K++; // by-pass '['
 	while((K<this.len)&&((a=this.s.charAt(K))!=']'))
 	{
@@ -103,7 +94,7 @@ mxG.P.prototype.parseValue=function(p,K,c)
 		if(K<this.len) v+=a;
 		K++;
 	}
-	v=this.clean(v);
+	v=v.match(/^[0-9a-zA-Z+:.]+$/)?v:this.clean(v);
 	// cannot manage "tt" coordinates if goban size is larger than 19x19
 	// if(((p=="B")||(p=="W"))&&(v=="tt")) v="";
 	if(p=="RE"){a=v.slice(0,1);if((a=="V")||(a=="D")) v=a;}
@@ -114,13 +105,14 @@ mxG.P.prototype.parseValue=function(p,K,c)
 	while(K<this.len)
 	{
 		a=this.s.charAt(K);
-		if((a=='(')||(a==';')||(a==')')||((a>='A')&&(a<='Z'))||(a=='[')) break;else K++;
+		if((a=='(')||(a==';')||(a==')')||((a>='A')&&(a<='Z'))||(a=='[')) break;
+		K++;
 	}
 	return K;
 };
 mxG.P.prototype.parseProperty=function(K)
 {
-	var a,p="",c=0;
+	let a,p="",c=0;
 	while((K<this.len)&&((a=this.s.charAt(K))!='['))
 	{
 		if((a>='A')&&(a<='Z')) p+=a;
@@ -131,7 +123,7 @@ mxG.P.prototype.parseProperty=function(K)
 };
 mxG.P.prototype.parseNode=function(K)
 {
-	var a;
+	let a;
 	this.nc=1;
 	while(K<this.len)
 	{
@@ -147,8 +139,9 @@ mxG.P.prototype.parseNode=function(K)
 };
 mxG.P.prototype.parseVariation=function(K)
 {
-	var a=(this.mainOnly?1:0);
-	if(this.nv){if(this.v.length) this.out("v=","","");this.nv=0;} else this.out("v+","","");
+	let a=(this.mainOnly?1:0);
+	if(this.nv) {if(this.v.length) this.out("v=","","");this.nv=0;}
+	else this.out("v+","","");
 	while(K<this.len)
 		switch(this.s.charAt(K))
 		{
@@ -163,7 +156,7 @@ mxG.P.prototype.parseVariation=function(K)
 };
 mxG.P.prototype.parseSgf=function(s)
 {
-	var K=0;
+	let K=0;
 	this.rN.Kid=[];
 	this.rN.Focus=0;
 	this.nN=this.rN;

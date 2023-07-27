@@ -1,11 +1,12 @@
 <svg width="30px" height="20px" viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<defs>
-<path id="s" d="M0,-1 0.59,0.81 -0.95,-0.31H0.95L-0.59,0.81Z" fill="#ff0"/>
-</defs>
-<rect width="30" height="20" fill="#e11"/>
-<use xlink:href="#s" transform="translate(5,5) scale(3)"/>
-<use xlink:href="#s" transform="translate(10,2) rotate(23)"/>
-<use xlink:href="#s" transform="translate(12,4) rotate(46)"/>
-<use xlink:href="#s" transform="translate(12,7) rotate(70)"/>
-<use xlink:href="#s" transform="translate(10,9) rotate(21)"/>
+	<title>中华人民共和国国旗</title>
+	<defs>
+		<path id="s" d="M0,-1 0.59,0.81 -0.95,-0.31H0.95L-0.59,0.81Z" fill="#ff0"/>
+	</defs>
+	<rect width="30" height="20" fill="#e11"/>
+	<use xlink:href="#s" transform="translate(5,5) scale(3)"/>
+	<use xlink:href="#s" transform="translate(10,2) rotate(23)"/>
+	<use xlink:href="#s" transform="translate(12,4) rotate(46)"/>
+	<use xlink:href="#s" transform="translate(12,7) rotate(70)"/>
+	<use xlink:href="#s" transform="translate(10,9) rotate(21)"/>
 </svg>

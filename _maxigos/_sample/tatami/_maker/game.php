@@ -21,21 +21,19 @@ include "../../../_js/mgosVersion.js";
 mxG.K++;
 mxG.B=["Header",["WhiteCartouche","Goban","AnimatedStone","BlackCartouche"],"Navigation","Loop","Variation","Version"];
 mxG.D[mxG.K]=new mxG.G(mxG.K,mxG.B);
-mxG.D[mxG.K].theme="<?php echo $theme ?>";
-mxG.D[mxG.K].config="<?php echo $config ?>";
+mxG.D[mxG.K].theme="<?=$theme?>";
+mxG.D[mxG.K].config="<?=$config?>";
 <?php
 include "../../_php/insertCss.php";
 ?>
 // general
-mxG.D[mxG.K].a.in3dOn=1; // (0,1) default 1
-mxG.D[mxG.K].a.htmlParenthesis=1; // (0,1) default 0
+mxG.D[mxG.K].a.in3dOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.allowStringAsSource=1; // (0,1) default 1
 mxG.D[mxG.K].a.allowFileAsSource=1; // (0,1) default 1
 // mxG.D[mxG.K].a.sourceFilter=""; // (str) default ""
 mxG.D[mxG.K].a.initMethod="last"; // ("first","loop","last") default "first"
 // Goban
 mxG.D[mxG.K].a.pointsNumMax=19; // (positive integer) default 0
-mxG.D[mxG.K].a.magicParentNum=0; // (positive integer) default 0
 mxG.D[mxG.K].a.stoneShadowOn=0; // (0,1) default 0 (require in3dOn=1)
 mxG.D[mxG.K].a.specialStoneOn=0; // (0,1) default 0 (require in3dOn=1)
 mxG.D[mxG.K].a.stretching="0,1,1,2"; // (list) default "0,0,1,1"
@@ -60,14 +58,11 @@ mxG.D[mxG.K].a.bowlOn=1; // (0,1) default 0
 // Header
 mxG.D[mxG.K].a.headerBoxOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.headerBtnOn=0; // (0,1) default 0
-mxG.D[mxG.K].a.hidePlace=1; // (0,1) default 0
-mxG.D[mxG.K].a.hideRules=1; // (0,1) default 0
-mxG.D[mxG.K].a.hideTimeLimits=1; // (0,1) default 0
-mxG.D[mxG.K].a.hideNumOfMoves=1; // (0,1) default 0
+mxG.D[mxG.K].a.hideInHeader="NumOfMoves,Place,Rules,TimeLimits"; // (set) default ""
 // Loop
 mxG.D[mxG.K].a.loopTime=1000; // (positive integer) default 1000
 // Navigation
-mxG.D[mxG.K].a.navigations="First,TenPred,Pred,Loop,Next,TenNext,Last"; // (list) default "First,TenPred,Pred,Next,TenNext,Last"
+mxG.D[mxG.K].a.navigations="First,TenPred,Pred,Loop,Next,TenNext,Last"; // (set) default "First,TenPred,Pred,Next,TenNext,Last"
 // Variation
 mxG.D[mxG.K].a.variationMarksOn=1; // (0,1,null) default 0
 mxG.D[mxG.K].a.siblingsOn=0; // (0,1,null) default 0

@@ -1,4 +1,4 @@
-// maxiGos v7 > mgos_scr.js
+// maxiGos v8 > mgos_scr.js
 // screen output manager
 // remember: css properties have priority on svg attributes
 if(!mxG.S)
@@ -9,125 +9,93 @@ mxG.S=function(p)
 	this.p=p; // parent object: mxG.D[k] 
 	this.d=23;
 	this.ff="Arial,sans-serif";
-	this.fs=14;
+	this.fs=14*this.d/23;
 	this.fw=400;
-	this.sw4text="";
-	this.sw4mark="1.125";
-	this.sw4grid="1.125";
-	this.sw4stone="1.125";
+	this.r4star="2.5";
+	this.sw4grid="1";
+	this.sw4mark="1";
+	this.sw4stone="1";
+	this.sw4text="0";
 	this.stoneShadowWidth=1;
+	this.glc="#000";
+	this.xmlnsUrl="http://www.w3.org/2000/svg";
+	this.xlinkUrl="http://www.w3.org/1999/xlink";
+	this.xmlns="xmlns=\""+this.xmlnsUrl+"\"";
+	this.xlink=" xmlns:xlink=\""+this.xlinkUrl+"\"";
 };
 mxG.S.prototype.star=function(x,y)
 {
 	let DX=this.DX,DY=this.DY,xok=0,yok=0,
-		Ax=4,Bx=DX+1-Ax,Cx=((DX+1)>>1),Ay=4,By=DY+1-Ay,Cy=((DY+1)>>1);
-	if((DX>11)&&((x==Ax)||(x==Bx))) xok=1;
-	if((DX&1)&&((DX>15)||(x==y))&&(x==Cx)) xok=1;
-	if((DY>11)&&((y==Ay)||(y==By))) yok=1;
-	if((DY&1)&&((DY>15)||(x==y))&&(y==Cy)) yok=1;
+		Ax=4,Bx=DX+1-Ax,Cx=(DX+1)>>1,Ay=4,By=DY+1-Ay,Cy=(DY+1)>>1;
+	if(DX>15){if((x==Ax)||(x==Bx)||((DX&1)&&(x==Cx))) xok=1;}
+	else if(DX>11){if((x==Ax)||(x==Bx)||((x==y)&&(DX&1)&&(x==Cx))) xok=1;}
+	else if((DX&1)&&(x==Cx)) xok=1;
+	if(DY>15){if((y==Ay)||(y==By)||((DY&1)&&(y==Cy))) yok=1;}
+	else if(DY>11){if((y==Ay)||(y==By)||((x==y)&&(DY&1)&&(y==Cy))) yok=1;}
+	else if((DY&1)&&(y==Cy)) yok=1;
 	return xok&&yok;
 };
-mxG.S.prototype.isLabel=function(m)
-{
-	return /^\(*\|.*\|\)*$/.test(m);
-};
+mxG.S.prototype.i2x=function(i){return this.dw*(i-this.xl+0.5)+this.gbsxl;};
+mxG.S.prototype.j2y=function(j){return this.dh*(j-this.yt+0.5)+this.gbsyt;};
+mxG.S.prototype.isLabel=function(m){return /^\(*\|.*\|\)*$/.test(m);};
+mxG.S.prototype.isMark=function(m){return /^\(*_(CR|MA|SQ|TR)_\)*$/.test(m);};
+mxG.S.prototype.isVariation=function(m){return /^\(.*\)$/.test(m);};
+mxG.S.prototype.isVariationOnFocus=function(m){return /^\(\([^()]*\)\)$/.test(m);};
 mxG.S.prototype.removeLabelDelimiters=function(m)
 {
 	return m.replace(/^(\(*)\|(.*)\|(\)*)$/,"$1$2$3");
-};
-mxG.S.prototype.isVariation=function(m)
-{
-	return /^\(.*\)$/.test(m);
-};
-mxG.S.prototype.isVariationOnFocus=function(m)
-{
-	return /^\(\([^()]*\)\)$/.test(m);
 };
 mxG.S.prototype.removeVariationDelimiters=function(m)
 {
 	return m.replace(/^\(+([^()]*)\)+$/,"$1");
 };
-mxG.S.prototype.isMark=function(m)
+mxG.S.prototype.makeText=function(txt,x,y,c,o)
 {
-	return /^\(*_(CR|MA|SQ|TR)_\)*$/.test(m);
-};
-mxG.S.prototype.i2x=function(i)
-{
-	return this.dw*(i-this.xl+0.5)+this.gbsxl;
-};
-mxG.S.prototype.j2y=function(j)
-{
-	return this.dh*(j-this.yt+0.5)+this.gbsyt;
-};
-mxG.S.prototype.makeText=function(txt,i,j,o)
-{
-	let s,x,y,dx,dy,c,cls,cls2="",wbk,hbk,w,h,dw2,dh2,dz,sw,sx;
-	cls=o.cls;
-	c=o.c;
-	sw=o.sw;
-	dz=this.grim+this.grip;
-	txt+="";
-	dx=(i<1)?-dz:(i>this.DX)?dz:0;
-	dy=(j<1)?-dz:(j>this.DY)?dz:0;
-	if((i<1)||(j<1)||(i>this.DX)||(j>this.DY))
-	{
-		dw2=this.db/2;
-		dh2=this.db/2;
-	}
-	else
-	{
-		dw2=this.dw/2;
-		dh2=this.dh/2;
-	}
-	x=this.dw*(i-this.xl+1)-dw2+this.gbsxl+dx;
-	y=this.dh*(j-this.yt+1)-dh2+this.gbsyt+dy;
-	s="<text";
-	if(cls) s+=" class=\""+cls+"\"";
+	let s="<text aria-hidden=\"true\"";
+	if(o.ij) s+=" data-maxigos-ij=\""+o.ij+"\"";
+	if(!o.ignoreTextAnchor) s+=" text-anchor=\"middle\"";
 	if(c&&!o.ignoreFillAndStroke)
 	{
 		s+=" fill=\""+c+"\"";
-		if (sw) s+=" stroke=\""+c+"\"";
+		if(this.sw4text!="0") s+=" stroke=\""+c+"\" stroke-width=\""+this.sw4text+"\"";
 	}
-	if (sw&&!o.ignoreFillAndStroke) s+=" stroke-width=\""+sw+"\"";
-	if((cls.indexOf("mxVertical")>=0)
-		&&((cls.indexOf("mxLen2")>=0)||(cls.indexOf("mxLen3")>=0)))
+	if(o.cls) s+=" class=\""+o.cls+"\"";
+	txt+="";
+	if(txt.length>1)
 	{
-		// japanese kanji
-		// bug? in firefox (08/2019), cannot use css textLength+vertical-rl
-		// bug? in safari (08/2019), cannot use css transform-box
-		s+=" transform=\"translate(0,"+(y-2)+")";
-		if(cls.indexOf("mxLen3")>=0) s+=" scale(1,0.33)";
-		else s+=" scale(1,0.5)";
-		s+=" translate(0,-"+y+")\"";
-		s+=" writing-mode=\"vertical-rl\"";
-	}
-	else if(txt.length>1)
-	{
-		// using svg transform seems to be the safest way to shrink text width
-		// translate(x,0) scale(sx,1) translate(-x,0)
-		// is as matrix(sx,0,0,1,x*(1-sx),0)
-		if(txt.length>2) sx=0.8;
-		else sx=0.9;
-		s+=" transform=\"matrix("+sx+",0,0,1,"+Math.round(x*(1-sx)*100)/100+",0)\"";
+		if(o.vertical)
+		{
+			// japanese kanji
+			// bug? in firefox (08/2019), cannot use css textLength+vertical-rl
+			// bug? in safari (08/2019), cannot use css transform-box
+			s+=" transform=\"translate(0,"+(y-2)+")";
+			if(txt.length>2) s+=" scale(1,0.33)";
+			else s+=" scale(1,0.5)";
+			s+=" translate(0,-"+y+")\"";
+			s+=" writing-mode=\"vertical-rl\"";
+		}
+		else
+		{
+			// using svg transform seems to be the safest way to shrink text width
+			// transform: translate(x,0) scale(sx,1) translate(-x,0)
+			let sx=(txt.length>2)?0.8:0.9;
+			s+=" transform=\"matrix("+sx+",0,0,1,"+Math.round(x*(1-sx)*100)/100+",0)\"";
+		}
 	}
 	// font-family, font-size and text-anchor are set in svg tag
-	// bug, cannot use dominant-baseline:central everywhere
+	// bug: cannot use dominant-baseline:central everywhere
 	// then just add 5 to y to center text vertically
-	s+=" x=\""+x+"\" y=\""+(y+5)+"\">";
-	s+=txt.replace(/</g,"&lt;").replace(/>/g,"&gt;");
-	s+="</text>";
+	s+=" x=\""+x+"\" y=\""+(y+5)+"\">"+txt+"</text>";
 	return s;
 };
 mxG.S.prototype.make2dStone=function(c,x,y,r,o)
 {
-	let s;
-	s="<circle class=\"mx"+c+"\"";
+	let s="<circle class=\"mx"+c+"\"";
 	if(o.opacity<1) s+="fill-opacity=\""+o.opacity+"\"";
-	if(!o.ignoreFillAndStroke) // alone stones, animated stones ...
+	if(!o.ignoreFillAndStroke) // alone stones, animated stones... (i.e not grouped)
 	{
-		let glc=(o.animatedStone&&this.p.glc)?this.p.glc:"#000";
 		s+=" fill=\""+(c=="Black"?"#000":"#fff")+"\"";
-		s+=" stroke=\""+(((c=="Black")&&o.whiteStroke4Black)?"#fff":glc)+"\"";
+		s+=" stroke=\""+(((c=="Black")&&o.whiteStroke4Black)?"#fff":"#000")+"\"";
 		s+=" stroke-width=\""+this.sw4stone+"\"";
 	}
 	s+=" cx=\""+x+"\" cy=\""+y+"\" r=\""+(r-(this.sw4stone-1)/2)+"\"/>";
@@ -135,8 +103,7 @@ mxG.S.prototype.make2dStone=function(c,x,y,r,o)
 };
 mxG.S.prototype.makeStoneShadow=function(c,x,y,r,o)
 {
-	let s="",e=this.stoneShadowWidth;
-	s+="<circle class=\"mx"+c+"Shadow\"";
+	let e=this.stoneShadowWidth,s="<circle";
 	// opacity better than rgba() for exporting
 	if(!o.ignoreFillAndStroke) s+=" fill=\"#000\" opacity=\"0.2\"";
 	s+=" cx=\""+(x+e)+"\" cy=\""+(y+e)+"\" r=\""+r+"\"/>";
@@ -144,7 +111,7 @@ mxG.S.prototype.makeStoneShadow=function(c,x,y,r,o)
 };
 mxG.S.prototype.make3dStone1=function(c,x,y,r,o)
 {
-	let s="",e=this.stoneShadowWidth;
+	let e=this.stoneShadowWidth,s="";
 	if(o.stoneShadowOn) s+=this.makeStoneShadow(c,x,y,r,o);
 	s+="<circle class=\"mx"+c+"\"";
 	if(o.opacity<1) s+="fill-opacity=\""+o.opacity+"\"";
@@ -155,7 +122,7 @@ mxG.S.prototype.make3dStone1=function(c,x,y,r,o)
 mxG.S.prototype.make3dStone2=function(c,x,y,r,o)
 {
 	// do not ignore fill and stroke here
-	let s="",a,rg;
+	let a,s="";
 	if(o.stoneShadowOn) s+=this.makeStoneShadow(c,x,y,r,o);
 	s+="<circle class=\"mx"+c+"\"";
 	if(o.opacity<1) s+="fill-opacity=\""+o.opacity+"\"";
@@ -163,437 +130,103 @@ mxG.S.prototype.make3dStone2=function(c,x,y,r,o)
 	s+=" cx=\""+x+"\" cy=\""+y+"\" r=\""+r+"\"/>";
 	s+="<circle class=\"mx"+c+"2\"";
 	if(o.opacity<1) s+="fill-opacity=\""+o.opacity+"\"";
-	rg="B";
-	if(c=="White")
-	{
-		a=this.p.alea8[Math.round((x+y)/r/2)%8];
-		if(a) rg+=a;
-	}
-	s+=" fill=\"url(#"+this.p.n+c[0]+"RG"+rg+")\"";
+	a=(c=="White")?Math.floor(x*this.p.alea+y)%8:"";
+	s+=" fill=\"url(#"+this.p.n+c[0]+"RGB"+a+")\"";
 	s+=" cx=\""+x+"\" cy=\""+y+"\" r=\""+r+"\"/>";
 	return s;
 };
 mxG.S.prototype.makeStone=function(c,x,y,r,o)
 {
 	if(o.in3dOn) return this["make3dStone"+(this.p.specialStoneOn?2:1)](c,x,y,r,o);
-	else return this.make2dStone(c,x,y,r,o);
-};
-mxG.S.prototype.makeTextOnAloneStone=function(txt,x,y,d,c,o)
-{
-	// assume txt is a number
-	let s;
-	txt+="";
-	s="<text";
-	s+=" text-anchor=\"middle\"";
-	s+=" fill=\""+c+"\"";
-	if(this.sw4text) s+=" stroke=\""+c+"\" stroke-width=\""+this.sw4text+"\"";
-	if(txt.length>1)
-	{
-		if(o.vertical)
-		{
-			s+=" transform=\"translate(0,"+(y-2)+")";
-			if(txt.length>2) s+=" scale(1,0.33)";
-			else s+=" scale(1,0.5)";
-			s+=" translate(0,-"+y+")\"";
-			s+=" writing-mode=\"vertical-rl\"";
-		}
-		else
-		{
-			// using svg transform seems to be the safest way to shrink text width
-			s+=" transform=\"translate("+x+",0)";
-			if(txt.length>2) s+=" scale(0.8,1)";
-			else s+=" scale(0.9,1)";
-			s+=" translate(-"+x+",0)\"";
-		}
-	}
-	// font-family, font-size and text-anchor are set in svg tag
-	// bug, cannot use dominant-baseline:central everywhere
-	// then just add 5 to y to center text vertically
-	s+=" x=\""+x+"\" y=\""+(y+5)+"\">";
-	s+=txt;
-	s+="</text>";
-	return s;
-};
-mxG.S.prototype.makeTextAfterAloneStone=function(txt,d,c)
-{
-	let s,x,y;
-	txt+="";
-	x=d+d/8;
-	y=d/2;
-	s="<text class=\"mxAfterAloneStone\"";
-	s+=" fill=\""+c+"\"";
-	if(this.sw4text) s+=" stroke=\""+c+"\" stroke-width=\""+this.sw4text+"\"";
-	// font-family and font-size are set in svg tag
-	// bug, cannot use dominant-baseline:central everywhere
-	// then just add 5 to y to center text vertically
-	s+=" x=\""+x+"\" y=\""+(y+5)+"\">";
-	s+=txt;
-	s+="</text>";
-	return s;
+	return this.make2dStone(c,x,y,r,o);
 };
 mxG.S.prototype.makeAloneStone=function(nat,n,o)
 {
-	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c,t;
+	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z;
 	z=(o.in3dOn&&o.stoneShadowOn)?this.stoneShadowWidth:0;
-	s="<svg";
-	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
+	s="<svg "+this.xmlns+" "+this.xlink;
 	// final viewBox, width and height will be modified when rendering
 	s+=" viewBox=\""+(-z)+" "+(-z)+" "+(dd+2*z)+" "+(dd+2*z)+"\"";
-	//s+=" width=\""+(dd+2*z)+"\" height=\""+(dd+2*z)+"\"";
 	s+=" width=\"40\" height=\"40\""; // acceptable size if no css
 	s+=" font-family=\""+this.ff+"\"";
 	s+=" font-size=\""+this.fs+"\"";
 	s+=" font-weight=\""+this.fw+"\"";
+	if(o.ariaHidden) s+=" aria-hidden=\"true\"";
 	s+=">";
-	c=(nat=="B")?"Black":(nat=="W")?"White":null;
-	if(c)
-	{
-		o.opacity=1;
-		s+=this.makeStone(c,x,y,d/2,o);
-		if(n) s+=this.makeTextOnAloneStone(n,dd/2,dd/2,dd,(nat=="B")?"White":"Black",o);
-	}
+	if(o.title) s+="<title>"+o.title+"</title>";
+	o.opacity=1;
+	s+=this.makeStone((nat=="B")?"Black":"White",x,y,d/2,o);
+	if(n) s+=this.makeText(n,dd/2,dd/2,(nat=="B")?"White":"Black",o);
 	s+="</svg>";
 	return s;
 };
-mxG.S.prototype.makeAloneStoneAndText=function(nat,n,v,o)
-{
-	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c,t;
-	z=(o.in3dOn&&o.stoneShadowOn)?this.stoneShadowWidth:0;
-	s="<svg";
-	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
-	// final viewBox, width and height will be modified when rendering
-	s+=" viewBox=\""+(-z)+" "+(-z)+" "+(dd+2*z)+" "+(dd+2*z)+"\"";
-	s+=" width=\"100%\" height=\"40\""; // acceptable size if no css
-	s+=" font-family=\""+this.ff+"\"";
-	s+=" font-size=\""+this.fs+"\"";
-	s+=" font-weight=\""+this.fw+"\"";
-	s+=">";
-	c=(nat=="B")?"Black":(nat=="W")?"White":null;
-	if(v)
-	{
-		t=this.p.local(c?c:"")+(n?(c?" ":"")+n:"")+v;
-		s+="<title>"+t+"</title>";
-	}
-	if(c)
-	{
-		o.opacity=1;
-		s+=this.makeStone(c,x,y,d/2,o);
-		if(n) s+=this.makeTextOnAloneStone(n,dd/2,dd/2,dd,(nat=="B")?"White":"Black",o);
-		if(v) s+=this.makeTextAfterAloneStone(v,dd,"Black");
-	}
-	s+="</svg>";
-	return s;
-};
-mxG.S.prototype.makeTextSomewhere=function(txt,x,y,c,centered)
-{
-	// x: center of the text if centered, beginning of the text otherwise
-	// y: center of the text
-	let s;
-	txt+="";
-	s="<text class=\"mxTextSomewhere\"";
-	s+=" fill=\""+c+"\"";
-	if(this.sw4text) s+=" stroke=\""+c+"\" stroke-width=\""+this.sw4text+"\"";
-	if(centered) s+=" text-anchor=\"middle\"";
-	// font-family and font-size are set in svg tag
-	// bug, cannot use dominant-baseline:central everywhere
-	// then just add 5 to y to center text vertically
-	s+=" x=\""+x+"\" y=\""+(y+5)+"\">";
-	s+=txt;
-	s+="</text>";
-	return s;
-};
-mxG.S.prototype.makeNotSeen=function(a,o)
-{
-	let k,km,s="",nw,h4ns,title="",i,j,c,x,y,xo;
-	let d,dd,ddd,z;
-	d=this.d;
-	dd=this.d+2;
-	z=(o.in3dOn&&o.stoneShadowOn)?this.stoneShadowWidth:0;
-	ddd=dd+2*z;
-	km=a.length;
-	for(k=0;k<km;k++)
-	{
-		if(k) title+=", ";
-		title+=this.p.local(a[k].nat=="B"?"Black":"White")+" "+a[k].n+" "+a[k].t;
-		if(a[k].nato) title+=" "+this.p.local(a[k].nato=="B"?"Black":"White")+" "+a[k].no;
-	}
-	// compute h4ns
-	nw=Math.floor(this.w/(4*ddd));
-	if(nw<1) nw=1;
-	nl=Math.ceil(km/nw);
-	h4ns=nl*ddd;
-	xo=(this.w-nw*4*ddd+ddd)/2;
-	s="<svg";
-	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
-	s+=" id=\""+this.p.n+"NotSeenSvg\" class=\"mxNotSeenSvg\"";
-	s+=" viewBox=\"0 0 "+this.w+" "+h4ns+"\"";
-	s+=" width=\""+this.w+"\" height=\""+h4ns+"\"";
-	s+=" stroke-linecap=\"square\"";
-	s+=" font-family=\""+this.ff+"\"";
-	s+=" font-size=\""+this.fs+"\"";
-	s+=" font-weight=\""+this.fw+"\"";
-	s+=">";
-	s+="<title>"+title+"</title>"; // accessibility
-	if(this.in3dOn)
-	{
-		s+="<defs>";
-		s+=this.makeGradient("Black");
-		s+=this.makeGradient("White");
-		s+="</defs>";
-	}
-	for(k=0;k<km;k++)
-	{
-		i=k%nw;
-		j=Math.floor(k/nw);
-		c=(a[k].nat=="B")?"Black":"White";
-		o.opacity=1;
-		x=xo+i*ddd*4+ddd/2;
-		y=j*ddd+ddd/2;
-		s+=this.makeStone(c,x,y,d/2,o);
-		if(a[k].n) s+=this.makeTextOnAloneStone(a[k].n,x,y,dd,(a[k].nat=="B")?"White":"Black",o);
-		if(a[k].t)
-		{
-			if(a[k].nato)
-				s+=this.makeTextSomewhere(a[k].t,x+ddd,y,"Black",1);
-			else
-				s+=this.makeTextSomewhere(a[k].t,x+ddd/2+d/8,y,"Black",0);
-		}
-		if(a[k].nato)
-		{
-			c=(a[k].nato=="B")?"Black":"White";
-			o.opacity=1;
-			x=xo+(i*4+2)*ddd+ddd/2;
-			y=j*ddd+ddd/2;
-			s+=this.makeStone(c,x,y,d/2,o);
-			if(a[k].no) s+=this.makeTextOnAloneStone(a[k].no,x,y,dd,(a[k].nato=="B")?"White":"Black",o);
-		}
-	}
-	s+="</svg>";
-	return s;
-};
-mxG.S.prototype.makeSelectTool=function()
-{
-	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c="#000";
-	z=d*3/4;
-	s="<svg";
-	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
-	s+=" viewBox=\"0 0 "+dd+" "+dd+"\"";
-	s+=" width=\"40\" height=\"40\""; // acceptable size if no css
-	s+=">";
-	s+="<rect stroke-dasharray=\"2\"";
-	s+=" fill=\"none\" stroke=\""+c+"\" stroke-width=\""+this.sw4grid+"\"";
-	s+=" x=\""+(x-z/2)+"\" y=\""+(y-z/2)+"\"";
-	s+=" width=\""+z+"\" height=\""+z+"\"/></g>";
-	s+="</svg>";
-	return s;
-};
-mxG.S.prototype.makeViewTool=function()
-{
-	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c="#000";
-	z=d*3/4;
-	s="<svg";
-	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
-	s+=" viewBox=\"0 0 "+dd+" "+dd+"\"";
-	s+=" width=\"40\" height=\"40\""; // acceptable size if no css
-	s+=">";
-	s+="<g fill=\"none\" stroke=\""+c+"\" stroke-width=\""+this.sw4grid+"\">"
-	s+="<rect";
-	s+=" x=\""+(x-z/2)+"\" y=\""+(y-z/2)+"\"";
-	s+=" width=\""+z+"\" height=\""+z+"\"/>";
-	s+="<rect";
-	s+=" x=\""+x+"\" y=\""+(y-z/2)+"\"";
-	s+=" width=\""+z/2+"\" height=\""+z/2+"\"/>";
-	s+="</g>";
-	s+="</svg>";
-	return s;
-};
-mxG.S.prototype.makeAloneBiStone=function(nat,o)
-{
-	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,c1,c2,r,z;
-	z=(this.p.in3dOn&&this.p.stoneShadowOn)?this.stoneShadowWidth:0;
-	if(nat.slice(-1)=="B"){c1="Black";c2="White";}
-	else {c1="White";c2="Black";}
-	s="<svg";
-	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
-	s+=" xmlns:xlink=\"http://www.w3.org/1999/xlink\"";
-	//s+=" viewBox=\"0 0 "+dd+" "+dd+"\"";
-	s+=" viewBox=\""+(-z)+" "+(-z)+" "+(dd+2*z)+" "+(dd+2*z)+"\"";
-	s+=" width=\"40\" height=\"40\""; // acceptable size if no css
-	s+=">";
-	s+="<defs>";
-	s+="<clipPath id=\""+this.p.n+"SetupBlackClip\"><path";
-	s+=" d=\"M0 0L"+x+" 0L"+x+" "+dd+"L0 "+dd+"Z\"";
-	s+="/></clipPath>";
-	s+="<clipPath id=\""+this.p.n+"SetupWhiteClip\">";
-	s+="<path";
-	s+=" d=\"M"+dd+" 0L"+x+" 0L"+x+" "+dd+"L"+dd+" "+dd+"Z\"";
-	s+="/>";
-	s+="</clipPath>";
-	s+="</defs>";
-	if(o.in3dOn) r=d/2; else r=(d-this.sw4stone+1)/2;
-	if(this.stoneShadowOn)
-	{
-		let e=this.stoneShadowWidth;
-		s+="<circle";
-		s+=" fill=\"#000\" opacity=\"0.2\"";
-		s+=" cx=\""+(x+e)+"\" cy=\""+(y+e)+"\" r=\""+r+"\"/>";
-	}
-	s+="<circle";
-	s+=" clip-path=\"url(#"+this.p.n+"SetupBlackClip)\"";
-	if(o.in3dOn) s+=" fill=\"url(#"+this.p.n+c1[0]+"RG)\"";
-	else s+=" fill=\""+c1+"\" stroke=\"#000\" stroke-width=\""+this.sw4stone+"\"";
-	s+=" cx=\""+x+"\" cy=\""+y+"\" r=\""+r+"\"";
-	s+="/>";
-	s+="<circle";
-	s+=" clip-path=\"url(#"+this.p.n+"SetupWhiteClip)\"";
-	if(o.in3dOn) s+=" fill=\"url(#"+this.p.n+c2[0]+"RG)\"";
-	else s+=" fill=\""+c2+"\" stroke=\"#000\" stroke-width=\""+this.sw4stone+"\"";
-	s+=" cx=\""+x+"\" cy=\""+y+"\" r=\""+r+"\"";
-	s+="/>";
-	s+="</svg>";
-	return s;
-};
-mxG.S.prototype.makeMarkOnLast=function(c,x,y,cls)
+mxG.S.prototype.makeMarkOnLast=function(c,x,y,o)
 {
 	let s,z=4; // z=this.d/6
-	s="<rect class=\""+cls+"\"";
-	s+=" fill=\""+c+"\"";
-	s+=" x=\""+(x-z)+"\" y=\""+(y-z)+"\"";
-	s+=" width=\""+z*2+"\" height=\""+z*2+"\"/>";
+	s="<rect class=\""+o.cls+"\" fill=\""+c+"\"";
+	s+=" x=\""+(x-z)+"\" y=\""+(y-z)+"\" width=\""+z*2+"\" height=\""+z*2+"\"/>";
 	return s;
 };
-mxG.S.prototype.makeMark=function(c,x,y,cls)
+mxG.S.prototype.makeMark=function(c,x,y,o)
 {
-	let s,x1,y1,x2,y2,z=6.5; // z=this.d*0.28
-	x1=x-z;
-	y1=y-z;
-	x2=x+z;
-	y2=y+z;
-	s="<path class=\""+cls+"\"";
+	let s,z=6;
+	s="<path class=\""+o.cls+"\"";
+	if(o.ij) s+=" data-maxigos-ij=\""+o.ij+"\"";
 	s+=" stroke-width=\""+this.sw4mark+"\" stroke=\""+c+"\" fill=\"none\"";
-	s+=" d=\"M"+x1+" "+y1+"L"+x2+" "+y2+"M"+x1+" "+y2+"L"+x2+" "+y1+"\"/>";
+	s+=" d=\"M"+(x-z)+" "+(y-z)+"L"+(x+z)+" "+(y+z)+"M"+(x-z)+" "+(y+z)+"L"+(x+z)+" "+(y-z)+"\"/>";
 	return s;
 };
-mxG.S.prototype.makeCircle=function(c,x,y,cls)
+mxG.S.prototype.makeCircle=function(c,x,y,o)
 {
-	let s,z=this.d*0.27;
-	s="<circle class=\""+cls+"\"";
+	let s,z=6.5;
+	s="<circle class=\""+o.cls+"\"";
+	if(o.ij) s+=" data-maxigos-ij=\""+o.ij+"\"";
 	s+=" stroke-width=\""+this.sw4mark+"\" stroke=\""+c+"\" fill=\"none\"";
 	s+=" cx=\""+x+"\" cy=\""+y+"\" r=\""+z+"\"/>";
 	return s;
 };
-mxG.S.prototype.makeTriangle=function(c,x,y,cls)
+mxG.S.prototype.makeTriangle=function(c,x,y,o)
 {
-	let s,x1,y1,x2,y2,x3,y3,z=this.d*0.32;
-	x1=x;
-	y1=y-z;
-	x2=x-z;
-	y2=y+z*0.8;
-	x3=x+z;
-	y3=y+z*0.8;
-	s="<polygon class=\""+cls+"\"";
+	let s,z=7.5;
+	s="<polygon class=\""+o.cls+"\"";
+	if(o.ij) s+=" data-maxigos-ij=\""+o.ij+"\"";
 	s+=" stroke-width=\""+this.sw4mark+"\" stroke=\""+c+"\" fill=\"none\"";
-	s+=" points=\""+x1+" "+y1+" "+x2+" "+y2+" "+x3+" "+y3+"\"/>";
+	s+=" points=\""+x+" "+(y-z)+" "+(x-z)+" "+(y+z*0.8)+" "+(x+z)+" "+(y+z*0.8)+"\"/>";
 	return s;
 };
-mxG.S.prototype.makeSquare=function(c,x,y,cls)
+mxG.S.prototype.makeSquare=function(c,x,y,o)
 {
-	let s,z=this.d*0.27;
-	s="<rect class=\""+cls+"\"";
+	let s,z=6;
+	s="<rect class=\""+o.cls+"\"";
+	if(o.ij) s+=" data-maxigos-ij=\""+o.ij+"\"";
 	s+=" stroke-width=\""+this.sw4mark+"\" stroke=\""+c+"\" fill=\"none\"";
-	s+=" x=\""+(x-z)+"\" y=\""+(y-z)+"\"";
-	s+=" width=\""+z*2+"\" height=\""+z*2+"\"/>";
+	s+=" x=\""+(x-z)+"\" y=\""+(y-z)+"\" width=\""+z*2+"\" height=\""+z*2+"\"/>";
 	return s;
 };
-mxG.S.prototype.makeAloneMark=function(m)
+mxG.S.prototype.makeTerritoryMark=function(a,x,y,o)
 {
-	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,c="#000",cls="mxTool";
-	s="<svg";
-	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
-	s+=" viewBox=\"0 0 "+dd+" "+dd+"\"";
-	s+=" width=\"40\" height=\"40\""; // acceptable size if no css
-	s+=">";
-	switch(m)
-	{
-		case "Circle":s+=this.makeCircle(c,x,y,cls);break;
-		case "Mark":s+=this.makeMark(c,x,y,cls);break;
-		case "Square":s+=this.makeSquare(c,x,y,cls);break;
-		case "Triangle":s+=this.makeTriangle(c,x,y,cls);break;
-	}
-	s+="</svg>";
-	return s;
-};
-mxG.S.prototype.makeAloneToolText=function(txt)
-{
-	// for edit tool only
-	// assume text width is smaller than dd
-	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,c="#000";
-	s="<svg";
-	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
-	s+=" viewBox=\"0 0 "+dd+" "+dd+"\"";
-	s+=" width=\"40\" height=\"40\""; // acceptable size if no css
-	s+=" font-family=\""+this.ff+"\"";
-	s+=" font-size=\""+this.fs+"\"";
-	s+=" font-weight=\""+this.fw+"\"";
-	s+=">";
-	s+="<text";
-	s+=" text-anchor=\"middle\"";
-	s+=" fill=\""+c+"\"";
-	if(this.sw4text) s+=" stroke=\""+c+"\" stroke-width=\""+this.sw4text+"\"";
-	//else s+=" stroke=\"none\"";
-	s+=" x=\""+x+"\" y=\""+(y+5)+"\">";
-	s+=txt;
-	s+="</text>";
-	s+="</svg>";
-	return s;
-};
-mxG.S.prototype.makeTerritoryMark=function(a,x,y,cls)
-{
-	let c=(a=="_TB_")?"Black":"White";
-	if(this.p.territoryMark=="MA") return this.makeMark(c,x,y,cls);
+	let c=a.match(/_TB_/)?"Black":"White";
+	if(this.p.territoryMark=="MA") return this.makeMark(c,x,y,o);
 	o={opacity:1,in3dOn:this.in3dOn,stoneShadowOn:this.stoneShadowOn};
 	return this.makeStone(c,x,y,5,o); // d=this.d/4.5
 };
 mxG.S.prototype.makeFocusMark=function(x,y)
 {
-	let s,z=this.d/2;
-	s+="<rect class=\"mxFocusMark\" stroke=\"#000\" fill=\"none\"";
-	s+=" x=\""+(x-z)+"\" y=\""+(y-z)+"\"";
-	s+=" width=\""+z*2+"\" height=\""+z*2+"\"/>";
-	return s;
-};
-mxG.S.prototype.makeStoneNumberOnGrid=function(i,j,nat,a)
-{
-	let s="",c,cls,x,y;
-	cls="mxOn"+((nat=="B")?"Black":"White");
-	cls+=" mx"+i+"_"+j;
-	cls+=" mxNumber";
-	c=(nat=="B")?"#fff":"#000";
-	x=this.i2x(i);
-	y=this.j2y(j);
-	if(this.oldJapaneseNumberingOn)
-	{
-		a=this.k2okanji(parseInt(a+""));
-		cls+=" mxVertical";
-		cls+=" mxLen"+(a+"").length;
-	}
-	s+=this.makeText(a,i,j,{c:c,cls:cls,ignoreFillAndStroke:1});
-	return s;
+	let z=this.d/2+1,s="<rect class=\"mxFocusMark\" stroke-width=\""+this.sw4grid+"\" stroke=\""+this.glc+"\" fill=\"none\"";
+	return s+" x=\""+(x-z)+"\" y=\""+(y-z)+"\" width=\""+z*2+"\" height=\""+z*2+"\"/>";
 };
 mxG.S.prototype.makeMarkOrLabel=function(i,j,nat,a)
 {
-	let s="",c,cls,x,y;
-	cls="mxOn"+((nat=="B")?"Black":(nat=="W")?"White":"Empty");
-	cls+=" mx"+i+"_"+j;
-	c=(nat=="B")?"#fff":"#000";
-	x=this.i2x(i);
-	y=this.j2y(j);
-	if((a=="_TB_")||(a=="_TW_"))
-		s+=this.makeTerritoryMark(a,x,y,"mxTerritoryMark "+cls);
-	else if(a=="_ML_")
-		s+=this.makeMarkOnLast(c,x,y,"mxMarkOnLast "+cls);
+	let s="",c=(nat=="B")?"#fff":(nat=="W")?"#000":this.glc,
+		cls="mxOn"+((nat=="B")?"Black":(nat=="W")?"White":"Empty"),
+		x=this.i2x(i),y=this.j2y(j),o={};
+	if(a.match(/^\(*_TB_|_TW_\)*$/))
+		s+=this.makeTerritoryMark(a,x,y,{cls:"mxTerritoryMark "+cls});
+	else if(a.match(/^\(*_ML_\)*$/))
+		s+=this.makeMarkOnLast(c,x,y,{cls:"mxMarkOnLast "+cls});
 	else
 	{
+		if(cls=="mxOnEmpty") o.ij=i+"_"+j;
 		if(this.isMark(a)) cls+=" mxMark";
 		else if(this.isLabel(a))
 		{
@@ -606,13 +239,14 @@ mxG.S.prototype.makeMarkOrLabel=function(i,j,nat,a)
 			if(this.isVariationOnFocus(a)) cls+=" mxOnFocus";
 			a=this.removeVariationDelimiters(a);
 		}
+		o.cls=cls;
 		switch(a)
 		{
-			case "_MA_":s+=this.makeMark(c,x,y,cls);break;
-			case "_TR_":s+=this.makeTriangle(c,x,y,cls);break;
-			case "_SQ_":s+=this.makeSquare(c,x,y,cls);break;
-			case "_CR_":s+=this.makeCircle(c,x,y,cls);break;
-			default:s+=this.makeText(a,i,j,{c:c,cls:cls,sw:this.sw4text});
+			case "_MA_":s+=this.makeMark(c,x,y,o);break;
+			case "_TR_":s+=this.makeTriangle(c,x,y,o);break;
+			case "_SQ_":s+=this.makeSquare(c,x,y,o);break;
+			case "_CR_":s+=this.makeCircle(c,x,y,o);break;
+			default:o.ignoreTextAnchor=1;s+=this.makeText(a,x,y,c,o);
 		}
 	}
 	return s;
@@ -620,8 +254,7 @@ mxG.S.prototype.makeMarkOrLabel=function(i,j,nat,a)
 mxG.S.prototype.k2katakana=function(ko)
 {
 	let k=this.DX-ko,s;
-	s="イロハニホヘトチリヌルヲワカヨタレソツ";
-	s+="ネナラムウヰノオクヤマケフコエテアサキユメミシヱヒモセス";
+	s="イロハニホヘトチリヌルヲワカヨタレソツネナラムウヰノオクヤマケフコエテアサキユメミシヱヒモセス";
 	return (k<s.length)?s.charAt(k):"";
 };
 mxG.S.prototype.k2kanji=function(k)
@@ -658,40 +291,41 @@ mxG.S.prototype.k2okanji=function(s)
 };
 mxG.S.prototype.k2n=function(k)
 {
-	if(this.oldJapaneseIndicesOn||this.japaneseIndicesOn) return this.k2okanji(k);
+	if(!this.latinCoordinates&&(this.p.oldJapaneseIndicesOn||this.p.japaneseIndicesOn))
+		return this.k2okanji(k);
 	return (this.DY+1-k)+"";
 };
 mxG.S.prototype.k2c=function(k)
 {
-	if(this.oldJapaneseIndicesOn) return this.k2katakana(k);
-	if(this.japaneseIndicesOn) return k+"";
+	if(!this.latinCoordinates&&this.p.oldJapaneseIndicesOn) return this.k2katakana(k);
+	if(!this.latinCoordinates&&this.p.japaneseIndicesOn) return k+"";
 	let r=((k-1)%25)+1;
 	return String.fromCharCode(r+((r>8)?65:64))+((k>25)?(k-r)/25:"");
 };
 mxG.S.prototype.getIndices=function(x,y)
 {
-	if(!this.hideLeftIndices&&(x==0)&&(y>0)&&(y<=this.DY)) return this.k2n(y);
-	if(!this.hideTopIndices&&(y==0)&&(x>0)&&(x<=this.DX)) return this.k2c(x);
-	if(!this.hideRightIndices&&(x==(this.DX+1))&&(y>0)&&(y<=this.DY)) return this.k2n(y);
-	if(!this.hideBottomIndices&&(y==(this.DY+1))&&(x>0)&&(x<=this.DX)) return this.k2c(x);
+	if(!this.p.hideLeftIndices&&(x==0)&&(y>0)&&(y<=this.DY)) return this.k2n(y);
+	if(!this.p.hideTopIndices&&(y==0)&&(x>0)&&(x<=this.DX)) return this.k2c(x);
+	if(!this.p.hideRightIndices&&(x==(this.DX+1))&&(y>0)&&(y<=this.DY)) return this.k2n(y);
+	if(!this.p.hideBottomIndices&&(y==(this.DY+1))&&(x>0)&&(x<=this.DX)) return this.k2c(x);
 	return "";
 };
 mxG.S.prototype.makeIndices=function()
 {
-	let s,i,j,cls1,cls2,m;
-	cls1="mxIndice mxHorizontal";
-	if(this.japaneseIndicesOn||this.oldJapaneseIndicesOn) cls2="mxIndice mxVertical";
-	else cls2=cls1;
-	s="<g class=\"mxIndices\" fill=\"#000\"";
-	if(this.sw4text) s+=" stroke=\"#000\" stroke-width=\""+this.sw4text+"\"";
+	let i,j,m,o,c=this.glc,s,dx=this.grim+this.gripx,dy=this.grim+this.gripy;
+	s="<g class=\"mxIndices\" fill=\""+c+"\"";
+	if(this.sw4text!="0") s+=" stroke=\""+c+"\" stroke-width=\""+this.sw4text+"\"";
 	s+=">";
+	o=(this.p.japaneseIndicesOn||this.p.oldJapaneseIndicesOn)?{vertical:1}:{};
+	o.ignoreTextAnchor=1;
+	o.ignoreFillAndStroke=1;
 	if(this.xl==1)
 	{
 		i=0;
 		for(j=this.yt;j<=this.yb;j++)
 		{
 			m=this.getIndices(i,j);
-			s+=this.makeText(m,i,j,{cls:cls2+" mxLen"+m.length});
+			s+=this.makeText(m,this.i2x(i)-dx,this.j2y(j),c,o);
 		}
 	}
 	if(this.yt==1)
@@ -700,7 +334,7 @@ mxG.S.prototype.makeIndices=function()
 		for(i=this.xl;i<=this.xr;i++)
 		{
 			m=this.getIndices(i,j);
-			s+=this.makeText(m,i,j,{cls:cls1+" mxLen"+m.length});
+			s+=this.makeText(m,this.i2x(i),this.j2y(j)-dy,c,o);
 		}
 	}
 	if(this.xr==this.DX)
@@ -709,7 +343,7 @@ mxG.S.prototype.makeIndices=function()
 		for(j=this.yt;j<=this.yb;j++)
 		{
 			m=this.getIndices(i,j);
-			s+=this.makeText(m,i,j,{cls:cls2+" mxLen"+m.length});
+			s+=this.makeText(m,this.i2x(i)+dx,this.j2y(j),c,o);
 		}
 	}
 	if(this.yb==this.DY)
@@ -718,31 +352,34 @@ mxG.S.prototype.makeIndices=function()
 		for(i=this.xl;i<=this.xr;i++)
 		{
 			m=this.getIndices(i,j);
-			s+=this.makeText(m,i,j,{cls:cls1+" mxLen"+m.length});
+			s+=this.makeText(m,this.i2x(i),this.j2y(j)+dy,c,o);
 		}
 	}
-	s+="</g>";
-	return s;
+	return s+"</g>";
 };
 mxG.S.prototype.gridUnder=function(i,j,nat,str)
 {
-	if((str!="_TB_")&&(str!="_TW_"))
-	{
-		if((nat=="B")||(nat=="W")) return 0;
-		if(str&&(this.isMark(str)||this.isLabel(str)||this.isVariation(str))) return 0;
-	}
+	if(str&&str.match(/(_TB_)|(_TW_)/)) return 1;
+	if((nat=="B")||(nat=="W")||str) return 0;
 	return 1;
+};
+mxG.S.prototype.makeOneStar=function(i,j)
+{
+	// Z is important to well closed the path
+	let rs=this.r4star,x=this.i2x(i),y=this.j2y(j),s;
+	s="M"+(x-(-rs))+" "+y+"A"+rs+" "+rs+" 0 1 0 "+(x-rs)+" "+y;
+	return s+"A"+rs+" "+rs+" 0 1 0 "+(x-(-rs))+" "+y+"Z";
 };
 mxG.S.prototype.makeGrid=function(vNat,vStr)
 {
-	let s="",m,i,j,k,x,y,a,rs,gi;
-	s+="<path class=\"mxGobanLines\" fill=\"none\" d=\"";
+	let s="",m,i,j,k,x,y,a,gi;
+	s+="<path class=\"mxGobanLines\" stroke-width=\""+this.sw4grid+"\" stroke=\""+this.glc+"\" fill=\"none\" d=\"";
 	for(i=this.xl;i<=this.xr;i++)
 	{
 		x=this.i2x(i);
 		this.yGridMin=y=((this.yt==1)?this.dh/2:0)+this.gbsyt;
 		s+="M"+x+" "+y;
-		if(this.eraseGridUnder)
+		if(this.p.eraseGridUnder)
 		{
 			m="M";
 			for(j=this.yt;j<=this.yb;j++)
@@ -781,7 +418,7 @@ mxG.S.prototype.makeGrid=function(vNat,vStr)
 		this.xGridMin=x=((this.xl==1)?this.dw/2:0)+this.gbsxl;
 		y=this.j2y(j);
 		s+="M"+x+" "+y;
-		if(this.eraseGridUnder)
+		if(this.p.eraseGridUnder)
 		{
 			m="M";
 			for(i=this.xl;i<=this.xr;i++)
@@ -816,60 +453,47 @@ mxG.S.prototype.makeGrid=function(vNat,vStr)
 		else s+=m+x+" "+y;
 	}
 	s+="\"/>";
-	rs=2*this.sw4grid;
-	s+="<path class=\"mxStars\" fill=\"#000\" d=\"";
+	s+="<path class=\"mxStars\" fill=\""+this.glc+"\" d=\"";
 	for(i=this.xl;i<=this.xr;i++)
 		for(j=this.yt;j<=this.yb;j++)
 			if(this.star(i,j))
 			{
 				k=this.p.xy(i,j);
-				if(!this.eraseGridUnder||this.gridUnder(i,j,vNat[k],vStr[k]))
-				{
-					x=this.i2x(i);
-					y=this.j2y(j);
-					s+="M"+(x+rs)+" "+y+"A"+rs+" "+rs+" 0 1 0 "+(x-rs)+" "+y;
-					// Z is important otherwise the path is not well closed
-					s+="A"+rs+" "+rs+" 0 1 0 "+(x+rs)+" "+y+"Z";
-				}
+				if(!this.p.eraseGridUnder||this.gridUnder(i,j,vNat[k],vStr[k]))
+					s+=this.makeOneStar(i,j);
 			}
 	s+="\"/>";
 	return s;
 };
 mxG.S.prototype.makeBackground=function(r)
 {
-	let s,x,y,a,b,cls;
-	b=this.indicesOn?this.gobp+this.db+this.grim:0; // indices width
+	let s,x,y,bx,by,cls;
+	bx=this.indicesOn?this.gobp+this.dw+this.grim:0; // indices width
+	by=this.indicesOn?this.gobp+this.dh+this.grim:0; // indices height
 	if(r=="Outer")
 	{
 		// always indicesOn in this case
-		x=((this.xl==1)?this.gobm:this.dw*(1-this.xl)-b);
-		y=((this.yt==1)?this.gobm:this.dh*(1-this.yt)-b);
-		a=this.grip+b;
-		w=this.dw*this.DX+a*2;
-		h=this.dh*this.DY+a*2;
+		x=(this.xl==1)?this.gobm:(this.dw*(1-this.xl)-bx);
+		y=(this.yt==1)?this.gobm:(this.dh*(1-this.yt)-by);
+		w=this.dw*this.DX+(this.gripx+bx)*2;
+		h=this.dh*this.DY+(this.gripy+by)*2;
 	}
 	else if(r=="Inner")
 	{
-		x=((this.xl==1)?this.gobm+b:this.dw*(1-this.xl));
-		y=((this.yt==1)?this.gobm+b:this.dh*(1-this.yt));
-		a=this.grip;
-		w=this.dw*this.DX+a*2;
-		h=this.dh*this.DY+a*2;
+		x=(this.xl==1)?this.gobm+bx:(this.dw*(1-this.xl));
+		y=(this.yt==1)?this.gobm+by:(this.dh*(1-this.yt));
+		w=this.dw*this.DX+this.gripx*2;
+		h=this.dh*this.DY+this.gripy*2;
 	}
-	else // whole svg
+	else // whole svg or any others
 	{
-		x=0;
-		y=0;
+		x=y=0;
 		w=this.w;
 		h=this.h;
 	}
-	cls="mxGobanBackground";
-	cls+=(this.indicesOn?" mxWithIndices":"");
-	cls+=" mx"+r+"Rect";
-	s="<rect class=\""+cls+"\"";
-	s+=" fill=\"none\" stroke=\"none\"";
-	s+=" x=\""+x+"\" y=\""+y+"\"";
-	s+=" width=\""+w+"\" height=\""+h+"\"/>";
+	cls="mxGobanBackground"+(this.indicesOn?" mxWithIndices":"")+" mx"+r+"Rect";
+	s="<rect class=\""+cls+"\" fill=\"none\" stroke=\"none\"";
+	s+=" x=\""+x+"\" y=\""+y+"\" width=\""+w+"\" height=\""+h+"\"/>";
 	return s;
 };
 mxG.S.prototype.getWRatio=function()
@@ -884,44 +508,44 @@ mxG.S.prototype.getHRatio=function()
 	let b=this.p.getE("GobanSvg").getBoundingClientRect();
 	return this.h/b.height;
 };
-mxG.S.prototype.getC=function(ev)
+mxG.S.prototype.getGxy=function(ev,s=0)
 {
-	let x,y,c=this.ig.getMClick(ev);
+	let x,y,c=this.ig.firstChild.getMClick(ev);
 	c.x=c.x*this.getWRatio()-this.gbsxl;
 	c.y=c.y*this.getHRatio()-this.gbsyt;
-	x=Math.max(Math.min(Math.floor(c.x/this.dw)+this.xl,this.xr),this.xl);
-	y=Math.max(Math.min(Math.floor(c.y/(this.dh))+this.yt,this.yb),this.yt);
+	x=Math.floor(c.x/this.dw)+this.xl;
+	y=Math.floor(c.y/this.dh)+this.yt;
+	if(s) return {x:x,y:y}; // useful when one needs to manage clicks outside the goban
+	x=Math.max(Math.min(x,this.xr),this.xl);
+	y=Math.max(Math.min(y,this.yb),this.yt);
 	return {x:x,y:y}
 };
-mxG.S.prototype.setMagicGobanWidth=function(e)
+mxG.S.prototype.refBox=function(){return this.ig;} // to be patched (see Eidogo+Problem)
+mxG.S.prototype.setMagicGobanWidth=function()
 {
 	// using pointsNumMax (number of points in a line of a reference goban)
-	// calculate a reduction ratio wr used to display a small gobans or part of a goban
+	// calculate a reduction ratio wr used to display a small goban or part of a goban
 	// with stones of the same diameter as the stone diameter of a reference goban
-	// the reduction is applied to e which is ig or one of its ancestors
-	let wr,z;
-	if((this.xr-this.xl+1)<=this.pointsNumMax)
+	// the reduction is applied to a reference box which is this.ig by default
+	if((this.xr-this.xl)<this.p.pointsNumMax)
 	{
-		z=this.gbsxl+this.gbsxr;
-		if(!this.indicesOn)
-		{
-			if(this.xl!=1) z+=this.gobp+this.db+this.grim;
-			if(this.xr!=this.DX) z+=this.gobp+this.db+this.grim;
-		}
-		wr=this.w/(this.dw*this.pointsNumMax+z)*100;
+		let a=this.stretching.split(","),
+			in3dWS=-(-a[0]),in3dHS=-(-a[1]),in2dWS=-(-a[2]),in2dHS=-(-a[3]),
+			dw0=this.d+(this.in3dOn?(in3dWS?in3dWS:0):(in2dWS?in2dWS:0)),
+			gbsx=this.indicesOn?this.gobm+this.gobp+dw0+this.grim+this.gripx:(this.gobm+this.gripx);
+		this.wr=100*this.w/(dw0*this.p.pointsNumMax+2*gbsx);
 	}
-	else wr=100; // if too large goban, do as if this.pointsNumMax=0
-	e.style.width=wr+"%";
-	this.wr=wr;
+	else
+		// if the goban has more vertical lines than this.p.pointsNumMax,
+		// do as if this.pointsNumMax=0
+		this.wr=100;
+	this.refBox().style.width=this.wr+"%";
 };
 mxG.S.prototype.makeGradient1=function(c)
 {
 	// glass stones
-	let s,r,c1,c2,c3;
-	r=(c=="Black")?50:100;
-	c1=(c=="Black")?"#999":"#fff";
-	c2=(c=="Black")?"#333":"#ccc";
-	c3=(c=="Black")?"#000":"#333";
+	let s,b=(c=="Black"),r=b?50:100,
+		c1=b?"#999":"#fff",c2=b?"#333":"#ccc",c3=b?"#000":"#333";
 	s="<radialGradient id=\""+this.p.n+c[0]+"RG\"";
 	s+=" class=\"mx"+c[0]+"RG\"";
 	s+=" cx=\"33%\" cy=\"33%\" r=\""+r+"%\">";
@@ -944,8 +568,7 @@ mxG.S.prototype.makeShellEffect=function(o)
 mxG.S.prototype.makeGradient2=function(c)
 {
 	// slate and shell stones
-	let s,k,l,rg;
-	s=this.makeGradient1(c);
+	let s=this.makeGradient1(c);
 	s+="<radialGradient id=\""+this.p.n+c[0]+"RGA\"";
 	s+=" class=\"mx"+c[0]+"RGA\"";
 	if(c=="Black")
@@ -973,11 +596,9 @@ mxG.S.prototype.makeGradient2=function(c)
 	}
 	else
 	{
-		for(k=0;k<8;k++)
+		for(let k=0;k<8;k++)
 		{
-			rg="B";
-			if(k) rg+=k;
-			s+="<radialGradient id=\""+this.p.n+c[0]+"RG"+rg+"\"";
+			s+="<radialGradient id=\""+this.p.n+c[0]+"RGB"+k+"\"";
 			s+=" class=\"mx"+c[0]+"RGB\"";
 			switch(k)
 			{
@@ -990,7 +611,7 @@ mxG.S.prototype.makeGradient2=function(c)
 				case 6:s+=" cx=\"0%\" cy=\"0%\" r=\"120%\">";break;
 				case 7:s+=" cx=\"0%\" cy=\"50%\" r=\"120%\">";break;
 			}
-			for(l=0.05;l<1;l=l+0.15) s+=this.makeShellEffect(l);
+			for(let l=0.05;l<1;l=l+0.15) s+=this.makeShellEffect(l);
 			s+="</radialGradient>";
 		}
 	}
@@ -1000,160 +621,93 @@ mxG.S.prototype.makeGradient=function(c)
 {
 	return this["makeGradient"+(this.p.specialStoneOn?2:1)](c);
 };
-mxG.S.prototype.addAnimatedGoban=function(c)
-{
-	let s,tpl,list,k,km,co,xo,yo,xn,yn,z,r=this.d/2,o;
-	s="<svg";
-	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
-	s+=" viewBox=\"0 0 "+this.w+" "+this.h+"\"";
-	s+=" width=\"100%\" height=\"100%\"";
-	s+=" class=\"mxAnimatedGobanSvg\"";
-	s+=">";
-	co=(c.nat=="B")?"Black":"White";
-	xo=(c.nat=="B")?this.w-r:r;
-	yo=(c.nat=="B")?this.h-r:r;
-	xn=this.i2x(c.x)-xo;
-	yn=this.j2y(c.y)-yo;
-	o={opacity:1,in3dOn:this.in3dOn,stoneShadowOn:this.stoneShadowOn,animatedStone:1};
-	s+=this.makeStone(co,xo,yo,this.d/2,o);
-	s+="</svg>";
-	tpl=document.createElement("template");
-	tpl.innerHTML=s;
-	list=tpl.content.querySelectorAll("circle");
-	km=list.length;
-	z="transform "+this.p.animatedStoneTime/1000+"s ease-out";
-	for(k=0;k<km;k++) list[k].style.transition=z;
-	this.ig.appendChild(tpl.content);
-	list=this.ig.lastChild.querySelectorAll("circle");
-	km=list.length;
-	this.ig.offsetHeight;
-	z="translate("+xn+"px,"+yn+"px)";
-	for(k=0;k<km;k++) list[k].style.transform=z;
-};
-mxG.S.prototype.removeAnimatedGoban=function(c)
-{
-	let e=this.ig.querySelector("svg:nth-of-type(2)");
-	if(e) this.ig.removeChild(e);
-};
 mxG.S.prototype.makeGoban=function()
 {
-	let s,c,p;
-	let i,j;
-	let x,y,x1,y1,x2,y2,w,h,wmax,wr,z,a;
+	let s;
 	this.vNat=[];
 	this.vStr=[];
 	this.w=this.dw*(this.xr-this.xl+1)+this.gbsxl+this.gbsxr;
 	this.h=this.dh*(this.yb-this.yt+1)+this.gbsyt+this.gbsyb;
-	// if pointsNumMax is not 0, reduce the width of ig or one of its ancestors
+	// if pointsNumMax is not 0, reduce the width of ig
 	// to be able to display small gobans or parts of goban with the same stone diameter
 	// as the stone diameter of a reference goban (which has pointsNumMax on its rows)
-	//     if magicParentNum is 0, ig itself is reduced
-	//     if magicParentNum is 1, ig parent is reduced
-	//     if magicParentNum is 2, ig grandparent is reduced etc.
-	// magicParentNum is useful when other components
-	// such as "navigation" or "notSeen" should have the same width as ig
-	p=this.ig;
-	km=this.p.magicParentNum||0;
-	for(k=0;k<km;k++) p=p.parentNode;
-	this.setMagicGobanWidth(p);
-	// convenient width should be set in css
-	// style set below is the minimalist style
-	//   convenient if style is disabled (goban is well displayed)
-	//   convenient for Edit component (need no css)
-	s="<svg";
-	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
-	s+=" xmlns:xlink=\"http://www.w3.org/1999/xlink\""; // in case one uses xlink:href
-	s+=" id=\""+this.p.n+"GobanSvg\" class=\"mxGobanSvg\"";
-	s+=" viewBox=\"0 0 "+this.w+" "+this.h+"\"";
-	//s+=" width=\"100%\" height=\"100%\""; // safer, else bug if borders in Chrome?
-	s+=" width=\""+this.w+"\" height=\""+this.h+"\"";
-	s+=" stroke-linecap=\"square\"";
-	s+=" font-family=\""+this.ff+"\"";
-	s+=" font-size=\""+this.fs+"\"";
-	s+=" font-weight=\""+this.fw+"\"";
-	s+=" text-anchor=\"middle\"";
+	this.setMagicGobanWidth();
+	// by default, no style is applied on the svg (minimalist style)
+	// in order to be able to display it even if css is disabled 
+	s="<svg "+this.xmlns+" "+this.xlink;
+	// aria-hidden="true" on all svg text is used to prevent data from being read twice
+	s+=" id=\""+this.p.n+"GobanSvg\" class=\"mxGobanSvg\" tabindex=\"0\"";
+	s+=" viewBox=\"0 0 "+this.w+" "+this.h+"\" width=\""+this.w+"\" height=\""+this.h+"\"";
+	s+=" font-family=\""+this.ff+"\" font-size=\""+this.fs+"\" font-weight=\""+this.fw+"\"";
+	s+=" stroke-linecap=\"square\" text-anchor=\"middle\"";
 	s+=">";
-	s+="<title>"+this.p.local("Goban")+"</title>"; // accessibility
+	s+="<title id=\""+this.p.n+"GobanTitle\"></title>";
+	s+="<desc id=\""+this.p.n+"GobanDesc\"></desc>"; // accessible?
 	if(this.in3dOn)
-	{
-		s+="<defs>";
-		s+=this.makeGradient("Black");
-		s+=this.makeGradient("White");
-		s+="</defs>";
-	}
+		s+="<defs>"+this.makeGradient("Black")+this.makeGradient("White")+"</defs>";
+	s+=this.makeBackground("Ghost");
 	s+=this.makeBackground("Whole");
 	s+=this.makeBackground("Outer");
 	if(this.indicesOn) s+=this.makeIndices();
 	s+=this.makeBackground("Inner");
-	s+="<g id=\""+this.p.n+"Grid\" class=\"mxGrid\"";
-	s+=" stroke-width=\""+this.sw4grid+"\" stroke=\"#000\"></g>";
+	s+="<g id=\""+this.p.n+"Grid\" class=\"mxGrid\"></g>";
 	s+="<g id=\""+this.p.n+"Points\" class=\"mxPoints\"></g>";
 	s+="<g id=\""+this.p.n+"Focus\" class=\"mxFocus\"></g>";
 	s+="</svg>";
 	return s;
 };
-mxG.S.prototype.setInternalParameters=function()
+mxG.S.prototype.setInternalParams=function()
 {
 	// internal parameters
-	let stretchingArray=this.stretching.split(",");
-	this.in3dWidthStretch=parseInt(stretchingArray[0]+"");
-	this.in3dHeightStretch=parseInt(stretchingArray[1]+"");
-	this.in2dWidthStretch=parseInt(stretchingArray[2]+"");
-	this.in2dHeightStretch=parseInt(stretchingArray[3]+"");
-	if(this.in3dOn)
-	{
-		this.pws=this.in3dWidthStretch?this.in3dWidthStretch:0;
-		this.phs=this.in3dHeightStretch?this.in3dHeightStretch:0;
-	}
-	else
-	{
-		this.pws=this.in2dWidthStretch?this.in2dWidthStretch:0;
-		this.phs=this.in2dHeightStretch?this.in2dHeightStretch:0;
-	}
-	this.dw=this.d+this.pws;
-	this.dh=this.d+this.phs;
-	this.db=(this.dw+this.dh)/2; // for indices area
+	let a=this.stretching.split(","),
+		in3dWS=-(-a[0]),in3dHS=-(-a[1]),in2dWS=-(-a[2]),in2dHS=-(-a[3]);
+	this.dw=this.d+(this.in3dOn?(in3dWS?in3dWS:0):(in2dWS?in2dWS:0));
+	this.dh=this.d+(this.in3dOn?(in3dHS?in3dHS:0):(in2dHS?in2dHS:0));
+	this.gripx=this.grip;
+	if(this.in3dOn&&Number.isInteger(in3dWS)&&(in3dWS&1)) this.gripx-=0.5;
+	else if(!this.in3dOn&&Number.isInteger(in2dWS)&&(in2dWS&1)) this.gripx-=0.5;
+	this.gripy=this.grip;
+	if(this.in3dOn&&Number.isInteger(in3dHS)&&(in3dHS&1)) this.gripy-=0.5;
+	else if(!this.in3dOn&&Number.isInteger(in2dHS)&&(in2dHS&1)) this.gripy-=0.5;
 	if(this.indicesOn)
 	{
-		this.gbsxl=((this.xl==1)?this.gobp+this.grim+this.gobm+this.db:0)+this.grip;
-		this.gbsyt=((this.yt==1)?this.gobp+this.grim+this.gobm+this.db:0)+this.grip;
-		this.gbsxr=((this.xr==this.DX)?this.gobp+this.grim+this.gobm+this.db:0)+this.grip;
-		this.gbsyb=((this.yb==this.DY)?this.gobp+this.grim+this.gobm+this.db:0)+this.grip;
+		this.gbsxl=((this.xl==1)?this.gobm+this.gobp+this.dw+this.grim:0)+this.gripx;
+		this.gbsyt=((this.yt==1)?this.gobm+this.gobp+this.dh+this.grim:0)+this.gripy;
+		this.gbsxr=((this.xr==this.DX)?this.gobm+this.gobp+this.dw+this.grim:0)+this.gripx;
+		this.gbsyb=((this.yb==this.DY)?this.gobm+this.gobp+this.dh+this.grim:0)+this.gripy;
 	}
 	else
 	{
-		this.gbsxl=((this.xl==1)?this.gobm:0)+this.grip;
-		this.gbsyt=((this.yt==1)?this.gobm:0)+this.grip;
-		this.gbsxr=((this.xr==this.DX)?this.gobm:0)+this.grip;
-		this.gbsyb=((this.yb==this.DY)?this.gobm:0)+this.grip;
+		this.gbsxl=((this.xl==1)?this.gobm:0)+this.gripx;
+		this.gbsyt=((this.yt==1)?this.gobm:0)+this.gripy;
+		this.gbsxr=((this.xr==this.DX)?this.gobm:0)+this.gripx;
+		this.gbsyb=((this.yb==this.DY)?this.gobm:0)+this.gripy;
 	}
 };
 mxG.S.prototype.init=function()
 {
 	let p=this.p;
-	this.ig=p.getE("InnerGobanDiv"); // DIV where goban displays
-	this.stoneShadowOn=p.stoneShadowOn;
-	this.pointsNumMax=p.pointsNumMax;
-	this.japaneseIndicesOn=p.japaneseIndicesOn;
-	this.oldJapaneseIndicesOn=p.oldJapaneseIndicesOn;
-	this.oldJapaneseNumberingOn=p.oldJapaneseNumberingOn;
-	this.eraseGridUnder=p.eraseGridUnder;
+	this.ig=p.ig; // the box where the goban displays
+	// in3dOn, stoneShadowOn, stretching, indicesOn, DX, DY, xl, xr, yt, yb
+	//	are initialized in updateGoban()
+	// when they are required for drawing other components that the goban
+	//	they are initialized through the o parameter of the functions
 	this.grip=p.gridPadding;
 	this.grim=p.gridMargin;
 	this.gobp=p.gobanPadding;
 	this.gobm=p.gobanMargin;
-	this.stretching=p.stretching;
-	this.hideLeftIndices=p.hideLeftIndices;
-	this.hideTopIndices=p.hideTopIndices;
-	this.hideRightIndices=p.hideRightIndices;
-	this.hideBottomIndices=p.hideBottomIndices;
+	this.ariaOn=1;
 };
-mxG.S.prototype.getLabelLen=function(a,str)
+mxG.S.prototype.getLen=function(a,str)
 {
-	let len=a.getComputedTextLength();
-	len=(str.length>2)?0.8*len:(str.length>1)?len=0.9*len:len;
-	len+=0.15*this.dw;
-	return Math.max(0.85*this.dw,len);
+	let len=0;
+	if(a.tagName.match(/text/i))
+	{
+		len=a.getComputedTextLength();
+		len=(str.length>2)?0.8*len:(str.length>1)?0.9*len:len;
+		len+=0.2*this.dw;
+	}
+	return Math.max(this.dw-4,Math.ceil(len));
 };
 mxG.S.prototype.getVerticalGridLine=function(i)
 {
@@ -1161,7 +715,7 @@ mxG.S.prototype.getVerticalGridLine=function(i)
 	list=g.querySelectorAll("path");
 	return list[i-this.xl];
 };
-mxG.S.prototype.eraseVerticalGridSegment=function(i,y)
+mxG.S.prototype.eraseOneVerticalGridSegment=function(i,y)
 {
 	let e,d0,d1,d2,a,b,k,km,x,y1,y2,f1,f2;
 	x=this.i2x(i);
@@ -1181,8 +735,7 @@ mxG.S.prototype.eraseVerticalGridSegment=function(i,y)
 	y1=Math.max(b[0],y-this.dh/2);
 	y2=Math.min(b[km-1],y+this.dh/2);
 	d2="M"+x+" "+b[0];
-	f1=0;
-	f2=0;
+	f1=f2=0;
 	for(k=1;k<km;k++)
 	{
 		if(!f1)
@@ -1224,11 +777,17 @@ mxG.S.prototype.eraseVerticalGridSegments=function(i,j,x,y,w)
 	{
 		if(ik!=i)
 		{
-			this.eraseVerticalGridSegment(ik,y);
+			this.eraseOneVerticalGridSegment(ik,y);
 			if(this.star(ik,j))
 			{
-				e=this.p.getE("Grid").querySelector(".mxStar"+ik+"_"+j);
-				e.parentNode.removeChild(e);
+				e=this.p.getE("Grid").querySelector(".mxStars");
+				if(e)
+				{
+					let s=this.makeOneStar(ik,j),
+						d=e.getAttributeNS(null,"d");
+					d=d.replace(s,"");
+					e.setAttributeNS(null,"d",d);
+				}
 			}
 		}
 	}
@@ -1237,7 +796,7 @@ mxG.S.prototype.eraseLongGridSegment=function(i,j,x,y,w)
 {
 	// is executed only when long label (i.e. almost never)
 	let e,d0,d1,d2,a,b,k,km,x1,x2,m,re;
-	e=this.p.getE("Grid").querySelector("path");
+	e=this.p.getE("Grid").firstChild;
 	d0=e.getAttributeNS(null,"d");
 	re=new RegExp("M"+this.xGridMin+" "+y+"[^V]+?H"+this.xGridMax);
 	d1=d0.match(re)[0];
@@ -1252,8 +811,7 @@ mxG.S.prototype.eraseLongGridSegment=function(i,j,x,y,w)
 	x1=Math.max(Math.floor((x-w/2)*10)/10,b[0]);
 	x2=Math.min(Math.ceil((x+w/2)*10)/10,b[km-1]);
 	d2="M"+b[0]+" "+y;
-	f1=0;
-	f2=0;
+	f1=f2=0;
 	for(k=1;k<km;k++)
 	{
 		if(!f1)
@@ -1290,56 +848,140 @@ mxG.S.prototype.eraseLongGridSegment=function(i,j,x,y,w)
 };
 mxG.S.prototype.addPointBackground=function(i,j,nat,str)
 {
-	let a,b,p,cls,x,y,h,w,vof=0;
-	if(this.isLabel(str)||this.isVariation(str))
+	let a,b,p,x,y,h,w;
+	p=this.p.getE("Points");
+	if(a=p.querySelector('[data-maxigos-ij="'+i+'_'+j+'"]'))
 	{
-		p=this.p.getE("Points");
-		if(a=p.querySelector("text.mx"+i+"_"+j))
-		{
-			cls="mxPointBackground mx"+i+"_"+j;
-			if(this.isLabel(str)) cls+=" mxLabel";
-			if(this.isVariation(str)) cls+=" mxVariation";
-			if(this.isVariationOnFocus(str))
-			{
-				cls+=" mxOnFocus";
-				if(a.classList.contains("mxOnEmpty")) vof=1;
-			}
-			if(a.classList.contains("mxOnBlack"))
-				cls+=" mxOnBlack";
-			else if(a.classList.contains("mxOnWhite"))
-				cls+=" mxOnWhite";
-			else if(a.classList.contains("mxOnEmpty"))
-				cls+=" mxOnEmpty";
-			h=0.85*this.dh;
-			w=this.getLabelLen(a,str);
-			x=parseFloat(a.getAttributeNS(null,"x"));
-			y=parseFloat(a.getAttributeNS(null,"y"));
-			b=document.createElementNS("http://www.w3.org/2000/svg","rect");
-			b.setAttributeNS(null,"fill","none");
-			b.setAttributeNS(null,"stroke",vof?"#000":"none");
-			if(vof) b.setAttributeNS(null,"stroke-width",this.sw4grid);
-			b.setAttributeNS(null,"x",x-w/2);
-			b.setAttributeNS(null,"y",y-h/2-5);
-			b.setAttributeNS(null,"width",w);
-			b.setAttributeNS(null,"height",h);
-			b.setAttribute("class",cls);
-			a.parentNode.insertBefore(b,a);
-			// if (w<=this.dw) the job was done when making the grid
-			if(w>this.dw) this.eraseLongGridSegment(i,j,x,y-5,w);
-		}
+		let vof=this.isVariationOnFocus(str);
+		h=this.dh-4;
+		w=this.getLen(a,str);
+		x=this.i2x(i);
+		y=this.j2y(j);
+		b=document.createElementNS(this.xmlnsUrl,"rect");
+		b.setAttributeNS(null,"fill","none");
+		b.setAttributeNS(null,"stroke",vof?this.glc:"none");
+		b.setAttributeNS(null,"stroke-width",vof?this.sw4grid:"0");
+		b.setAttributeNS(null,"x",x-w/2);
+		b.setAttributeNS(null,"y",y-h/2);
+		b.setAttributeNS(null,"width",w);
+		b.setAttributeNS(null,"height",h);
+		b.setAttribute("class","mxPointBackground"+" "+a.classList.value);
+		a.parentNode.insertBefore(b,a);
+		// if (w<=this.dw) the job was done when making the grid
+		if(this.p.eraseGridUnder&&(w>this.dw)) this.eraseLongGridSegment(i,j,x,y,w);
 	}
 };
-mxG.S.prototype.draw=function(vNat,vStr,pFocus)
+mxG.S.prototype.makeOneInfo=function(i,j,k,nat,str,sayLast)
 {
-	let i,j,k,km,s="",opacity,nat,str,list,a,b,c,xf,yf,o,z,s1,s2,s3,s4,s5,s6;
+	let s="",last=0,ojio,jio;
+	if((nat=="B")||(nat=="W")) s+=this.p.local(nat=="B"?"Black":"White");
+	if(s&&str) s+=" ";
+	if(str)
+	{
+		if(str.match(/_ML_/)) last=1;
+		else if(str.match(/_TB_/)) s+=this.p.local("Black territory mark");
+		else if(str.match(/_TW_/)) s+=this.p.local("White territory mark");
+		else
+		{
+			if(this.isVariation(str))
+			{
+				if(this.isVariationOnFocus(str))
+					s+=this.p.local("Variation on focus")+" ";
+				else s+=this.p.local("Variation")+" ";
+				str=this.removeVariationDelimiters(str);
+			}
+			if(this.isMark(str))
+			{
+				switch(str)
+				{
+					case "_MA_":s+=this.p.local("Mark");break;
+					case "_CR_":s+=this.p.local("Circle");break;
+					case "_SQ_":s+=this.p.local("Square");break;
+					case "_TR_":s+=this.p.local("Triangle");break;
+				}
+			}
+			else
+			{
+				if(this.isLabel(str)) str=this.removeLabelDelimiters(str);
+				s+=str;
+			}
+		}
+	}
+	if(s) s+=this.p.local(" at ");
+	if(this.p.lang!="ja") this.latinCoordinates=1;
+	s+=this.k2c(i)+this.k2n(j);
+	if(this.p.lang!="ja") this.latinCoordinates=0;
+	if(sayLast&&last) s+=", "+this.p.local("Last played move");
+	return s;
+};
+mxG.S.prototype.makeGobanTitle=function()
+{
+	let s="",xf,yf,k,nat,str;
+	s=this.p.local("Goban")+" "+this.DX+"x"+this.DY;
+	if((this.xl!=1)||(this.yt!=1)||(this.xr!=this.DX)||(this.yb!=this.DY))
+	{
+		s+=", "+this.p.local("Partial view");
+		s+=" "+this.k2c(this.xl)+this.k2n(this.yb);
+		s+=" "+this.k2c(this.xr)+this.k2n(this.yt);
+	}
+	if((xf=this.p.xFocus)&&(yf=this.p.yFocus))
+	{
+		k=this.p.xy(xf,yf);
+		nat=this.vNat[k];
+		str=this.vStr[k];
+		if(s) s+=", ";
+		s+=this.p.local("Cursor on");
+		if(s) s+=" ";
+		s+=this.makeOneInfo(xf,yf,k,nat,str,1);
+	}
+	return s;
+};
+mxG.S.prototype.makeGobanDescription=function()
+{
+	let s="",i,j,k,nat,str;
+	for(i=this.xl;i<=this.xr;i++)
+		for(j=this.yb;j>=this.yt;j--)
+		{
+			k=this.p.xy(i,j);
+			nat=this.vNat[k];
+			str=this.vStr[k];
+			if((nat=="B")||(nat=="W")||str)
+			{
+				if(s) s+=", ";
+				s+=this.makeOneInfo(i,j,k,nat,str,0);
+			}
+		}
+	if(!s) s=this.p.local("Empty goban");
+	return s;
+};
+mxG.S.prototype.setGobanFocusTitleDesc=function(verbose)
+{
+	let x=this.p.xFocus,y=this.p.yFocus,ghost,a;
+	if(!this.p.inView(x,y)) {x=0;y=0;}
+	if(x&&y)this.p.getE("Focus").innerHTML=this.makeFocusMark(this.i2x(x),this.j2y(y));
+	else this.p.getE("Focus").innerHTML="";
+	this.p.getE("GobanTitle").innerHTML=this.makeGobanTitle()+(verbose?".":"");
+	this.p.getE("GobanDesc").innerHTML=this.makeGobanDescription();
+	a=this.p.n+"GobanTitle"+(verbose?" "+this.p.n+"GobanDesc":"");
+	this.p.getE("GobanSvg").setAttribute("aria-labelledby",a);
+	// below is a trick to force reading by screen readers
+	ghost=this.p.getE("GobanSvg").querySelector('.mxGhostRect');
+	if(ghost)
+	{
+		if(ghost.style.display) ghost.style.display="";
+		else ghost.style.display="none";
+	}
+};
+mxG.S.prototype.drawGoban=function(vNat,vStr)
+{
+	let s,s1,s2,s3,s4,s5,s6,i,j,k,nat,str,c,o;
 	this.p.getE("Grid").innerHTML=this.makeGrid(vNat,vStr);
 	this.pNat=this.vNat;
 	this.pStr=this.vStr;
 	this.vNat=vNat;
 	this.vStr=vStr;
-	this.pFocus=pFocus;
+	s=s1=s2=s3=s4=s5=s6="";
 	// group elements to reduce final svg size
-	s1=s2=s3=s4=s5="";
 	for(i=this.xl;i<=this.xr;i++)
 		for(j=this.yt;j<=this.yb;j++)
 		{
@@ -1348,25 +990,30 @@ mxG.S.prototype.draw=function(vNat,vStr,pFocus)
 			str=this.vStr[k];
 			if((nat=="B")||(nat=="W"))
 			{
+				let x=this.i2x(i),y=this.j2y(j);
 				c=(nat=="B")?"Black":"White";
 				if(this.in3dOn&&this.stoneShadowOn)
 				{
 					o={ignoreFillAndStroke:1};
-					s1+=this.makeStoneShadow(c,this.i2x(i),this.j2y(j),this.d/2,o);
+					s1+=this.makeStoneShadow(c,x,y,this.d/2,o);
 				}
 				o={in3dOn:this.in3dOn,stoneShadowOn:0,ignoreFillAndStroke:1};
 				o.opacity=((str=="_TB_")||(str=="_TW_"))?0.5:1;
-				if(nat=="B")
+				if(nat=="B") s2+=this.makeStone(c,x,y,this.d/2,o);
+				else s3+=this.makeStone(c,x,y,this.d/2,o);
+				if(str&&/^[0-9]+$/.test(str))
 				{
-					s2+=this.makeStone(c,this.i2x(i),this.j2y(j),this.d/2,o);
-					if(str&&/^[0-9]+$/.test(str))
-						s4+=this.makeStoneNumberOnGrid(i,j,nat,str);
-				}
-				else
-				{
-					s3+=this.makeStone(c,this.i2x(i),this.j2y(j),this.d/2,o);
-					if(str&&/^[0-9]+$/.test(str))
-						s5+=this.makeStoneNumberOnGrid(i,j,nat,str);
+					c=(nat=="B")?"#fff":"#000",
+					o={cls:"mxOn"+((nat=="B")?"Black":"White")+" mxNumber"};
+					o.ignoreTextAnchor=1;
+					o.ignoreFillAndStroke=1;
+					if(this.p.oldJapaneseNumberingOn)
+					{
+						str=this.k2okanji(-(-str));
+						o.vertical=1;
+					}
+					if(nat=="B") s4+=this.makeText(str,x,y,c,o);
+					else s5+=this.makeText(str,x,y,c,o);
 				}
 			}
 		}
@@ -1375,8 +1022,7 @@ mxG.S.prototype.draw=function(vNat,vStr,pFocus)
 	{
 		// opacity better than rgba() for exporting
 		s+="<g class=\"mxStoneShadows\" fill=\"#000\" opacity=\"0.2\" stroke=\"none\">";
-		s+=s1;
-		s+="</g>";
+		s+=s1+"</g>";
 	}
 	if(s2)
 	{
@@ -1387,8 +1033,7 @@ mxG.S.prototype.draw=function(vNat,vStr,pFocus)
 			s+=" stroke=\"none\">";
 		}
 		else s+=" fill=\"#000\" stroke=\"#000\" stroke-width=\""+this.sw4stone+"\">";
-		s+=s2;
-		s+="</g>";
+		s+=s2+"</g>";
 	}
 	if(s3)
 	{
@@ -1399,31 +1044,21 @@ mxG.S.prototype.draw=function(vNat,vStr,pFocus)
 			s+=" stroke=\"none\">";
 		}
 		else s+=" fill=\"#fff\" stroke=\"#000\" stroke-width=\""+this.sw4stone+"\">";
-		s+=s3;
-		s+="</g>";
+		s+=s3+"</g>";
 	}
 	if(s4)
 	{
-		s6="<g class=\"mxBlackStoneNumbers\"";
-		s6+=" fill=\"#fff\"";
-		if(this.sw4text) s6+=" stroke=\"#fff\" stroke-width=\""+this.sw4text+"\"";
-		s6+=">";
-		s6+=s4;
-		s6+="</g>";
-		s+=s6;
+		s+="<g class=\"mxBlackStoneNumbers\" fill=\"#fff\"";
+		if(this.sw4text!="0") s+=" stroke=\"#fff\" stroke-width=\""+this.sw4text+"\"";
+		s+=">"+s4+"</g>";
 	}
 	if(s5)
 	{
-		s6="<g class=\"mxWhiteStoneNumbers\"";
-		s6+=" fill=\"#000\"";
-		if(this.sw4text) s6+=" stroke=\"#000\" stroke-width=\""+this.sw4text+"\"";
-		s6+=">";
-		s6+=s5;
-		s6+="</g>";
-		s+=s6;
+		s+="<g class=\"mxWhiteStoneNumbers\" fill=\"#000\"";
+		if(this.sw4text!="0") s+=" stroke=\"#000\" stroke-width=\""+this.sw4text+"\"";
+		s+=">"+s5+"</g>";
 	}
 	// do the following last in case of drawing over the neighboring stones
-	s1="";
 	for(i=this.xl;i<=this.xr;i++)
 		for(j=this.yt;j<=this.yb;j++)
 		{
@@ -1431,310 +1066,29 @@ mxG.S.prototype.draw=function(vNat,vStr,pFocus)
 			nat=this.vNat[k];
 			str=this.vStr[k];
 			if(str&&!(((nat=="B")||(nat=="W"))&&/^[0-9]+$/.test(str)))
-				s1+=this.makeMarkOrLabel(i,j,nat,str);
+				s6+=this.makeMarkOrLabel(i,j,nat,str);
 		}
-	if(s1)
-	{
-		s3="<g class=\"mxMarksAndLabels\">";
-		s3+=s1;
-		s3+="</g>";
-		s+=s3;
-	}
+	if(s6) s+="<g class=\"mxMarksAndLabels\">"+s6+"</g>";
 	this.p.getE("Points").innerHTML=s;
-	if((xf=this.pFocus.x)&&(yf=this.pFocus.y))
-		this.p.getE("Focus").innerHTML=this.makeFocusMark(this.i2x(xf),this.j2y(yf));
-	else this.p.getE("Focus").innerHTML="";
+	// add point backgrounds
 	for(i=this.xl;i<=this.xr;i++)
 		for(j=this.yt;j<=this.yb;j++)
 		{
 			k=this.p.xy(i,j);
-			if(this.vStr[k]) this.addPointBackground(i,j,this.vNat[k],this.vStr[k]);
+			nat=this.vNat[k];
+			str=this.vStr[k];
+			if(str&&(nat!="B")&&(nat!="W"))
+				this.addPointBackground(i,j,nat,str);
 		}
+	this.setGobanFocusTitleDesc(1);
 };
 // loop, navigation and solve buttons
-mxG.S.prototype.makeBtnRectangle=function(x)
-{
-	return "<rect x=\""+x+"\" y=\"0\" width=\"24\" height=\"128\"/>";
-};
-mxG.S.prototype.makeBtnTriangle=function(x,a)
-{
-	let z=a*52;
-	return "<polygon points=\""+x+" 64 "+(x+z)+" 128 "+(x+z)+" 0\"/>";
-};
-mxG.S.prototype.makeBtnContent=function(a,t)
+mxG.S.prototype.makeBtnIcon=function(a,t)
 {
 	// convenient width and height should be set in css
-	let s="<svg";
-	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
-	s+=" viewBox=\"0 0 128 128\"";
-	s+=" width=\"40\" height=\"40\">"; // acceptable size if no css
-	if(t) s+="<title>"+this.p.local(t)+"</title>";
-	return s+a+"</svg>";
-};
-mxG.S.prototype.makeFirstBtn=function()
-{
-	let s=this.makeBtnRectangle(26)+this.makeBtnTriangle(50,1);
-	return this.makeBtnContent(s,"First");
-};
-mxG.S.prototype.makeTenPredBtn=function()
-{
-	let s=this.makeBtnTriangle(4,1)+this.makeBtnTriangle(56,1);
-	return this.makeBtnContent(s,"10 Previous");
-};
-mxG.S.prototype.makePredBtn=function()
-{
-	let s=this.makeBtnTriangle(30,1);
-	return this.makeBtnContent(s,"Previous");
-};
-mxG.S.prototype.makeNextBtn=function()
-{
-	let s=this.makeBtnTriangle(98,-1);
-	return this.makeBtnContent(s,"Next");
-};
-mxG.S.prototype.makeTenNextBtn=function()
-{
-	let s=this.makeBtnTriangle(72,-1)+this.makeBtnTriangle(124,-1);
-	return this.makeBtnContent(s,"10 Next");
-};
-mxG.S.prototype.makeLastBtn=function()
-{
-	let s=this.makeBtnTriangle(78,-1)+this.makeBtnRectangle(78);
-	return this.makeBtnContent(s,"Last");
-};
-mxG.S.prototype.makeAutoBtn=function()
-{
-	let s=this.makeBtnTriangle(0,1)+this.makeBtnTriangle(128,-1);
-	return this.makeBtnContent(s,"Auto");
-};
-mxG.S.prototype.makePauseBtn=function()
-{
-	let s=this.makeBtnRectangle(24)+this.makeBtnRectangle(80);
-	return this.makeBtnContent(s,"Pause");
-};
-mxG.S.prototype.makeRetryBtn=function()
-{
-	let s;
-	s="<path d=\"M0 64L64 64L32 92L0 64Z\"/>";
-	s+="<path d=\"M24 64A50 50 0 1 1 49 107L57 94A34 34 0 1 0 40 64Z\"/>";
-	return this.makeBtnContent(s,"Retry");
-};
-mxG.S.prototype.makeUndoBtn=function()
-{
-	let s;
-	s="<path d=\"M20,105H108C114.6,105 120,99 120,93V44C120,37 114,32 108,32H40V8L8,40 40,72V48H96C100,48 104,51 104,56V81C104,85 100,89 96,89H20 Z\"/>";
-	return this.makeBtnContent(s,"Undo");
-};
-mxG.S.prototype.makeHintBtn=function()
-{
-	let s;
-	s="<rect x=\"54\" y=\"10\" width=\"20\" height=\"64\" rx=\"5\" ry=\"5\"/>";
-	s+="<circle cx=\"64\" cy=\"104\" r=\"14\"/>";
-	return this.makeBtnContent(s,"Hint");
-};
-mxG.S.prototype.makePassBtn=function()
-{
-	let s;
-	s="<path fill-rule=\"evenodd\" d=\"M 64,10 L 118,64 L 64,118 L 10,64 Z M 64,35 L 93,64 L 64,93 L 35,64 Z\"/>";
-	return this.makeBtnContent(s,"Pass");
-};
-mxG.S.prototype.makeFromPath=function(p)
-{
-	let s="<svg";
-	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
-	s+=" viewBox=\"0 0 1024 1024\"";
-	s+=" width=\"40\" height=\"40\">"; // acceptable size if no css
-	return s+"<path d='"+p+"'/></svg>";
-};
-mxG.S.prototype.addSelect=function(i,j)
-{
-	let b,x,y,w,h,cls;
-	w=this.dw;
-	h=this.dh;
-	if(i==this.xl)
-	{
-		x=0;
-		w=this.i2x(i+1)-this.dw/2;
-	}
-	else if(i==this.xr)
-	{
-		x=this.i2x(i-1)+this.dw/2;
-		w=this.w-x;
-	}
-	else
-	{
-		x=this.i2x(i)-this.dw/2;
-		w=this.dw;
-	}
-	if(j==this.yt)
-	{
-		y=0;
-		h=this.j2y(j+1)-this.dh/2;
-	}
-	else if(j==this.yb)
-	{
-		y=this.j2y(j-1)+this.dh/2;
-		h=this.h-y;
-	}
-	else
-	{
-		y=this.j2y(j)-this.dh/2;
-		h=this.dh;
-	}
-	cls="mxSelect";
-	cls+=" mx"+i+"_"+j;
-	b=document.createElementNS("http://www.w3.org/2000/svg","rect");
-	b.setAttributeNS(null,"fill","#777");
-	b.setAttributeNS(null,"opacity","0.5"); // better than rgba() for exporting
-	b.setAttributeNS(null,"stroke","none");
-	b.setAttributeNS(null,"x",x);
-	b.setAttributeNS(null,"y",y);
-	b.setAttributeNS(null,"width",w);
-	b.setAttributeNS(null,"height",h);
-	b.setAttribute("class",cls);
-	this.ig.firstChild.appendChild(b);
-};
-mxG.S.prototype.removeSelect=function(i,j)
-{
-	let a,b;
-	a=this.ig.firstChild;
-	b=a.querySelector(".mxSelect.mx"+i+"_"+j);
-	if(b) a.removeChild(b);
-};
-mxG.S.prototype.makeOneStone4Bowl=function(nat,x,y,d,o)
-{
-	// no shadow inside the bowl
-	let s="",o2={};
-	// todo: why without o2, o keeps changes below outside this function?
-	if (o.hasOwnProperty("opacity")) o2.opacity=o.opacity;
-	if (o.hasOwnProperty("stoneShadowOn")) o2.stoneShadowOn=o.stoneShadowOn;
-	if (o.hasOwnProperty("whiteStroke4Black")) o2.whiteStroke4Black=o.whiteStroke4Black;
-	o.opacity=1;
-	o.stoneShadowOn=0;
-	o.whiteStroke4Black=1;
-	s=this.makeStone(nat=="B"?"Black":"White",x,y,d/2,o);
-	if (o2.hasOwnProperty("opacity")) o.opacity=o2.opacity;
-	if (o2.hasOwnProperty("stoneShadowOn")) o.stoneShadowOn=o2.stoneShadowOn;
-	if (o2.hasOwnProperty("whiteStroke4Black")) o.whiteStroke4Black=o2.whiteStroke4Black;
-	return s;
-};
-mxG.S.prototype.makeBowl=function(nat,o)
-{
-	// no svg shadow for the bowl
-	let s="",x,y,r,i,j,k,km,km2,dk,rk,magicNum;
-	magicNum=this.w/this.d*100/this.wr;
-	dk=this.bowlW/magicNum*3;
-	rk=dk/2;
-	x=this.bowlW/2;
-	y=(nat=="W")?this.bowlW/2:this.bowlW/2+this.capW;
-	r=this.bowlW/2*0.9;
-	r2=r-rk;
-	s+="<circle class=\"mxBowlBackground\"";
-	s+=" fill=\""+((nat=="B")?"#000":"#ccc")+"\"";
-	s+=" cx=\""+x+"\" cy=\""+y+"\" r=\""+r+"\"/>";
-	km=Math.ceil(2*r2/dk);
-	for(i=0;i<km;i++)
-		for(j=0;j<km;j++)
-		{
-			xk=2*r2*(i+((j&1)?0.5:0))/km-r2;
-			yk=2*r2*(j+0.5)/km-r2;
-			if((xk*xk+yk*yk)<r2*r2)
-				s+=this.makeOneStone4Bowl(nat,x+xk,y+yk,dk,o);
-		}
-	km2=km*km;
-	for(k=0;k<km2;k++)
-	{
-		xk=2*(r2-rk)*Math.random()-(r2-rk);
-		yk=2*(r2-rk)*Math.random()-(r2-rk);
-		if((xk*xk+yk*yk)<r2*r2)
-			s+=this.makeOneStone4Bowl(nat,x+xk,y+yk,dk,o);
-	}
-	s+="<circle class=\"mxBowl\"";
-	if(o.in3dOn) s+=" fill=\"url(#"+this.p.n+nat+"BowlIn3dRG)\"";
-	else s+=" fill=\"url(#"+this.p.n+nat+"BowlIn2dRG)\"";
-	s+=" cx=\""+x+"\" cy=\""+y+"\" r=\""+r+"\"/>";
-	return s;
-};
-mxG.S.prototype.makeCap=function(nat,n,o)
-{
-	// no svg shadow for the cap
-	let s="",x,y,r,c=(nat=="B")?"Black":"White";
-	x=this.bowlW/2;
-	y=(nat=="W")?this.bowlW+this.capW/2:this.capW/2;
-	dy=this.capW*5/42;
-	r=this.capW/2*0.9;
-	s+="<circle class=\"mxCap\"";
-	if(o.in3dOn) s+=" fill=\"url(#"+this.p.n+nat+"CapIn3dRG)\"";
-	else s+=" fill=\"url(#"+this.p.n+nat+"CapIn2dRG)\"";
-	s+=" cx=\""+x+"\" cy=\""+y+"\" r=\""+r+"\"/>";
-	s+="<text id=\""+this.p.n+c+"PrisonersText"+"\"";
-	s+=" fill=\""+c+"\"";
-	s+=" x=\""+x+"\" y=\""+y+"\" dy=\""+dy+"\"";
-	s+=">";
-	s+=n;
-	s+="</text>";
-	return s;
-};
-mxG.S.prototype.makeBowlAndCap=function(nat,n,o)
-{
+	// width=40 and height=40 are just acceptable values if no css
 	let s="";
-	this.bowlW=5*this.d;
-	this.capW=4*this.d;
-	s+="<svg";
-	s+=" xmlns=\"http://www.w3.org/2000/svg\"";
-	s+=" viewBox=\"0 0 "+this.bowlW+" "+(this.bowlW+this.capW)+"\"";
-	s+=" width=\""+this.bowlW+"\" height=\""+(this.bowlW+this.capW)+"\"";
-	s+=" font-family=\""+this.ff+"\"";
-	s+=" font-size=\""+this.capW/3+"\"";
-	s+=" font-weight=\""+this.fw+"\"";
-	s+=" text-anchor=\"middle\"";
-	s+=">";
-	s+="<title>"+this.p.local("Bowl")+"</title>";
-	s+="<defs>";
-	// use stop-opacity instead of transparent (better support, see ios)
-	s+="<radialGradient id=\""+this.p.n+nat+"BowlIn3dRG\"";
-	s+=" class=\"mx"+nat+"BowlRG\"";
-	s+=" cx=\"50%\" cy=\"50%\" r=\"50%\">";
-	s+="<stop stop-color=\"#000\" offset=\"0\" stop-opacity=\"0\"/>";
-	s+="<stop stop-color=\"#000\" offset=\"0.7\" stop-opacity=\"0\"/>";
-	s+="<stop stop-color=\"#da7\" offset=\"0.7\"/>";
-	s+="<stop stop-color=\"#da7\" offset=\"0.8\"/>";
-	s+="<stop stop-color=\"#853\" offset=\"0.85\"/>";
-	s+="<stop stop-color=\"#964\" offset=\"1\"/>";
-	s+="</radialGradient>";
-	s+="<radialGradient id=\""+this.p.n+nat+"BowlIn2dRG\"";
-	s+=" class=\"mx"+nat+"BowlRG\"";
-	s+=" cx=\"50%\" cy=\"50%\" r=\"50%\">";
-	s+="<stop stop-color=\"#000\" offset=\"0\" stop-opacity=\"0\"/>";
-	s+="<stop stop-color=\"#000\" offset=\"0.7\" stop-opacity=\"0\"/>";
-	s+="<stop stop-color=\"#da7\" offset=\"0.7\"/>";
-	s+="<stop stop-color=\"#da7\" offset=\"0.8\"/>";
-	s+="<stop stop-color=\"#964\" offset=\"0.8\"/>";
-	s+="<stop stop-color=\"#964\" offset=\"1\"/>";
-	s+="</radialGradient>";
-	s+="<radialGradient id=\""+this.p.n+nat+"CapIn3dRG\"";
-	s+=" class=\"mx"+nat+"CapRG\"";
-	s+=" cx=\"50%\" cy=\"50%\" r=\"50%\">";
-	s+="<stop stop-color=\"#a74\" offset=\"0\"/>";
-	s+="<stop stop-color=\"#8f5430\" offset=\"0.65\"/>";
-	s+="<stop stop-color=\"#741\" offset=\"0.7\"/>";
-	s+="<stop stop-color=\"#741\" offset=\"0.8\"/>";
-	s+="<stop stop-color=\"#852\" offset=\"0.85\"/>";
-	s+="<stop stop-color=\"#964\" offset=\"1\"/>";
-	s+="</radialGradient>";
-	s+="<radialGradient id=\""+this.p.n+nat+"CapIn2dRG\"";
-	s+=" class=\"mx"+nat+"CapRG\"";
-	s+=" cx=\"50%\" cy=\"50%\" r=\"50%\">";
-	s+="<stop stop-color=\"#a74\" offset=\"0\"/>";
-	s+="<stop stop-color=\"#a74\" offset=\"0.7\"/>";
-	s+="<stop stop-color=\"#741\" offset=\"0.7\"/>";
-	s+="<stop stop-color=\"#741\" offset=\"0.8\"/>";
-	s+="<stop stop-color=\"#964\" offset=\"0.8\"/>";
-	s+="<stop stop-color=\"#964\" offset=\"1\"/>";
-	s+="</radialGradient>";
-	s+="</defs>";
-	s+=this.makeBowl(nat,o);
-	s+=this.makeCap(nat,n,o);
-	s+="</svg>";
-	return s;
+	s+="<svg "+this.xmlns+" viewBox=\"0 0 128 128\" width=\"40\" height=\"40\" aria-hidden=\"true\">";
+	return s+(t?"<title>"+this.p.local(t)+"</title>":"")+a+"</svg>";
 };
 }

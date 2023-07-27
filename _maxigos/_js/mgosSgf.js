@@ -1,4 +1,4 @@
-// maxiGos v7 > mgosSgf.js
+// maxiGos v8 > mgosSgf.js
 if(!mxG.G.prototype.createSgf)
 {
 mxG.fr(" Close ","Fermer");
@@ -17,7 +17,7 @@ mxG.sgfEsc=function(s)
 };
 mxG.G.prototype.runTransform=function(x,s)
 {
-	var c1,c2,c3,c4,n1,n2,n3,n4,r,D,DX,DY;
+	let c1,c2,c3,c4,n1,n2,n3,n4,r,D,DX,DY;
 	if(this.transform)
 	{
 		if(x=='SZ')
@@ -86,7 +86,7 @@ mxG.G.prototype.buildAllSgf=function(aN,only,c)
 	// if only&2, keep main variation only
 	// if only&4, keep variation on focus only (useful when show)
 	// remove empty nodes
-	var rc="\n",k,x,y,ym,aText="",first,keep;
+	let rc="\n",k,x,y,ym,aText="",first,keep;
 	if(c===undefined) c=0;
 	if(this.transform&&aN.Dad&&(aN.Dad==this.rN)) this.sz=(aN.P['SZ']?aN.P['SZ']+"":"19");
 	if((aN.Dad&&(aN.Dad==this.rN))||(aN.Dad&&(aN.Dad.Kid.length>1)))
@@ -149,8 +149,8 @@ mxG.G.prototype.buildAllSgf=function(aN,only,c)
 };
 mxG.G.prototype.sgfMandatory=function()
 {
-	var p,km=this.rN.Kid.length;
-	for(var k=0;k<km;k++)
+	let p,km=this.rN.Kid.length;
+	for(let k=0;k<km;k++)
 	{
 		p=this.rN.Kid[k].P;
 		p.FF=["4"];
@@ -177,7 +177,7 @@ mxG.G.prototype.popupSgf=function()
 	// use <pre> tag otherwise line breaks are replaced by spaces
 	this.sgfPopup.document.open();
 	this.sgfPopup.document.write("<!DOCTYPE html><html><body><pre>\n");
-	this.sgfPopup.document.write(this.htmlProtect(this.buildSgf()));
+	this.sgfPopup.document.write(this.buildSgf().noT());
 	this.sgfPopup.document.write("\n</pre></body></html>");
 	this.sgfPopup.document.close();
 	this.sgfPopup.document.title="Sgf"; // not working in all browsers
@@ -193,7 +193,7 @@ mxG.G.prototype.canDownloadSgf=function()
 mxG.G.prototype.downloadSgf=function(f)
 {
 	// also used by File component
-	var u,a;
+	let u,a;
 	if(this.canDownloadSgf())
 	{
 		// Big5, gb18030, Shift_JIS, ... are they usable here?
@@ -212,12 +212,11 @@ mxG.G.prototype.doDownloadSgf=function(f)
 {
 	this.downloadSgf(f);
 };
-mxG.G.prototype.doReplaceFromSgf=function()
+mxG.G.prototype.doSgfOK=function()
 {
-	var s=this.getE("ShowSgfDiv").firstChild.firstChild.value,sgf,k;
+	let s=this.getE("EditSgfDialog").querySelector('textarea').value,sgf,k;
 	if(s!=this.sgfBeforeEdit)
 	{
-		this.mayHaveExtraTags=0;
 		k=this.rNs.indexOf(this.rN);
 		sgf=this.rN.sgf?this.rN.sgf:"";
 		if(this.getE("WindowMenuDiv"))
@@ -229,51 +228,19 @@ mxG.G.prototype.doReplaceFromSgf=function()
 		if(this.getE("WindowMenuDiv")) this.rNs[k]=this.rN;
 		this.backNode(this.kidOnFocus(this.rN));
 		if(this.hasC("Tree")) this.hasToSetTree=1;
+		this.updateAll();
 	}
-	this.hideGBox("ShowSgf");
 };
 mxG.G.prototype.doEditSgf=function()
 {
-	var e;
-	if(this.gBox=="ShowSgf") {this.hideGBox("ShowSgf");return;}
-	if(!this.getE("ShowSgfDiv"))
-	{
-		var s="";
-		// textarea considerably faster than div contenteditable when pasting big sgf
-		s="<div class=\"mxShowContentDiv\">";
-		s+="<textarea>";
-		s+="</textarea>";
-		s+="</div>";
-		s+="<div class=\"mxOKDiv\">";
-		s+="<button type=\"button\" onclick=\""+this.g+".doReplaceFromSgf()\"><span>"+this.local("OK")+"</span></button>";
-		s+="<button type=\"button\" onclick=\""+this.g+".hideGBox('ShowSgf')\"><span>"+this.local("Cancel")+"</span></button>";
-		s+="</div>";
-		this.createGBox("ShowSgf").innerHTML=s;
-	}
-	this.sgfBeforeEdit=this.buildSgf();
-	e=this.getE("ShowSgfDiv").firstChild.firstChild;
-	e.value=this.sgfBeforeEdit;
-	this.showGBox("ShowSgf");
+	let btns=[{n:"OK",a:"Sgf"},{n:"Cancel"}],s;
+	s="<textarea>"+this.buildSgf()+"</textarea>";
+	this.doDialog("EditSgf",s,btns);
+	this.sgfBeforeEdit=this.getE("EditSgfDialog").querySelector('textarea').value;
 };
 mxG.G.prototype.doShowSgf=function()
 {
-	var e;
-	if(this.gBox=="ShowSgf") {this.hideGBox("ShowSgf");return;}
-	if(!this.getE("ShowSgfDiv"))
-	{
-		let s,z=this.k;
-		s="<div class=\"mxShowContentDiv\" tabindex=\"0\">";
-		s+="</div>";
-		s+="<div class=\"mxOKDiv\">";
-		s+="<button type=\"button\"><span>"+this.local(" Close ")+"</span></button>";
-		s+="</div>";
-		this.createGBox("ShowSgf").innerHTML=s;
-		btn=this.getE("ShowSgfDiv").querySelector(".mxOKDiv button");
-		btn.addEventListener("click",function(){mxG.D[z].hideGBox('ShowSgf');},false);
-	}
-	e=this.getE("ShowSgfDiv").firstChild;
-	e.innerHTML=this.htmlProtect(this.buildSgf());
-	this.showGBox("ShowSgf");
+	this.doDialog("ShowSgf",this.buildSgf().noT(),[{n:" Close "}]);
 };
 mxG.G.prototype.doSgf=function()
 {
@@ -281,14 +248,6 @@ mxG.G.prototype.doSgf=function()
 		this.doDownloadSgf(this.rN.sgf?this.rN.sgf:"maxiGos.sgf");
 	else if(this.sgfAction=="edit") this.doEditSgf();
 	else this.doShowSgf();
-};
-mxG.G.prototype.updateSgf=function()
-{
-	if(this.getE("SgfBtn"))
-	{
-		if(this.gBox=="ShowSgf") this.selectBtn("Sgf");
-		else this.unselectBtn("Sgf");
-	}
 };
 mxG.G.prototype.initSgf=function()
 {
@@ -301,6 +260,6 @@ mxG.G.prototype.createSgf=function()
 	this.sgfAlias=this.setA("sgfAlias",null,"string");
 	this.sgfBtnOn=this.setA("sgfBtnOn",0,"bool");
 	this.toCharset=this.setA("toCharset","UTF-8","string");
-	return this.createBtnBox("Sgf");
+	return this.sgfBtnOn?this.createBtnBox("Sgf"):"";
 };
 }

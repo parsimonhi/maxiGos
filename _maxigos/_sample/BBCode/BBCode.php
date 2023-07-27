@@ -12,7 +12,7 @@ switch($lang)
 }
 $y=(($lang=="fr")?2:1);
 ?>
-<html lang="<?php echo $lang;?>">
+<html lang="<?=$lang?>">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -61,17 +61,17 @@ that does the parsing.
 </p>
 <?php }?>
 <h2>Basic (default)</h2>
-[sgf]download/file.php?id=11<?php echo $x;?>[/sgf]
+[sgf]download/file.php?id=11<?=$x?>[/sgf]
 <h2>Comment</h2>
-[sgf=comment]download/file.php?id=16<?php echo $y;?>[/sgf]
+[sgf=comment]download/file.php?id=16<?=$y?>[/sgf]
 <h2>Diagram</h2>
 [sgf=diagram]download/file.php?id=211[/sgf]
 <h2>Game</h2>
-[sgf=game]download/file.php?id=11<?php echo $x;?>[/sgf]
+[sgf=game]download/file.php?id=11<?=$x?>[/sgf]
 <h2>Problem</h2>
-[sgf=problem]download/file.php?id=43<?php echo $x;?>[/sgf]
+[sgf=problem]download/file.php?id=43<?=$x?>[/sgf]
 <h2>Tree</h2>
-[sgf=tree]download/file.php?id=16<?php echo $y;?>[/sgf]
+[sgf=tree]download/file.php?id=16<?=$y?>[/sgf]
 </main>
 
 <script>
@@ -85,7 +85,7 @@ that does the parsing.
 	// where {url} is an url which gets sgf files such as "download/file.php?id=123"
 	// where "xy" is a language code such as "en", "fr", "ja", ...
 	// where "r" is a regex which matches {url}
-	var e,f,p,r,a,b;
+	let e,f,p,r,a,b;
 	// adapt the line below to get the html element which encloses your content
 	// here, assume the html element is "main"
 	e=document.querySelector("main");
@@ -100,11 +100,11 @@ that does the parsing.
 	// assume the theme is "Minimalist"
 	p="<div "+a+" "+b+" data-maxigos=\"$2,Minimalist\">$3</div>";
 	e.innerHTML=e.innerHTML.replace(r,p);
-})("<?php echo $lang;?>"); // replace the parameter by a language code such as "en", "fr", "ja", ...
+})("<?=$lang?>"); // replace the parameter by a language code such as "en", "fr", "ja", ...
 </script>
 <?php if (in_array($lang,array("ja","zh-hans","zh-hant"))) {?>
 <!-- insert the script that contains translation in $lang -->
-<script src="../../_i18n/maxigos-i18n-<?php print $lang;?>.js"></script>
+<script src="../../_i18n/maxigos-i18n-<?=$lang?>.js"></script>
 <?php }?>
 <!-- insert the script that runs maxigos viewers -->
 <script src="../_js/mgosLoader.js"></script>

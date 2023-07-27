@@ -1,15 +1,16 @@
-// maxiGos v7 > mgosScore.js
+// maxiGos v8 > mgosScore.js
 if(!mxG.G.prototype.createScore)
 {
+// mxG.fr(": "," : ");
 mxG.fr("Score","Score");
-mxG.fr("Score method:","Méthode de score :");
+mxG.fr("Score method","Méthode de score");
 mxG.fr("trivial","triviale");
 mxG.fr("counting","décompte");
 mxG.fr("propagate","propagation");
 mxG.fr("estimate","estimation");
 mxG.fr("ephemeral score","score éphémère");
-mxG.fr("Black:","Noir :");
-mxG.fr("White:","Blanc :");
+// mxG.fr("Black","Noir");
+// mxG.fr("White","Blanc");
 mxG.fr("Chinese style","chinois");
 mxG.fr("Japanese style","japonais");
 mxG.fr("Unusual komi","Komi inhabituel");
@@ -17,16 +18,16 @@ mxG.fr("Unknown rules","Règle inconnue");
 
 mxG.G.prototype.buildScore=function()
 {
-	var s="",i,j,cb=0,cw=0,ib=0,iw=0,pb=0,pw=0,handicap,komi,rules,r;
-	var hasC=this.hasC("C"),expectedKomi;
-	rules=this.getInfoS("RU");
+	let s="",i,j,cb=0,cw=0,ib=0,iw=0,pb=0,pw=0,handicap,komi,rules,r,
+		hasC=this.hasC("C"),expectedKomi;
+	rules=this.getInfo("RU");
 	if(!rules) rules=this.scoreDefaultRules;
 	if(rules) rules=rules.toLowerCase();
 	if((rules=="chinese")||(rules=="ing")||(rules=="goe")||(rules=="nz")) r="C";
 	else if((rules=="aga")||(rules=="french")||(rules=="british")) r="C";
 	else if((rules=="japanese")||(rules=="korean")) r="J";
 	else r=null;
-	komi=this.getInfoS("KM");
+	komi=this.getInfo("KM");
 	if(komi)
 	{
 		komi=parseFloat(komi);
@@ -40,7 +41,7 @@ mxG.G.prototype.buildScore=function()
 	//	if handicap is not specified in the SGF,
 	//	but some handicap-like AB are at the beginning
 	//	try to guess the handicap?
-	handicap=this.getInfoS("HA");
+	handicap=this.getInfo("HA");
 	if(handicap) {handicap=parseInt(handicap);if(!handicap) handicap=0;}
 	else if(komi==0.5) handicap=1;
 	else handicap=0;
@@ -68,14 +69,14 @@ mxG.G.prototype.buildScore=function()
 	{
 		if(handicap) expectedKomi=0.5+handicap-1;
 		else expectedKomi=7.5;
-		if(hasC) s+="<h1>";
+		if(hasC) s+="<h1 tabindex=\"0\">";
 		s+=this.local("Score")+" ("+this.local("Chinese style")+")";
 		if(hasC) s+="</h1>"; else s+="\n";
 		if(hasC) s+="<p>";
-		s+=this.local("Black:")+" "+cb+" + "+ib+" = "+(cb+ib);
+		s+=this.local("Black")+this.local(": ")+cb+" + "+ib+" = "+(cb+ib);
 		if(hasC) s+="</p>"; else s+="\n";
 		if(hasC) s+="<p>";
-		s+=this.local("White:")+" "+cw+" + "+iw+" + "+komi+" = "+(cw+iw+komi);
+		s+=this.local("White")+this.local(": ")+cw+" + "+iw+" + "+komi+" = "+(cw+iw+komi);
 		if(hasC) s+="</p>"; else s+="\n";
 		if(expectedKomi!=komi)
 		{
@@ -88,14 +89,14 @@ mxG.G.prototype.buildScore=function()
 	{
 		if(handicap) expectedKomi=0.5;
 		else expectedKomi=6.5;
-		if(hasC) s+="<h1>";
+		if(hasC) s+="<h1 tabindex=\"0\">";
 		s+=this.local("Score")+" ("+this.local("Japanese style")+")";
 		if(hasC) s+="</h1>"; else s+="\n";
 		if(hasC) s+="<p>";
-		s+=this.local("Black:")+" "+cb+" + "+pb+" = "+(cb+pb);
+		s+=this.local("Black")+this.local(": ")+cb+" + "+pb+" = "+(cb+pb);
 		if(hasC) s+="</p>"; else s+="\n";
 		if(hasC) s+="<p>";
-		s+=this.local("White:")+" "+cw+" + "+pw+" + "+komi+" = "+(cw+pw+komi);
+		s+=this.local("White")+this.local(": ")+cw+" + "+pw+" + "+komi+" = "+(cw+pw+komi);
 		if(hasC) s+="</p>"; else s+="\n";
 		if(expectedKomi!=komi)
 		{
@@ -106,7 +107,7 @@ mxG.G.prototype.buildScore=function()
 	}
 	else
 	{
-		if(hasC) s+="<h1>";
+		if(hasC) s+="<h1 tabindex=\"0\">";
 		s+=this.local("Score");
 		if(hasC) s+="</h1>"; else s+="\n";
 		if(hasC) s+="<p>";
@@ -118,8 +119,8 @@ mxG.G.prototype.buildScore=function()
 };
 mxG.G.prototype.getTX=function()
 {
-	var TX=["TB","TW"];
-	var aN,k,aLen,s,x,y,x1,y1,x2,y2,z;
+	let TX=["TB","TW"];
+	let aN,k,aLen,s,x,y,x1,y1,x2,y2,z;
 	aN=this.cN4Score;
 	for(z=0;z<7;z++)
 	{
@@ -155,7 +156,7 @@ mxG.G.prototype.getTX=function()
 mxG.G.prototype.removeTX=function(a,b)
 {
 	// remove TM[ab] or TW[ab] if any
-	var k,km,kp,TX=["TB","TW"],aN,v;
+	let k,km,kp,TX=["TB","TW"],aN,v;
 	aN=this.cN4Score;
 	v=this.xy2s(a,b);
 	for(kp=0;kp<TX.length;kp++)
@@ -164,14 +165,14 @@ mxG.G.prototype.removeTX=function(a,b)
 		{
 			km=aN.P[TX[kp]].length;
 			for(k=0;k<km;k++) if(aN.P[TX[kp]][k]==v) break;
-			if(k<km) aN.TakeOff(TX[kp],k);
+			if(k<km) aN.takeOff(TX[kp],k);
 		}
 	}
 };
 mxG.G.prototype.addTX=function(tx,a,b)
 {
 	// tx is "TB" or "TW"
-	var aN,v;
+	let aN,v;
 	aN=this.cN4Score;
 	v=this.xy2s(a,b);
 	this.removeTX(a,b);
@@ -180,7 +181,7 @@ mxG.G.prototype.addTX=function(tx,a,b)
 };
 mxG.G.prototype.setTX=function(from)
 {
-	var i,j;
+	let i,j;
 	for(i=1;i<=this.DX;i++)
 		for(j=1;j<=this.DY;j++)
 		{
@@ -244,7 +245,7 @@ mxG.G.prototype.w4po=function(s,x,y,a)
 };
 mxG.G.prototype.possibleOwner=function(x,y)
 {
-	var s={b:0,w:0},z,i,j,k,n;
+	let s={b:0,w:0},z,i,j,k,n;
 	// avoid use of last score action here: mess for little benefit
 	k=9;
 	for(i=x-k;i<=x+k;i++)
@@ -405,7 +406,7 @@ mxG.G.prototype.swapWhenScore=function(nat,x,y,d)
 };
 mxG.G.prototype.computeScoreMarks_trivial=function(v)
 {
-	var i,j;
+	let i,j;
 	for(i=1;i<=this.DX;i++)
 		for(j=1;j<=this.DY;j++)
 		{
@@ -425,7 +426,7 @@ mxG.G.prototype.computeScoreMarks_trivial=function(v)
 };
 mxG.G.prototype.computeScoreMarks_counting=function(v)
 {
-	var i,j;
+	let i,j;
 	for(i=1;i<=this.DX;i++)
 		for(j=1;j<=this.DY;j++)
 		{
@@ -449,7 +450,7 @@ mxG.G.prototype.computeScoreMarks_propagate=function(v)
 };
 mxG.G.prototype.computeScoreMarks_estimate=function(v)
 {
-	var i,j;
+	let i,j;
 	for(i=1;i<=this.DX;i++)
 		for(j=1;j<=this.DY;j++)
 		{
@@ -626,7 +627,7 @@ mxG.G.prototype.initScoreBan=function()
 	// modified: initial marks + marks added by the user
 	// taken: stones marked as dead
 	// computed: computed marks, those displayed (depends on scoreMethod)
-	var i,j,nat;
+	let i,j,nat;
 	this.scoreBan={initial:[],marked:[],modified:[],taken:[],computed:[],buffer:[]};
 	for(i=1;i<=this.DX;i++)
 	{
@@ -661,34 +662,33 @@ mxG.G.prototype.checkScore=function(x,y)
 	this.setTX("computed");
 	this.updateAll();
 };
-mxG.G.prototype.doClickScore=function(ev)
+mxG.G.prototype.enableAllWhenQuitScore=function()
 {
-	var c;
-	if(this.isGobanDisabled()) return;
-	if(this.canPlaceScore)
+	if(this.hasC("Tree")) this.enableTree();
+	if(this.disabledWhenEnterScore)
 	{
-		c=this.scr.getC(ev);
-		if(!this.inView(c.x,c.y)) {this.plonk();return;}
-		this.checkScore(c.x,c.y);		
+		for(let k=0;k<this.disabledWhenEnterScore.length;k++)
+			this.disabledWhenEnterScore[k].disabled=false;
 	}
-};
-mxG.G.prototype.doKeydownGobanForScore=function(ev)
+	this.disabledWhenEnterScore=[];
+}
+mxG.G.prototype.disableAllWhenEnterScore=function()
 {
-	var c;
-	if(this.isGobanDisabled()) return;
-	if(this.canPlaceScore&&this.gobanFocusVisible)
+	let list,scoreBtn=this.getE("ScoreBtn");
+	list=this.getE("GlobalBoxDiv").querySelectorAll("button,input");
+	for(let k=0;k<list.length;k++)
 	{
-		c=mxG.getKCode(ev);
-		if((c==13)||(c==32))
+		if(!list[k].disabled&&(list[k]!=scoreBtn))
 		{
-			this.checkScore(this.xFocus,this.yFocus);
-			ev.preventDefault();
+			this.disabledWhenEnterScore.push(list[k]);
+			list[k].disabled=true;
 		}
 	}
-};
+	if(this.hasC("Tree")) this.disableTree();
+}
 mxG.G.prototype.toggleScore=function()
 {
-	// call this function each one wants to enter/quit score mode
+	// call this function each time one wants to enter/quit score mode
 	if(this.canPlaceScore)
 	{
 		if(this.ephemeralScore)
@@ -698,6 +698,7 @@ mxG.G.prototype.toggleScore=function()
 				this.getE("CommentToolText").value=this.formerCommentWhenScore;
 		}
 		this.canPlaceScore=0;
+		this.enableAllWhenQuitScore();
 		this.canPlaceVariation=this.initialCanPlaceVariationForScore;
 		this.canPlaceGuess=this.initialCanPlaceGuessForScore;
 		this.canPlaceSolve=this.initialCanPlaceSolveForScore;
@@ -712,6 +713,7 @@ mxG.G.prototype.toggleScore=function()
 			if(this.hasC("Edit"))
 				this.formerCommentWhenScore=this.getCommentWhenEdit();
 		}
+		this.disableAllWhenEnterScore();
 		this.canPlaceScore=1;
 		this.initialCanPlaceVariationForScore=(this.canPlaceVariation?1:0);
 		this.initialCanPlaceGuessForScore=(this.canPlaceGuess?1:0);
@@ -729,7 +731,6 @@ mxG.G.prototype.toggleScore=function()
 };
 mxG.G.prototype.doScore=function()
 {
-	if(this.gBox) this.hideGBox(this.gBox);
 	this.toggleScore();
 	this.updateAll();
 };
@@ -743,24 +744,20 @@ mxG.G.prototype.updateScore=function()
 };
 mxG.G.prototype.initScore=function()
 {
-	var k=this.k;
-	this.ig.getMClick=mxG.getMClick;
-	this.ig.addEventListener("click",function(ev){mxG.D[k].doClickScore(ev);},false);
-	if(this.canGobanFocus)
-		this.ig.addEventListener("keydown",
-			function(ev){mxG.D[k].doKeydownGobanForScore(ev);},false);
+	let k=this.k;
 	if(this.scoreBtnOn)
 		this.addBtn(this.getE("ScoreDiv"),{n:"Score",v:this.alias("Score","scoreAlias")});
 };
 mxG.G.prototype.createScore=function()
 {
+	this.canPlaceScore=0;
 	this.scoreBtnOn=this.setA("scoreBtnOn",0,"bool");
 	this.ephemeralScore=this.setA("ephemeralScore",0,"bool");
 	this.scoreAlias=this.setA("scoreAlias",null,"string");
 	this.scoreDefaultRules=this.setA("scoreDefaultRules",null,"string");
 	this.scoreInComment=this.setA("scoreInComment",0,"bool");
 	this.scoreMethod=this.setA("scoreMethod","trivial","string");
-	this.canPlaceScore=0;
-	return this.createBtnBox("Score");
+	this.disabledWhenEnterScore=[];
+	return this.scoreBtnOn?this.createBtnBox("Score"):"";
 };
 }

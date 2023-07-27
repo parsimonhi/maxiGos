@@ -5,7 +5,24 @@ if(!mxG.Z.ja) mxG.Z.ja=[];
 mxG.Z.ja["•"]=1; // particle style
 // mgos.js
 mxG.Z.ja["_"]=""; // empty string for alias
-mxG.Z.ja["Loading..."]="ダウンロード...";
+mxG.Z.ja["→"]="→";
+mxG.Z.ja[" at "]=" ";
+mxG.Z.ja["Alert"]="警告";
+mxG.Z.ja["Black"]="黒";
+mxG.Z.ja["Black territory mark"]="黒地の印";
+mxG.Z.ja["Circle"]="丸";
+mxG.Z.ja["Cursor on"]="カーソル";
+mxG.Z.ja["Empty goban"]="空の碁盤";
+mxG.Z.ja["Goban"]="碁盤";
+mxG.Z.ja["Last played move"]="最後の手";
+mxG.Z.ja["Mark"]="バツ"; // cross mark
+mxG.Z.ja["Partial view"]="部分的なビュー";
+mxG.Z.ja["Square"]="四角";
+mxG.Z.ja["Triangle"]="三角";
+mxG.Z.ja["Variation"]="変化";
+mxG.Z.ja["Variation on focus"]="フォーカスのある変化";
+mxG.Z.ja["White"]="白";
+mxG.Z.ja["White territory mark"]="白地の印";
 // mgosAbout.js
 mxG.Z.ja["About"]="アバウト";
 mxG.Z.ja[" Close "]="OK";
@@ -19,8 +36,13 @@ mxG.Z.ja["About_Short"]="？";
 mxG.Z.ja["Back to game"]="局を戻る";
 mxG.Z.ja["BackToGame_Short"]="局";
 // mgosCartouche.js
+mxG.Z.ja["Bowl"]="碁笥";
 mxG.Z.ja["Caps"]="ハマ";
 mxG.Z.ja["Rank"]="棋力";
+mxG.Z.ja["Black bowl"]="黒碁笥";
+mxG.Z.ja["White bowl"]="白碁笥";
+mxG.Z.ja["Black prisoners"]="黒アゲハマ";
+mxG.Z.ja["White prisoners"]="白アゲハマ";
 // mgosComment.js
 mxG.Z.ja["Comments"]="コメント";
 mxG.Z.ja["buildMove"]=function(k){return k+"手";};
@@ -37,16 +59,16 @@ mxG.Z.ja["Cut branch"]="ブランチのカット";
 mxG.Z.ja["Copy branch"]="ブランチのコピー";
 mxG.Z.ja["Paste branch"]="ブランチのペースト";
 mxG.Z.ja["Label"]="ラベル";
-mxG.Z.ja["Mark"]="印";
-mxG.Z.ja["Circle"]="円の印";
-mxG.Z.ja["Square"]="正方形の印";
-mxG.Z.ja["Triangle"]="三角の印";
+//mxG.Z.ja["Mark"]="印";
+//mxG.Z.ja["Circle"]="円の印";
+//mxG.Z.ja["Square"]="正方形の印";
+//mxG.Z.ja["Triangle"]="三角の印";
 mxG.Z.ja["Numbering"]="ナンバリング";
 mxG.Z.ja["As in book"]="本のように";
 mxG.Z.ja["Indices"]="座標";
 mxG.Z.ja["Variation marks"]="変化のマーク";
 mxG.Z.ja["Variation style"]="変化のスタイル";
-mxG.Z.ja["Mark on last"]="最後の手の上にマーク";
+mxG.Z.ja["Mark on last"]="最後の手の上に印";
 mxG.Z.ja["Marks and labels"]="マークとラベル";
 mxG.Z.ja["Header"]="対局情報";
 mxG.Z.ja["K"]="K";
@@ -95,9 +117,8 @@ mxG.Z.ja["Goban size"]="碁盤サイズ";
 mxG.Z.ja["Email:"]="メール";
 mxG.Z.ja["Create"]="作成する";
 mxG.Z.ja["Add"]="加える";
-//mxG.Z.ja["OK"]="OK";
-//mxG.Z.ja["Cancel"]="キャンセル";
-mxG.Z.ja["Values between 5 and 19:"]="5と19の間の値";
+// mxG.Z.ja["OK"]="OK";
+// mxG.Z.ja["Cancel"]="キャンセル";
 mxG.Z.ja["Values between 1 and 52:"]="1と52の間の値";
 mxG.Z.ja["Click here to open a sgf file"]="SGFファイルを開くにはここをクリックして下さい。";
 mxG.Z.ja["File name:"]="ファイル名";
@@ -107,15 +128,14 @@ mxG.Z.ja["Untitled"]="無題";
 mxG.Z.ja["This is not a sgf file!"]="SGFファイルではありません。";
 // mgosGoto.js
 mxG.Z.ja["Guess-o-meter"]="ゲス-O-メートル";
+mxG.Z.ja["Go to ..."]="移動";
 // mgosHeader.js
-//mxG.Z.ja["Header"]="対局情報";
+// mxG.Z.ja["Header"]="対局情報";
 mxG.Z.ja[" "]="　";
 mxG.Z.ja[", "]=", ";
 mxG.Z.ja[": "]="：";
 mxG.Z.ja["."]=".";
 mxG.Z.ja["-"]="〜";
-mxG.Z.ja["Black"]="黒";
-mxG.Z.ja["White"]="白";
 mxG.Z.ja[" wins"]="勝ち";
 mxG.Z.ja["Date"]="対局日";
 mxG.Z.ja["Place"]="場所";
@@ -134,7 +154,7 @@ mxG.Z.ja["unknown result"]="未知";
 mxG.Z.ja["Komi"]="コミ";
 mxG.Z.ja[" point"]="目";
 mxG.Z.ja[" points"]="目";
-//mxG.Z.ja[" Close "]="OK";
+// mxG.Z.ja[" Close "]="OK";
 mxG.Z.ja["h"]="時間";
 mxG.Z.ja["mn"]="分";
 mxG.Z.ja["s"]="秒";
@@ -157,7 +177,7 @@ mxG.Z.ja["buildMonth"]=function(a)
 };
 mxG.Z.ja["buildDate2"]=function(s)
 {
-	var r,reg=/(^\s*([0-9]{2})(-([0-9]{2}(,[0-9]{2})*))?)(([^-])(.*))*\s*$/g;
+	let r,reg=/(^\s*([0-9]{2})(-([0-9]{2}(,[0-9]{2})*))?)(([^-])(.*))*\s*$/g;
 	if(s.match(reg))
 	{
 		r=s.replace(reg,"$8");
@@ -169,7 +189,7 @@ mxG.Z.ja["buildDate2"]=function(s)
 };
 mxG.Z.ja["buildDate"]=function(s)
 {
-	var r,y,m,reg=/(^\s*([0-9]{4})(-([^\.]*))*)(\.)?(.*)\s*$/g,k,km,z;
+	let r,y,m,reg=/(^\s*([0-9]{4})(-([^\.]*))*)(\.)?(.*)\s*$/g,k,km,z;
 	if(s.indexOf("~")>=0)
 	{
 		r=s.split("~");
@@ -190,7 +210,7 @@ mxG.Z.ja["buildDate"]=function(s)
 };
 mxG.Z.ja["buildRank"]=function(a)
 {
-	var b=a;
+	let b=a;
 	if(b.match(/^[0-9]+[kdp]$/))
 	{
 		b=b.replace(/[dp]/,"段");
@@ -212,7 +232,7 @@ mxG.Z.ja["buildTimeLimits"]=function(a)
 {
 	if(a.match(/^[0-9]+$/g))
 	{
-		var r="",t,h,mn,s;
+		let r="",t,h,mn,s;
 		t=parseInt(a);
 		h=Math.floor(t/3600);
 		if(h) r+=h+mxG.Z.ja["h"];
@@ -227,7 +247,7 @@ mxG.Z.ja["buildTimeLimits"]=function(a)
 mxG.Z.ja["buildNumOfMoves"]=function(a){return a+"手";};
 mxG.Z.ja["buildResult"]=function(a)
 {
-	var b="";
+	let b="";
 	if(a.substring(0,1)=="B") b=mxG.Z.ja["Black"];
 	else if(a.substring(0,1)=="W") b=mxG.Z.ja["White"];
 	else if(a.substring(0,1)=="V") return mxG.Z.ja["game with no result"];
@@ -247,40 +267,42 @@ mxG.Z.ja["buildResult"]=function(a)
 	return b;
 };
 // mgosHelp.js
-//mxG.Z.ja[" Close "]="OK";
+// mxG.Z.ja[" Close "]="OK";
 mxG.Z.ja["Help"]="ヘルプ";
 mxG.Z.ja["Help not available!"]="すみませんですがヘルプはありません。";
-//mxG.Z.ja["Error"]="エラー";
+// mxG.Z.ja["Error"]="エラー";
 // mgosImage.js
 mxG.Z.ja["Image"]="イメージ";
 mxG.Z.ja["PNG"]="ＰＮＧ";
 mxG.Z.ja["SVG"]="ＳＶＧ";
+mxG.Z.ja["PNG image of the goban"]="Image PNG du goban";
+mxG.Z.ja["SVG image of the goban"]="Image SVG du goban";
 // mgosInfo.js
 mxG.Z.ja["Info"]="情報";
-//mxG.Z.ja["OK"]="OK";
-//mxG.Z.ja["Cancel"]="キャンセル";
-mxG.Z.ja["Event:"]="大会名";
-mxG.Z.ja["Round:"]="第◯局";
-mxG.Z.ja["Black:"]="黑";
-mxG.Z.ja["White:"]="白";
-mxG.Z.ja["Rank:"]="棋力";
-mxG.Z.ja["Komi:"]="コミ";
-mxG.Z.ja["Handicap:"]="置石数";
-mxG.Z.ja["Result:"]="結果";
-mxG.Z.ja["Date:"]="対局日";
-mxG.Z.ja["Place:"]="場所";
-mxG.Z.ja["Rules:"]="ルール";
-mxG.Z.ja["Time limits:"]="持時間";
-mxG.Z.ja["Overtime:"]="秒読み";
-mxG.Z.ja["Annotations:"]="評者名";
-mxG.Z.ja["Copyright:"]="著作権";
-mxG.Z.ja["Source:"]="ソース";
-mxG.Z.ja["User:"]="記録者名";
-mxG.Z.ja["Black team:"]="黒チーム名";
-mxG.Z.ja["White team:"]="白チーム名";
-mxG.Z.ja["Game name:"]="対局名";
-mxG.Z.ja["Opening:"]="布石情報";
-mxG.Z.ja["General comment:"]="対局のコメント";
+// mxG.Z.ja["OK"]="OK";
+// mxG.Z.ja["Cancel"]="キャンセル";
+mxG.Z.ja["Event"]="大会名";
+mxG.Z.ja["Round"]="第◯局";
+mxG.Z.ja["Black"]="黒";
+mxG.Z.ja["White"]="白";
+mxG.Z.ja["Rank"]="棋力";
+mxG.Z.ja["Komi"]="コミ";
+mxG.Z.ja["Handicap"]="置石数";
+mxG.Z.ja["Result"]="結果";
+mxG.Z.ja["Date"]="対局日";
+mxG.Z.ja["Place"]="場所";
+mxG.Z.ja["Rules"]="ルール";
+mxG.Z.ja["Time limits"]="持時間";
+mxG.Z.ja["Overtime"]="秒読み";
+mxG.Z.ja["Annotations"]="評者名";
+mxG.Z.ja["Copyright"]="著作権";
+mxG.Z.ja["Source"]="引用元";
+mxG.Z.ja["User"]="記録者名";
+mxG.Z.ja["Black team"]="黒チーム名";
+mxG.Z.ja["White team"]="白チーム名";
+mxG.Z.ja["Game name"]="対局名";
+mxG.Z.ja["Opening"]="布石情報";
+mxG.Z.ja["General comment"]="対局のコメント";
 mxG.Z.ja["by resign"]="中押";
 mxG.Z.ja["by time"]="時間切れ";
 mxG.Z.ja["by forfeit"]="反則";
@@ -289,27 +311,32 @@ mxG.Z.ja["on points"]="ポイントで";
 mxG.Z.ja["suspended"]="打ち掛け";
 mxG.Z.ja["Main"]="メイン";
 mxG.Z.ja["Other"]="その他";
-//mxG.Z.ja["Black"]="黑";
-//mxG.Z.ja["White"]="白";
-//mxG.Z.ja[" wins"]="勝ち";
-//mxG.Z.ja["draw"]="持碁";
+// mxG.Z.ja["Black"]="黒";
+// mxG.Z.ja["White"]="白";
+// mxG.Z.ja[" wins"]="勝ち";
+// mxG.Z.ja["draw"]="持碁";
 mxG.Z.ja["no result"]="無勝負";
 mxG.Z.ja["unknown"]="未知";
 // mgosKifu.js
 mxG.Z.ja["Kifu"]="棋譜";
+// mgosLesson.js
+mxG.Z.ja["Assistant"]="アシスタント";
 // mgosLoop.js
 mxG.Z.ja["Auto"]="オート";
 mxG.Z.ja["Pause"]="ポーズ";
 // mgosMenu.js
 mxG.Z.ja["File"]="ファイル";
 mxG.Z.ja["Edit"]="編集";
-//mxG.Z.ja["Cut"]="カット";
+// mxG.Z.ja["Cut"]="カット";
 mxG.Z.ja["Copy"]="コピー";
 mxG.Z.ja["Paste"]="ペースト";
 mxG.Z.ja["View"]="表示";
 mxG.Z.ja["Window"]="ウィンドウ";
-//mxG.Z.ja["Untitled"]="無題";
+// mxG.Z.ja["Untitled"]="無題";
 // mgosMoveInfo.js
+mxG.Z.ja["pass"]="パス";
+// mxG.Z.ja[" at "]=" → ";
+mxG.Z.ja["Move information"]="手の情報";
 // mgosNavigation.js
 mxG.Z.ja["First"]="最初に戻る";
 mxG.Z.ja["10 Previous"]="10回前へ";
@@ -319,19 +346,20 @@ mxG.Z.ja["10 Next"]="10回次へ";
 mxG.Z.ja["Last"]="最終手へ";
 // mgosNotSeen.js
 mxG.Z.ja["tenuki"]="手抜き";
-mxG.Z.ja["pass"]="パス";
-mxG.Z.ja["→"]="→";
-// mgosOption.js
+// mxG.Z.ja["pass"]="パス";
+// mxG.Z.ja["→"]="→";
+mxG.Z.ja["Invisible moves"]="目に見えない手";
+// mgosOptions.js
 mxG.Z.ja["Options"]="オプション";
 mxG.Z.ja["Options_Short"]="オ";
-//mxG.Z.ja["OK"]="OK";
-//mxG.Z.ja["Cancel"]="キャンセル";
-//mxG.Z.ja["Mark on last"]="最後の手の上にマーク";
-//mxG.Z.ja["Indices"]="座標";
-//mxG.Z.ja["As in book"]="本のように";
-//mxG.Z.ja["Numbering"]="ナンバリング";
-//mxG.Z.ja["Marks and labels"]="マークとラベル";
-//mxG.Z.ja["Variation marks"]="変化のマーク";
+// mxG.Z.ja["OK"]="OK";
+// mxG.Z.ja["Cancel"]="キャンセル";
+// mxG.Z.ja["As in book"]="本のように";
+// mxG.Z.ja["Indices"]="座標";
+// mxG.Z.ja["Mark on last"]="最後の手の上に印";
+// mxG.Z.ja["Marks and labels"]="マークとラベル";
+// mxG.Z.ja["Numbering"]="ナンバリング";
+// mxG.Z.ja["Variation marks"]="変化のマーク";
 mxG.Z.ja["Show variations of current move instead of next move"]="現在の手の変化／次の一手の変化";
 mxG.Z.ja["In 3d"]="3D";
 mxG.Z.ja["When clicking on the goban"]="碁盤をクリックすると";
@@ -339,22 +367,22 @@ mxG.Z.ja["place a variation"]="変化を打つ";
 mxG.Z.ja["try to guess the next move"]="次の一手を推測する";
 mxG.Z.ja[" from "]="から";
 mxG.Z.ja[" with "]="で";
-mxG.Z.ja["Loop time:"]="ループ時間：";
+mxG.Z.ja["Loop time"]="ループ時間";
 mxG.Z.ja["Animated stone"]="石のアニメーション";
-mxG.Z.ja["Animated stone time:"]="石のアニメーション時間：";
+mxG.Z.ja["Animated stone time"]="石のアニメーション時間";
 // mgosPass.js
 mxG.Z.ja["Pass"]="パス";
 mxG.Z.ja["Pass_Short"]="パ";
 // mgosScore.js
 mxG.Z.ja["Score"]="点数";
-mxG.Z.ja["Score method:"]="点数法";
+mxG.Z.ja["Score method"]="点数法";
 mxG.Z.ja["trivial"]="ささいな";
 mxG.Z.ja["counting"]="計算";
 mxG.Z.ja["propagate"]="伝搬";
 mxG.Z.ja["estimate"]="評価";
 mxG.Z.ja["ephemeral score"]="一時的な点数";
-//mxG.Z.ja["Black:"]="黒：";
-//mxG.Z.ja["White:"]="白：";
+// mxG.Z.ja["Black"]="黒";
+// mxG.Z.ja["White"]="白";
 mxG.Z.ja["Unusual komi:"]="異常なコミ";
 mxG.Z.ja["Unknown rules:"]="未知のルール";
 mxG.Z.ja["Chinese style"]="中国流";
@@ -369,10 +397,10 @@ mxG.Z.ja["prisoners"]="ハマ";
 mxG.Z.ja["pass"]="パス";
 mxG.Z.ja["stones"]="石";
 mxG.Z.ja["last move"]="最後の手";
-//mxG.Z.ja["komi"]="コミ";
+// mxG.Z.ja["komi"]="コミ";
 // mgosSgf.js
 mxG.Z.ja["SGF"]="ＳＧＦ";
-//mxG.Z.ja[" Close "]="OK";
+// mxG.Z.ja[" Close "]="OK";
 // mgosSolve.js
 mxG.Z.ja["Retry"]="最初に戻る";
 mxG.Z.ja["Undo"]="一手戻る";
@@ -387,26 +415,22 @@ mxG.Z.ja["_offpathMessage_"]="オフパス";
 mxG.Z.ja["_endMessage_"]="終わり";
 // mgosSpeed.js
 mxG.Z.ja["Speed"]="速度";
-// mgosTitle.js
-//mxG.Z.ja[", "]=", ";
 // mgosTree.js
 mxG.Z.ja["Game tree"]="ゲーム木";
 // mgosVariation.js
-mxG.Z.ja["Variations: "]="変化: ";
+mxG.Z.ja["Variations"]="変化";
 mxG.Z.ja["no variation"]="なし";
 // mgosView.js
 mxG.Z.ja["2d/3d"]="2D/3D";
 mxG.Z.ja["Stretching"]="伸ばす";
 mxG.Z.ja["Stone shadow"]="石の影";
+mxG.Z.ja["Colors"]="色";
 mxG.Z.ja["Zoom+"]="ズーム+";
 mxG.Z.ja["No zoom"]="ズームなし";
 mxG.Z.ja["Zoom-"]="ズーム-";
-mxG.Z.ja["Colors"]="色";
+mxG.Z.ja["Reset"]="リセット";
 mxG.Z.ja["Goban background color:"]="碁盤背景色「CSS色」";
 mxG.Z.ja["Goban background image:"]="碁盤背景画像";
 mxG.Z.ja["Line color:"]="線色「CSS色」";
 mxG.Z.ja["None"]="なし";
-// svg
-mxG.Z.ja["Goban"]="碁盤";
-mxG.Z.ja["Bowl"]="碁笥";
 // end of localization

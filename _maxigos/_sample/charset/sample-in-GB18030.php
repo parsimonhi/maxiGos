@@ -1,12 +1,10 @@
-<?php
-header ('Content-Type:text/html;charset=GB18030');
-?>
+<?php header ('Content-Type:text/html;charset=GB18030');?>
 <!DOCTYPE html>
 <?php
 include "../_php/lib.php";
 $lang=(isset($_GET["lang"])?safeValue($_GET["lang"]):"en");
 ?>
-<html lang="<?php echo $lang;?>">
+<html lang="<?=$lang?>">
 <head>
 <meta charset="GB18030">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -32,12 +30,12 @@ p {padding:0.25em;}
 {
 	margin:1em auto;
 }
-.topLink {text-align:center;margin-bottom:1em;}
-.bottomLink {text-align:center;margin-top:1em;}
+.topLink {display:block;text-align:center;margin-bottom:1em;}
+.bottomLink {display:block;text-align:center;margin-top:1em;}
 </style>
 </head>
 <body>
-<div class="topLink"><a href="../?sample=Charset&lang=<?php echo $lang;?>">Index</a></div>
+<a class="topLink" href="../?sample=Charset&lang=<?=$lang?>">Index</a>
 <h1>GB18030</h1>
 
 <p>This page is encoded in GB18030 but could be encoded in another charset such as UTF-8 as well.<br>
@@ -64,8 +62,8 @@ Read the sgf file "Mingren-001-1F-1-zh-hans-GB18030.sgf" (in this file, CA is GB
 <!-- don't forget charset="UTF-8" -->
 <script lang="zh-hans"
 		charset="UTF-8"
-		src="../minimalist/_maker/comment.php">
-../_sgf/game/Mingren-001-1F-1-zh-hans-GB18030.sgf
+		src="../minimalist/_maker/comment.php"
+		data-maxigos-sgf="../_sgf/game/Mingren-001-1F-1-zh-hans-GB18030.sgf">
 </script>
 
 <p>Setp 1: maxiGos reads the sgf file, looks at its CA property and sees that it is GB18030.<br>
@@ -83,8 +81,8 @@ Read the sgf file "Mingren-001-1F-1-zh-hans-GB18030.sgf" (in this file, CA is GB
 <script lang="zh-hans"
 		charset="UTF-8"
 		data-maxigos-to-charset="GB18030"
-		src="../minimalist/_maker/edit.php">
-../_sgf/game/Mingren-001-1F-1-zh-hans-GB18030.sgf
+		src="../minimalist/_maker/edit.php"
+		data-maxigos-sgf="../_sgf/game/Mingren-001-1F-1-zh-hans-GB18030.sgf">
 </script>
 
 <p>By default, maxiGos generates sgf in "UTF-8". But here, when the user clicks on the "Sgf" button 
@@ -102,6 +100,6 @@ Step 6: if the user clicks on the "Sgf" button, maxiGos looks at the value of th
 parameter and sees that it is "GB18030" and not "UTF-8".<br>
 Step 7: maxiGos replaces the CA property of the sgf by "GB18030" then displays the sgf.</p>
 
-<div class="bottomLink"><a href="../?sample=Charset&lang=<?php echo $lang;?>">Index</a></div>
+<a class="bottomLink" href="../?sample=Charset&lang=<?=$lang?>">Index</a>
 </body>
 </html>

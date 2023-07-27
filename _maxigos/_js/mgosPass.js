@@ -1,24 +1,19 @@
-// maxiGos v7 > mgosPass.js
+// maxiGos v8 > mgosPass.js
 if(!mxG.G.prototype.createPass)
 {
 mxG.fr("Pass","Passe");
 mxG.fr("Pass_Short","P");
 mxG.en("Pass_Short","P");
-mxG.G.prototype.doPass2=function()
+mxG.G.prototype.doPass=function()
 {
-	this.doNotFocusGobanJustAfter=1;
 	if(this.hasC("Edit")) this.checkEditPlay(0,0);
 	else if(this.hasC("Solve")&&this.canPlaceSolve) this.checkSolve(0,0);
 	else if(this.hasC("Variation")&&this.canPlaceVariation) this.checkVariation(0,0);
 	else if(this.hasC("Guess")) this.checkGuess(0,0);
 };
-mxG.G.prototype.doPass=function()
-{
-	this.doPass2();
-};
 mxG.G.prototype.isPass=function(aN)
 {
-	var s,x,y;
+	let s,x,y;
 	if(aN.P["B"]||aN.P["W"])
 	{
 		s=(aN.P["B"]?aN.P["B"][0]:aN.P["W"][0]);
@@ -35,7 +30,7 @@ mxG.G.prototype.isPass=function(aN)
 };
 mxG.G.prototype.updatePass=function()
 {
-	var aN=0,k,km,status,look=0,s,e=this.getE("PassBtn");
+	let aN=0,k,km,status,look=0,s,e=this.getE("PassBtn");
 	if(!e) return;
 	status=this.isPass(this.cN)?1:0;
 	if(!(this.styleMode&2))
@@ -63,8 +58,7 @@ mxG.G.prototype.updatePass=function()
 	if(status&2) s+=" mxOnVariationPassBtn";
 	if(status&4) s+=" mxOnFocusPassBtn";
 	e.className=s;
-	if(this.gBox||(this.hasC("Score")&&this.canPlaceScore)) this.disableBtn("Pass");
-	else if(this.canPassOnlyIfPassInSgf)
+	if(this.canPassOnlyIfPassInSgf)
 	{
 		if(status&2) this.enableBtn("Pass");
 		else this.disableBtn("Pass");
@@ -81,6 +75,6 @@ mxG.G.prototype.createPass=function()
 	this.passBtnOn=this.setA("passBtnOn",0,"bool");
 	this.passAlias=this.setA("passAlias",null,"string");
 	this.canPassOnlyIfPassInSgf=this.setA("canPassOnlyIfPassInSgf",0,"bool");
-	return this.createBtnBox("Pass");
+	return this.passBtnOn?this.createBtnBox("Pass"):"";
 };
 }

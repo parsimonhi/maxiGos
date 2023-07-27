@@ -1,23 +1,23 @@
-// maxiGos v7 > mgosGuess.js
+// maxiGos v8 > mgosGuess.js
 if(!mxG.G.prototype.createGuess)
 {
 mxG.fr("Guess-o-meter","Devinette");
 mxG.G.prototype.updateGuessBar=function(dz)
 {
-	var dzm,pz,bad,good;
+	let dzm,pz,p,s;
 	if(!this.guessBoxOn) return;
 	if(!this.canPlaceGuess) dz=0;
 	dzm=(this.DX+this.DY)>>1;
-	bad=this.getE("GuessBad");
-	good=this.getE("GuessGood");
-	pz=(dz<=0)?1000:1000-((dz>dzm)?1000:((dz*1000)/dzm));
-	good.setAttributeNS(null,"width",pz);
-	bad.style.visibility=((pz==1000)?"hidden":"visible");
-	good.style.visibility=((pz==1000)?"hidden":"visible");
+	pz=(dz<=0)?100:100-((dz>dzm)?100:(100*dz/dzm));
+	pz=Math.round(Math.max(pz,0));
+	// bug safari, need to replace the whole tag to make things working (2023-06-27)
+	p="min=\"0\" max=\"100\" low=\"0\" high=\"0\" optimum=\"100\" value=\""+pz+"\"";
+	s="<meter title=\""+this.local("Guess-o-meter")+"\" "+p+"></meter>";
+	this.getE("GuessDiv").innerHTML=s;
 };
 mxG.G.prototype.checkBW=function(aN,a,b)
 {
-	var s="",x,y;
+	let s="",x,y;
 	if(aN.P.B||aN.P.W)
 	{
 		if(aN.P.B) s=aN.P.B[0];else s=aN.P.W[0];
@@ -29,7 +29,7 @@ mxG.G.prototype.checkBW=function(aN,a,b)
 };
 mxG.G.prototype.checkGuess=function(a,b)
 {
-	var aN,bN,k,km,s,x,y,dx,dy,dz=this.DX+this.DY;
+	let aN,bN,k,km,s,x,y,dx,dy,dz=this.DX+this.DY;
 	aN=this.cN;
 	km=aN.Kid.length;
 	if(!km) {this.plonk();return;}
@@ -78,80 +78,22 @@ mxG.G.prototype.checkGuess=function(a,b)
 	}
 	this.updateGuessBar(dz);
 };
-mxG.G.prototype.doClickGuess=function(ev)
-{
-	var c;
-	if(this.isGobanDisabled()) return;
-	if(this.canPlaceGuess)
-	{
-		c=this.scr.getC(ev);
-		if(!this.inView(c.x,c.y)) {this.plonk();return;}
-		this.checkGuess(c.x,c.y);
-	}
-};
-mxG.G.prototype.doKeydownGobanForGuess=function(ev)
-{
-	var c;
-	if(this.canPlaceGuess&&this.gobanFocusVisible)
-	{
-		c=mxG.getKCode(ev);
-		if((c==13)||(c==32))
-		{
-			this.checkGuess(this.xFocus,this.yFocus);
-			ev.preventDefault();
-		}
-	}
-};
 mxG.G.prototype.updateGuess=function()
 {
 	this.updateGuessBar(this.cN.Add?100:0);
 };
-mxG.G.prototype.initGuess=function()
-{
-	var k=this.k;
-	this.ig.getMClick=mxG.getMClick;
-	this.ig.addEventListener("click",function(ev){mxG.D[k].doClickGuess(ev);},false);
-	if(this.canGobanFocus)
-		this.ig.addEventListener("keydown",
-			function(ev){mxG.D[k].doKeydownGobanForGuess(ev);},false);
-};
 mxG.G.prototype.createGuess=function()
 {
-	var s="";
+	let s="";
 	this.guessBoxOn=this.setA("guessBoxOn",0,"bool");
-	// if both canPlaceGuess and canPlaceVariation are 1, canPlaceGuess is ignored
 	this.canPlaceGuess=this.setA("canPlaceGuess",0,"bool");
-	if(this.canPlaceGuess&&this.canPlaceVariation) this.canPlaceGuess=0;
+	// if canPlaceVariation is 1, canPlaceGuess is ignored
+	if(this.canPlaceVariation) this.canPlaceGuess=0;
 	if(this.guessBoxOn)
 	{
 		s+="<div class=\"mxGuessDiv\" id=\""+this.n+"GuessDiv\">";
-		s+="<div class=\"mxGuessOMeterDiv\"";
-		s+=" title=\""+this.local("Guess-o-meter")+"\"";
-		s+=" id=\""+this.n+"GuessOMeterDiv\">";
-		s+="<svg class=\"mxGuessSvg\" id=\""+this.n+"GuessSvg\"";
-		s+=" viewBox=\"0 0 1000 20\"";
-		s+=" width=\"100%\" height=\"100%\"";
-		s+=" stroke-width=\"1\"";
-		s+=">";
-		s+="<rect class=\"mxGuessBar\" id=\""+this.n+"GuessBar\"";
-		s+=" fill=\"#fff\"";
-		s+=" stroke=\"#000\"";
-		s+=" x=\"0.5\" y=\"0.5\" width=\"999\" height=\"19\">";
-		s+="</rect>";
-		s+="<rect class=\"mxGuessBad\" id=\""+this.n+"GuessBad\"";
-		s+=" fill=\"#000\"";
-		s+=" stroke=\"#000\"";
-		s+=" x=\"0.5\" y=\"0.5\" width=\"999\" height=\"19\">";
-		s+="</rect>";
-		s+="<rect class=\"mxGuessGood\" id=\""+this.n+"GuessGood\"";
-		s+=" fill=\"#fff\"";
-		s+=" stroke=\"#000\"";
-		s+=" x=\"0.5\" y=\"0.5\" width=\"999\" height=\"19\">";
-		s+="</rect>";
-		s+="</svg>";
-		s+="</div>";
 		s+="</div>";
 	}
 	return s;
-};
+}
 }

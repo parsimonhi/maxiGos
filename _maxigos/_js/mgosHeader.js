@@ -1,4 +1,4 @@
-// maxiGos v7 > mgosHeader.js
+// maxiGos v8 > mgosHeader.js
 if(!mxG.G.prototype.createHeader)
 {
 mxG.fr("Header","Informations");
@@ -40,9 +40,78 @@ mxG.fr("AGA","américaine / française");
 mxG.fr(" move"," coup");
 mxG.fr(" moves"," coups");
 mxG.fr("Number of moves","Nombre de coups");
+mxG.fr("translateTitle",function(ev,ro)
+{
+	let s=ev+"",a=ro+"",c="",of="",t="",between="";
+	if(a!="")
+	{
+		if(a.search(/^([0-9]+)$/)==0) t="ronde";
+		else if(a.search(/[ ]*\((final|semi-final|quarter-final|playoff|game|round)\)/i)>=0)
+		{
+			if(s.search(/[ ]+(cup|league)/i)>=0) of=" de la ";else if(s) of=" du ";
+			if(a.search(/[ ]*\(final\)/i)>=0) {c="Finale"+of;t="partie";}
+			else if(a.search(/[ ]*\(semi-final\)/i)>=0) {c="Demi-finale"+of;t="partie";}
+			else if(a.search(/[ ]*\(quarter-final\)/i)>=0) {c="Quart de finale"+of;t="partie";}
+			else if(a.search(/[ ]*\(playoff\)/i)>=0) {c="Playoff"+of;t="partie";}
+			else if(a.search(/[ ]*\(game\)/i)>=0) t="partie";
+			else t="tour";
+			a=a.replace(/[ ]*\((final|semi-final|quarter-final|playoff|game|round)\)/i,"");
+		}
+		else if(a.search(/[ ]*\(final tournament\)/i)>=0)
+		{
+			if(s.search(/[ ]+(cup|league)/i)>=0) of=" de la ";else if(s) of=" du ";
+			c="Tournoi final"+of;t="ronde";
+			a=a.replace(/[ ]*\(final tournament\)/i,"");
+		}
+		if(a.search(/^([0-9]+)/)==0) a=a.replace(/^([0-9]+)(.*)/,t+(t?" ":"")+"$1$2");
+	}
+	if(s.search(/^([0-9]+)(st|nd|rd|th)/i)>=0)
+	{
+		s=s.replace(/^([0-9]+)(st|nd|rd|th)[ ]+Female[ ]+(.*)$/i,"$1$2 $3 féminin");
+		s=s.replace(/^([0-9]+)(st|nd|rd|th)[ ]+(Former|Old)[ ]+(.*)$/i,"$1$2 ancien $4");
+		s=s.replace(/^([0-9]+)(st|nd|rd|th)/i,"$1<span class=\"sup\">e</span>");
+		s=s.replace(/^1<span class=\"sup\">e<\/span>/,(s.search(/[ ]+(cup|league)/i)>=0)?"1<span class=\"sup\">re</span>":"1<span class=\"sup\">er</span>");
+	}
+	s=c+s;
+	if(s&&(a.search(/^[a-zA-Z0-9]/)==0)) s+=", ";else if(s&&a) s+=" ";
+	if(s) s=s.ucF(); else if(a) a=a.ucF();
+	if(s) s="<span class=\"mxEVTitleSpan\">"+s+"</span>";
+	if(a) a="<span class=\"mxROTitleSpan\">"+a+"</span>";
+	return s+a;
+});
+mxG.en("translateTitle",function(ev,ro)
+{
+	let s=ev+"",a=ro+"",c="",t="",before="",between="";
+	if(a!="")
+	{
+		if(a.search(/^([0-9]+)$/)==0) t="round";
+		if(a.search(/[ ]*\((final|semi-final|quarter-final|playoff|game|round)\)/i)>=0)
+		{
+			if(s) before=", ";
+			if(a.search(/[ ]*\(final\)/i)>=0) {c=before+"final";t="game";}
+			else if(a.search(/[ ]*\(semi-final\)/i)>=0) {c=before+"semi-final";t="game";}
+			else if(a.search(/[ ]*\(quarter-final\)/i)>=0) {c=before+"quarter-final";t="game";}
+			else if(a.search(/[ ]*\(playoff\)/i)>=0) {c=before+"playoff";t="game";}
+			else if(a.search(/[ ]*\(game\)/i)>=0) t="game";
+			else t="round";
+			a=a.replace(/[ ]*\((final|semi-final|quarter-final|playoff|game|round)\)/i,"");
+		}
+		else if(a.search(/[ ]*\(final tournament\)/i)>=0)
+		{
+			if(s) before=", ";
+			c=before+"final tournament";t="round";
+			a=a.replace(/[ ]*\(final tournament\)/i,"");
+		}
+		if(a.search(/^([0-9]+)/)==0) a=a.replace(/^([0-9]+)(.*)/,t+(t?" ":"")+"$1$2");
+	}
+	s=s+c;
+	if(s&&(a.search(/^\(/)==0)) between=" ";else if(s&&a) between=", ";
+	s=s+between+a;
+	return s.ucF();
+});
 mxG.fr("buildMonth",function(a)
 {
-	var m=["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
+	let m=["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
 	return m[parseInt(a)-1];
 });
 mxG.fr("buildDay",function(a)
@@ -52,7 +121,7 @@ mxG.fr("buildDay",function(a)
 });
 mxG.fr("buildDate2",function(s)
 {
-	var r,reg=/(^\s*([0-9]{2})(-([0-9]{2}(,[0-9]{2})*))?)(([^-])(.*))*\s*$/g;
+	let r,reg=/(^\s*([0-9]{2})(-([0-9]{2}(,[0-9]{2})*))?)(([^-])(.*))*\s*$/g;
 	if(s.match(reg))
 	{
 		r=s.replace(reg,"$8");
@@ -64,7 +133,7 @@ mxG.fr("buildDate2",function(s)
 });
 mxG.fr("buildDate",function(s)
 {
-	var r,y,m,reg=/(^\s*([0-9]{4})(-([^\.]*))*)(\.)?(.*)\s*$/g,k,km,z;
+	let r,y,m,reg=/(^\s*([0-9]{4})(-([^\.]*))*)(\.)?(.*)\s*$/g,k,km,z;
 	if(s.indexOf("~")>=0)
 	{
 		r=s.split("~");
@@ -85,16 +154,25 @@ mxG.fr("buildDate",function(s)
 });
 mxG.en("Header_Short","H");
 // buildRules, buildTimeLimits, buildKomi, buildResult, buildNumOfMoves
-// are called by this.build()
+// are called by this.build(), but buildTitle() is called directly
+mxG.G.prototype.buildTitle=function()
+{
+	let ev,ro,f;
+	ev=this.getInfo("EV");
+	ro=this.getInfo("RO");
+	if(this.translateTitleOn) f="translateTitle";else f="buildTitle";
+	if(mxG.Z[this.lang]&&mxG.Z[this.lang][f]) return mxG.Z[this.lang][f](ev,ro);
+	return ev+((ev&&ro)?this.local(", "):"")+ro;
+};
 mxG.G.prototype.buildRules=function(a)
 {
-	return this.local(a.ucFirst());
+	return this.local(a.ucF());
 };
 mxG.G.prototype.buildTimeLimits=function(a)
 {
 	if(a.match(/^[0-9]+$/g))
 	{
-		var r="",t,h,mn,s;
+		let r="",t,h,mn,s;
 		t=parseInt(a);
 		h=Math.floor(t/3600);
 		if(h) r+=h+this.local("h");
@@ -108,7 +186,7 @@ mxG.G.prototype.buildTimeLimits=function(a)
 };
 mxG.G.prototype.buildKomi=function(k)
 {
-	var a=k+"",b;
+	let a=k+"",b;
 	if(a.search(/^([0-9]+([,\.]([0-9]+)?)?)?$/)==0)
 	{
 		b=parseFloat(a.replace(",","."));
@@ -121,7 +199,7 @@ mxG.G.prototype.buildKomi=function(k)
 };
 mxG.G.prototype.buildResult=function(a)
 {
-	var b="";
+	let b="";
 	if(a.substring(0,1)=="B") b=this.local("Black");
 	else if(a.substring(0,1)=="W") b=this.local("White");
 	else if(a.substring(0,1)=="V") return this.local("game with no result");
@@ -137,7 +215,7 @@ mxG.G.prototype.buildResult=function(a)
 		else if(a.substring(2,3)=="F") b+=this.local(" by forfeit");
 		else if(a.length>2)
 		{
-			var c=parseFloat(a.substring(2).replace(",","."));
+			let c=parseFloat(a.substring(2).replace(",","."));
 			b+=this.local(" by ")+c;
 			if((c>-2)&&(c<2)) b+=this.local(" point");else b+=this.local(" points");
 			b=b.replace(".",this.local("."));
@@ -151,7 +229,7 @@ mxG.G.prototype.buildNumOfMoves=function(k)
 };
 mxG.G.prototype.getNumOfMoves=function()
 {
-	var aN=this.rN,n=0,p=0,ex="E",v;
+	let aN=this.rN,n=0,p=0,ex="E",v;
 	while(this.kidOnFocus(aN))
 	{
 		aN=aN.Kid[0];
@@ -166,68 +244,107 @@ mxG.G.prototype.getNumOfMoves=function()
 	}
 	return n-p;
 };
-mxG.G.prototype.buildHeader=function()
+mxG.G.prototype.buildHeader=function(u=0)
 {
-	var h="",a="",t="",b,c,d,r;
+	let a="",t="",h="",g="",b,c,d,r,z=0;
 	if(!this.hideTitle)
 	{
-		if(this.hasC("Title")) t=this.buildTitle();
-		else
-		{
-			t=this.getInfoS("EV");
-			a=this.getInfoS("RO");
-			if(a) t+=(t?this.local(", "):"")+a;
-		}
-		if(this.concatDateToTitle&&(a=this.getInfoS("DT"))) t+=(t?" (":"")+this.build("Date",a)+(t?")":"");
+		t=this.buildTitle();
+		if(this.concatDateToTitle&&(a=this.getInfo("DT"))) t+=(t?" (":"")+this.build("Date",a)+(t?")":"");
 	}
-	if(t) t="<h1 class=\"mxTitleH1\">"+t+"</h1>";
-	if(this.hideBlack) a="";else a=this.getInfoS("PB");
+	if(t)
+	{
+		if(u) t="<h1 tabindex=\"0\" class=\"mxTitleH1\">"+t+"</h1>";
+		else t="<p class=\"mxTitleP\">"+t+"</p>";
+	}
+	a=(this.hideBlack)?0:this.getInfo("PB");
 	if(a)
 	{
 		h+="<span class=\"mxPBSpan\"><span class=\"mxHeaderSpan\">"+this.local("Black")+this.local(": ")+"</span>"+a;
-		a=this.getInfoS("BR");
+		a=this.getInfo("BR");
 		if(a) h+=this.local(" ")+this.build("Rank",a);
-		if(this.concatTeamToPlayer&&(b=this.getInfoS("BT"))) h+=(a?" (":"")+b+(a?")":"");
-		h+="</span><br>";
+		if(this.concatTeamToPlayer&&(b=this.getInfo("BT"))) h+=(a?" (":"")+b+(a?")":"");
+		h+="</span>";
+		z=1;
 	}
-	if(this.hideWhite) a="";else a=this.getInfoS("PW");
+	a=(this.hideWhite)?0:this.getInfo("PW");
 	if(a)
 	{
+		if(z) h+="<br>";
 		h+="<span class=\"mxPWSpan\"><span class=\"mxHeaderSpan\">"+this.local("White")+this.local(": ")+"</span>"+a;
-		a=this.getInfoS("WR");
+		a=this.getInfo("WR");
 		if(a) h+=this.local(" ")+this.build("Rank",a);
-		if(this.concatTeamToPlayer&&(b=this.getInfoS("WT"))) h+=(a?" (":"")+b+(a?")":"");
-		h+="</span><br>";
+		if(this.concatTeamToPlayer&&(b=this.getInfo("WT"))) h+=(a?" (":"")+b+(a?")":"");
+		h+="</span>";
+		z=1;
 	}
-	if(this.hideDate) a="";else a=this.getInfoS("DT");
-	if(a&&!this.concatDateToTitle) h+="<span class=\"mxDTSpan\"><span class=\"mxHeaderSpan\">"+this.local("Date")+this.local(": ")+"</span>"+this.build("Date",a)+"</span><br>";
-	if(this.hidePlace) a="";else a=this.getInfoS("PC");
-	if(a) h+="<span class=\"mxPCSpan\"><span class=\"mxHeaderSpan\">"+this.local("Place")+this.local(": ")+"</span>"+a+"</span><br>";
-	if(this.hideRules) a="";else a=this.getInfoS("RU");
-	if(a) h+="<span class=\"mxRUSpan\"><span class=\"mxHeaderSpan\">"+this.local("Rules")+this.local(": ")+"</span>"+this.build("Rules",a)+"</span><br>";
-	if(this.hideTimeLimits) a="";else a=this.getInfoS("TM");
-	if(a) h+="<span class=\"mxTMSpan\"><span class=\"mxHeaderSpan\">"+this.local("Time limits")+this.local(": ")+"</span>"+this.build("TimeLimits",a)+"</span><br>";
-	if(this.hideKomi) a="";else a=this.getInfoS("KM");
+	if(this.hideDate) a="";else a=this.getInfo("DT");
+	if(a&&!this.concatDateToTitle)
+	{
+		if(z) h+="<br>";
+		h+="<span class=\"mxDTSpan\"><span class=\"mxHeaderSpan\">"+this.local("Date")+this.local(": ")+"</span>"+this.build("Date",a)+"</span>";
+		z=1;
+	}
+	if(this.hidePlace) a="";else a=this.getInfo("PC");
+	if(a)
+	{
+		if(z) h+="<br>";
+		h+="<span class=\"mxPCSpan\"><span class=\"mxHeaderSpan\">"+this.local("Place")+this.local(": ")+"</span>"+a+"</span>";
+		z=1;
+	}
+	if(this.hideRules) a="";else a=this.getInfo("RU");
+	if(a)
+	{
+		if(z) h+="<br>";
+		h+="<span class=\"mxRUSpan\"><span class=\"mxHeaderSpan\">"+this.local("Rules")+this.local(": ")+"</span>"+this.build("Rules",a)+"</span>";
+		z=1;
+	}
+	if(this.hideTimeLimits) a="";else a=this.getInfo("TM");
+	if(a)
+	{
+		if(z) h+="<br>";
+		h+="<span class=\"mxTMSpan\"><span class=\"mxHeaderSpan\">"+this.local("Time limits")+this.local(": ")+"</span>"+this.build("TimeLimits",a)+"</span>";
+		z=1;
+	}
+	if(this.hideKomi) a="";else a=this.getInfo("KM");
 	if(a) b="<span class=\"mxHeaderSpan\">"+this.local("Komi")+this.local(": ")+"</span>"+this.build("Komi",a);else b="";
-	if(b&&!this.concatKomiToResult) h+="<span class=\"mxKMSpan\">"+b+"</span><br>";
-	if(this.hideHandicap) a="";else a=this.getInfoS("HA");
+	if(b&&!this.concatKomiToResult)
+	{
+		if(z) h+="<br>";
+		h+="<span class=\"mxKMSpan\">"+b+"</span>";
+		z=1;
+	}
+	if(this.hideHandicap) a="";else a=this.getInfo("HA");
 	if(a) c="<span class=\"mxHeaderSpan\">"+this.local("Handicap")+this.local(": ")+"</span>"+this.build("handicap",a);else c="";
-	if(c&&!this.concatHandicapToResult) h+="<span class=\"mxHASpan\">"+c+"</span><br>";
-	if(!this.hideNumOfMoves)
+	if(c&&!this.concatHandicapToResult)
+	{
+		if(z) h+="<br>";
+		h+="<span class=\"mxHASpan\">"+c+"</span>";
+		z=1;
+	}
+	if(this.hideNumOfMoves) d="";
+	else
 	{
 		a=this.getNumOfMoves()+"";
 		if(this.hideNumOfMovesLabel) d=this.build("NumOfMoves",a);
 		else d="<span class=\"mxHeaderSpan\">"+this.local("Number of moves")+this.local(": ")+"</span>"+a;
-		if(!this.concatNumOfMovesToResult) h+="<span class=\"mxNMSpan\">"+d+"</span><br>";
+		if(!this.concatNumOfMovesToResult)
+		{
+			if(z) h+="<br>";
+			h+="<span class=\"mxNMSpan\">"+d+"</span>";
+			z=1;
+		}
 	}
-	else d="";
-	if(!this.hideResult&&(a=this.getInfoS("RE")))
+	if(!this.hideResult&&(a=this.getInfo("RE")))
 	{
+		if(z) h+="<br>";
 		h+="<span class=\"mxRESpan\">";
 		r=this.build("Result",a);
 		if(!this.hideResultLabel) h+=("<span class=\"mxHeaderSpan\">"+this.local("Result")+this.local(": ")+"</span>"+r);
-		else h+=r.ucFirst();
-		if((d&&this.concatNumOfMovesToResult)||(c&&this.concatHandicapToResult)||(b&&this.concatKomiToResult))
+		else h+=r.ucF();
+		if((d&&this.concatNumOfMovesToResult)
+			||(c&&this.concatHandicapToResult)
+			||(b&&this.concatKomiToResult))
 		{
 			let b2,c2,d2;
 			h+=" (";
@@ -241,32 +358,17 @@ mxG.G.prototype.buildHeader=function()
 			if(b2) h+=b2;
 			h+=")";
 		}
-		h+="</span><br>";
+		h+="</span>";
+		z=1;
 	}
-	if(h) h="<div class=\"mxP\">"+h+"</div>";
-	if(!this.hideGeneralComment&&(a=this.getInfoS("GC")))
-		h+="<div class=\"mxP mxGeneralCommentP\">"+a.replace(/\n/g,"<br>")+"</div>";
-	return "<div class=\"mxHeaderContentDiv\">"+t+h+"</div>";
+	if(h) h="<p class=\"mxHeaderContentP\">"+h+"</p>";
+	if(!this.hideGeneralComment&&(a=this.getInfo("GC")))
+		g="<p class=\"mxGeneralCommentP\">"+a.replace(/\n/g,"<br>")+"</p>";
+	return t+h+g;
 };
 mxG.G.prototype.doHeader=function()
 {
-	var e;
-	if(this.gBox=="ShowHeader") {this.hideGBox("ShowHeader");return;}
-	if(!this.getE("ShowHeaderDiv"))
-	{
-		let s="",z=this.k;
-		s+="<div class=\"mxShowContentDiv\" tabindex=\"0\">";
-		s+="</div>";
-		s+="<div class=\"mxOKDiv\">";
-		s+="<button type=\"button\"><span>"+this.local(" Close ")+"</span></button>";
-		s+="</div>";
-		this.createGBox("ShowHeader").innerHTML=s;
-		btn=this.getE("ShowHeaderDiv").querySelector(".mxOKDiv button");
-		btn.addEventListener("click",function(){mxG.D[z].hideGBox('ShowHeader');},false);
-	}
-	e=this.getE("ShowHeaderDiv").firstChild;
-	e.innerHTML=this.buildHeader();
-	this.showGBox("ShowHeader");
+	this.doDialog("ShowHeader",this.buildHeader(1),[{n:" Close "}]);
 };
 mxG.G.prototype.updateHeader=function()
 {
@@ -279,11 +381,6 @@ mxG.G.prototype.updateHeader=function()
 			this.header=h;
 		}
 	}
-	if(this.getE("HeaderBtn"))
-	{
-		if(this.gBox=="ShowHeader") this.selectBtn("Header");
-		else this.unselectBtn("Header");
-	}
 };
 mxG.G.prototype.initHeader=function()
 {
@@ -292,37 +389,21 @@ mxG.G.prototype.initHeader=function()
 };
 mxG.G.prototype.createHeader=function()
 {
-	var s="",a="";
 	this.canHeaderFocus=this.setA("canHeaderFocus",0,"bool");
-	this.concatDateToTitle=this.setA("concatDateToTitle",0,"bool");
-	this.concatTeamToPlayer=this.setA("concatTeamToPlayer",0,"bool");
-	this.concatKomiToResult=this.setA("concatKomiToResult",0,"bool");
-	this.concatHandicapToResult=this.setA("concatHandicapToResult",0,"bool");
-	this.concatNumOfMovesToResult=this.setA("concatNumOfMovesToResult",0,"bool");
+	this.concatInHeader=this.setA("concatInHeader",new Set(),"set");
+	for(let k of this.concatInHeader) this["concat"+k]=1;
 	this.headerAlias=this.setA("headerAlias",null,"string");
 	this.headerBoxOn=this.setA("headerBoxOn",0,"bool");
 	this.headerBtnOn=this.setA("headerBtnOn",0,"bool");
-	this.hideBlack=this.setA("hideBlack",0,"bool");
-	this.hideDate=this.setA("hideDate",0,"bool");
-	this.hideGeneralComment=this.setA("hideGeneralComment",0,"bool");
-	this.hideKomi=this.setA("hideKomi",0,"bool");
-	this.hideHandicap=this.setA("hideHandicap",0,"bool");
-	this.hideNumOfMoves=this.setA("hideNumOfMoves",0,"bool");
-	this.hideNumOfMovesLabel=this.setA("hideNumOfMovesLabel",0,"bool");
-	this.hidePlace=this.setA("hidePlace",0,"bool");
-	this.hideResult=this.setA("hideResult",0,"bool");
-	this.hideResultLabel=this.setA("hideResultLabel",0,"bool");
-	this.hideRules=this.setA("hideRules",0,"bool");
-	this.hideTimeLimits=this.setA("hideTimeLimits",0,"bool");
-	this.hideTitle=this.setA("hideTitle",0,"bool");
-	this.hideWhite=this.setA("hideWhite",0,"bool");
+	this.hideInHeader=this.setA("hideInHeader",new Set(),"set");
+	this.translateTitleOn=this.setA("translateTitleOn",0,"bool");
+	for(let k of this.hideInHeader) this["hide"+k]=1;
 	if(this.headerBoxOn||this.headerBtnOn)
 	{
 		// add tabindex="0" to this div if it can be scrolled (for keyboard navigation)
-		a=(this.headerBoxOn&&this.canHeaderFocus)?" tabindex=\"0\"":"";
-		s+="<div class=\"mxHeaderDiv\" id=\""+this.n+"HeaderDiv\""+a+">";
-		s+="</div>";
+		let a=(this.headerBoxOn&&this.canHeaderFocus)?" tabindex=\"0\"":"";
+		return "<div class=\"mxHeaderDiv\" id=\""+this.n+"HeaderDiv\""+a+"></div>";
 	}
-	return s;
+	return "";
 };
 }

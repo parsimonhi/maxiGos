@@ -16,21 +16,19 @@ include "../../../_js/mgosVersion.js";
 mxG.K++;
 mxG.B=[["Goban","NotSeen"],"Version"];
 mxG.D[mxG.K]=new mxG.G(mxG.K,mxG.B);
-mxG.D[mxG.K].theme="<?php echo $theme ?>";
-mxG.D[mxG.K].config="<?php echo $config ?>";
+mxG.D[mxG.K].theme="<?=$theme?>";
+mxG.D[mxG.K].config="<?=$config?>";
 <?php
 include "../../_php/insertCss.php";
 ?>
 // general
-mxG.D[mxG.K].a.in3dOn=1; // (0,1) default 1
-mxG.D[mxG.K].a.htmlParenthesis=1; // (0,1) default 0
+mxG.D[mxG.K].a.in3dOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.allowStringAsSource=1; // (0,1) default 1
 mxG.D[mxG.K].a.allowFileAsSource=1; // (0,1) default 1
 // mxG.D[mxG.K].a.sourceFilter=""; // (str) default ""
 mxG.D[mxG.K].a.initMethod="last"; // ("first","loop","last") default "first"
 // Goban
 mxG.D[mxG.K].a.pointsNumMax=19; // (positive integer) default 0
-mxG.D[mxG.K].a.magicParentNum=2; // (positive integer) default 0
 mxG.D[mxG.K].a.stoneShadowOn=0; // (0,1) default 0 (require in3dOn=1)
 mxG.D[mxG.K].a.stretching="1,1,1,1"; // (list) default "0,0,1,1"
 mxG.D[mxG.K].a.gridPadding=2; // (float) default 0

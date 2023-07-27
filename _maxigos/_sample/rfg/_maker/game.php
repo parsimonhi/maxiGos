@@ -10,7 +10,6 @@ include "../../../_js/mgos_rls.js";
 include "../../../_js/mgos_scr.js";
 include "../../../_js/mgos.js";
 include "../../../_js/mgosHeader.js";
-include "../../../_js/mgosTitle.js";
 include "../../../_js/mgosGoban.js";
 include "../../../_js/mgosNavigation.js";
 include "../../../_js/mgosLoop.js";
@@ -19,16 +18,15 @@ include "../../../_js/mgosBackToGame.js";
 include "../../../_js/mgosSgf.js";
 ?>
 mxG.K++;
-mxG.B=["Header","Title","Goban","Navigation","Loop","Variation",["BackToGame","Sgf"]];
+mxG.B=["Header","Goban","Navigation","Loop","Variation",["BackToGame","Sgf"]];
 mxG.D[mxG.K]=new mxG.G(mxG.K,mxG.B);
-mxG.D[mxG.K].theme="<?php echo $theme ?>";
-mxG.D[mxG.K].config="<?php echo $config ?>";
+mxG.D[mxG.K].theme="<?=$theme?>";
+mxG.D[mxG.K].config="<?=$config?>";
 <?php
 include "../../_php/insertCss.php";
 ?>
 // general
-mxG.D[mxG.K].a.in3dOn=1; // (0,1) default 1
-mxG.D[mxG.K].a.htmlParenthesis=1; // (0,1) default 0
+mxG.D[mxG.K].a.in3dOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.allowStringAsSource=1; // (0,1) default 1
 mxG.D[mxG.K].a.allowFileAsSource=1; // (0,1) default 1
 // mxG.D[mxG.K].a.sourceFilter=""; // (str) default ""
@@ -55,24 +53,16 @@ mxG.D[mxG.K].a.eraseGridUnder=1; // (0,1) default 0
 mxG.D[mxG.K].a.backToGameBtnOn=1; // (0,1) default 0
 // Header
 mxG.D[mxG.K].a.headerBoxOn=1; // (0,1) default 0
-mxG.D[mxG.K].a.headerBtnOn=0; // (0,1) default 0
-mxG.D[mxG.K].a.hideNumOfMoves=1; // (0,1) default 0
-mxG.D[mxG.K].a.concatDateToTitle=1; // (0,1) default 0
-mxG.D[mxG.K].a.concatTeamToPlayer=1; // (0,1) default 0
-mxG.D[mxG.K].a.concatKomiToResult=1; // (0,1) default 0
-mxG.D[mxG.K].a.concatHandicapToResult=1; // (0,1) default 0
-mxG.D[mxG.K].a.concatNumOfMovesToResult=0; // (0,1) default 0
+mxG.D[mxG.K].a.hideInHeader="NumOfMoves"; // (set) default ""
+mxG.D[mxG.K].a.concatInHeader="DateToTitle,TeamToPlayer,KomiToResult,HandicapToResult"; // (set) default ""
 // Loop
 mxG.D[mxG.K].a.loopTime=1000; // (positive integer) default 1000
 // Navigation
-mxG.D[mxG.K].a.navigations="First,TenPred,Pred,Loop,Next,TenNext,Last"; // (list) default "First,TenPred,Pred,Next,TenNext,Last"
+mxG.D[mxG.K].a.navigations="First,TenPred,Pred,Loop,Next,TenNext,Last"; // (set) default "First,TenPred,Pred,Next,TenNext,Last"
 // Sgf
 mxG.D[mxG.K].a.sgfBtnOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.sgfAlias="SGF_Long"; // (string) default null
 mxG.D[mxG.K].a.sgfAction="download"; // (string) default "show"
-// Title
-mxG.D[mxG.K].a.titleBoxOn=0; // (0,1,null) default 0
-mxG.D[mxG.K].a.translateTitleOn=1; // (0,1) default 0
 // Variation
 mxG.D[mxG.K].a.variationMarksOn=1; // (0,1,null) default 0
 mxG.D[mxG.K].a.siblingsOn=0; // (0,1,null) default 0

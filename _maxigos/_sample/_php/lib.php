@@ -5,7 +5,7 @@ function safeValue($a)
 }
 function base64EncodeImage($f,$t)
 {
-	if (($t=="gif")||($t=="jpg")||($t=="png")||($t=="svg"))
+	if (($t=="gif")||($t=="jpg")||($t=="png")||($t=="webp")||($t=="svg"))
 	{
     	if (file_exists($f))
     	{
@@ -38,7 +38,9 @@ function getSgfFromFileToAttribute($f)
 }
 function copyright($config="",$theme="")
 {
-	echo "// maxiGos v7";
+	global $v;
+	echo "// maxiGos";
+	if(isset($v)) echo " v".$v;
 	if ($config&&$theme) echo " ".$config."+".$theme;
 	echo " copyright 1998-".date("Y")." FM&SH, BSD license\n\n";
 }
@@ -71,6 +73,18 @@ function makeJs($config,$theme)
 	include $tmp;
 	$content=ob_get_contents();
 	ob_end_clean();
+	// remove comments (only if // is followed by a space)
+	$content=preg_replace("#; *//\s.*?\n#u",";\n",$content);
+	$content=preg_replace("#(?!^)\s*//\s.*?\n#u","\n",$content);
+	// remove some spaces around {}
+	//$content=preg_replace("#\s*{#u","{",$content);
+	//$content=preg_replace("#\s*}#u","}",$content);
+	// remove some ;
+	//$content=preg_replace("#;?};?#u","}",$content);
+	// remove tabs
+	//$content=preg_replace("#\n(\t| )*#u","\n",$content);
+	// remove extra-lines
+	$content=preg_replace("#\n+#u","\n",$content);
 	file_put_contents($targetName,$content);
 	$joomlaTargetName="../../../maxigos-joomla/_maxigos/_alone/maxigos-".$folder."-".strtolower($config).".js";
 	copy($targetName,$joomlaTargetName);
@@ -85,5 +99,20 @@ function isConvenientServer($myServer="127.0.0.1")
 	return (($_SERVER['SERVER_NAME']==$myServer)
 		||($_SERVER['SERVER_NAME']=="localhost")
 		||preg_match("/^192.168.1/",$_SERVER['SERVER_NAME']));
+}
+function kogo()
+{
+	$a=explode("/",$_SERVER['SCRIPT_NAME']);
+	$k=1;
+	$km=count($a);
+	$f='Kogo.sgf';
+	while($k<$km)
+		if(is_file($f)) return $f;
+		else
+		{
+			$f='../'.$f;
+			$k++;
+		}
+	return 0;
 }
 ?>

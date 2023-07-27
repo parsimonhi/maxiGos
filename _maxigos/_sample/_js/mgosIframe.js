@@ -5,15 +5,16 @@
 	if (window.frameElement)
 	{
 		// automatically update iframe height
-		var magic=function()
+		let magic=function()
 		{
 			// update iframe height
-			window.frameElement.style.height=document.body.scrollHeight+"px";
+			// add 1 to avoid some rounding issues that cause a scrollbar to appear
+			window.frameElement.style.height=(document.body.scrollHeight+1)+"px";
 		}
 		// iframe height is updated in 2 cases
 		//  when some elements are added to or remove from iframe content
 		//  when the size of the iframe changes
-		var o=new MutationObserver(magic);
+		let o=new MutationObserver(magic);
 		o.observe(document.body,{attributes:true,childList:true,subtree:true});
 		window.addEventListener("resize",magic);
 	}

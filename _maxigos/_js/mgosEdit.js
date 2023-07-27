@@ -1,4 +1,4 @@
-// maxiGos v7 > mgosEdit.js
+// maxiGos v8 > mgosEdit.js
 if(!mxG.G.prototype.createEdit)
 {
 mxG.fr("Cut","Couper");
@@ -15,10 +15,10 @@ mxG.fr("Cut branch","Couper une branche");
 mxG.fr("Copy branch","Copier une branche");
 mxG.fr("Paste branch","Coller une branche");
 mxG.fr("Label","Étiquette");
-mxG.fr("Mark","Marque");
-mxG.fr("Circle","Cercle");
-mxG.fr("Square","Carré");
-mxG.fr("Triangle","Triangle");
+// mxG.fr("Mark","Marque");
+// mxG.fr("Circle","Cercle");
+// mxG.fr("Square","Carré");
+// mxG.fr("Triangle","Triangle");
 mxG.fr("Numbering","Numérotation");
 mxG.fr("As in book","Comme dans les livres");
 mxG.fr("Indices","Indices");
@@ -51,9 +51,164 @@ mxG.fr("Horizontal mirror","Miroir horizontal");
 mxG.fr("Vertical mirror","Miroir vertical");
 mxG.fr("Rotate","Rotation");
 mxG.fr("Comments","Commentaire");
+
+// mxG.S section
+mxG.S.prototype.makeFromPath=function(p)
+{
+	let s="<svg "+this.xmlns;
+	s+=" viewBox=\"0 0 1024 1024\"";
+	s+=" width=\"40\" height=\"40\"";
+	s+=" aria-hidden=\"true\"";
+	s+=">"; // acceptable size if no css
+	return s+"<path class=\"mxFillable\" d=\""+p+"\"/></svg>";
+};
+mxG.S.prototype.makeAloneMark=function(m)
+{
+	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,c="#000",o={cls:"mxStrokable"};
+	s="<svg "+this.xmlns;
+	s+=" viewBox=\"0 0 "+dd+" "+dd+"\"";
+	s+=" width=\"40\" height=\"40\""; // acceptable size if no css
+	s+=" aria-hidden=\"true\"";
+	s+=">";
+	switch(m)
+	{
+		case "Circle":s+=this.makeCircle(c,x,y,o);break;
+		case "Mark":s+=this.makeMark(c,x,y,o);break;
+		case "Square":s+=this.makeSquare(c,x,y,o);break;
+		case "Triangle":s+=this.makeTriangle(c,x,y,o);break;
+	}
+	s+="</svg>";
+	return s;
+};
+mxG.S.prototype.makeAloneToolText=function(txt)
+{
+	// for edit tool only
+	// assume text width is smaller than dd
+	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,c="#000";
+	s="<svg "+this.xmlns;
+	s+=" viewBox=\"0 0 "+dd+" "+dd+"\"";
+	s+=" width=\"40\" height=\"40\""; // acceptable size if no css
+	s+=" font-family=\""+this.ff+"\"";
+	s+=" font-size=\""+this.fs+"\"";
+	s+=" font-weight=\""+this.fw+"\"";
+	s+=" aria-hidden=\"true\"";
+	s+=">";
+	s+="<text";
+	s+=" text-anchor=\"middle\"";
+	s+=" fill=\""+c+"\"";
+	s+=" class=\"mxFillable\""; // stroke="none"
+	s+=" x=\""+x+"\" y=\""+(y+5)+"\">";
+	s+=txt;
+	s+="</text>";
+	s+="</svg>";
+	return s;
+};
+mxG.S.prototype.makeSelectTool=function()
+{
+	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c="#000";
+	z=d*3/4;
+	s="<svg "+this.xmlns;
+	s+=" width=\"40\" height=\"40\""; // acceptable size if no css
+	s+=" viewBox=\"0 0 "+dd+" "+dd+"\"";
+	s+=" aria-hidden=\"true\"";
+	s+=">";
+	s+="<rect stroke-dasharray=\"2\"";
+	s+=" class=\"mxStrokable\"";
+	s+=" fill=\"none\" stroke=\""+c+"\" stroke-width=\""+this.sw4grid+"\"";
+	s+=" x=\""+(x-z/2)+"\" y=\""+(y-z/2)+"\"";
+	s+=" width=\""+z+"\" height=\""+z+"\"/></g>";
+	s+="</svg>";
+	return s;
+};
+mxG.S.prototype.makeViewTool=function()
+{
+	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c="#000";
+	z=d*3/4;
+	s="<svg "+this.xmlns;
+	s+=" width=\"40\" height=\"40\""; // acceptable size if no css
+	s+=" viewBox=\"0 0 "+dd+" "+dd+"\"";
+	s+=" aria-hidden=\"true\"";
+	s+=">";
+	s+="<g fill=\"none\" class=\"mxStrokable\" stroke=\""+c+"\" stroke-width=\""+this.sw4grid+"\">"
+	s+="<rect";
+	s+=" x=\""+(x-z/2)+"\" y=\""+(y-z/2)+"\"";
+	s+=" width=\""+z+"\" height=\""+z+"\"/>";
+	s+="<rect";
+	s+=" x=\""+x+"\" y=\""+(y-z/2)+"\"";
+	s+=" width=\""+z/2+"\" height=\""+z/2+"\"/>";
+	s+="</g>";
+	s+="</svg>";
+	return s;
+};
+mxG.S.prototype.makeSemiCircle=function(n,x,y,r,c,o)
+{
+	let s="<circle";
+	s+=" clip-path=\"url(#"+this.p.n+"Setup"+n+"Clip)\"";
+	if(o.in3dOn) s+=" fill=\"url(#"+this.p.n+c+"RG)\"";
+	else
+	{
+		s+=" class=\""+((c=="W")?"":"mxFillable ")+"mxStrokable\"";
+		s+=" fill=\"#fff\" stroke=\"#000\" stroke-width=\""+this.sw4stone+"\"";
+	}
+	s+=" cx=\""+x+"\" cy=\""+y+"\" r=\""+r+"\"";
+	return s+"/>";
+}
+mxG.S.prototype.makeAloneBiStone=function(nat,o)
+{
+	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,c1,c2,r,z;
+	z=(this.in3dOn&&this.stoneShadowOn)?this.stoneShadowWidth:0;
+	if(nat[1]=="B") {c1="B";c2="W";} else {c1="W";c2="B";}
+	s="<svg "+this.xmlns+" "+this.xlink;
+	s+=" width=\"40\" height=\"40\""; // acceptable size if no css
+	s+=" viewBox=\""+(-z)+" "+(-z)+" "+(dd+2*z)+" "+(dd+2*z)+"\"";
+	s+=" aria-hidden=\"true\"";
+	s+=">";
+	s+="<defs>";
+	s+="<clipPath id=\""+this.p.n+"Setup1Clip\">";
+	s+="<path d=\"M0 0H"+x+"V"+dd+"H0Z\"/></clipPath>";
+	s+="<clipPath id=\""+this.p.n+"Setup2Clip\">";
+	s+="<path d=\"M"+dd+" 0H"+x+"V"+dd+"H"+dd+"Z\"/></clipPath>";
+	s+="</defs>";
+	r=o.in3dOn?d/2:(d-this.sw4stone+1)/2;
+	if(o.in3dOn&&this.stoneShadowOn)
+	{
+		let e=this.stoneShadowWidth;
+		s+="<circle fill=\"#000\" opacity=\"0.2\"";
+		s+=" cx=\""+(x+e)+"\" cy=\""+(y+e)+"\" r=\""+r+"\"/>";
+	}
+	s+=this.makeSemiCircle(1,x,y,r,c1,o);
+	s+=this.makeSemiCircle(2,x,y,r,c2,o);
+	s+="</svg>";
+	return s;
+};
+mxG.S.prototype.addSelect=function(xl,yt,xr,yb)
+{
+	let dx=this.grim+this.gripx+this.gobp+this.gobm,
+		dy=this.grim+this.gripy+this.gobp+this.gobm,
+		x=this.i2x(xl)-this.dw/2-(xl==1?this.dw+dx:0),
+		y=this.j2y(yt)-this.dh/2-(yt==1?this.dh+dy:0),
+		w=this.i2x(xr)+this.dw/2-x+(xr==this.DX?this.dw+dx:0),
+		h=this.j2y(yb)+this.dh/2-y+(yb==this.DY?this.dh+dy:0),
+		b=document.createElementNS(this.xmlnsUrl,"rect");
+	b.setAttributeNS(null,"fill","#777");
+	b.setAttributeNS(null,"opacity","0.5"); // better than rgba() for exporting
+	b.setAttributeNS(null,"stroke","none");
+	b.setAttributeNS(null,"x",x);
+	b.setAttributeNS(null,"y",y);
+	b.setAttributeNS(null,"width",w);
+	b.setAttributeNS(null,"height",h);
+	b.classList.add("mxSelect");
+	this.ig.firstChild.appendChild(b);
+}
+mxG.S.prototype.removeSelect=function()
+{
+	let a=this.ig.firstChild,b=a.querySelector('.mxSelect');
+	if(b) a.removeChild(b);
+};
+// mxG.G section
 mxG.G.prototype.setViewFromSelection=function()
 {
-	var aN,s,xl,yt,xr,yb,exXl,exYt,exXr,exYb,exXls,exYts,exXrs,exYbs;
+	let aN,s,xl,yt,xr,yb,exXl,exYt,exXr,exYb,exXls,exYts,exXrs,exYbs;
 	if(this.selection)
 	{
 		xl=((this.editXrs>this.editXls)?this.editXls:this.editXrs);
@@ -79,19 +234,11 @@ mxG.G.prototype.setViewFromSelection=function()
 	aN=this.cN;
 	if(aN.P.VW)
 	{
-		aN.TakeOff("VW",-1);
+		aN.takeOff("VW",-1);
 		if(s) aN.P.VW=[s];
 	}
 	else aN.P.VW=[s];
 	this.updateAll();
-};
-mxG.G.prototype.selectPoint=function(x,y)
-{
-	this.scr.addSelect(x,y);
-};
-mxG.G.prototype.unselectPoint=function(x,y)
-{
-	this.scr.removeSelect(x,y);
 };
 mxG.G.prototype.unselectTool=function(tool)
 {
@@ -117,19 +264,18 @@ mxG.G.prototype.disableTool=function(tool)
 mxG.G.prototype.enableTool=function(tool)
 {
 	if(!tool||!this.hasEditTool(tool)) return;
-	if(tool.substring(0,4)=="Void") this.getE(tool+"Tool").disabled=true;
-	else if(tool=="Comment") this.getE("CommentToolText").disabled=false;
+	if(tool=="Comment") this.getE("CommentToolText").disabled=false;
 	else this.getE(tool+"Tool").disabled=false;
 };
 mxG.G.prototype.disableTools=function()
 {
-	var k,km=this.tools.length;
+	let k,km=this.tools.length;
 	for(k=0;k<km;k++) this.disableTool(this.tools[k]);
 	this.disableTool("Comment");
 };
 mxG.G.prototype.enableTools=function()
 {
-	var k,km=this.tools.length;
+	let k,km=this.tools.length;
 	for(k=0;k<km;k++) this.enableTool(this.tools[k]);
 	this.enableTool("Comment");
 };
@@ -143,7 +289,7 @@ mxG.G.prototype.changeSelectedTool=function(newTool)
 };
 mxG.G.prototype.doCut=function()
 {
-	var aN,SZ,ST,z=this.k;
+	let aN,SZ,ST,z=this.k;
 	if(this.hasC("Menu")) this.toggleMenu("Edit",0);
 	this.selectTool("Cut");
 	this.zN=this.cN;
@@ -151,8 +297,8 @@ mxG.G.prototype.doCut=function()
 	this.zN.Dad=null;
 	if((aN==this.rN)&&(aN.Kid.length==1))
 	{
-		SZ=this.getInfoS("SZ");
-		ST=this.getInfoS("ST");
+		SZ=this.getInfo("SZ");
+		ST=this.getInfo("ST");
 	}
 	aN.Kid.splice(aN.Focus-1,1);
 	aN.Focus=aN.Kid.length?1:0;
@@ -175,16 +321,16 @@ mxG.G.prototype.doCut=function()
 };
 mxG.G.prototype.doCopy=function()
 {
-	var z=this.k;
+	let z=this.k;
 	if(this.hasC("Menu")) this.toggleMenu("Edit",0);
 	this.selectTool("Copy");
-	this.zN=this.cN.Clone(null);
+	this.zN=this.cN.clone(null);
 	this.zN.Dad=null;
 	setTimeout(function(){mxG.D[z].unselectTool("Copy");},200);
 };
 mxG.G.prototype.doPaste=function()
 {
-	var z=this.k;
+	let z=this.k;
 	if(this.hasC("Menu")) this.toggleMenu("Edit",0);
 	this.selectTool("Paste");
 	if(this.zN)
@@ -192,7 +338,7 @@ mxG.G.prototype.doPaste=function()
 		if(this.zN.P.SZ) this.cN=this.rN;
 		this.zN.Dad=this.cN;
 		this.cN.Kid[this.cN.Kid.length]=this.zN;
-		this.zN=this.zN.Clone(null);
+		this.zN=this.zN.clone(null);
 		this.cN.Focus=this.cN.Kid.length;
 		this.backNode((this.cN==this.rN)?this.kidOnFocus(this.cN):this.cN);
 		if(this.hasC("Tree")) this.hasToSetTree=1;
@@ -202,14 +348,13 @@ mxG.G.prototype.doPaste=function()
 };
 mxG.G.prototype.doRemoveComments=function()
 {
-	var sgf,sgf1,sgf2,k;
+	let sgf,sgf1,sgf2,k;
 	if(this.hasC("Menu")) this.toggleMenu("Edit",0);
 	if(!this.hasC("Sgf")) return;
 	sgf1=this.buildSgf();
 	sgf2=sgf1.replace(/(\n|;|\])C\[([^\[\]]+|(\[[^\[\]]+\])?)*\]/g,'$1');
 	if(sgf2!=sgf1)
 	{
-		this.mayHaveExtraTags=0;
 		k=this.rNs.indexOf(this.rN);
 		sgf=this.rN.sgf?this.rN.sgf:"";
 		if(this.getE("WindowMenuDiv"))
@@ -226,7 +371,7 @@ mxG.G.prototype.doRemoveComments=function()
 }
 mxG.G.prototype.doAsInBook=function()
 {
-	var aN=this.cN,sN=this.kidOnFocus(this.rN),exFig=0,newFig,newAsInBookOn=(this.asInBookOn?0:1);
+	let aN=this.cN,sN=this.kidOnFocus(this.rN),exFig=0,newFig,newAsInBookOn=(this.asInBookOn?0:1);
 	while(aN!=this.rN)
 	{
 		if(aN.P.FG) {exFig=parseInt(aN.P.FG[0]);break;}
@@ -234,13 +379,13 @@ mxG.G.prototype.doAsInBook=function()
 	}
 	if(aN==this.rN) aN=sN;
 	newFig=(newAsInBookOn?(exFig|256):(exFig&~256));
-	if((aN==sN)&&!newFig) aN.TakeOff("FG",0);
-	else aN.Set("FG",newFig);
+	if((aN==sN)&&!newFig) aN.takeOff("FG",0);
+	else aN.put("FG",newFig);
 	this.updateAll();
 };
 mxG.G.prototype.doIndices=function()
 {
-	var aN=this.cN,sN=this.kidOnFocus(this.rN),exFig=0,newFig,newIndicesOn;
+	let aN=this.cN,sN=this.kidOnFocus(this.rN),exFig=0,newFig,newIndicesOn;
 	newIndicesOn=(this.indicesOn?0:1);
 	while(aN!=this.rN)
 	{
@@ -249,55 +394,13 @@ mxG.G.prototype.doIndices=function()
 	}
 	if(aN==this.rN) aN=sN;
 	newFig=newIndicesOn?(exFig&~1):(exFig|1);
-	if((aN==sN)&&!newFig) aN.TakeOff("FG",0);
-	else aN.Set("FG",newFig);
+	if((aN==sN)&&!newFig) aN.takeOff("FG",0);
+	else aN.put("FG",newFig);
 	this.updateAll();
-};
-mxG.G.prototype.doNumberingOK=function()
-{
-	var aN;
-	if(this.getE("NewFigureBox")&&this.getE("NewFigureBox").checked) aN=this.cN;
-	else
-	{
-		aN=this.cN;
-		while((aN.Dad!=this.rN)&&!(aN.P.FG)) aN=aN.Dad;
-	}
-	if(this.getE("FigureOrNot2Input")&&this.getE("FigureOrNot2Input").checked)
-	{
-		aN.TakeOff("FG",0);
-		aN.TakeOff("PM",0);
-		aN.TakeOff("MN",0);
-	}
-	else
-	{
-		var newNumberingOn=(this.getE("NumberingOrNot1Input").checked?1:0);
-		var newNumWith=parseInt(this.getE("NumWithTextInput").value);
-		var newAsInBookOn=(this.getE("AsInBookInput").checked?1:0);
-		var newIndicesOn=(this.getE("IndicesInput").checked?1:0);
-		var newFigure=((newAsInBookOn?256:0)|(newIndicesOn?0:1));
-		if(aN==this.kidOnFocus(this.rN))
-		{
-			if(newFigure) aN.Set("FG",newFigure);
-			else aN.TakeOff("FG",0);
-			if((newNumWith>1)&&newNumberingOn) aN.Set("MN",newNumWith);
-			else aN.TakeOff("MN",0);
-			if(newNumberingOn!=1) aN.Set("PM",newNumberingOn);
-			else aN.TakeOff("PM",0);
-		}
-		else
-		{
-			aN.Set("FG",newFigure);
-			aN.Set("PM",newNumberingOn);
-			if(newNumberingOn) aN.Set("MN",newNumWith);
-			else aN.TakeOff("MN",0);
-		}
-	}
-	if(this.hasC("Tree")) this.hasToSetTree=1;
-	this.hideGBox("Numbering");
 };
 mxG.G.prototype.switchFigureOrNot=function()
 {
-	var e;
+	let e;
 	if(this.getE("NewFigureBox").checked)
 	{
 		if(e=this.getE("FigureOrNot1P")) e.style.display="none";
@@ -309,28 +412,26 @@ mxG.G.prototype.switchFigureOrNot=function()
 		else if(e=this.getE("FigureOrNot2P")) e.style.display="block";
 	}
 };
-mxG.G.prototype.doNumbering=function()
+mxG.G.prototype.buildNumbering=function()
 {
-	if(this.gBox=="Numbering") {this.hideGBox("Numbering");return;}
-	if(!this.getE("NumberingDiv")) this.createGBox("Numbering");
-	var aN=this.cN,s="",a;
+	let aN=this.cN,s="";
 	while((aN.Dad!=this.rN)&&!aN.P.FG) aN=aN.Dad;
-	a=" tabindex=\"0\"";
-	s+="<div class=\"mxShowContentDiv\""+a+">";
-	s+="<h1>"+this.local("Numbering")+"</h1>";
+	s+="<h1 tabindex=\"0\">"+this.local("Numbering")+"</h1>";
 	if(aN!=this.cN)
 	{
-		s+="<div class=\"mxP\"><label for=\""+this.n+"NewFigureBox\">"+this.local("New (from this point):")+" </label>";
+		s+="<p>";
+		s+="<label for=\""+this.n+"NewFigureBox\">"+this.local("New (from this point):")+" </label>";
 		s+="<input type=\"checkbox\" "+"id=\""+this.n+"NewFigureBox\" onclick=\""+this.g+".switchFigureOrNot()\">";
-		s+="</div>";
+		s+="</p>";
 	}
 	if((aN.Dad!=this.rN)&&aN.P.FG) 
 	{
-		s+="<div class=\"mxP mxFigureOrNotP\" id=\""+this.n+"FigureOrNot1P\"><input type=\"radio\" id=\""+this.n+"FigureOrNot1Input\" name=\"figureOrNot\" checked value=\"1\">";
+		s+="<p class=\"mxFigureOrNotP\" id=\""+this.n+"FigureOrNot1P\">";
+		s+="<input type=\"radio\" id=\""+this.n+"FigureOrNot1Input\" name=\"figureOrNot\" checked value=\"1\">";
 		s+="<label for=\""+this.n+"FigureOrNot1Input\">"+this.local("Modify")+"</label>";
-		s+="</div>";
+		s+="</p>";
 	}
-	s+="<div class=\"mxP mxTabNumberingP\">";
+	s+="<p class=\"mxTabNumberingP\">";
 	s+="<input type=\"radio\" id=\""+this.n+"NumberingOrNot1Input\" name=\"numberingOrNot\"";
 	s+=(this.numberingOn?" checked":"");
 	s+=" value=\"1\">";
@@ -342,70 +443,113 @@ mxG.G.prototype.doNumbering=function()
 	s+="<label for=\""+this.n+"NumberingOrNot2Input\">"+this.local("No numbering")+"</label><br><br>";
 	s+="<input type=\"checkbox\""+(this.asInBookOn?" checked":"")+" id=\""+this.n+"AsInBookInput\"> "+this.local("As in book")+"<br>";
 	s+="<input type=\"checkbox\""+(this.indicesOn?" checked":"")+" id=\""+this.n+"IndicesInput\"> "+this.local("Indices")+"<br>";
-	s+="</div>";
+	s+="</p>";
 	if((aN.Dad!=this.rN)&&aN.P.FG)
 	{
-		s+="<div class=\"mxP mxFigureOrNotP\" id=\""+this.n+"FigureOrNot2P\"><input type=\"radio\" id=\""+this.n+"FigureOrNot2Input\" name=\"figureOrNot\" value=\"2\">";
-		s+="<label for=\""+this.n+"FigureOrNot2Input\">"+this.local("Remove")+"</label></div>";
+		s+="<p class=\"mxFigureOrNotP\" id=\""+this.n+"FigureOrNot2P\">";
+		s+="<input type=\"radio\" id=\""+this.n+"FigureOrNot2Input\" name=\"figureOrNot\" value=\"2\">";
+		s+="<label for=\""+this.n+"FigureOrNot2Input\">"+this.local("Remove")+"</label>";
+		s+="</p>";
 	}
-	s+="</div>";
-	s+="<div class=\"mxOKDiv\">";
-	s+="<button type=\"button\" onclick=\""+this.g+".doNumberingOK()\"><span>"+this.local("OK")+"</span></button>";
-	s+="<button type=\"button\" onclick=\""+this.g+".hideGBox('Numbering')\"><span>"+this.local("Cancel")+"</span></button>";
-	s+="</div>";
-	this.getE("NumberingDiv").innerHTML=s;
-	this.showGBox("Numbering");
+	return s;
+}
+mxG.G.prototype.doNumberingOK=function()
+{
+	let aN;
+	if(this.getE("NewFigureBox")&&this.getE("NewFigureBox").checked) aN=this.cN;
+	else
+	{
+		aN=this.cN;
+		while((aN.Dad!=this.rN)&&!(aN.P.FG)) aN=aN.Dad;
+	}
+	if(this.getE("FigureOrNot2Input")&&this.getE("FigureOrNot2Input").checked)
+	{
+		aN.takeOff("FG",0);
+		aN.takeOff("PM",0);
+		aN.takeOff("MN",0);
+	}
+	else
+	{
+		let newNumberingOn=(this.getE("NumberingOrNot1Input").checked?1:0);
+		let newNumWith=parseInt(this.getE("NumWithTextInput").value);
+		let newAsInBookOn=(this.getE("AsInBookInput").checked?1:0);
+		let newIndicesOn=(this.getE("IndicesInput").checked?1:0);
+		let newFigure=((newAsInBookOn?256:0)|(newIndicesOn?0:1));
+		if(aN==this.kidOnFocus(this.rN))
+		{
+			if(newFigure) aN.put("FG",newFigure);
+			else aN.takeOff("FG",0);
+			if((newNumWith>1)&&newNumberingOn) aN.put("MN",newNumWith);
+			else aN.takeOff("MN",0);
+			if(newNumberingOn!=1) aN.put("PM",newNumberingOn);
+			else aN.takeOff("PM",0);
+		}
+		else
+		{
+			aN.put("FG",newFigure);
+			aN.put("PM",newNumberingOn);
+			if(newNumberingOn) aN.put("MN",newNumWith);
+			else aN.takeOff("MN",0);
+		}
+	}
+	if(this.hasC("Tree")) this.hasToSetTree=1;
+	this.updateAll();
+};
+mxG.G.prototype.doNumbering=function()
+{
+	let btns=[{n:"OK",a:"Numbering"},{n:"Cancel"}];
+	this.doDialog("EditNumbering",this.buildNumbering(),btns);
 };
 mxG.G.prototype.doVariation=function()
 {
 	if(this.styleMode&2) this.styleMode-=2;else this.styleMode+=2;
-	this.kidOnFocus(this.rN).Set("ST",this.styleMode&~4);
+	this.kidOnFocus(this.rN).put("ST",this.styleMode&~4);
 	this.updateAll();
 };
 mxG.G.prototype.doStyle=function()
 {
 	if(this.styleMode&1) this.styleMode-=1;else this.styleMode+=1;
-	this.kidOnFocus(this.rN).Set("ST",this.styleMode&~4);
+	this.kidOnFocus(this.rN).put("ST",this.styleMode&~4);
 	this.updateAll();
 };
 mxG.G.prototype.doPropertySwitch=function(tool)
 {
-	var z;
+	let z;
 	if((tool!="DO")&&(tool!="IT")) z=2;else z=1;
 	if(this.cN.P&&this.cN.P[tool])
 	{
 		if(((this.cN.P[tool][0]+"")=="1")&&(z>1)) this.cN.P[tool][0]="2";
-		else this.cN.TakeOff(tool,0);
+		else this.cN.takeOff(tool,0);
 	}
 	else
 	{
 		if((tool=="GB")||(tool=="GW")||(tool=="DM")||(tool=="UC"))
 		{
-			if((tool!="GB")&&this.cN.P&&this.cN.P.GB) this.cN.TakeOff("GB",0);
-			if((tool!="GW")&&this.cN.P&&this.cN.P.GW) this.cN.TakeOff("GW",0);
-			if((tool!="DM")&&this.cN.P&&this.cN.P.DM) this.cN.TakeOff("DM",0);
-			if((tool!="UC")&&this.cN.P&&this.cN.P.UC) this.cN.TakeOff("UC",0);
+			if((tool!="GB")&&this.cN.P&&this.cN.P.GB) this.cN.takeOff("GB",0);
+			if((tool!="GW")&&this.cN.P&&this.cN.P.GW) this.cN.takeOff("GW",0);
+			if((tool!="DM")&&this.cN.P&&this.cN.P.DM) this.cN.takeOff("DM",0);
+			if((tool!="UC")&&this.cN.P&&this.cN.P.UC) this.cN.takeOff("UC",0);
 		}
 		if((tool=="TE")||(tool=="BM")||(tool=="DO")||(tool=="IT"))
 		{
-			if((tool!="TE")&&this.cN.P&&this.cN.P.TE) this.cN.TakeOff("TE",0);
-			if((tool!="BM")&&this.cN.P&&this.cN.P.BM) this.cN.TakeOff("BM",0);
-			if((tool!="DO")&&this.cN.P&&this.cN.P.DO) this.cN.TakeOff("DO",0);
-			if((tool!="IT")&&this.cN.P&&this.cN.P.IT) this.cN.TakeOff("IT",0);
+			if((tool!="TE")&&this.cN.P&&this.cN.P.TE) this.cN.takeOff("TE",0);
+			if((tool!="BM")&&this.cN.P&&this.cN.P.BM) this.cN.takeOff("BM",0);
+			if((tool!="DO")&&this.cN.P&&this.cN.P.DO) this.cN.takeOff("DO",0);
+			if((tool!="IT")&&this.cN.P&&this.cN.P.IT) this.cN.takeOff("IT",0);
 		}
-		this.cN.Set(tool,(z>1)?"1":"");
+		this.cN.put(tool,(z>1)?"1":"");
 	}
 	this.updateAll();
 };
 mxG.G.prototype.doPL=function()
 {
-	if(this.cN.P&&this.cN.P.PL) this.cN.TakeOff("PL",0);
-	else this.cN.Set("PL",this.editNextNat);
+	if(this.cN.P&&this.cN.P.PL) this.cN.takeOff("PL",0);
+	else this.cN.put("PL",this.editNextNat);
 	this.updateAll();
 };
 mxG.G.prototype.doTransform=function(transform)
 {
-	var s,z,a=[],aN,n,k,sgf;
+	let s,z,a=[],aN,n,k,sgf;
 	if(this.hasC("Sgf"))
 	{
 		aN=this.cN;
@@ -417,7 +561,6 @@ mxG.G.prototype.doTransform=function(transform)
 		this.transform=transform;
 		s=this.buildSgf();
 		this.transform=0;
-		this.mayHaveExtraTags=0;
 		k=this.rNs.indexOf(this.rN);
 		sgf=this.rN.sgf?this.rN.sgf:"";
 		this.rN=new mxG.P(s,this.sgfLoadCoreOnly,this.sgfLoadMainOnly);
@@ -432,7 +575,6 @@ mxG.G.prototype.doTransform=function(transform)
 };
 mxG.G.prototype.doEditTool=function(newTool)
 {
-	if(this.gBox) {if(newTool==this.gBox) this.hideGBox(newTool);return;}
 	if(newTool=="ShowInfo") {this.doInfo();return;}
 	if(newTool=="Numbering") {this.doNumbering();return;}
 	if(newTool=="Cut") {this.doCut();return;}
@@ -492,16 +634,14 @@ mxG.G.prototype.doEditTool=function(newTool)
 };
 mxG.G.prototype.doEditCommentTool=function()
 {
-	var s=this.getE("CommentToolText").value;
-	if(s) this.cN.Set("C",s);
-	else this.cN.TakeOff("C",0);
+	let s=this.getE("CommentToolText").value;
+	if(s) this.cN.put("C",s);
+	else this.cN.takeOff("C",0);
 };
 mxG.G.prototype.getNextEditNat=function()
 {
-	var aN,k,km;
-	
+	var aN=this.cN;
 	// get color from PL
-	aN=this.cN;
 	if(aN.P.PL) return aN.P.PL[0];
 	// get color of this.kidOnFocus(this.cN)
 	aN=this.kidOnFocus(this.cN);
@@ -510,7 +650,6 @@ mxG.G.prototype.getNextEditNat=function()
 		if(aN.P.B) return "B";
 		if(aN.P.W) return "W";
 	}
-	
 	// get opposite color of cN
 	aN=this.cN;
 	if(aN.P.B) return "W";
@@ -519,16 +658,14 @@ mxG.G.prototype.getNextEditNat=function()
 	if(aN.P.AB&&!aN.P.AW) return "W";
 	else if(aN.P.AW&&!aN.P.AB) return "B";
 	// get color of cN children
-	km=this.cN.Kid.length;
-	for(k=0;k<km;k++)
+	for(let k=0;k<this.cN.Kid.length;k++)
 	{
 		aN=this.cN.Kid[k];
 		if(aN.P.B) return "B";
 		if(aN.P.W) return "W";
 	}
 	// get opposite color of cN brothers
-	km=this.cN.Dad.Kid.length;
-	for(k=0;k<km;k++)
+	for(let k=0;k<this.cN.Dad.Kid.length;k++)
 	{
 		aN=this.cN.Dad.Kid[k];
 		if(aN.P.B) return "W";
@@ -539,25 +676,22 @@ mxG.G.prototype.getNextEditNat=function()
 };
 mxG.G.prototype.checkEditPlay=function(a,b)
 {
-	var nextNat=this.editNextNat,
-		s,aN,x,y,nat,k,km;
+	let nextNat=this.editNextNat,k,km;
 	if(!nextNat) {this.plonk();return;}
 	if((a||b)&&this.gor.isOccupied(a,b)) {this.plonk();return;}
 	k=0;
 	km=this.cN.Kid.length;
 	while(k<km)
 	{
-		aN=this.cN.Kid[k];
-		x=-1;
-		y=-1;
-		nat="O";
-		s="";
+		let aN=this.cN.Kid[k],x,y,s,nat;
 		if(aN.P.B) {s=aN.P.B[0];nat="B";}
 		else if(aN.P.W) {s=aN.P.W[0];nat="W";}
+		else {s="";nat="O";}
 		if(s.length==2) {x=s.c2n(0);y=s.c2n(1);}
 		else if(s.length==0) {x=0;y=0;}
-		
-		if((x==a)&&(y==b)&&(nat==nextNat)) // there is already a nextNat move on (a,b) thus place it
+		else {x=-1;y=-1;}
+		// if there is already a nextNat move on (a,b), place it
+		if((x==a)&&(y==b)&&(nat==nextNat))
 		{
 			this.cN.Focus=k+1;
 			this.backNode(this.cN); // why?
@@ -577,8 +711,8 @@ mxG.G.prototype.checkEditSetup=function(x,y,setupTool="Setup")
 {
 	// if a B or W is in cN, add AX values on a new cN kids
 	// else add/remove AX values on cN
-	var aN,p,v,k,km,kp;
-	var AX=["AB","AW","AE"];
+	let aN,p,v,k,km,kp;
+	let AX=["AB","AW","AE"];
 	if(!this.inView(x,y)) return;
 	if(this.gor.getBanNat(x,y)!="E") p="AE";else p=this.editAX;
 	v=this.xy2s(x,y);
@@ -601,7 +735,7 @@ mxG.G.prototype.checkEditSetup=function(x,y,setupTool="Setup")
 			{
 				km=aN.P[AX[kp]].length;
 				for(k=0;k<km;k++) if(aN.P[AX[kp]][k]==v) break;
-				if(k<km) aN.TakeOff(AX[kp],k);
+				if(k<km) aN.takeOff(AX[kp],k);
 			}
 		}
 		// add p[x y] only if something is changed
@@ -620,7 +754,7 @@ mxG.G.prototype.selectGobanArea=function(x,y)
 {
 	if((this.editTool=="Select")&&this.inSelect&&((x!=this.editXrs)||(y!=this.editYbs)))
 	{
-		var id,i,j,xl,yt,xr,yb,xl1,yt1,xr1,yb1,xl2,yt2,xr2,yb2;
+		let id,i,j,xl,yt,xr,yb,xl1,yt1,xr1,yb1,xl2,yt2,xr2,yb2;
 		xl1=Math.min(this.editXls,this.editXrs);
 		yt1=Math.min(this.editYts,this.editYbs);
 		xr1=Math.max(this.editXls,this.editXrs);
@@ -635,39 +769,29 @@ mxG.G.prototype.selectGobanArea=function(x,y)
 		yt=Math.min(yt1,yt2);
 		xr=Math.max(xr1,xr2);
 		yb=Math.max(yb1,yb2);
-		for(i=xl;i<=xr;i++)
-			for(j=yt;j<=yb;j++)
-				if((i>=xl2)&&(i<=xr2)&&(j>=yt2)&&(j<=yb2))
-				{
-					if((i<xl1)||(i>xr1)||(j<yt1)||(j>yb1)) this.selectPoint(i,j);
-				}
-				else if((i>=xl1)&&(i<=xr1)&&(j>=yt1)&&(j<=yb1)) this.unselectPoint(i,j);
+		this.scr.removeSelect();
+		this.scr.addSelect(xl,yt,xr,yb);
 	}
 };
 mxG.G.prototype.unselectView=function()
 {
-	var i,j;
+	let i,j;
 	this.selection=0;
-	// check all points (easier)
-	for(i=0;i<=(this.DX+1);i++)
-		for(j=0;j<=(this.DY+1);j++)
-			this.unselectPoint(i,j);
+	this.scr.removeSelect();
 };
 mxG.G.prototype.selectView=function()
 {
-	var i,j,xl,yt,xr,yb;
+	let i,j,xl,yt,xr,yb;
 	this.selection=1;
 	xl=Math.min(this.editXls,this.editXrs);
 	yt=Math.min(this.editYts,this.editYbs);
 	xr=Math.max(this.editXls,this.editXrs);
 	yb=Math.max(this.editYts,this.editYbs);
-	for(i=xl;i<=xr;i++)
-		for(j=yt;j<=yb;j++)
-			this.selectPoint(i,j);
+	this.scr.addSelect(xl,yt,xr,yb);
 };
 mxG.G.prototype.getNextLabel=function(aLB)
 {
-	var bLB="";
+	let bLB="";
 	if(aLB.match(/^[A-Za-z]$/))
 	{
 		if(aLB=="Z") bLB="A";
@@ -678,7 +802,7 @@ mxG.G.prototype.getNextLabel=function(aLB)
 };
 mxG.G.prototype.checkEditMarkOrLabel=function(x,y,m)
 {
-	var v,k,km,kp,aLB,bLB="",MX=["MA","TR","SQ","CR","LB"];
+	let v,k,km,kp,aLB,bLB="",MX=["MA","TR","SQ","CR","LB"];
 	if(!this.inView(x,y)) return;
 	v=this.xy2s(x,y);
 	if(m=="LB")
@@ -701,7 +825,7 @@ mxG.G.prototype.checkEditMarkOrLabel=function(x,y,m)
 			else if(k<km)
 			{
 				if(MX[kp]=="LB") bLB=this.cN.P[MX[kp]][k].substring(3);
-				this.cN.TakeOff(MX[kp],k);
+				this.cN.takeOff(MX[kp],k);
 			}
 		}
 		else if(MX[kp]==m)
@@ -718,8 +842,8 @@ mxG.G.prototype.doMouseMoveEdit=function(ev)
 {
 	if((this.editTool=="Select")&&(this.inSelect==1))
 	{
-		if(ev.preventDefault) ev.preventDefault();
-		var c=this.scr.getC(ev);
+		ev.preventDefault();
+		let c=this.scr.getGxy(ev);
 		this.selectGobanArea(c.x,c.y);
 	}
 };
@@ -741,7 +865,7 @@ mxG.G.prototype.doMouseDownEdit=function(ev)
 {
 	if(this.editTool=="Select")
 	{
-		var c=this.scr.getC(ev);
+		let c=this.scr.getGxy(ev);
 		this.doMouseDownEditSelect(c.x,c.y);
 	}
 };
@@ -753,13 +877,23 @@ mxG.G.prototype.doMouseUpEdit=function(ev)
 {
 	if(this.editTool=="Select")
 	{
-		var c=this.scr.getC(ev);
+		let c=this.scr.getGxy(ev);
 		this.doMouseUpEditSelect(c.x,c.y);
 	}
 };
 mxG.G.prototype.doMouseOutEdit=function(ev)
 {
-	if(this.editTool=="Select") this.inSelect=0;
+	// mouseOut events may be generated even if the mouse is still on ig
+	// because the svg could hide ig, thus discard such mouseOut events
+	if(this.editTool=="Select")
+	{
+		if(this.inSelect)
+		{
+			let c=this.scr.getGxy(ev,1);
+			if((c.x<this.xli)||(c.x>this.xri)||(c.y<this.yti)||(c.y>this.ybi))
+				this.inSelect=0;
+		}
+	}
 };
 mxG.G.prototype.doKeydownSelect=function(x,y)
 {
@@ -768,10 +902,10 @@ mxG.G.prototype.doKeydownSelect=function(x,y)
 	{
 		this.inSelect=2;
 		if(this.selection) this.unselectView();
-		this.editXls=((x==1)?0:((x==this.DX)?this.DX+1:x));
-		this.editYts=((y==1)?0:((y==this.DY)?this.DY+1:y));
-		this.editXrs=((x==(this.DX+1))?this.DX:((x==0)?1:x));
-		this.editYbs=((y==(this.DY+1))?this.DY:((y==0)?1:y));
+		this.editXls=x;
+		this.editYts=y;
+		this.editXrs=x;
+		this.editYbs=y;
 		this.selectView();
 	}
 };
@@ -790,35 +924,10 @@ mxG.G.prototype.checkEdit=function(x,y)
 		case "Label": this.checkEditMarkOrLabel(x,y,"LB");break;
 	}
 };
-mxG.G.prototype.doClickEdit=function(ev)
-{
-	var c;
-	if(this.isGobanDisabled()) return;
-	if(this.canPlaceEdit)
-	{
-		c=this.scr.getC(ev);
-		this.checkEdit(c.x,c.y);
-	}
-};
-mxG.G.prototype.doKeydownGobanForEdit=function(ev)
-{
-	var c;
-	if(this.gBox&&(this[this.gBox+"Parent"]=="Goban")) return;
-	if(this.canPlaceEdit&&this.gobanFocusVisible)
-	{
-		c=mxG.getKCode(ev);
-		if((c==13)||(c==32))
-		{
-			if(this.editTool=="Select") this.doKeydownSelect(this.xFocus,this.yFocus);
-			else this.checkEdit(this.xFocus,this.yFocus);
-			ev.preventDefault();
-		}
-	}
-};
 mxG.G.prototype.drawSvgTool=function(tool)
 {
-	var e=this.getE(tool+"Tool"),nat,txt,o;
-	o={in3dOn:this.in3dOn,stoneShadowOn:this.stoneShadowOn};
+	let e=this.getE(tool+"Tool"),nat,txt,o;
+	o={in3dOn:this.in3dOn,stoneShadowOn:this.stoneShadowOn,type:"tool",ariaHidden:1};
 	switch(tool)
 	{
 		case "Select":
@@ -894,7 +1003,7 @@ mxG.G.prototype.drawSvgTool=function(tool)
 };
 mxG.G.prototype.drawEditTools=function()
 {
-	var k,km=this.tools.length,tool;
+	let k,km=this.tools.length,tool;
 	for(k=0;k<km;k++)
 	{
 		tool=this.tools[k];
@@ -927,14 +1036,8 @@ mxG.G.prototype.getInitialMark=function(a)
 };
 mxG.G.prototype.updateEdit=function()
 {
-	if(this.gBox)
-	{
-		this.disableTools();
-		if((this.gBox=="Numbering")||(this.gBox=="ShowInfo"))
-			this.enableTool(this.gBox);
-	}
-	else if(this.hasC("Score")&&this.canPlaceScore) this.disableTools();
-	else this.enableTools();
+	if(this.hasC("Score")&&this.canPlaceScore) return;
+	this.enableTools();
 	this.editNextNat=this.getNextEditNat();
 	if(this.hasToSetEditTools) this.drawEditTools();
 	else this.drawSvgTool("Play");
@@ -965,7 +1068,7 @@ mxG.G.prototype.updateEdit=function()
 };
 mxG.G.prototype.doKeydownLabel=function(ev)
 {
-	if(mxG.getKCode(ev)==13) this.changeSelectedTool("Label");
+	if(ev.key=="Enter") this.changeSelectedTool("Label");
 };
 mxG.G.prototype.getToolLabel=function(tool)
 {
@@ -1008,7 +1111,7 @@ mxG.G.prototype.getToolLabel=function(tool)
 };
 mxG.G.prototype.makeTool=function(tool)
 {
-	var s,id;
+	let s,id;
 	s=" title=\""+this.local(this.getToolLabel(tool))+"\"";
 	id=this.n+tool+"Tool";
 	s+=" class=\"mxUnselectedEditTool\"";
@@ -1017,19 +1120,9 @@ mxG.G.prototype.makeTool=function(tool)
 	else s="<button"+s+"></button>";
 	return s;
 };
-mxG.G.prototype.buildEditBtns=function()
-{
-	// for "Menu" component if any
-	var s="";
-	s+=this.buildBtn({n:"Cut",v:this.local("Cut")});
-	s+=this.buildBtn({n:"Copy",v:this.local("Copy")});
-	s+=this.buildBtn({n:"Paste",v:this.local("Paste")});
-	s+=this.buildBtn({n:"RemoveComments",v:this.local("Remove comments")});
-	return s;
-};
 mxG.G.prototype.initEditTools=function()
 {
-	var k,km=this.tools.length,tool,e;
+	let k,km=this.tools.length,tool,e;
 	for(k=0;k<km;k++)
 	{
 		tool=this.tools[k];
@@ -1037,18 +1130,18 @@ mxG.G.prototype.initEditTools=function()
 		if(tool)
 		{
 			let z=this.k,t=tool;
-			e.addEventListener("click",function(){mxG.D[z].doEditTool(t);},false);
+			e.addEventListener("click",function(){mxG.D[z].doEditTool(t);});
 			if(tool=="Label")
 			{
 				e.addEventListener("keydown",function(ev){
-					mxG.D[z].doKeydownLabel(ev);},false);
+					mxG.D[z].doKeydownLabel(ev);});
 			}
 		}
 	}
 };
 mxG.G.prototype.initEdit=function()
 {
-	var k=this.k;
+	let k=this.k;
 	if(this.editXls===undefined) this.editXls=this.xl;
 	if(this.editYts===undefined) this.editYts=this.yt;
 	if(this.editXrs===undefined) this.editXrs=this.xr;
@@ -1059,37 +1152,26 @@ mxG.G.prototype.initEdit=function()
 	this.drawEditTools();
 	if(!this.editTool) this.changeSelectedTool("Play");
 	this.pN=this.cN; // pN: previous node
-	this.ig.getMClick=mxG.getMClick;
-	this.ig.addEventListener("click",function(ev){mxG.D[k].doClickEdit(ev);},false);
-	this.ig.addEventListener("mousemove",function(ev){mxG.D[k].doMouseMoveEdit(ev);},false);
-	this.ig.addEventListener("mouseup",function(ev){mxG.D[k].doMouseUpEdit(ev);},false);
-	this.ig.addEventListener("mousedown",function(ev){mxG.D[k].doMouseDownEdit(ev);},false);
-	this.ig.addEventListener("mouseout",function(ev){mxG.D[k].doMouseOutEdit(ev);},false);
-	if(this.canGobanFocus)
-		this.ig.addEventListener("keydown",
-			function(ev){mxG.D[k].doKeydownGobanForEdit(ev);},false);
 	if(this.hasEditTool("Comment"))
 	{
-		this.getE("CommentToolDiv").addEventListener("click",function(){mxG.D[k].doEditCommentTool();},false);
-		this.getE("CommentToolText").addEventListener("change",function(){mxG.D[k].doEditCommentTool();},false);
+		this.getE("CommentToolDiv").addEventListener("click",function(){mxG.D[k].doEditCommentTool();});
+		this.getE("CommentToolText").addEventListener("change",function(){mxG.D[k].doEditCommentTool();});
 		this.getE("CommentToolText").value="";
 	}
 };
 mxG.G.prototype.hasEditTool=function(tool)
 {
-	if(tool=="Comment") return this.editCommentToolOn;
+	if(tool=="Comment") return 1;
 	return this.tools.indexOf(tool)>=0;
 };
 mxG.G.prototype.createEdit=function()
 {
-	var s="",k=0,km,m,mm;
-	if(this.editCommentToolOn===undefined) this.editCommentToolOn=1;
-	if(this.tools===undefined)
-		this.tools=[
-			"Select","View","Play","Setup","Cut","Copy","Paste",
-			"Numbering","ShowInfo","Label","Mark","Circle","Square","Triangle",
-			"AsInBook","Indices","Variation","Style",
-			"GB","GW","DM","UC","TE","BM","DO","IT","PL","R","VM","HM"];
+	let s="",k=0,km,m,mm;
+	this.tools=[
+		"Select","View","Play","Setup","Cut","Copy","Paste",
+		"Numbering","ShowInfo","Label","Mark","Circle","Square","Triangle",
+		"AsInBook","Indices","Variation","Style",
+		"GB","GW","DM","UC","TE","BM","DO","IT","PL","R","VM","HM"];
 	this.canPlaceEdit=1;
 	this.extraEditToolsOn=1;
 	this.et=1; // padding arround canvas tool
@@ -1100,17 +1182,20 @@ mxG.G.prototype.createEdit=function()
 	this.inSelect=0;
 	this.selection=0;
 	this.editTool=0;
-	s+="<div tabindex=\"-1\"";
-	s+=" class=\"mxEditToolBarDiv\" id=\""+this.n+"EditToolBarDiv\">";
+	s+="<div class=\"mxEditToolBarDiv\" id=\""+this.n+"EditToolBarDiv\">";
 	km=this.tools.length;
 	for(k=0;k<km;k++) s+=this.makeTool(this.tools[k]);
 	s+="</div>";
-	if(this.editCommentToolOn)
-	{
-		s+="<div class=\"mxEditCommentToolDiv\" id=\""+this.n+"CommentToolDiv\">";
-		s+="<textarea title=\""+this.local("Comment")+"\" id=\""+this.n+"CommentToolText\"></textarea>";
-		s+="</div>";
-	}
+	s+="<div class=\"mxEditCommentToolDiv\" id=\""+this.n+"CommentToolDiv\">";
+	s+="<textarea title=\""+this.local("Comment")+"\" id=\""+this.n+"CommentToolText\"></textarea>";
+	s+="</div>";
+	this.menuEditItems=
+	[
+		{n:"Cut",v:this.local("Cut")},
+		{n:"Copy",v:this.local("Copy")},
+		{n:"Paste",v:this.local("Paste")},
+		{n:"RemoveComments",v:this.local("Remove comments")}
+	];
 	return s;
 };
 }

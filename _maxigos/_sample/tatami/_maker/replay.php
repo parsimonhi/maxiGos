@@ -17,8 +17,7 @@ include "../../../_js/mgosLoop.js";
 include "../../../_js/mgosVariation.js";
 include "../../../_js/mgosGoto.js";
 include "../../../_js/mgosSpeed.js";
-include "../../../_js/mgosOption.js";
-include "../../../_js/mgosTitle.js";
+include "../../../_js/mgosOptions.js";
 include "../../../_js/mgosHeader.js";
 include "../../../_js/mgosCut.js";
 include "../../../_js/mgosPass.js";
@@ -31,28 +30,30 @@ mxG.B=[["WhiteCartouche","Goban","AnimatedStone","BlackCartouche"],
 	   "Navigation",
 	   "Loop",
 	   "Variation",
+	   "Guess",
 	   "Goto",
 	   "Speed",
-	   "Guess",
-	   ["Option","Title","Header","Image","Cut","Pass"],
+	   ["Options","Header","Image","Cut","Pass"],
 	   "Version"
 	];
 mxG.D[mxG.K]=new mxG.G(mxG.K,mxG.B);
-mxG.D[mxG.K].theme="<?php echo $theme ?>";
-mxG.D[mxG.K].config="<?php echo $config ?>";
+mxG.D[mxG.K].theme="<?=$theme?>";
+mxG.D[mxG.K].config="<?=$config?>";
 <?php
 include "../../_php/insertCss.php";
 ?>
 // general
-mxG.D[mxG.K].a.in3dOn=1; // (0,1) default 1
-mxG.D[mxG.K].a.htmlParenthesis=1; // (0,1) default 0
+mxG.D[mxG.K].a.in3dOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.allowStringAsSource=1; // (0,1) default 1
 mxG.D[mxG.K].a.allowFileAsSource=1; // (0,1) default 1
 // mxG.D[mxG.K].a.sourceFilter=""; // (str) default ""
 mxG.D[mxG.K].a.initMethod="last"; // ("first","loop","last") default "first"
+// guessing variations is not very interesting in general
+// so one chooses to ignore them here
+// since canPlaceGuess=1, canPlaceVariation=0 and no Options component
+mxG.D[mxG.K].a.sgfLoadMainOnly=1; // (0,1) default 0
 // Goban
 mxG.D[mxG.K].a.pointsNumMax=19; // (positive integer) default 0
-mxG.D[mxG.K].a.magicParentNum=0; // (positive integer) default 0
 mxG.D[mxG.K].a.stoneShadowOn=0; // (0,1) default 0 (require in3dOn=1)
 mxG.D[mxG.K].a.specialStoneOn=0; // (0,1) default 0 (require in3dOn=1)
 mxG.D[mxG.K].a.stretching="0,1,1,2"; // (list) default "0,0,1,1"
@@ -82,30 +83,27 @@ mxG.D[mxG.K].a.gotoBoxOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.guessBoxOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.canPlaceGuess=1; // (0,1) default 0
 // Header
-mxG.D[mxG.K].a.headerBoxOn=0; // (0,1) default 0
 mxG.D[mxG.K].a.headerBtnOn=1; // (0,1) default 0
-mxG.D[mxG.K].a.concatNumOfMovesToResult=1; // (0,1) default 0
-mxG.D[mxG.K].a.hideNumOfMovesLabel=1; // (0,1) default 0
+mxG.D[mxG.K].a.hideInHeader="NumOfMovesLabel"; // (set) default ""
+mxG.D[mxG.K].a.concatInHeader="NumOfMovesToResult"; // (set) default ""
 // Image
 mxG.D[mxG.K].a.pngBtnOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.svgBtnOn=1; // (0,1) default 0
 // Loop
 mxG.D[mxG.K].a.loopTime=1000; // (positive integer) default 1000
 // Navigation
-mxG.D[mxG.K].a.navigations="First,TenPred,Pred,Loop,Next,TenNext,Last"; // (list) default "First,TenPred,Pred,Next,TenNext,Last"
-// Option
-mxG.D[mxG.K].a.optionBtnOn=1; // (0,1) default 0
-mxG.D[mxG.K].a.hideIn3dOn=1; // (0,1) default 0
-mxG.D[mxG.K].a.hideIndicesOn=1; // (0,1) default 0
-mxG.D[mxG.K].a.hideSiblingsOn=1; // (0,1) default 0
+mxG.D[mxG.K].a.navigations="First,TenPred,Pred,Loop,Next,TenNext,Last"; // (set) default "First,TenPred,Pred,Next,TenNext,Last"
+// options
+mxG.D[mxG.K].a.optionsBtnOn=1; // (0,1) default 0
+mxG.D[mxG.K].a.hideInOptions="In3dOn,IndicesOn,SiblingsOn"; // (set) default ""
 // Pass
 mxG.D[mxG.K].a.passBtnOn=1; // (0,1) default 0
-// Title
-mxG.D[mxG.K].a.translateTitleOn=1; // (0,1) default 0
 // Variation
 mxG.D[mxG.K].a.variationMarksOn=1; // (0,1,null) default 0
 mxG.D[mxG.K].a.siblingsOn=0; // (0,1,null) default 0
 mxG.D[mxG.K].a.hideSingleVariationMarkOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.variationBoxOn=0; // (0,1) default 0
 mxG.D[mxG.K].a.canPlaceVariation=0; // (0,1) default 0
+// Version
+mxG.D[mxG.K].a.versionBoxOn=1; // (0,1) default 0
 mxG.D[mxG.K].start();

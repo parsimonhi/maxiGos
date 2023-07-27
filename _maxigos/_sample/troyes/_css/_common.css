@@ -1,84 +1,46 @@
 .mxTroyesTheme
 {
-	--gobanMaxWidth:30em;
-	--gobanMinWidth:10em;
+	--gobanMaxWidth:calc(1em * 491 / 16);
+	font-family:sans-serif;
 	text-align:left;
 }
+.mxTroyesTheme.mxIndicesOff {--gobanMaxWidth:calc(1em * 445 / 16);}
 /* general */
-.mxTroyesTheme div::-moz-focus-inner,
-.mxTroyesTheme button::-moz-focus-inner,
-.mxTroyesTheme input[type=text]::-moz-focus-inner,
-.mxTroyesTheme a::-moz-focus-inner {padding:0;border:0;}
-.mxTroyesTheme div:focus,
-.mxTroyesTheme button:focus,
-.mxTroyesTheme input[type=text]:focus,
-.mxTroyesTheme a:focus {outline:none;}
-.mxTroyesTheme button,
-.mxTroyesTheme input[type=button],
-.mxTroyesTheme textarea {-webkit-appearance:none;-moz-appearance:none;}
-.mxTroyesTheme text {cursor:default;}
-.mxTroyesTheme button {cursor:pointer;}
-.mxTroyesTheme input[type=text][disabled],
-.mxTroyesTheme button[disabled] {cursor:default;}
-/* font */
-.mxTroyesTheme
-{
-	font-family:sans-serif;
-}
-.mxTroyesTheme svg
-{
-	font-family:arial,sans-serif;
-}
-.mxTroyesTheme button
-{
-	font-family:sans-serif;
-}
+.mxTroyesTheme button {-webkit-appearance:none;-moz-appearance:none;}
+.mxTroyesTheme button[disabled] {cursor:default;opacity:0.3;}
+.mxTroyesTheme svg {display:block;width:100%;height:100%;}
 /* layout */
 .mxTroyesTheme
 {
 	max-width:var(--gobanMaxWidth);
-	min-width:var(--gobanMinWidth);
 	margin:0 auto;
 }
-.mxTroyesTheme>.mxVersionDiv {display:none;}
 /* common */
 .mxTroyesTheme .mxInnerGobanDiv
 {
-	/* avoid bad touch effect on mobile */
-	-webkit-tap-highlight-color:rgba(0,0,0,0);
-	user-select:none;
 	margin:0 auto;
-	position:relative;
 }
 .mxTroyesTheme .mxGobanDiv svg
 {
-	display:block;
-	width:100%;
-	height:100%;
-	pointer-events:none;
 	margin:0 auto;
-	/* need border-box since border */
-	box-sizing:border-box;
-	border-top:1px solid #ca7;
-	border-left:1px solid #ca7;
-	border-right:1px solid #974;
-	border-bottom:1px solid #974;
-	/* add background-color to avoid a 1px transparent line on goban right or bottom */
-	/* the transparent 1px line doesn't appear in all cases (rounding problem?) */
-	background-color:#cc9960;
-	/* background:url(troyes-mini.jpg); */
+	box-shadow:inset 1px 1px #ca7,inset -1px -1px #974;
+	/* background-image:url(troyes-mini.jpg); */
 	background-image:url("data:image/jpeg;base64,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");
 	background-size:100% 100%;
 	background-repeat:no-repeat;
 }
-.mxTroyesTheme .mxGobanLines
+.mxTroyesTheme .mxGobanLines,
+.mxTroyesTheme .mxStars,
+.mxTroyesTheme .mxMark.mxOnEmpty:not(.mxPointBackground),
+.mxTroyesTheme .mxPointBackground.mxOnEmpty.mxOnFocus
 {
 	stroke:#532;
 }
-.mxTroyesTheme .mxStars
+.mxTroyesTheme .mxIndices,
+.mxTroyesTheme .mxStars,
+.mxTroyesTheme text.mxOnEmpty
 {
 	fill:#532;
-	stroke:#532;
 }
 .mxTroyesTheme .mxBlackRadialGradient stop:nth-of-type(1)
 {
@@ -104,10 +66,7 @@
 {
 	stop-color:#999;
 }
-.mxTroyesTheme .mxBlack
-{
-	stroke:rgba(0,0,0,0.1);
-}
+.mxTroyesTheme .mxBlack,
 .mxTroyesTheme .mxWhite
 {
 	stroke:rgba(0,0,0,0.1);
@@ -116,139 +75,47 @@
 {
 	fill:#b30;
 }
-.mxTroyesTheme .mxGobanDiv .mxMark,
-.mxTroyesTheme .mxGobanDiv .mxTerritoryMark,
-.mxTroyesTheme .mxTreeDiv .mxMark
+.mxTroyesTheme .mxMark:not(.mxPointBackground),
+.mxTroyesTheme .mxTerritoryMark
 {
-	stroke-width:1.5px;
+	stroke-width:1.25px;
 }
-.mxTroyesTheme .mxGobanDiv .mxMark.mxOnWhite:not(.mxPointBackground)
+.mxTroyesTheme .mxTitleP
 {
-	stroke:#000;
-}
-.mxTroyesTheme .mxGobanDiv .mxMark.mxOnEmpty:not(.mxPointBackground)
-{
-	stroke:#532;
-}
-.mxTroyesTheme .mxGobanDiv .mxLabel.mxOnWhite:not(.mxPointBackground),
-.mxTroyesTheme .mxGobanDiv .mxVariation.mxOnWhite:not(.mxPointBackground)
-{
-	fill:#000;
-	stroke:#000;
-}
-.mxTroyesTheme .mxGobanDiv .mxLabel.mxOnEmpty:not(.mxPointBackground),
-.mxTroyesTheme .mxGobanDiv .mxVariation.mxOnEmpty:not(.mxPointBackground)
-{
-	fill:#532;
-	stroke:#532;
-}
-.mxTroyesTheme .mxGobanDiv .mxVariation.mxOnFocus:not(.mxPointBackground)
-{
-	fill:#b30;
-	stroke:#b30;
-}
-.mxTroyesTheme .mxGobanDiv .mxVariation.mxOnFocus.mxPointBackground
-{
-	stroke:none;
-}
-.mxTroyesTheme text
-{
-	stroke-width:0.5px;
-}
-.mxTroyesTheme text.mxOnBlack
-{
-	fill:#fff;
-	stroke:#fff;
-}
-.mxTroyesTheme text.mxOnWhite
-{
-	fill:#000;
-	stroke:#000;
-}
-.mxTroyesTheme text.mxOnEmpty,
-.mxTroyesTheme text.mxIndice
-{
-	fill:#532;
-	stroke:#532;
-}
-.mxTroyesTheme text.mxVariation.mxOnFocus
-{
-	fill:#b30;
-	stroke:#b30;
-}
-.mxTroyesTheme .mxTitleH1
-{
-	font-size:1em;
-	padding:0;
-	margin:0 0 0.25em 0;
-}
-.mxTroyesTheme .mxVersionDiv
-{
-	display:none;
-	text-align:center;
-}
-.mxTroyesTheme .mxP:not(:first-child)
-{
-	padding-top:0.5em;
+	font-weight:bold;
 }
 /* comment and tree*/
-.mxTroyesTheme.mxCommentConfig .mxCommentDiv,
-.mxTroyesTheme.mxTreeConfig .mxCommentDiv,
-.mxTroyesTheme.mxTreeConfig .mxTreeDiv
+.mxTroyesTheme:not(.mxProblemConfig) .mxCommentDiv,
+.mxTroyesTheme .mxTreeDiv
 {
-	margin-top:0.25em;
 	height:7em;
 	padding:0.25em;
 	border:1px solid rgba(0,0,0,0.3);
 	overflow:auto;
 	resize:vertical;
 }
-.mxTroyesTheme.mxCommentConfig .mxCommentDiv:focus,
-.mxTroyesTheme.mxTreeConfig .mxCommentDiv:focus,
-.mxTroyesTheme.mxTreeConfig .mxTreeDiv:focus
+.mxTroyesTheme .mxTreeDiv
 {
-	border:1px solid rgba(0,0,0,0.7);
-	color:rgba(0,0,0,0.9);
+	margin:0.25em 0 0 0;
 }
-.mxTroyesTheme.mxTreeConfig .mxTreeDiv svg .mxFocus
+.mxTroyesTheme .mxTreeDiv svg
+{
+	width:unset;
+	height:unset;
+}
+.mxTroyesTheme .mxTreeDiv svg .mxFocus
 {
 	fill:#b30;
 	opacity:1;
 }
-.mxTroyesTheme.mxTreeConfig .mxTreeDiv svg .mxTreeLine
+.mxTroyesTheme .mxTreeDiv svg .mxTreeLine
 {
 	stroke:rgba(0,0,0,0.9);
-}
-.mxTroyesTheme.mxCommentConfig .mxAboutParentDiv,
-.mxTroyesTheme.mxTreeConfig .mxAboutParentDiv
-{
-	text-align:center;
-}
-.mxTroyesTheme.mxCommentConfig .mxAboutParentDiv>div,
-.mxTroyesTheme.mxTreeConfig .mxAboutParentDiv>div
-{
-	display:inline-block;
-}
-.mxTroyesTheme.mxTreeConfig .mxTreeDiv
-{
-	resize:vertical;
-	user-select:none;
-	max-height:42em;
 }
 /* diagram */
 .mxTroyesTheme .mxInnerNotSeenDiv:not(:empty)
 {
 	margin:0.5em auto 0 auto;
-}
-.mxTroyesTheme .mxInnerNotSeenDiv
-{
-	margin:0 auto;
-}
-.mxTroyesTheme .mxNotSeenSvg
-{
-	width:100%;
-	height:100%;
-	display:block;
 }
 /* game */
 .mxTroyesTheme.mxGameConfig .mxHeaderDiv
@@ -256,111 +123,71 @@
 	padding-bottom:0.125em;
 	margin-bottom:0.5em;
 }
-.mxTroyesTheme.mxGameConfig .mxHeaderDiv h1
-{
-	font-size:1em;
-	font-weight:bold;
-}
 /* problem */
 .mxTroyesTheme.mxProblemConfig .mxCommentDiv
 {
-	margin:0 auto 0.5em auto;
-	text-align:center;
-	min-height:1.5em;
-	line-height:1.5em;
+	display:flex;
+	justify-content:center;
+	min-height:2.25em;
 }
-.mxTroyesTheme.mxProblemConfig .mxCommentContentDiv
+.mxTroyesTheme.mxProblemConfig .mxCommentContentDiv p
 {
-	display:inline-block;
-	text-align:justify;
-}
-/* buttons and inputs */
-/* buttons */
-.mxTroyesTheme input[type=text][disabled],
-.mxTroyesTheme button[disabled] {opacity:0.3;}
-.mxTroyesTheme .mxAboutParentDiv button
-{
-	font-size:1em;
-	border:1px solid rgba(0,0,0,0.3);
-	background:transparent;
-	color:#000;
-	margin:0.5em 0.125em;
-	padding:0 0.75em;
-	height:2em;
-	line-height:2em;
-	white-space:nowrap;
-	text-decoration:none;
-}
-.mxTroyesTheme .mxOptionParentDiv button:focus,
-.mxTroyesTheme input[type=text]:focus
-{
-	border:1px solid rgba(0,0,0,0.7);
-}
-.mxTroyesTheme input[type=text]
-{
-	text-align:center;
+	margin:0.5em;
+	padding:0;
+	line-height:1.25em;
 }
 /* navigation and solve*/
 .mxTroyesTheme .mxNavigationDiv
 {
 	display:flex;
 	justify-content:space-around;
-	align-items:center;
 }
 .mxTroyesTheme .mxNavigationDiv button
 {
 	flex:1;
 	font-size:1em;
-	border:1px solid transparent;
+	border:0;
 	background:none;
 	margin:0 2%;
-	padding:0;
-}
-.mxTroyesTheme .mxNavigationDiv button svg
-{
-	display:block;
-	margin:25% auto;
-	max-width:50%;
-	width:100%;
-	height:100%;
-}
-.mxTroyesTheme .mxNavigationDiv rect,
-.mxTroyesTheme .mxNavigationDiv polygon
-{
-	fill:rgba(0,0,0,0.9);
+	padding:3%;
 }
 .mxTroyesTheme .mxSolveDiv
 {
-	padding:1px;
 	text-align:center;
 }
 .mxTroyesTheme .mxSolveDiv button
 {
+	width:10%;
+	min-width:1cm;
+	margin:1% 2%;
+	padding:0;
 	border:0;
 	background:none;
-	margin:0.125em 1em;
-	padding:0;
-	width:10%;
-	min-width:40px;
-	height:auto;
 }
-.mxTroyesTheme .mxSolveDiv button svg
-{
-	display:block;
-	width:100%;
-	height:100%;
-}
-.mxTroyesTheme .mxSolveDiv rect,
-.mxTroyesTheme .mxSolveDiv circle,
+.mxTroyesTheme .mxNavigationDiv rect,
+.mxTroyesTheme .mxNavigationDiv polygon,
 .mxTroyesTheme .mxSolveDiv path
 {
 	fill:rgba(0,0,0,0.9);
 }
+/* focus, hover and cursor */
+.mxTroyesTheme :focus {outline:none;}
+.mxTroyesTheme .mxGobanSvg:not(:focus-visible) .mxFocus {display:none;}
+.mxTroyesTheme .mxCommentDiv:focus,
+.mxTroyesTheme .mxTreeDiv:focus
+{
+	border:1px solid rgba(0,0,0,0.7);
+	color:rgba(0,0,0,0.9);
+}
 .mxTroyesTheme .mxNavigationDiv button:focus rect,
 .mxTroyesTheme .mxNavigationDiv button:focus polygon,
-.mxTroyesTheme .mxSolveDiv button:focus rect,
-.mxTroyesTheme .mxSolveDiv button:focus circle,
 .mxTroyesTheme .mxSolveDiv button:focus path
 {
 	fill:#b30;
 }
+.mxTroyesTheme button,
+.mxTroyesTheme:not(.mxDiagramConfig) .mxGobanDiv svg,
+.mxTroyesTheme .mxTreeDiv svg circle,
+.mxTroyesTheme .mxTreeDiv svg polygon,
+.mxTroyesTheme .mxTreeDiv svg rect,
+.mxTroyesTheme .mxTreeDiv svg text {cursor:pointer;}

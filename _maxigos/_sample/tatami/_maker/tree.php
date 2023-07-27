@@ -18,7 +18,7 @@ include "../../../_js/mgosGoto.js";
 include "../../../_js/mgosComment.js";
 include "../../../_js/mgosTree.js";
 include "../../../_js/mgosAbout.js";
-include "../../../_js/mgosOption.js";
+include "../../../_js/mgosOptions.js";
 include "../../../_js/mgosHeader.js";
 include "../../../_js/mgosSgf.js";
 include "../../../_js/mgosCut.js";
@@ -26,23 +26,21 @@ include "../../../_js/mgosPass.js";
 include "../../../_js/mgosVersion.js";
 ?>
 mxG.K++;
-mxG.B=[["WhiteCartouche","Goban","AnimatedStone","BlackCartouche"],"Navigation","Variation","Goto","Comment","Tree",["About","Option","Header","Sgf","Cut","Pass"],"Version"];
+mxG.B=[["WhiteCartouche","Goban","AnimatedStone","BlackCartouche"],"Navigation","Variation","Goto","Comment","Tree",["About","Options","Header","Sgf","Cut","Pass"],"Version"];
 mxG.D[mxG.K]=new mxG.G(mxG.K,mxG.B);
-mxG.D[mxG.K].theme="<?php echo $theme ?>";
-mxG.D[mxG.K].config="<?php echo $config ?>";
+mxG.D[mxG.K].theme="<?=$theme?>";
+mxG.D[mxG.K].config="<?=$config?>";
 <?php
 include "../../_php/insertCss.php";
 ?>
 // general
-mxG.D[mxG.K].a.in3dOn=1; // (0,1) default 1
-mxG.D[mxG.K].a.htmlParenthesis=1; // (0,1) default 0
+mxG.D[mxG.K].a.in3dOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.allowStringAsSource=1; // (0,1) default 1
 mxG.D[mxG.K].a.allowFileAsSource=1; // (0,1) default 1
 // mxG.D[mxG.K].a.sourceFilter=""; // (str) default ""
 mxG.D[mxG.K].a.initMethod="first"; // ("first","loop","last") default "first"
 // Goban
 mxG.D[mxG.K].a.pointsNumMax=19; // (positive integer) default 0
-mxG.D[mxG.K].a.magicParentNum=0; // (positive integer) default 0
 mxG.D[mxG.K].a.stoneShadowOn=0; // (0,1) default 0 (require in3dOn=1)
 mxG.D[mxG.K].a.specialStoneOn=0; // (0,1) default 0 (require in3dOn=1)
 mxG.D[mxG.K].a.stretching="0,1,1,2"; // (list) default "0,0,1,1"
@@ -73,25 +71,19 @@ mxG.D[mxG.K].a.canCommentFocus=1; // (0,1) default 0
 mxG.D[mxG.K].a.cutBtnOn=1; // (0,1) default 0
 // Goto
 mxG.D[mxG.K].a.gotoBoxOn=0; // (0,1) default 0
-mxG.D[mxG.K].a.gotoInputOn=1; // (0,1) default 0
-mxG.D[mxG.K].a.gotoInputBefore="Next"; // (string) default ""
 // Header
 mxG.D[mxG.K].a.headerBoxOn=0; // (0,1) default 0
 mxG.D[mxG.K].a.headerBtnOn=1; // (0,1) default 0
-mxG.D[mxG.K].a.hidePlace=1; // (0,1) default 0
-mxG.D[mxG.K].a.hideRules=1; // (0,1) default 0
-mxG.D[mxG.K].a.hideTimeLimits=1; // (0,1) default 0
-mxG.D[mxG.K].a.hideNumOfMoves=1; // (0,1) default 0
+mxG.D[mxG.K].a.hideInHeader="NumOfMoves,Place,Rules,TimeLimits"; // (set) default ""
+// Navigation
+mxG.D[mxG.K].a.navigations="First,TenPred,Pred,Goto,Next,TenNext,Last"; // (set) default "First,TenPred,Pred,Next,TenNext,Last"
 // Pass
 mxG.D[mxG.K].a.passBtnOn=1; // (0,1) default 0
-// Option
-mxG.D[mxG.K].a.optionBoxOn=0; // (0,1) default 0
-mxG.D[mxG.K].a.optionBtnOn=1; // (0,1) default 0
+// options
+mxG.D[mxG.K].a.optionsBoxOn=0; // (0,1) default 0
+mxG.D[mxG.K].a.optionsBtnOn=1; // (0,1) default 0
 // Sgf
 mxG.D[mxG.K].a.sgfBtnOn=1; // (0,1) default 0
-// Title
-mxG.D[mxG.K].a.titleBoxOn=0; // (0,1,null) default 0
-mxG.D[mxG.K].a.translateTitleOn=0; // (0,1) default 0
 // Tree
 mxG.D[mxG.K].a.canTreeFocus=1; // (0,1) default 0
 mxG.D[mxG.K].a.treeVsGobanMaxRatio=5/3; // (positive float) default 1

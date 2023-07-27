@@ -78,8 +78,8 @@ pierres, elles sont de forme biconvexe et d'un diamètre d'environ 22
 mm.</p>
 
 <figure class="g19x19">
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js">
-../../../../_sgf/regle/grille.sgf
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
+		data-maxigos-sgf="../../../../_sgf/regle/grille.sgf">
 </script>
 <figcaption>
 <span>Fig. 1</span> :
@@ -95,8 +95,8 @@ certains points sont renforcés. On les appelle
 ligne et sans autre intersection entre elles.</p>
 
 <figure class="g7x7">
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js">
-../../../../_sgf/regle/voisines.sgf
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
+		data-maxigos-sgf="../../../../_sgf/regle/voisines.sgf">
 </script>
 <figcaption>
 <span>Diag. 1</span> : 'a' et 'b' sont des intersections
@@ -113,8 +113,8 @@ plusieurs pierres de même couleur voisines de proche en proche.</p>
 intersections inoccupées voisines des pierres de cette chaîne.</p>
 
 <figure class="g7x7">
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js">
-../../../../_sgf/regle/libertes.sgf
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
+		data-maxigos-sgf="../../../../_sgf/regle/libertes.sgf">
 </script>
 <figcaption>
 <span>Diag. 2</span> :
@@ -133,8 +133,8 @@ délimitées par des pierres de même
 couleur.</p>
 
 <figure class="g7x7">
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js">
-../../../../_sgf/regle/territoire.sgf
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
+		data-maxigos-sgf="../../../../_sgf/regle/territoire.sgf">
 </script>
 <figcaption>
 <span>Diag. 3</span> :
@@ -170,8 +170,8 @@ liberté, sauf si par ce coup il capture une chaîne adverse.</p>
 dit qu'elle est en <span id="atari" class="definition">atari</span>.</p>
 
 <figure class="g7x7">
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js">
-../../../../_sgf/regle/priseSimple1.sgf
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
+		data-maxigos-sgf="../../../../_sgf/regle/priseSimple1.sgf">
 </script>
 <figcaption>
 <span>Diag. 4</span> : 
@@ -181,8 +181,8 @@ en atari (car elle n'a plus qu'une liberté, en 'a').
 </figure>
 
 <figure class="g7x7">
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js">
-../../../../_sgf/regle/priseSimple2.sgf
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
+		data-maxigos-sgf="../../../../_sgf/regle/priseSimple2.sgf">
 </script>
 <figcaption>
 <span>Diag. 5</span> :
@@ -192,8 +192,8 @@ des pierres blanches...
 </figure>
 
 <figure class="g7x7">
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js">
-../../../../_sgf/regle/priseSimple3.sgf
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
+		data-maxigos-sgf="../../../../_sgf/regle/priseSimple3.sgf">
 </script>
 <figcaption>
 <span>Diag. 6</span> :
@@ -211,8 +211,8 @@ des <span class="definition">pierres vivantes</span> sont des pierres que l'on n
 peut plus espérer capturer.</p>
 
 <figure class="g7x7">
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js">
-../../../../_sgf/regle/mort.sgf
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
+		data-maxigos-sgf="../../../../_sgf/regle/mort.sgf">
 </script>
 <figcaption>
 <span>Diag. 7</span> :
@@ -223,8 +223,8 @@ d'après la règle de capture, Blanc peut jouer en
 </figure>
 
 <figure class="g7x7">
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js">
-../../../../_sgf/regle/vie.sgf
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
+		data-maxigos-sgf="../../../../_sgf/regle/vie.sgf">
 </script>
 <figcaption>
 <span>Diag. 8</span> :
@@ -235,8 +235,8 @@ et qu'il est vivant.
 </figure>
 
 <figure class="g7x7">
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js">
-../../../../_sgf/regle/seki.sgf
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
+		data-maxigos-sgf="../../../../_sgf/regle/seki.sgf">
 </script>
 <figcaption>
 <span>Diag. 9</span> :
@@ -260,8 +260,8 @@ répétition le plus simple et le plus fréquent que l'on
 appelle aussi <span id="ko" class="definition">ko</span>.</p>
 
 <figure class="g7x7">
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js">
-../../../../_sgf/regle/repetition1.sgf
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
+		data-maxigos-sgf="../../../../_sgf/regle/repetition1.sgf">
 </script>
 <figcaption>
 <span>Diag. 10</span> :
@@ -271,8 +271,8 @@ si Noir joue en 'a', il capture la pierre blanche 'X' qui est en
 </figure>
 
 <figure class="g7x7">
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js">
-../../../../_sgf/regle/repetition2.sgf
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
+		data-maxigos-sgf="../../../../_sgf/regle/repetition2.sgf">
 </script>
 <figcaption>
 <span>Diag. 11</span> :
@@ -306,8 +306,8 @@ sert à éviter les parties nulles).</p>
 <p>Le gagnant est celui qui a le plus de points.</p>
 
 <figure class="g9x9">
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js">
-../../../../_sgf/regle/decompte1.sgf
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
+		data-maxigos-sgf="../../../../_sgf/regle/decompte1.sgf">
 </script>
 <figcaption>
 <span>Diag. 12</span> :
@@ -337,8 +337,8 @@ désaccord (ce qui est en principe exceptionnel), il suffira de continuer
 réglés.</p>
 
 <figure class="g9x9">
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js">
-../../../../_sgf/regle/decompte2.sgf
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
+		data-maxigos-sgf="../../../../_sgf/regle/decompte2.sgf">
 </script>
 <figcaption>
 <span>Diag. 13</span> :
@@ -366,8 +366,8 @@ points supplémentaires égal au nombre de coups qu'il n'a pas pu
 jouer en début de partie.</p>
 
 <figure class="g19x19">
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js">
-../../../../_sgf/regle/handicap.sgf
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
+		data-maxigos-sgf="../../../../_sgf/regle/handicap.sgf">
 </script>
 <figcaption>
 <span>Fig. 2</span> :
@@ -411,8 +411,8 @@ et dans les parties à handicap, d'ajouter un demi point au total du
 même Blanc.</p>
 
 <figure class="g9x9">
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js">
-../../../../_sgf/regle/decompteRapide1.sgf
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
+		data-maxigos-sgf="../../../../_sgf/regle/decompteRapide1.sgf">
 </script>
 <figcaption>
 <span>Diag. 14</span> :
@@ -425,8 +425,8 @@ capturer tôt ou tard.
 </figure>
 
 <figure class="g9x9">
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js">
-../../../../_sgf/regle/decompteRapide2.sgf
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
+		data-maxigos-sgf="../../../../_sgf/regle/decompteRapide2.sgf">
 </script>
 <figcaption>
 <span>Diag. 15</span> :
@@ -445,8 +445,8 @@ demi.</li></ul>
 </figure>
 
 <figure class="g9x9">
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js">
-../../../../_sgf/regle/decompteRapide3.sgf
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
+		data-maxigos-sgf="../../../../_sgf/regle/decompteRapide3.sgf">
 </script>
 <figcaption>
 <span>Diag. 16</span> :
@@ -472,8 +472,8 @@ demi.</li>
 </figure>
 
 <figure class="g9x9">
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js">
-../../../../_sgf/regle/decompteRapide4.sgf
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
+		data-maxigos-sgf="../../../../_sgf/regle/decompteRapide4.sgf">
 </script>
 <figcaption>
 <span>Diag. 17</span> : 
@@ -487,8 +487,8 @@ capturer. On peut alors compter les points.
 </figure>
 
 <figure class="g9x9">
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js">
-../../../../_sgf/regle/decompteRapide5.sgf
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
+		data-maxigos-sgf="../../../../_sgf/regle/decompteRapide5.sgf">
 </script>
 <figcaption>
 <span>Diag. 18</span> :
@@ -507,8 +507,8 @@ demi.</li></ul>
 </figure>
 
 <figure class="g9x9">
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js">
-../../../../_sgf/regle/decompteRapide6.sgf
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
+		data-maxigos-sgf="../../../../_sgf/regle/decompteRapide6.sgf">
 </script>
 <figcaption>
 <span>Diag. 19</span> :

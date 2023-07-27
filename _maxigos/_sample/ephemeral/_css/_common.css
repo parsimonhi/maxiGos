@@ -2,6 +2,10 @@
 {
 	max-width:30em;
 }
+.mxEphemeralTheme.mxSimpleConfig svg
+{
+	display:block;
+}
 .mxEphemeralTheme.mxSimpleConfig .mxGobanDiv svg
 {
 	background:#9cf;
@@ -33,13 +37,8 @@
 {
 	fill:red;
 }
-.mxEphemeralTheme.mxSimpleConfig button::-moz-focus-inner
+.mxEphemeralTheme.mxSimpleConfig>div:first-of-type
 {
-	padding:0;border:0;
-}
-.mxEphemeralTheme.mxSimpleConfig .mxInnerGobanDiv,
-.mxEphemeralTheme.mxSimpleConfig .mxNavigationDiv,
-.mxEphemeralTheme.mxSimpleConfig .mxNavigationDiv button
-{
-	outline:none;
+	color:red;
+	padding-bottom:0.5em;
 }

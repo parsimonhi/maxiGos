@@ -1,62 +1,25 @@
 .mxTatamiTheme
 {
-	--gobanMaxWidth:30em;
-	--gobanMinWidth:10em;
-	text-align:left;
-}
-/* general */
-.mxTatamiTheme div::-moz-focus-inner,
-.mxTatamiTheme button::-moz-focus-inner,
-.mxTatamiTheme input[type=text]::-moz-focus-inner,
-.mxTatamiTheme a::-moz-focus-inner {padding:0;border:0;}
-.mxTatamiTheme div:focus,
-.mxTatamiTheme button:focus,
-.mxTatamiTheme input[type=text]:focus,
-.mxTatamiTheme a:focus {outline:none;}
-.mxTatamiTheme button,
-.mxTatamiTheme input[type=button],
-.mxTatamiTheme textarea {-webkit-appearance:none;-moz-appearance:none;}
-.mxTatamiTheme text {cursor:default;}
-.mxTatamiTheme button {cursor:pointer;}
-.mxTatamiTheme input[type=text][disabled],
-.mxTatamiTheme button[disabled] {cursor:default;}
-/* font */
-.mxTatamiTheme
-{
-	font-family:sans-serif;
-}
-.mxTatamiTheme svg
-{
-	font-family:arial,sans-serif;
-}
-.mxTatamiTheme button
-{
-	font-family:sans-serif;
-}
-/* layout */
-.mxTatamiTheme
-{
+	--gobanMaxWidth:calc(1em * 511 / 16);
 	max-width:calc(var(--gobanMaxWidth) * 54.5 / 30);
-	min-width:var(--gobanMinWidth);
 	background:#f3f3f3;
 	margin:0 auto;
+	overflow:auto;
+	resize:horizontal;
+	text-align:left;
 }
-.mxTatamiTheme .mxVersionDiv {display:none;}
+.mxTatamiTheme.mxIn3d {--gobanMaxWidth:calc(1em * 491 / 16);}
+.mxTatamiTheme.mxIndicesOff {--gobanMaxWidth:calc(1em * 463 / 16);}
+.mxTatamiTheme.mxIndicesOff.mxIn3d {--gobanMaxWidth:calc(1em * 445 / 16);}
+/* general */
+.mxTatamiTheme button {-webkit-appearance:none;-moz-appearance:none;}
+.mxTatamiTheme input[type=text][disabled],
+.mxTatamiTheme button[disabled] {cursor:default;}
+.mxTatamiTheme fieldset {border:0;margin:0;padding:0;}
+.mxTatamiTheme svg {display:block;}
+.mxTatamiTheme,
+.mxTatamiTheme button {font-family:sans-serif;}
 /* common */
-.mxTatamiTheme h1
-{
-	font-size:1em;
-	font-weight:bold;
-	margin:0 0 0.125em 0;
-}
-.mxTatamiTheme .mxInnerGobanDiv
-{
-	/* avoid bad touch effect on mobile */
-	-webkit-tap-highlight-color:rgba(0,0,0,0);
-	user-select:none;
-	margin:0 auto;
-	position:relative;
-}
 .mxTatamiTheme .mxGobanParentDiv
 {
 	margin:0 auto;
@@ -84,34 +47,28 @@
 	width:100%;
 	margin:auto;
 }
-.mxTatamiTheme .mxInnerGobanDiv
-{
-	box-shadow:0 8px 8px #963;
-}
 .mxTatamiTheme.mxIn3d .mxGobanDiv
 {
-	padding-bottom:0.5em;
-	padding-bottom:8px;
+	padding:4px 0;
 }
-.mxTatamiTheme.mxIn3d .mxGobanDiv.mxUnder .mxInnerGobanDiv
+.mxTatamiTheme .mxInnerGobanDiv
 {
-	box-shadow:none;
+	margin:0 auto;
+	position:relative; /* required for svg.mxAnimatedGobanSvg */
+}
+.mxTatamiTheme.mxIn3d .mxInnerGobanDiv
+{
+	box-shadow:0 6px 6px #963;
 }
 .mxTatamiTheme.mxIn2d .mxInnerGobanDiv
 {
 	border:1px solid #dfc997;
-	box-shadow:1px 0 8px #dfc997;
-	box-shadow:-1px 0 8px #dfc997;
-	box-shadow:0 1px 8px #dfc997;
-	box-shadow:0 -1px 8px #dfc997;
+	box-shadow:1px 0 8px #dfc997,-1px 0 8px #dfc997,0 1px 8px #dfc997,0 -1px 8px #dfc997;
 }
-.mxTatamiTheme.mxIn3d .mxInnerGobanDiv[data-maxigos-disabled] {box-shadow:none;}
 .mxTatamiTheme .mxGobanDiv svg
 {
-	display:block;
 	width:100%;
 	height:100%;
-	pointer-events:none;
 }
 .mxTatamiTheme .mxGobanDiv svg .mxWholeRect
 {
@@ -123,28 +80,28 @@
 	position:absolute;
 	top:0;
 	left:0;
+	bottom:0;
+	right:0;
 	pointer-events:none;
 }
-.mxTatamiTheme text.mxOnBlack.mxLabel,
-.mxTatamiTheme text.mxOnBlack.mxVariation
-{
-	fill:#fff;
-	stroke:#fff;
-}
-.mxTatamiTheme text.mxOnWhite.mxLabel,
-.mxTatamiTheme text.mxOnWhite.mxVariation,
-.mxTatamiTheme text.mxOnEmpty.mxLabel,
 .mxTatamiTheme text.mxOnEmpty.mxVariation
 {
 	fill:#000;
 	stroke:#000;
+	stroke-width:0.5px;
 }
-.mxTatamiTheme text.mxVariation.mxOnFocus
+.mxTatamiTheme text.mxOnEmpty.mxVariation.mxOnFocus
 {
 	fill:#f00;
 	stroke:#f00;
+	stroke-width:0.5px;
 }
-.mxTatamiTheme rect.mxVariation.mxOnFocus
+.mxTatamiTheme :not(.mxPointBackground).mxMark.mxVariation.mxOnFocus
+{
+	fill:none;
+	stroke:#f00;
+}
+.mxTatamiTheme .mxPointBackground
 {
 	stroke:none;
 }
@@ -159,9 +116,9 @@
 	stroke:#f00;
 	stroke-width:2px;
 }
-.mxTatamiTheme .mxP:not(:first-child)
+.mxTatamiTheme .mxTitleP
 {
-	padding-top:0.5em;
+	font-weight:bold;
 }
 /* comment and tree */
 .mxTatamiTheme.mxCommentConfig .mxCommentDiv,
@@ -179,27 +136,29 @@
 .mxTatamiTheme.mxTreeConfig .mxTreeDiv
 {
 	margin-top:0.25em;
+	max-height:42em;
+}
+.mxTatamiTheme .mxTreeDiv svg
+{
+	width:unset;
+	height:unset;
 }
 .mxTatamiTheme.mxTreeConfig .mxTreeDiv svg .mxFocus
 {
 	fill:#f00;
 	opacity:1;
 }
-.mxTatamiTheme.mxCommentConfig .mxOptionParentDiv,
-.mxTatamiTheme.mxReplayConfig .mxOptionParentDiv,
-.mxTatamiTheme.mxTreeConfig .mxOptionParentDiv
+.mxTatamiTheme.mxCommentConfig .mxOptionsParentDiv,
+.mxTatamiTheme.mxReplayConfig .mxOptionsParentDiv,
+.mxTatamiTheme.mxTreeConfig .mxOptionsParentDiv
 {
 	text-align:center;
 }
-.mxTatamiTheme.mxCommentConfig .mxOptionParentDiv>div,
-.mxTatamiTheme.mxReplayConfig .mxOptionParentDiv>div,
-.mxTatamiTheme.mxTreeConfig .mxOptionParentDiv>div
+.mxTatamiTheme.mxCommentConfig .mxOptionsParentDiv>div,
+.mxTatamiTheme.mxReplayConfig .mxOptionsParentDiv>div,
+.mxTatamiTheme.mxTreeConfig .mxOptionsParentDiv>div
 {
 	display:inline-block;
-}
-.mxTatamiTheme.mxTreeConfig .mxTreeDiv
-{
-	user-select:none;
 }
 /* diagram */
 .mxTatamiTheme.mxDiagramConfig .mxNotSeenDiv
@@ -223,41 +182,37 @@
 	display:block;
 }
 /* game */
-.mxTatamiTheme.mxGameConfig .mxHeaderContentDiv
+.mxTatamiTheme.mxGameConfig .mxHeaderDiv
 {
 	padding:0.5em;
 }
-.mxTatamiTheme.mxGameConfig .mxHeaderContentDiv:empty
+.mxTatamiTheme.mxGameConfig .mxHeaderDiv:empty
 {
 	display:none;
 }
 /* problem */
-.mxTatamiTheme.mxProblemConfig
-{
-	padding-top:0.5em;
-}
 .mxTatamiTheme.mxProblemConfig .mxCartoucheDiv .mxShortHeaderDiv
 {
 	display:none;
 }
 .mxTatamiTheme.mxProblemConfig .mxCommentDiv
 {
-	margin:0 auto 0.5em auto;
-	text-align:center;
-	border:1px solid transparent;
+	display:flex;
+	justify-content:center;
+	min-height:3.25em;
 }
-.mxTatamiTheme.mxProblemConfig .mxCommentContentDiv
+.mxTatamiTheme.mxProblemConfig .mxCommentContentDiv p
 {
-	display:inline-block;
-	text-align:justify;
+	margin:1em;
+	padding:0;
+	line-height:1.25em;
 }
 /* buttons */
-.mxTatamiTheme .mxOptionParentDiv {user-select:none;}
 .mxTatamiTheme button[disabled] {opacity:0.3;}
-.mxTatamiTheme .mxGBoxDiv button,
-.mxTatamiTheme.mxCommentConfig .mxOptionParentDiv button,
-.mxTatamiTheme.mxReplayConfig .mxOptionParentDiv button,
-.mxTatamiTheme.mxTreeConfig .mxOptionParentDiv button
+.mxTatamiTheme dialog button,
+.mxTatamiTheme.mxCommentConfig .mxOptionsParentDiv button,
+.mxTatamiTheme.mxReplayConfig .mxOptionsParentDiv button,
+.mxTatamiTheme.mxTreeConfig .mxOptionsParentDiv button
 {
 	font-size:1em;
 	border:1px solid #ccc;
@@ -269,18 +224,6 @@
 	line-height:1.75em;
 	white-space:nowrap;
 	text-decoration:none;
-}
-.mxTatamiTheme .mxGBoxDiv button
-{
-	margin:0 0.125em;
-}
-.mxTatamiTheme .mxGBoxDiv button:focus,
-.mxTatamiTheme.mxCommentConfig .mxOptionParentDiv button:focus,
-.mxTatamiTheme.mxReplayConfig .mxOptionParentDiv button:focus,
-.mxTatamiTheme.mxTreeConfig .mxOptionParentDiv button:focus,
-.mxTatamiTheme input[type=text]:focus
-{
-	border:1px solid #000;
 }
 .mxTatamiTheme input[type=text]
 {
@@ -403,150 +346,167 @@
 	overflow:hidden;
 	opacity:0;
 }
-/* focus */
-.mxTatamiTheme .mxGBoxDiv .mxShowContentDiv:focus,
-.mxTatamiTheme.mxCommentConfig .mxCommentDiv:focus,
-.mxTatamiTheme.mxTreeConfig .mxCommentDiv:focus,
-.mxTatamiTheme.mxTreeConfig .mxTreeDiv:focus,
-.mxTatamiTheme.mxProblemConfig .mxCommentDiv:focus
-{
-	border:1px solid #000;
-}
-/* gBox */
-.mxTatamiTheme .mxGBoxDiv
+/* dialog */
+.mxTatamiTheme dialog,
+.mxTatamiTheme dialog *
 {
 	box-sizing:border-box;
-	border:1px solid #ccc;
+}
+.mxTatamiTheme dialog::backdrop
+{
+  background: rgba(0,0,0,0.5);
+}
+.mxTatamiTheme dialog
+{
+	min-width:min(50vw,19em);
+	border:1px solid #999;
 	background:#fff;
 	text-align:left;
+	padding:0;
 }
-.mxTatamiTheme .mxGBoxDiv.mxShowSgfDiv
+.mxTatamiTheme dialog.mxShowPngDialog,
+.mxTatamiTheme dialog.mxShowSgfDialog,
+.mxTatamiTheme dialog.mxShowSvgDialog
 {
-	font-family:monospace;
-	white-space:pre-wrap;
+	width:calc(var(--gobanMaxWidth) * 3 / 2);
 }
-.mxTatamiTheme .mxGBoxDiv.mxShowSvgDiv .mxShowContentDiv img,
-.mxTatamiTheme .mxGBoxDiv.mxShowPngDiv .mxShowContentDiv img
+.mxTatamiTheme dialog form
+{
+	margin:0;
+	padding:0;
+}
+.mxTatamiTheme dialog .mxContentFieldset
+{
+	padding:0.5em;
+	min-width:100%;
+}
+.mxTatamiTheme dialog.mxEditOptionsDialog .mxContentFieldset
+{
+	line-height:1.5em;
+}
+.mxTatamiTheme dialog .mxMenuFieldset
+{
+	background:#f3f3f3;
+	min-height:3em;
+	line-height:3em;
+	text-align:center;
+}
+.mxTatamiTheme dialog label:not([for])
 {
 	display:block;
-	box-sizing:border-box;
-	height:100%;
-	width:auto;
-	border:0;
-	margin:0 auto;
 }
-.mxTatamiTheme .mxGBoxDiv .mxShowContentDiv
+.mxTatamiTheme dialog input[type=text]
 {
-	box-sizing:border-box;
-	position:absolute;
-	top:0;
-	left:0;
-	right:0;
-	bottom:3em;
-	background:#fff;
-	padding:0.25em;
-	overflow:auto;
-	z-index:1;
-	border:1px solid transparent;
-}
-.mxTatamiTheme .mxOKDiv
-{
-	box-sizing:border-box;
-	background:#ddd;
-	position:absolute;
-	bottom:0;
-	height:3em;
-	width:100%;
 	max-width:100%;
-	overflow:auto;
-	display:flex;
-	justify-content:center;
-	align-items:center;
-	flex-wrap:wrap;
-	z-index:1;
 }
-.mxTatamiTheme .mxShowOptionDiv
-{
-	line-height:1.75em;
-}
-.mxTatamiTheme .mxNumFromTextSpan,
-.mxTatamiTheme .mxNumWithTextSpan
-{
-	position:relative;
-	left:2em;
-	white-space:nowrap;
-}
-.mxTatamiTheme .mxNumFromTextSpan:before
-{
-	content:"\a";
-	white-space:pre-line;
-}
-.mxTatamiTheme .mxShowOptionDiv input[type=text]
-{
-	font-size:1em;
-}
-.mxTatamiTheme input:not(:checked)~.mxNumFromTextSpan,
-.mxTatamiTheme input:not(:checked)~.mxNumWithTextSpan
-{
-	display:none;
-}
-.mxTatamiTheme a
+.mxTatamiTheme dialog a
 {
 	color:#000;
 }
-.mxTatamiTheme a:focus
+.mxTatamiTheme dialog img
 {
-	color:#f00;
-}
-.mxTatamiTheme [data-maxigos-disabled] {opacity:0.5;}
-/* goto */
-.mxTatamiTheme.mxReplayConfig .mxGotoDiv
-{
-	margin:0 0.5em;
-	user-select:none;
-}
-.mxTatamiTheme.mxReplayConfig .mxGotoDiv svg
-{
-	box-sizing:border-box;
 	display:block;
 	margin:0 auto;
+	max-width:100%;
+	height:auto;
+	border:0;
 }
-.mxTatamiTheme.mxReplayConfig .mxGotoBar
+.mxTatamiTheme dialog.mxShowSgfDialog .mxContentFieldset
 {
-	fill:#fff;
-	stroke:#ccc;
+	font-family:monospace; /* for Safari? */
+	white-space:pre-wrap;
+	min-height:var(--gobanMaxWidth);
 }
-.mxTatamiTheme.mxReplayConfig .mxGotoCursor
+.mxTatamiTheme .mxNumberingOnCheckbox:not(:checked)~span
 {
-	fill:#000;
-	stroke:#000;
-	cursor:pointer;
+	display:none;
 }
-/* Guess */
-.mxTatamiTheme.mxReplayConfig .mxGuessDiv
+/* goto */
+.mxTatamiTheme .mxGotoDiv [type=range]
 {
-	padding:0.5em;
-	user-select:none;
+	--gotoColor:#000;
+	display:block;
+	font-size:1em;
+	margin:0;
+	padding:0 1em;
+	width:calc(100% - 2em);
+	height:2.5em;
+	border:0;
+	border-radius:0;
+	background:#0000;
 }
-.mxTatamiTheme.mxReplayConfig .mxGuessSvg
+.mxTatamiTheme .mxGotoDiv [type=range],
+.mxTatamiTheme .mxGotoDiv [type=range]::-webkit-slider-thumb
+{
+	-webkit-appearance:none;
+}
+.mxTatamiTheme .mxGotoDiv [type=range]::-webkit-slider-runnable-track
+{
+	box-sizing:border-box;
+	height:1em;
+	border:1px solid #ccc;
+	border-radius:0;
+	background:#fff;
+}
+.mxTatamiTheme .mxGotoDiv [type=range]::-moz-range-track
+{
+	box-sizing:border-box;
+	height:1em;
+	border:1px solid #ccc;
+	border-radius:0;
+	background:#fff;
+}
+.mxTatamiTheme .mxGotoDiv [type=range]::-webkit-slider-thumb
+{
+	margin-top:-1px;
+	box-sizing:border-box;
+	width:1em;
+	height:1em;
+	border:0;
+	border-radius:0;
+	background:var(--gotoColor);
+}
+.mxTatamiTheme .mxGotoDiv [type=range]::-moz-range-thumb
+{
+	box-sizing:border-box;
+	width:1em;
+	height:1em;
+	border:0;
+	border-radius:0;
+	background:var(--gotoColor);
+}
+/* guess */
+.mxTatamiTheme meter
 {
 	display:block;
+	font-size:1em;
+	margin:1em;
+	padding:0;
+	width:calc(100% - 2em);
+	height:0.5em;
+	border:0;
+	border-radius:0.25em;
+	overflow:hidden;
+	background:#f00; /* set "bad" color */
 }
-.mxTatamiTheme.mxReplayConfig .mxGuessBar
+/* do not reunite ::-selectors below, otherwise error in webkit browsers */
+.mxTatamiTheme ::-moz-meter-bar
 {
-	stroke:#ccc;
-	fill:#fff;
+	width:100%;
+    height:0.5em;
+    border:0;
+	background:#0000;
 }
-.mxTatamiTheme.mxReplayConfig .mxGuessBad
+.mxTatamiTheme ::-webkit-meter-bar
 {
-	stroke:#f00;
-	fill:#f00;
+    width:100%;
+    height:0.5em;
+    border:0;
+    background:#0000;
 }
-.mxTatamiTheme.mxReplayConfig .mxGuessGood
-{
-	stroke:#090;
-	fill:#090;
-}
+/* set "good" color */
+.mxTatamiTheme :-moz-meter-optimum::-moz-meter-bar {background:#7e9e3e;}
+.mxTatamiTheme ::-webkit-meter-optimum-value {background:#7e9e3e;}
 /* navigation */
 .mxTatamiTheme .mxNavigationDiv
 {
@@ -559,7 +519,7 @@
 .mxTatamiTheme .mxNavigationDiv button
 {
 	flex:1 1;
-	border:none;
+	border:0;
 	background:none;
 	margin:0 2%;
 	padding:0;
@@ -567,11 +527,15 @@
 }
 .mxTatamiTheme .mxNavigationDiv button svg
 {
-	display:block;
 	max-width:60%;
 	width:100%;
 	height:auto;
 	margin:20% auto;
+}
+.mxTatamiTheme .mxNavigationDiv button.mxAutoBtn[disabled],
+.mxTatamiTheme .mxNavigationDiv button.mxPauseBtn[disabled]
+{
+	display:none;
 }
 .mxTatamiTheme .mxSolveDiv
 {
@@ -583,7 +547,7 @@
 .mxTatamiTheme .mxSolveDiv button
 {
 	flex:1 1 3em;
-	border:none;
+	border:0;
 	background:none;
 	margin:1em;
 	padding:0;
@@ -591,17 +555,8 @@
 }
 .mxTatamiTheme .mxSolveDiv button svg
 {
-	display:block;
 	width:100%;
 	height:100%;
-}
-.mxTatamiTheme .mxNavigationDiv button:focus rect,
-.mxTatamiTheme .mxNavigationDiv button:focus polygon,
-.mxTatamiTheme .mxSolveDiv button:focus circle,
-.mxTatamiTheme .mxSolveDiv button:focus rect,
-.mxTatamiTheme .mxSolveDiv button:focus path
-{
-	fill:#f00;
 }
 .mxTatamiTheme .mxNavigationDiv .mxGotoInput
 {
@@ -611,75 +566,103 @@
 	border:1px solid #ccc;
 	text-align:center;
 }
+/* speed */
+.mxTatamiTheme .mxSpeedDiv [type=range]
+{
+	--speedColor:#000;
+	display:block;
+	font-size:1em;
+	margin:0;
+	padding:0 1em;
+	width:calc(100% - 2em);
+	height:2.5em;
+	border:0;
+	border-radius:0;
+	background:#0000;
+}
+.mxTatamiTheme .mxSpeedDiv [type=range],
+.mxTatamiTheme .mxSpeedDiv [type=range]::-webkit-slider-thumb
+{
+	-webkit-appearance:none;
+}
+.mxTatamiTheme .mxSpeedDiv [type=range]::-webkit-slider-runnable-track
+{
+	box-sizing:border-box;
+	height:0.5em;
+	border:0;
+	border-radius:0.25em;
+	background:var(--speedColor);
+}
+.mxTatamiTheme .mxSpeedDiv [type=range]::-moz-range-track
+{
+	box-sizing:border-box;
+	height:0.5em;
+	border:0;
+	border-radius:0.25em;
+	background:var(--speedColor);
+}
+.mxTatamiTheme .mxSpeedDiv [type=range]::-webkit-slider-thumb
+{
+	margin-top:-0.5em;
+	box-sizing:border-box;
+	width:1.5em;
+	height:1.5em;
+	border:0;
+	border-radius:50%;
+	background:var(--speedColor);
+}
+.mxTatamiTheme .mxSpeedDiv [type=range]::-moz-range-thumb
+{
+	box-sizing:border-box;
+	width:1.5em;
+	height:1.5em;
+	border:0;
+	border-radius:50%;
+	background:var(--speedColor);
+}
+/* version */
+.mxTatamiTheme .mxVersionDiv
+{
+	text-align:center;
+	padding:0.5em;
+}
+/* focus, hover and cursor */
+.mxTatamiTheme *:not([type=radio]):not([type=checkbox]):focus {outline:none;}
+.mxTatamiTheme .mxGobanSvg:not(:focus-visible) .mxFocus {display:none;}
+.mxTatamiTheme a:focus {color:#f00;}
+.mxTatamiTheme.mxCommentConfig .mxCommentDiv:focus,
+.mxTatamiTheme.mxTreeConfig .mxCommentDiv:focus,
+.mxTatamiTheme.mxTreeConfig .mxTreeDiv:focus,
+.mxTatamiTheme.mxProblemConfig .mxCommentDiv:focus
+{
+	border:1px solid #000;
+}
+.mxTatamiTheme dialog button:focus,
+.mxTatamiTheme.mxCommentConfig .mxOptionsParentDiv button:focus,
+.mxTatamiTheme.mxReplayConfig .mxOptionsParentDiv button:focus,
+.mxTatamiTheme.mxTreeConfig .mxOptionsParentDiv button:focus,
+.mxTatamiTheme input[type=text]:focus
+{
+	border:1px solid #000;
+}
+.mxTatamiTheme .mxNavigationDiv button:focus rect,
+.mxTatamiTheme .mxNavigationDiv button:focus polygon,
+.mxTatamiTheme .mxSolveDiv button:focus circle,
+.mxTatamiTheme .mxSolveDiv button:focus rect,
+.mxTatamiTheme .mxSolveDiv button:focus path
+{
+	fill:#f00;
+}
 .mxTatamiTheme .mxNavigationDiv .mxGotoInput:focus
 {
 	border:1px solid #000;
 }
-/* speed */
-.mxTatamiTheme.mxReplayConfig .mxSpeedDiv
-{
-	display:flex;
-	justify-content:center;
-	align-items:center;
-	margin:1em 0.5em 0.5em 0.5em;
-	user-select:none;
-}
-.mxTatamiTheme.mxReplayConfig .mxSpeedDiv button
-{
-	flex:0;
-	font-size:1em;
-	margin:0;
-	padding:0;
-	border:1px solid transparent;
-	background:none;
-}
-.mxTatamiTheme.mxReplayConfig .mxSpeedDiv svg
-{
-	flex:1;
-	min-width:0; /* necessary for chrome? */
-}
-.mxTatamiTheme.mxReplayConfig .mxSpeedDiv button span
-{
-	display:block;
-	margin:auto;
-	width:1.5em;
-	height:1.5em;
-	line-height:1.5em;
-	color:transparent;
-	position:relative;
-}
-.mxTatamiTheme.mxReplayConfig .mxSpeedDiv button:focus span,
-.mxTatamiTheme.mxReplayConfig .mxSpeedDiv button:hover span
-{
-	background:rgba(0,0,0,0.05);
-}
-.mxTatamiTheme.mxReplayConfig .mxSpeedDiv button span:before
-{
-	content:"";
-	display:block;
-	position:absolute;
-	top:calc(50% - 1px);
-	left:25%;
-	bottom:0;
-	right:25%;
-	border-top:2px solid #000;
-	z-index:1;
-}
-.mxTatamiTheme.mxReplayConfig .mxSpeedDiv button.mxSpeedPlusBtn span:after
-{
-	content:"";
-	display:block;
-	position:absolute;
-	top:25%;
-	left:calc(50% - 1px);
-	bottom:25%;
-	right:0;
-	border-left:2px solid #000;
-	z-index:1;
-}
-.mxTatamiTheme.mxReplayConfig .mxSpeedDiv .mxSpeedBar,
-.mxTatamiTheme.mxReplayConfig .mxSpeedDiv .mxSpeedCursor
-{
-	stroke:#ccc;
-	cursor:pointer;
-}
+.mxTatamiTheme .mxSpeedDiv [type=range]:focus {--speedColor:#f00;}
+.mxTatamiTheme .mxGotoDiv [type=range]:focus {--gotoColor:#f00;}
+.mxTatamiTheme button,
+.mxTatamiTheme:not(.mxDiagramConfig) .mxGobanDiv svg,
+.mxTatamiTheme [type=range],
+.mxTatamiTheme .mxTreeDiv svg circle,
+.mxTatamiTheme .mxTreeDiv svg polygon,
+.mxTatamiTheme .mxTreeDiv svg rect,
+.mxTatamiTheme .mxTreeDiv svg text {cursor:pointer;}

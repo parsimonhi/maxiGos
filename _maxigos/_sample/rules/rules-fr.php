@@ -74,8 +74,8 @@ Des pierres de même couleur sont <span class="definition">connectées</span> si e
 <figure>
 <script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
 		data-maxigos-indices-on="0"
-		data-maxigos-points-num-max="0">
-../_sgf/rules/adjacent.sgf
+		data-maxigos-points-num-max="0"
+		data-maxigos-sgf="../_sgf/rules/adjacent.sgf">
 </script>
 <figcaption>
 <p>'a' et 'b' sont voisines, mais 'b' et 'c' ne le sont pas.</p>
@@ -83,7 +83,9 @@ Des pierres de même couleur sont <span class="definition">connectées</span> si e
 </figure>
 
 <figure>
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0">../_sgf/rules/liberties.sgf</script>
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0"
+		data-maxigos-sgf="../_sgf/rules/liberties.sgf">
+</script>
 <figcaption>
 <p>La pierre marquée d'un triangle a quatre libertés ('a', 'b', 'c' et 'd'), 
 celle marquée d'un carré trois ('e', 'f' et 'g') 
@@ -93,7 +95,9 @@ et celle marquée d'une croix deux ('h' et 'i').
 </figure>
 
 <figure>
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0">../_sgf/rules/connection.sgf</script>
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0"
+		data-maxigos-sgf="../_sgf/rules/connection.sgf">
+</script>
 <figcaption>
 <p>Les quatre pierres blanches marquées d'une croix sont connectées 
 et ont cinq libertés ('a', 'b', 'c', 'd', et 'e').
@@ -111,7 +115,9 @@ sauf s'il capture au moins une pierre adverse.
 </p>
 
 <figure>
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0">../_sgf/rules/captureSimpleBefore.sgf</script>
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0"
+		data-maxigos-sgf="../_sgf/rules/captureSimpleBefore.sgf">
+</script>
 <figcaption>
 <p>Si Noir joue en 'a',
 il supprime la dernière liberté des pierres blanches marquées d'une croix...
@@ -120,7 +126,9 @@ il supprime la dernière liberté des pierres blanches marquées d'une croix...
 </figure>
 
 <figure>
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0">../_sgf/rules/captureSimpleAfter.sgf</script>
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0"
+		data-maxigos-sgf="../_sgf/rules/captureSimpleAfter.sgf">
+</script>
 <figcaption>
 <p>...alors Noir, après avoir posé la pierre 1,
 capture ces pierres blanches en les retirant de la grille.
@@ -131,8 +139,8 @@ capture ces pierres blanches en les retirant de la grille.
 <figure>
 <script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
 		data-maxigos-indices-on="0"
-		data-maxigos-points-num-max="0">
-../_sgf/rules/captureNoLib1.sgf
+		data-maxigos-points-num-max="0"
+		data-maxigos-sgf="../_sgf/rules/captureNoLib1.sgf">
 </script>
 <figcaption>
 <p>Si Noir joue en 'a', il n'a pas de liberté,
@@ -144,8 +152,8 @@ d'une croix...</p>
 <figure>
 <script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
 		data-maxigos-indices-on="0"
-		data-maxigos-points-num-max="0">
-../_sgf/rules/captureNoLib2.sgf
+		data-maxigos-points-num-max="0"
+		data-maxigos-sgf="../_sgf/rules/captureNoLib2.sgf">
 </script>
 <figcaption>
 <p>...alors Noir capture ces pierres en les retirant de la grille,
@@ -156,8 +164,8 @@ ce qui donne deux libertés à la pierre 1 qu'il vient de jouer.</p>
 <figure>
 <script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
 		data-maxigos-indices-on="0"
-		data-maxigos-points-num-max="0">
-../_sgf/rules/suicide.sgf
+		data-maxigos-points-num-max="0"
+		data-maxigos-sgf="../_sgf/rules/suicide.sgf">
 </script>
 <figcaption>
 
@@ -175,8 +183,8 @@ a lui-même déjà donné.
 <figure>
 <script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
 		data-maxigos-indices-on="0"
-		data-maxigos-points-num-max="0">
-../_sgf/rules/repetition1.sgf
+		data-maxigos-points-num-max="0"
+		data-maxigos-sgf="../_sgf/rules/repetition1.sgf">
 </script>
 <figcaption>
 <p>Si Noir joue en 'a', il capture la pierre marquée d'une croix (il lui enlève sa dernière liberté).
@@ -188,8 +196,8 @@ a lui-même déjà donné.
 <script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
 		data-maxigos-indices-on="0"
 		data-maxigos-points-num-max="0"
-		data-maxigos-as-in-book-on="0">
-../_sgf/rules/repetition2.sgf
+		data-maxigos-as-in-book-on="0"
+		data-maxigos-sgf="../_sgf/rules/repetition2.sgf">
 </script>
 <figcaption>
 <p>Une fois que Noir a joué 1,
@@ -242,8 +250,8 @@ et ne donnent de points à personne.</p>
 <script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
 		data-maxigos-indices-on="0"
 		data-maxigos-points-num-max="0"
-		data-maxigos-numbering-on="0">
-../_sgf/rules/countG.sgf
+		data-maxigos-numbering-on="0"
+		data-maxigos-sgf="../_sgf/rules/countG.sgf">
 </script>
 <figcaption>
 <p>Les joueurs viennent de passer.
@@ -255,8 +263,8 @@ qu'il est certain de pouvoir capturer.</p>
 <figure>
 <script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
 		data-maxigos-indices-on="0"
-		data-maxigos-points-num-max="0">
-../_sgf/rules/countB.sgf
+		data-maxigos-points-num-max="0"
+		data-maxigos-sgf="../_sgf/rules/countB.sgf">
 </script>
 <figcaption>
 <p>Noir entoure 7 intersections en haut à gauche,
@@ -267,8 +275,8 @@ qu'il est certain de pouvoir capturer.</p>
 <figure>
 <script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
 		data-maxigos-indices-on="0"
-		data-maxigos-points-num-max="0">
-../_sgf/rules/countW.sgf
+		data-maxigos-points-num-max="0"
+		data-maxigos-sgf="../_sgf/rules/countW.sgf">
 </script>
 <figcaption>
 <p>Blanc entoure 8 intersections en bas à gauche,

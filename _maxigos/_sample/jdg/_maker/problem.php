@@ -18,21 +18,19 @@ include "../../../_js/mgosVersion.js";
 mxG.K++;
 mxG.B=[[["Goban"],"Solve","Pass"],["Comment","Version"]];
 mxG.D[mxG.K]=new mxG.G(mxG.K,mxG.B);
-mxG.D[mxG.K].theme="<?php echo $theme ?>";
-mxG.D[mxG.K].config="<?php echo $config ?>";
+mxG.D[mxG.K].theme="<?=$theme?>";
+mxG.D[mxG.K].config="<?=$config?>";
 <?php
 include "../../_php/insertCss.php";
 ?>
 // general
-mxG.D[mxG.K].a.in3dOn=1; // (0,1) default 1
-mxG.D[mxG.K].a.htmlParenthesis=1; // (0,1) default 0
+mxG.D[mxG.K].a.in3dOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.allowStringAsSource=1; // (0,1) default 1
 mxG.D[mxG.K].a.allowFileAsSource=1; // (0,1) default 1
 // mxG.D[mxG.K].a.sourceFilter=""; // (str) default ""
 mxG.D[mxG.K].a.initMethod="first"; // ("first","loop","last") default "first"
 // Goban
 mxG.D[mxG.K].a.pointsNumMax=0; // (positive integer) default 0
-mxG.D[mxG.K].a.magicParentNum=0; // (positive integer) default 0
 mxG.D[mxG.K].a.stoneShadowOn=1; // (0,1) default 0 (require in3dOn=1)
 mxG.D[mxG.K].a.stretching="0,1,1,2"; // (list) default "0,0,1,1"
 mxG.D[mxG.K].a.gridPadding=2; // (float) default 0
@@ -48,10 +46,13 @@ mxG.D[mxG.K].a.numAsMarkOnLastOn=0; // (0,1) default 0 (require markOnLastOn=1)
 mxG.D[mxG.K].a.japaneseIndicesOn=0; // (0,1) default 0 (require indicesOn=1)
 mxG.D[mxG.K].a.oldJapaneseIndicesOn=0; // (0,1) default 0 (require indicesOn=1)
 mxG.D[mxG.K].a.eraseGridUnder=1; // (0,1) default 0
-// solve
-mxG.D[mxG.K].a.canPlaceSolve=1; // (0,1) default 1
+// Comment
+mxG.D[mxG.K].a.canCommentFocus=1; // (0,1) default 0
+// Solve
+mxG.D[mxG.K].a.canPlaceSolve=1; // (0,1) default 0
 mxG.D[mxG.K].a.solves="Retry,Undo"; // (list) default "Retry,Undo"
 mxG.D[mxG.K].a.specialMoveMatch=1; // (positive integer) default 0
 // Version
 mxG.D[mxG.K].a.versionBoxOn=1; // (0,1) default 0
+// Start
 mxG.D[mxG.K].start();

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="initial-scale=1.0,user-scalable=yes">
 <?php include "../../_php/version.php";?>
-<title>Documentation for maxiGos v<?php print $v;?></title>
+<title>Documentation for maxiGos v<?=$v?></title>
 <style>
 p.note {font-style:italic;}
 h1+em,
@@ -55,8 +55,6 @@ img.flag
 	width:1.8em;
 	height:auto;
 }
-.classList>div {margin:1em 0;}
-.classList>div div {margin-left:2em;}
 h2 .component,
 h3 .component,
 h4 .component,
@@ -70,41 +68,44 @@ figure.maxigosSample
 	background:#eee;
 	padding:1rem;
 }
-/* customSmallBordeaux example */
-#customSmallBordeaux div.mxGlobalBoxDiv.mxDiagramConfig.mxNeoClassicTheme
+/* BordeauxSample example */
+.BordeauxSample
 {
-	--gobanMaxWidth:60em;
+	background:#ddd;
+	padding:1em;
 }
-#customSmallBordeaux div.mxGlobalBoxDiv.mxDiagramConfig.mxNeoClassicTheme svg
+.BordeauxSample .mxMinimalistTheme .mxInnerGobanDiv svg
 {
-	background-image:none;
 	background:#a72926;
 }
-#customSmallBordeaux div.mxGlobalBoxDiv.mxDiagramConfig.mxNeoClassicTheme .mxGobanLine,
-#customSmallBordeaux div.mxGlobalBoxDiv.mxDiagramConfig.mxNeoClassicTheme .mxMark.mxOnEmpty:not(.mxPointBackground)
+.BordeauxSample .mxMinimalistTheme .mxGobanLines
 {
 	stroke:#fff;
 }
-#customSmallBordeaux div.mxGlobalBoxDiv.mxDiagramConfig.mxNeoClassicTheme .mxStar,
-#customSmallBordeaux div.mxGlobalBoxDiv.mxDiagramConfig.mxNeoClassicTheme .mxIndice,
-#customSmallBordeaux div.mxGlobalBoxDiv.mxDiagramConfig.mxNeoClassicTheme .mxLabel.mxOnEmpty:not(.mxPointBackground)
+.BordeauxSample .mxMinimalistTheme .mxStars
+{
+	stroke:#fff;
+	fill:#fff;
+	stroke-width:5px;
+}
+.BordeauxSample .mxMinimalistTheme .mxMark.mxOnEmpty:not(.mxPointBackground)
+{
+	fill:none;
+	stroke:#fff;
+}
+.BordeauxSample .mxMinimalistTheme text.mxOnEmpty
 {
 	fill:#fff;
-	stroke:#fff;
-}
-#customSmallBordeaux div.mxGlobalBoxDiv.mxDiagramConfig.mxNeoClassicTheme .mxPointBackground.mxOnEmpty
-{
-	fill:#0003;
 	stroke:none;
 }
 </style>
 </head>
 <body>
-<p><?php if (file_exists("../../../index.php")) print "<a href=\"../../../index.php?lang=en\">Home</a>";?><!--
---><a href="<?php print str_replace("/_fr/","/_en/",$_SERVER["SCRIPT_NAME"]);?>"><img class="flag" src="../../_img/flag/en.svg">English</a><!--
---><a href="<?php print str_replace("/_en/","/_fr/",$_SERVER["SCRIPT_NAME"]);?>"><img class="flag" src="../../_img/flag/fr.svg">Fran&ccedil;ais</a></p>
-<h1>Documentation for maxiGos v<?php print $v;?></h1>
-<em>Copyright 1998-<?php print date("Y");?> - FM&SH</em>
+<nav><?=(file_exists("../../../index.php")?"<a href=\"../../../index.php?lang=en\">Home</a>":"")?><!--
+--><a href="<?=str_replace("/_fr/","/_en/",$_SERVER["SCRIPT_NAME"])?>"><img alt="English" class="flag" src="../../_img/flag/en.svg">English</a><!--
+--><a href="<?=str_replace("/_en/","/_fr/",$_SERVER["SCRIPT_NAME"])?>"><img alt="Français" class="flag" src="../../_img/flag/fr.svg">Fran&ccedil;ais</a></nav>
+<h1>Documentation for maxiGos v<?=$v?></h1>
+<em>Copyright 1998-<?=date("Y")?> - FM&amp;SH</em>
 <nav><a href="download.php">Download</a></nav>
 <h2>What is maxiGos?</h2>
 <p>MaxiGos is a set of sgf viewers to display
@@ -124,22 +125,20 @@ for instance "maxigos-neo-classic-game.js"</p>
 <p>If the sgf file you want to display is called "blood-vomit-en.sgf",
 insert in the &lt;body&gt; part of a html page
 where you want the viewer displays a code as:</p>
-<code><pre>
-&lt;script src="ppp/maxigos-neo-classic-game.js" data-maxigos-l="en"&gt;
-qqq/blood-vomit-en.sgf
-&lt;/script&gt;</pre></code>
+<pre><code>&lt;script
+	src="ppp/maxigos-neo-classic-game.js"
+	data-maxigos-sgf="qqq/blood-vomit-en.sgf"&gt;
+&lt;/script&gt;</code></pre>
 <p>Replace "ppp/" by a relative path between the html page and the "maxigos-neo-classic-game.js" maxiGos script.</p>
 <p>Replace "qqq/" by a relative path between the html page and the "blood-vomit-en.sgf" sgf file.</p>
 <p>You should get the result below:</p>
 <figure class="maxigosSample">
-<script src="../../_sample/neo-classic/_alone/maxigos-neo-classic-game.js" data-maxigos-l="en">
-../../_sample/_sgf/game/blood-vomit-en.sgf
+<script
+	src="../../_sample/neo-classic/_alone/maxigos-neo-classic-game.js"
+	data-maxigos-sgf="../../_sample/_sgf/game/blood-vomit-en.sgf">
 </script>
 </figure>
-<p>The attribute data-maxigos-l="en" indicates that maxiGos displays its labels,
-messages, etc. in english. You can omit this attribute
-if one of the ancestors of the maxiGos global tag has its lang attribute set to "en".</p>
-<p>To see more samples, <a href="../../_sample/?lang=en">click here!</a>
+<p><a href="../../_sample/?lang=en">More samples here!</a>
 <h2>How to install the full version of maxiGos?</h2>
 <p>To install the full version of maxiGos,
 <a href="download.php">download maxiGos archive</a>, unzip and copy it
@@ -169,17 +168,22 @@ are in a single javascript file.</p>
 <p>These files are stored in "_alone" folders of the samples provided with maxiGos.
 These samples can be found in the "_sample" folder.</p>
 <h4>The code to insert in your web page</h4>
-<p>Include in your web page, where you want the viewer displays something,
+<p>Include in your web page where you want the viewer displays something
 &lt;script&gt; and &lt;/script&gt; tags with the javascript file name of a stand-alone viewer
 as value of the "src" attribute,
-and put between the tags a sgf file name or a sgf record or an url that generates a sgf record.</p>
+and a sgf file name or a sgf record or an url that generates a sgf record as value
+of the "data-maxigos-sgf" attribute.</p>
 <p>If one uses a sgf file name, the code is for instance:</p>
-<code><pre>&lt;script src="xxx/maxigos-neo-classic-problem.js" data-maxigos-l="en"&gt;
-yyy/myFirstSgf.sgf
-&lt;/script&gt;</pre></code>
-<p>Another way is to use the "data-maxigos-sgf" attribute which value is the sgf file name. For instance:</p>
-<code><pre>&lt;script src="xxx/maxigos-neo-classic-problem.js" data-maxigos-l="en" data-maxigos-sgf="yyy/myFirstSgf.sgf"&gt;
-&lt;/script&gt;</pre></code>
+<pre><code>&lt;script
+	src="xxx/maxigos-neo-classic-problem.js"
+	data-maxigos-sgf="yyy/myFirstSgf.sgf"&gt;
+&lt;/script&gt;</code></pre>
+<p>Another way is to place a sgf file name or a sgf record or an url that generates a sgf record
+between &lt;script&gt; and &lt;/script&gt; tags. For instance:</p>
+<pre><code>&lt;script
+	src="xxx/maxigos-neo-classic-problem.js"&gt;
+	yyy/myFirstSgf.sgf
+&lt;/script&gt;</code></pre>
 <p>Of course, you have to adapt the path (here "xxx") before "maxigos-problem.js" script 
 which contains the code of a stand-alone viewer, 
 taking into account where you stored it, and where your web page is.
@@ -189,25 +193,33 @@ taking into account where you stored it, and where your web page is.
 It's a relative path between your web page and the folder that contains the file.
 </p>
 <p>If one uses a sgf record, the code is for instance:</p>
-<code><pre>&lt;script src="xxx/maxigos-neo-classic-problem.js" data-maxigos-l="en"&gt;
-(;FF[4]GM[1]SZ[19]VW[aa:ii]FG[1]AW[ee]AB[de][fe][ed];B[ef]C[Correct!])
-&lt;/script&gt;</pre></code>
+<pre><code>&lt;script
+	src="xxx/maxigos-neo-classic-problem.js"
+	data-maxigos-sgf="(;FF[4]GM[1]SZ[19]VW[aa:ii]FG[1]AW[ee]AB[de][fe][ed];B[ef]C[Correct!])"&gt;
+&lt;/script&gt;</code></pre>
+<p>Another way is:</p>
+<pre><code>&lt;script
+	src="xxx/maxigos-neo-classic-problem.js"&gt;
+	(;FF[4]GM[1]SZ[19]VW[aa:ii]FG[1]AW[ee]AB[de][fe][ed];B[ef]C[Correct!])
+&lt;/script&gt;</code></pre>
 <p class="note">Note: when one inserts directly a sgf record in a page as in above samples,
 the CA property is useless and ignored if present,
 since the sgf record charset is necessarily the same as the charset of the page.</p>
 <p>If one uses the "data-maxigos-sgf" attribute, the code is for instance:</p>
-<code><pre>&lt;script src="xxx/maxigos-neo-classic-problem.js"<br>data-maxigos-l="en"
-data-maxigos-sgf="(;FF[4]GM[1]SZ[19]VW[aa:ii]FG[1]AW[ee]AB[de][fe][ed];B[ef]C[Correct!])"&gt;
-&lt;/script&gt;</pre></code>
 <p>If one uses an url that generates a sgf record,
 one must add the "data-maxigos-source-filter" attribute
 which value is a regular expression that matches the url. The code is for instance:</p>
-<code><pre>&lt;script src="xxx/maxigos-neo-classic-problem.js" data-maxigos-l="en" data-maxigos-source-filter="/download/file\.php\?id=[0-9]+$"&gt;
-/download/file.php?id=23
-&lt;/script&gt;</pre></code>
-<p>If one uses the "data-maxigos-sgf" attribute, the code is for instance:</p>
-<code><pre>&lt;script src="xxx/maxigos-neo-classic-problem.js" data-maxigos-l="en" data-maxigos-source-filter="/download/file\.php\?id=[0-9]+$" data-maxigos-sgf="/download/file.php?id=23"&gt;
-&lt;/script&gt;</pre></code>
+<pre><code>&lt;script
+	src="xxx/maxigos-neo-classic-problem.js"
+	data-maxigos-source-filter="/download/file\.php\?id=[0-9]+$"
+	data-maxigos-sgf="/download/file.php?id=23"&gt;
+&lt;/script&gt;</code></pre>
+<p>Another way is:</p>
+<pre><code>&lt;script
+	src="xxx/maxigos-neo-classic-problem.js"
+	data-maxigos-source-filter="/download/file\.php\?id=[0-9]+$"&gt;
+	/download/file.php?id=23
+&lt;/script&gt;</code></pre>
 <p>The url must respect the "same origin" policy
 (i.e. same protocol, same domain, same port as the calling page).</p>
 <p class="note">Note 1: one doesn't need to install all maxiGos files on the server to use 
@@ -218,21 +230,23 @@ of this language (one of those stored in "_i18n" folder).</p>
 <p class="note">Note 2: in theory, a stand-alone viewer should not use external resources (images, ...). 
 If an external resource is required, maxiGos looks for it at the place
 where this ressource is in the full version.</p>
-<h4>Customization</h4>
-<p>Customization can be done by using "data-maxigos-xxx" attributes, 
+<h4>Customization of stand-alone viewers</h4>
+<p>Customization of stand-alone viewers can be done by using "data-maxigos-xxx" attributes, 
 where "xxx" is a maxiGos parameter 
-(see "Component parameters" chapter to learn more about maxiGos parameters). 
+(see the "Component parameters" chapter to learn more about maxiGos parameters). 
 Because only lower case letters are allowed in attribute names, 
 replace any upper case letter by its lower case form prefixed by "-". 
 For instance the attribute name for "in3dOn" maxiGos parameter is "data-maxigos-in3d-on".</p>
 <p>Many things can be changed using attributes. For instance, below is a way to display a diagram 
 without 3D effects using a neo-classic viewer that initially displays
 with 3D effects:</p>
-<code><pre>
-&lt;script src="xxx/maxigos-neo-classic-diagram.js" data-maxigos-l="en" data-maxigos-in3d-on="0"&gt;
-(;FF[4]GM[1]SZ[19]VW[aa:ii]FG[1]AW[ee]AB[de][fe][ed])
+<pre><code>
+&lt;script
+	src="xxx/maxigos-neo-classic-diagram.js"
+	data-maxigos-in3d-on="0"&gt;
+	data-maxigos-sgf="(;FF[4]GM[1]SZ[19]VW[aa:ii]FG[1]AW[ee]AB[de][fe][ed])"&gt;
 &lt;/script&gt;
-</pre></code>
+</code></pre>
 <p>It is also possible to make some changes in the css file 
 (as for goban background in the above sample).</p>
 <h3>Using a "plugin"</h3>
@@ -249,22 +263,25 @@ for more details.</p>
 using data found in its code.</p>
 <h4>The line to insert in your web page</h4>
 <p>Include in your web page where you want the viewer displays something a line such as:</p>
-<code><pre>&lt;script src="xxx/classic/_maker/basic.php" data-maxigos-l="en"&gt;
-yyy/myFirstSgf.sgf
-&lt;/script&gt;</pre></code>
+<pre><code>&lt;script
+	src="xxx/classic/_maker/basic.php"
+	data-maxigos-sgf="yyy/myFirstSgf.sgf"&gt;
+&lt;/script&gt;</code></pre>
 <p>Of course, you have to adapt the path (here "ppp") before the php script (here "classic/_maker/basic.php") 
 which is called a maker, taking into account where you installed maxiGos, and where your web page is.
 It's a relative path between the folder where your web page is and the folder where the maker script file is.</p>
 <p>The sgf can be specified as for stand-alone viewers.</p>
-<h4>Customization</h4>
+
+<h4>Customization of makers</h4>
 <p>The customization of makers can be done as for stand-alone viewers.</p>
+
 <h3>Using a "loader" in javascript</h3>
 <p>Use a loader when you need to insert sgf data between other html tag such as &lt;div&gt; and &lt;/div&gt;.
 This method is notably slower than others.</p>
+
 <h4>The code to insert in your web page</h4>
 <p>Insert for instance in your web page several &lt;div&gt; and &lt;/div&gt; tags
-with one attribute named "data-maxigos" which value is a maxiGos configuration name 
-(the corresponding configuration file name is the concatenantion of the configuration name and ".cfg").
+with one attribute named "data-maxigos" which value is a maxiGos configuration name.
 </p>
 <p>Insert a sgf file name or a sgf record or an url that can generate a sgf record
 between each of these tags.</p>
@@ -272,17 +289,18 @@ between each of these tags.</p>
 This script will replace each &lt;div&gt; and &lt;/div&gt; tags contents by a maxiGos viewer 
 that displays those contents.</p>
 <p>For instance:</p>
-<code><pre>&lt;div data-maxigos-l="en" data-maxigos="problem"&gt;
-(;FF[4]GM[1]SZ[19]VW[aa:lh]FG[1]AW[ee]AB[de][fe][ed];B[ef]C[Correct!])
+<pre><code>&lt;div data-maxigos="problem"&gt;
+	(;FF[4]GM[1]SZ[19]VW[aa:lh]FG[1]AW[ee]AB[de][fe][ed];B[ef]C[Correct!])
 &lt;/div&gt;
-&lt;div data-maxigos-l="en" data-maxigos="basic"&gt;
-(;FF[4]GM[1]SZ[19];B[qd])
+&lt;div data-maxigos="basic"&gt;
+	(;FF[4]GM[1]SZ[19];B[qd])
 &lt;/div&gt;
-&lt;script src="ppp/_mgos/mgosLoader.js"&gt;&lt;/script&gt;</pre></code>
-<p>Of course, you have to adapt the path (here "ppp/") before "_mgos/mgosLoader.js", 
+&lt;script src="ppp/_js/mgosLoader.js"&gt;&lt;/script&gt;</code></pre>
+<p>Of course, you have to adapt the path (here "ppp/") before "_js/mgosLoader.js", 
 taking into account where you installed maxiGos, and where your web page is.
 It's a relative path between your web page and the "loader" script file.</p>
-<h4>Customization</h4>
+
+<h4>Customization of loaders</h4>
 <p>As for stand-alone players, customization of loaders can be done by adding
 "data-maxigos-xxx" attributes to the tag where the viewer displays,
 and where "xxx" is a maxiGos parameter.</p>
@@ -293,24 +311,26 @@ or by the html lang attribute of one of the ancestors of the tag).</p>
 <p>In practice, the lang attribute is often specified for the html tag itself.</p>
 <p>If no lang attribute is specified, maxiGos tries to use the language of the navigator
 or english.</p>
-<p>You can change it very easily to english by adding
+<p>You can force the language to be english by adding
 <span style="color:red;">data-maxigos-l="en"</span> to each tag where a maxiGos viewer will display.</p>
 <p>For instance:</p>
-<code><pre>&lt;script src="ppp/maxigos-neo-classic-basic.js" data-maxigos-l="en"&gt;
-qqq/myFirstSgf.sgf
-&lt;/script&gt;</pre></code>
+<pre><code>&lt;script
+	src="ppp/maxigos-neo-classic-basic.js"
+	data-maxigos-l="en"
+	data-maxigos-sgf="qqq/myFirstSgf.sgf"&gt;
+&lt;/script&gt;</code></pre>
 <p>Note that maxiGos doesn't translate sgf content. It can just change the language of its own messages, button labels, …</p>
 <p>To set another language, insert before the first call to maxiGos scripts 
 an internationalization script for this other language.
 For instance, for japanese, you can insert the "maxigos-i18n-ja.js" script found in "_i18n" folder
 using something like 
 (replace "ppp" by a relative path between your web page and "_i18n" folder):</p>
-<code><pre>&lt;script src="ppp/_i18n/maxigos-i18n-ja.js"&gt;&lt;/script&gt;</pre></code>
+<pre><code>&lt;script src="ppp/_i18n/maxigos-i18n-ja.js"&gt;&lt;/script&gt;</code></pre>
 <p>If you can't or don't want to insert this ligne each time in your web page,
 you can simply add the code which is inside the internationalization script of the desired language
 at the beginning of the script of the viewer you are using.</p>
 <p>Then add <span style="color:red;">data-maxigos-l="ja"</span> to each tag where a maxiGos viewer will display such as:</p>
-<code><pre>&lt;script data-maxigos-l="ja" src="ppp/maxigos-neo-classic-basic.js"&gt;qqq/myFirstSgf.sgf&lt;/script&gt;</pre></code>
+<pre><code>&lt;script data-maxigos-l="ja" src="ppp/maxigos-neo-classic-basic.js"&gt;qqq/myFirstSgf.sgf&lt;/script&gt;</code></pre>
 <p>All internationalization scripts delivered with maxiGos are in "_i18n" folder.
 If the internationalization script for a language doesn't exist, 
 you can try to create it (try to do it from the japanese one).</p>
@@ -327,7 +347,7 @@ to use the "lang" parameter of the maker to change the language.</p>
 is not in "UTF-8", just add charset="UTF-8" to any &lt;script&gt; tag that includes 
 maxiGos scripts in your page.</p>
 <p>For instance:</p>
-<code><pre>&lt;script data-maxigos-l="en" charset="UTF-8" src="/_maxigos/_alone/maxigos-basic.js"&gt;</pre></code> 
+<pre><code>&lt;script charset="UTF-8" src="/_maxigos/_alone/maxigos-basic.js"&gt;</code></pre> 
 <h3>Encoding of sgf files</h3>
 <p>MaxiGos can well display sgf files encoded in different charsets 
 if the sgf CA property in these sgf files is properly set. 
@@ -342,7 +362,7 @@ no CA property in the sgf file.
 The only way for the moment to solve this problem is to use a text editor to add the correct CA property 
 in the sgf file.</p>
 <p>Note that when the actual charset of the sgf file is "UTF-8", 
-the value of the CA property must be set "UTF-8" too (a missing CA property is not an option).</p>
+the value of the CA property must be set "UTF-8" too (a missing CA property is not convenient in this case).</p>
 <p>If one inserts some sgf record as is in the code of a page using a text editor, maxiGos assumes 
 that the encoding of this record is the same as the encoding of the page (it is always the case in theory) 
 and therefore ignores the CA property.</p>
@@ -375,33 +395,32 @@ For instance, the goban, the navigation bar or the comment box are components.</
 <li>"BackToGame" (button to go to the nearest move of the main variation that was not add by the user),</li>
 <li>"Cartouche" (a container for players names, their levels and the number of their prisoners),</li>
 <li>"Comment" (simple comment, displays C sgf property),</li>
-<li>"Cut" (button to cut a branch in the game tree, used with "Edit" component),</li>
-<li>"Edit" (to modify a sgf file, used with "Info" and "Menu" components),</li>
-<li>"File" (to create, open, save or send by email sgf files, used with "Sgf" component, evenly used with "Menu" component),</li>
+<li>"Cut" (button to cut a branch in the game tree, used with the "Edit" component),</li>
+<li>"Edit" (to modify a sgf file, used with the "Info" and "Menu" components),</li>
+<li>"File" (to create, open, save or send by email sgf files, used with the "Sgf" component, evenly used with the "Menu" component),</li>
 <li>"Goban" (goban, displays sgf B, W, AB, AW, AE, LB, MA, CR, SQ, TR, TB, TW, ST, PL, and FG properties),</li>
-<li>"Goto" (to go to another move in the game tree).</li>
+<li>"Goto" (to go to another move in the game tree using a slider or an input field).</li>
 <li>"Guess" (to try to guess the next move),</li>
 <li>"Header" (to display sgf EV, RO, PB, PW, BR, WR, DT, PC, RU, TM, KM, HA, RE and GC properties),</li>
 <li>"Help" (button to display help),</li>
 <li>"Image" (button to generate a png image of the current state of the goban),</li>
-<li>"Info" (to change EV, RO, DT, PC, PB, PW, BR, WR, KM, HA, RE, GC, AN, CP, SO, US, RU, TM, OT, ON, BT, WT, GN properties, used most often with "Edit" component),</li>
+<li>"Info" (to change EV, RO, DT, PC, PB, PW, BR, WR, KM, HA, RE, GC, AN, CP, SO, US, RU, TM, OT, ON, BT, WT, GN properties, used most often with the "Edit" component),</li>
 <li>"Lesson" (to display comment in a balloon, sgf C, BM, DO, IT and TE properties),</li>
 <li>"Loop" (to display moves in loop),</li>
 <li>"Menu" (menu manager, used with at least one component among "File", "Edit" and "View"),</li>
 <li>"MoveInfo" (to display last move information),</li>
 <li>"Navigation" (buttons to navigate in the game tree),</li>
-<li>"NotSeen" (to display list of moves as in book, need "Diagram" component),</li>
+<li>"NotSeen" (to display list of moves as in book, need the "Diagram" component),</li>
 <li>"Options" (to modify numbering, show/hide mark on the last move, ...),</li>
 <li>"Pass" (pass button, to make a pass),</li>
 <li>"Score" (score button, to add/remove TB and TW properties),</li>
 <li>"Sgf" (sgf button, sgf record builder),</li>
 <li>"Solve" ("retry" and "undo" buttons, provide an answer to the user move if found in the sgf),</li>
-<li>"Speed" (loop speed, used with "Loop" component),</li>
-<li>"Title" (display sgf EV and RO properties),</li>
+<li>"Speed" (loop speed, used with the "Loop" component),</li>
 <li>"Tree" (game tree),</li>
 <li>"Variations" (variation management),</li>
 <li>"Version" (displays maxiGos version).</li>
-<li>"View" (functions that change view, evenly used with "Menu" component).</li>
+<li>"View" (functions that change view, evenly used with the "Menu" component).</li>
 </ul>
 <h3>Global parameters</h3>
 <table class="params">
@@ -422,15 +441,6 @@ For instance, the goban, the navigation bar or the comment box are components.</
 <td><span class="attribute">data-maxigos-allow-string-as-source</span></td>
 <td>If 1, maxiGos accepts sgf string records as data input.
 </td><td>(0,1)</td><td>1</td></tr>
-<tr>
-<td><span class="parameter">htmlParenthesis</span></td>
-<td><span class="attribute">data-maxigos-html-parenthesis</span></td>
-<td>If 1, maxiGos replace "&amp;#40;" and "&amp;#41;" by "(" and ")" in sgf source
-when it is inserted between html tags where the viewer displays.
-This parameter is useful for instance when using maxiGos in a forum powered by phpBB3
-which has an editor that replaces "(" and ")"
-by "&amp;#40;" and "&amp;#41;".
-</td><td>(0,1)</td><td>0</td></tr>
 <tr>
 <td><span class="parameter">initMethod</span></td>
 <td><span class="attribute">data-maxigos-init-method</span></td>
@@ -457,7 +467,7 @@ or advance of n nodes in the game tree.</td><td>"first", "last", "loop" or an in
 <tr>
 <td><span class="parameter">sourceFilter</span></td>
 <td><span class="attribute">data-maxigos-source-filter</span></td>
-<td>A regular expression that the sgf source has to match
+<td>A string representing a regular expression that the sgf source has to match
 when it is inserted between html tags where the sgf viewer displays.
 This parameter is useful for instance to discard unwanted data source
 inserted by a user on a forum.
@@ -488,7 +498,7 @@ If null, maxiGos displays "About" on the button.</td>
 <tr>
 <td><span class="parameter">aboutBtnOn</span></td>
 <td><span class="attribute">data-maxigos-about-btn-on</span></td>
-<td>If 1, display a "About" button in its own component box.</td>
+<td>If 1, display the "About" button in its own component box.</td>
 <td>(0,1)</td><td>0</td></tr>
 </table>
 
@@ -508,7 +518,7 @@ to their final location.</p>
 <td>Reference time used to compute duration of 
 stone translation when placing it on the goban. The actual translation time depends of the distance
 between the starting point and the ending point of the translation.<br><br>
-Its default value is the value of the "loopTime" parameter if "Loop" component is in use, 
+Its default value is the value of the "loopTime" parameter if the "Loop" component is in use, 
 otherwise 1000 ms.</td>
 <td>Number</td><td>1000</td></tr>
 </table>
@@ -538,7 +548,7 @@ If null, maxiGos displays "Back to game" on the button.</td>
 <tr>
 <td><span class="parameter">backToGameBtnOn</span></td>
 <td><span class="attribute">data-maxigos-back-to-game-btn-on</span></td>
-<td>If 1, display a "BackToGame" button in its own component box.</td>
+<td>If 1, display the "BackToGame" button in its own component box.</td>
 <td>(0,1)</td>
 <td>0</td>
 </tr>
@@ -614,9 +624,9 @@ without scrollbars, this parameter should be set to 0.</td>
 <td>0</td>
 </tr>
 <tr>
-<td><span class="parameter">commentLabelOn</span></td>
-<td><span class="attribute">data-maxigos-comment-label-on</span></td>
-<td>If 1, maxiGos displays the title of the comment box.</td>
+<td><span class="parameter">commentCaptionOn</span></td>
+<td><span class="attribute">data-maxigos-comment-caption-on</span></td>
+<td>If 1, maxiGos displays a caption ("Comments") for the comment box.</td>
 <td>(0,1)</td>
 <td>0</td>
 </tr>
@@ -624,7 +634,7 @@ without scrollbars, this parameter should be set to 0.</td>
 <td><span class="parameter">headerInComment</span></td>
 <td><span class="attribute">data-maxigos-header-in-comment</span></td>
 <td>
-If 1, maxiGos displays the header in comment box.<br><br>
+If 1, maxiGos displays the header in the comment box.<br><br>
 The <span class="component">Header</span> component has to be in use too, otherwise this parameter has no effect.
 </td>
 <td>(0,1)</td>
@@ -655,7 +665,7 @@ If null, maxiGos displays "Cut" on the button.</td>
 <tr>
 <td><span class="parameter">cutBtnOn</span></td>
 <td><span class="attribute">data-maxigos-cut-btn-on</span></td>
-<td>If 1, display a "Cut" button in its own component box.</td>
+<td>If 1, display the "Cut" button in its own component box.</td>
 <td>(0,1)</td>
 <td>0</td>
 </tr>
@@ -702,16 +712,6 @@ This parameter is useful to display diagrams, figures and kifus.
 marks and labels.</td>
 <td>(0,1)</td>
 <td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">gBoxParent</span></td>
-<td><span class="attribute">data-maxigos-g-box-parent</span></td>
-<td>Specify a box name on which dialog boxes will be displayed
-(to change options, show sgf, show help, etc.)<br><br>
-In practice, one uses it to specify an ancestor of "Goban"
-when "Goban" is too small.</td>
-<td>string</td>
-<td>"Goban"</td>
 </tr>
 <tr>
 <td><span class="parameter">gridMargin</span></td>
@@ -772,17 +772,6 @@ to determine if indices have to be displayed.</td>
 <td>0</td>
 </tr>
 <tr>
-<td><span class="parameter">magicParentNum</span></td>
-<td><span class="attribute">data-maxigos-magic-parent-num</span></td>
-<td>If <span class="parameter">pointsNumMax</span> is not null,
-this parameter specifies for which ancestor box of goban
-one must apply a shrinking for gobans smaller than a reference goban
-(a goban with pointsNumMax vertical lines).
-This parameter is merely required.</td>
-<td>positive interger</td>
-<td>0</td>
-</tr>
-<tr>
 <td><span class="parameter">marksAndLabelsOn</span></td>
 <td><span class="attribute">data-maxigos-marks-and-labels-on</span></td>
 <td>If 1, maxiGos displays marks and labels.</td>
@@ -824,7 +813,6 @@ to determine how to display numbers on stones.</td>
 <td>0</td>
 </tr>
 <tr>
-<tr>
 <td><span class="parameter">oldJapaneseNumberingOn</span></td>
 <td><span class="attribute">data-maxigos-old-japanese-numbering-on</span></td>
 <td>If 1, maxiGos uses kanjis to number stones.<br><br>
@@ -842,7 +830,7 @@ Otherwise, maxiGos compute the width of a reference goban
 which has pointsNumMax vertical lines.
 Then it displays all gobans with the same distance between their lines.
 Gobans with more than <span class="parameter">pointsNumMax</span> intersections
-are not concerned.</td>
+are displayed with the reference goban width.</td>
 <td>A positive integer</td>
 <td>0</td>
 </tr>
@@ -882,10 +870,8 @@ Number #4 : pixels (svg coordinates) to add vertically if 2d is on.<br>
 <td><span class="parameter">territoryMark</span></td>
 <td><span class="attribute">data-maxigos-territory-mark</span></td>
 <td>Territory mark shape
-(specified by sgf TB and TW properties).
-<br><br>
-"MA": cross<br>
-"MS": small stones<br>
+(specified by sgf TB and TW properties):
+<ul><li>"MA": cross</li><li>"MS": small stones</li></ul>
 </td>
 <td>("MA","MS")</td>
 <td>"MS"</td>
@@ -893,11 +879,13 @@ Number #4 : pixels (svg coordinates) to add vertically if 2d is on.<br>
 </table>
 
 <h3><span class="component">Goto</span> component</h3>
-<p>This component can insert a text input field in
-the navigation bar to displays the current move number
-and to allow the user to change the current move.</p>
-<p>It can also display a slider in its own box
+<p>This component displays a slider in its own box
 to allow the user to move in the sgf tree.</p>
+<p>It also provides a text input field for
+the navigation bar to displays the current move number
+and to allow the user to change the current move.
+To display this text input field in the navigation bar, just add "Goto"
+to the <span class="parameter">navigations</span> parameter value.</p>
 <table class="params">
 <tr>
 <th>Parameter</th>
@@ -913,26 +901,6 @@ to allow the user to move in the sgf tree.</p>
 to move in the sgf tree.</td>
 <td>(0,1)</td>
 <td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">gotoInputOn</span></td>
-<td><span class="attribute">data-maxigos-goto-input-on</span></td>
-<td>If 1, maxiGos inserts an text input field call "moveTo" in the navigation bar.
-This text input field displays the current move number
-and allows the user to change this current move
-by entering another move number.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">gotoInputBefore</span></td>
-<td><span class="attribute">data-maxigos-goto-input-before</span></td>
-<td>If its value is the name of a button of the navigation bar,
-maxiGos inserts "moveTo" text input field after this button
-in the navigation bar.
-Otherwise it inserts the field at the end of the navigation bar.</td>
-<td>A string (which is a button name)</td>
-<td>""</td>
 </tr>
 </table>
 
@@ -978,9 +946,7 @@ This parameter is ignored if
 </table>
 
 <h3><span class="component">Header</span> component</h3>
-<p>This component can displays the sgf header in its own box.</p>
-<p>It can also display a button that allows the user 
-to display the header on the goban.</p>
+<p>This component displays a button or a box to display the sgf header.</p>
 <table class="params">
 <tr>
 <th>Parameter</th>
@@ -999,39 +965,19 @@ without scrollbars, this parameter should be set to 0.</td>
 <td>0</td>
 </tr>
 <tr>
-<td><span class="parameter">concatDateToTitle</span></td>
-<td><span class="attribute">data-maxigos-concat-date-to-title</span></td>
-<td>If 1, maxiGos displays the date after the title.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">concatTeamToPlayer</span></td>
-<td><span class="attribute">data-maxigos-concat-team-to-player</span></td>
-<td>If 1, maxiGos displays the team name after the players' name.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">concatKomiToResult</span></td>
-<td><span class="attribute">data-maxigos-concat-komi-to-result</span></td>
-<td>If 1, maxiGos displays the komi after the result.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">concatHandicapToResult</span></td>
-<td><span class="attribute">data-maxigos-concat-handicap-to-result</span></td>
-<td>If 1, maxiGos displays the handicap after the result.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">concatNumOfMovesToResult</span></td>
-<td><span class="attribute">data-maxigos-concat-num-of-moves-to-result</span></td>
-<td>If 1, maxiGos displays the number of moves after the result.</td>
-<td>(0,1)</td>
-<td>0</td>
+<td><span class="parameter">concatInHeader</span></td>
+<td><span class="attribute">data-maxigos-concat-in-header</span></td>
+<td>Set of element pairs to concatenate. The pairs can be:
+<ul>
+<li>DateToTitle: date after the title,</li>
+<li>HandicapToResult: handicap after the result,</li>
+<li>KomiToResult: komi after the result,</li>
+<li>NumOfMovesToResult: number of moves after the result,</li>
+<li>TeamToPlayer: team name after the players' name.</li>
+</ul>
+</td>
+<td>Set of chains (comma-separated)</td>
+<td>""</td>
 </tr>
 <tr>
 <td><span class="parameter">headerAlias</span></td>
@@ -1058,122 +1004,60 @@ If null, maxiGos displays "Header" on the button.</td>
 <td>If 1,
 maxiGos displays an "Informations" button in the component box
 instead of displaying the header itself. 
-A click on this button displays the header on the goban.
+A click on this button displays the header in a dialog.
 This parameter is ignored if <span class="parameter">headerBoxOn</span> is 1.</td>
 <td>(0,1)</td>
 <td>0</td>
 </tr>
 <tr>
-<td><span class="parameter">hideBlack</span></td>
-<td><span class="attribute">data-maxigos-hide-black</span></td>
-<td>If 1, maxiGos doesn't display Black name and level.</td>
-<td>(0,1)</td>
-<td>0</td>
+<td><span class="parameter">hideInHeader</span></td>
+<td><span class="attribute">data-maxigos-hide-in-header</span></td>
+<td>Set of header items to hide. The items can be:
+<ul>
+<li>Black (name and level of Black, PB and BR sgf properties)</li>
+<li>Date (date, DT sgf property)</li>
+<li>GeneralComment (general comment, GC sgf property)</li>
+<li>Handicap (handicap, HA sgf property)</li>
+<li>Komi (komi, KM sgf property)</li>
+<li>NumOfMoves (number of moves of the main variation)</li>
+<li>NumOfMovesLabel (the "Number of moves:" string)</li>
+<li>Place (place, PC sgf property)</li>
+<li>Result (result, RE sgf property)</li>
+<li>ResultLabel (the "Result:" string)</li>
+<li>Rules (rules, RU sgf property)</li>
+<li>TimeLimits (time limits, TM sgf property)</li>
+<li>Title (title, EV and RO sgf properties)</li>
+<li>White (name and level of White, PW and WR sgf properties)</li>
+</ul>
+</td>
+<td>Set of strings (comma-separated)</td>
+<td>""</td>
 </tr>
 <tr>
-<td><span class="parameter">hideDate</span></td>
-<td><span class="attribute">data-maxigos-hide-date</span></td>
-<td>If 1, maxiGos doesn't display the date.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">hideGeneralComment</span></td>
-<td><span class="attribute">data-maxigos-hide-general-comment</span></td>
-<td>If 1, maxiGos doesn't display the general comment.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">hideHandicap</span></td>
-<td><span class="attribute">data-maxigos-hide-handicap</span></td>
-<td>If 1, maxiGos doesn't display the handicap.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">hideKomi</span></td>
-<td><span class="attribute">data-maxigos-hide-komi</span></td>
-<td>If 1, maxiGos doesn't display the komi.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">hideNumOfMoves</span></td>
-<td><span class="attribute">data-maxigos-hide-num-of-moves</span></td>
-<td>If 1, maxiGos doesn't display the number of moves.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">hideNumOfMovesLabel</span></td>
-<td><span class="attribute">data-maxigos-hide-num-of-moves-label</span></td>
-<td>If 1, maxiGos doesn't display "Number of moves:"
-before the number of moves.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">hidePlace</span></td>
-<td><span class="attribute">data-maxigos-hide-place</span></td>
-<td>If 1, maxiGos doesn't display the place.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">hideResult</span></td>
-<td><span class="attribute">data-maxigos-hide-result</span></td>
-<td>If 1, maxiGos doesn't display the result.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">hideResultLabel</span></td>
-<td><span class="attribute">data-maxigos-hide-result-label</span></td>
-<td>If 1, maxiGos doesn't display "Result:" before the result.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">hideRules</span></td>
-<td><span class="attribute">data-maxigos-hide-rules</span></td>
-<td>If 1, maxiGos doesn't display the rules name.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">hideTimeLimits</span></td>
-<td><span class="attribute">data-maxigos-hide-time-limits</span></td>
-<td>If 1, maxiGos doesn't display the time limits.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">hideTitle</span></td>
-<td><span class="attribute">data-maxigos-hide-title</span></td>
-<td>If 1,
-maxiGos doesn't display the title.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">hideWhite</span></td>
-<td><span class="attribute">data-maxigos-hide-white</span></td>
-<td>If 1,
-maxiGos doesn't display White name and level.</td>
+<td><span class="parameter">translateTitleOn</span></td>
+<td><span class="attribute">data-maxigos-translate-title-on</span></td>
+<td>If 1, maxiGos tries to translate the title,
+using translation functions in "_i18n" scripts files.<br><br>
+The title is built from sgf EV and RO properties. 
+EV should be "x t" with x as
+"1st" or "2nd" or "3rd" or "nth", n a number, 
+and t a title name such as "Honinbo", "Meijin", "Ing Cup", ...
+RO should be "n" or "n (s)" or "(s)", n a number, 
+and s a string among "final", "semi-final", "quarter-final", "playoff", "round" or "game".
+</td>
 <td>(0,1)</td>
 <td>0</td>
 </tr>
 </table>
-<p>Note 1: if headerBoxOn and headerBtnOn are both 0, maxiGos doesn't display "Header" component box.
-But it can still display header in "Comment" component box if "headerInComment" is set to 1.</p>
-<p>Note 2: difference between "Header" component and "Info" component is that
-one can change header content using "Info" component
-while "Header" component just displays its content.</p>
+<p>Note 1: if headerBoxOn and headerBtnOn are both 0, maxiGos doesn't display the "Header" component box.
+But it can still display the header in "Comment" component box if "headerInComment" is set to 1.</p>
+<p>Note 2: the difference between the "Header" component and the "Info" component is
+that one can modify the content of the header using the "Info" component
+while the "Header" component simply displays its content.</p>
 
 <h3><span class="component">Help</span> component</h3>
 <p>This component displays a button in its own box
-to allows the user to display help on the goban.</p>
+to allows the user to display help in a dialog.</p>
 <p>It is designed to be used in <span class="config">Edit</span> configuration.</p>
 <table class="params">
 <tr>
@@ -1186,7 +1070,7 @@ to allows the user to display help on the goban.</p>
 <tr>
 <td><span class="parameter">helpBtnOn</span></td>
 <td><span class="attribute">data-maxigos-help-btn-on</span></td>
-<td>If 1, maxiGos displays "Help" button.</td>
+<td>If 1, maxiGos displays the "Help" button.</td>
 <td>(0,1)</td>
 <td>0</td>
 </tr>
@@ -1203,7 +1087,7 @@ If null, maxiGos displays "Help" on the button.</td>
 </table>
 
 <h3><span class="component">Image</span> component</h3>
-<p>This component contains two sub-components: "PNG" and "SVG".</p>
+<p>This component contains two sub-components: "Png" and "Svg".</p>
 <p>Each of them can display a button in their own box to
 make a PNG image or a SVG image of the current state of the goban.</p>
 <table class="params">
@@ -1227,7 +1111,7 @@ If null, maxiGos displays "PNG" on the button.</td>
 <tr>
 <td><span class="parameter">pngBtnOn</span></td>
 <td><span class="attribute">data-maxigos-png-btn-on</span></td>
-<td>If 1, maxiGos displays "Png" button..</td>
+<td>If 1, maxiGos displays the "Png" button.</td>
 <td>(0,1)</td>
 <td>0</td>
 </tr>
@@ -1244,13 +1128,13 @@ If null, maxiGos displays "Svg" on the button.</td>
 <tr>
 <td><span class="parameter">svgBtnOn</span></td>
 <td><span class="attribute">data-maxigos-svg-btn-on</span></td>
-<td>If 1, maxiGos displays "Svg" button.</td>
+<td>If 1, maxiGos displays the "Svg" button.</td>
 <td>(0,1)</td>
 <td>0</td>
 </tr></table>
 
 <h3><span class="component">Info</span> component</h3>
-<p>This component displays forms on the goban to edit sgf properties
+<p>This component displays a form in a dialog to edit sgf properties
 such as EV, RO, DT, PC, PB, PW, etc.</p>
 <p>It is designed to be used in <span class="config">Edit</span> configuration.</p>
 <p>It doesn't have any parameters.</p>
@@ -1261,9 +1145,12 @@ containing sgf comments.</p>
 <p>It doesn't have any parameter.</p>
 
 <h3><span class="component">Loop</span> component</h3>
-<p>This component can display "Auto" and "Pause" buttons
-in the navigation bar,
-to allow a user to start or stop the display on a loop.</p>
+<p>This component displays moves on a loop.</p>
+<p>It also provides the "Auto" and "Pause" buttons for the navigation bar,
+to start or stop the display on a loop.
+To display these buttons in the navigation bar, just add "Loop"
+to the <span class="parameter">navigations</span> parameter value.
+</p>
 <table class="params">
 <tr>
 <th>Parameter</th>
@@ -1276,8 +1163,9 @@ to allow a user to start or stop the display on a loop.</p>
 <td><span class="parameter">loopTime</span></td>
 <td><span class="attribute">data-maxigos-loop-time</span></td>
 <td>Reference time (in milliseconds) used to compute iddle time between the display of two sgf nodes.
-Iddle time T is longer when a comment of L bytes length is found in the node in order to let the user enough time to read the comment. T is computed by the following formula: 
-T=L*loopTime/20+loopTime.</td>
+Iddle time T is longer when a comment of L bytes length is found in the node in order
+to let the user enough time to read the comment.
+T is computed by the following formula: T=(L/20+1)*loopTime.</td>
 <td>A positive integer</td>
 <td>1000</td>
 </tr>
@@ -1297,13 +1185,6 @@ T=initialLoopTime*loopTime/1000.</td>
 This iddle time is computed by the following formula: 
 T=finalLoopTime*loopTime/1000.</td>
 <td>A positive integer</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">mainVariationOnlyLoop</span></td>
-<td><span class="attribute">data-maxigos-main-variation-only-loop</span></td>
-<td>If 1, maxiGos displays only the main variation.</td>
-<td>(0,1)</td>
 <td>0</td>
 </tr>
 </table>
@@ -1372,12 +1253,13 @@ in its own box.</p>
 <tr>
 <td><span class="parameter">navigations</span></td>
 <td><span class="attribute">data-maxigos-navigations</span></td>
-<td>List of buttons displayed by
+<td>Set of buttons or input displayed by the
 <span class="component">Navigation</span> component.<br><br>
-Buttons are: "First", "TenPred", "Pred", "Next, "TenNext",
-"Last", "Auto" and "Pause".<br><br>
-"Auto" and "Pause"require <span class="component">Loop</span> component.</td>
-<td>Comma-separated list of string</td>
+The set can contains: "First", "TenPred", "Pred", "Next, "TenNext",
+"Last", "Auto", "Pause" and "Goto".<br><br>
+"Auto" and "Pause" require the <span class="component">Loop</span> component.<br><br>
+"Goto"requires the <span class="component">Goto</span> component.</td>
+<td>Set of strings (comma-separated)</td>
 <td>"First,TenPred,Pred,Next,TenNext,Last"</td>
 </tr>
 </table>
@@ -1399,14 +1281,16 @@ parameter is set to 1.</p>
 <td><span class="parameter">notSeenTwinStonesOn</span></td>
 <td><span class="attribute">data-maxigos-not-seen-twin-stones-on</span></td>
 <td>If 1, maxiGos displays on what stone a move is played
-whenever possible. If 0, it displays the coordinates of the move.</td>
+if the stone has a number, a label or a mark,
+else it displays the coordinates of the move.
+If 0, it always displays the coordinates of the move.</td>
 <td>(0,1)</td>
 <td>1</td>
 </tr>
 </table>
 
 <h3><span class="component">Options</span> component</h3>
-<p>This component displays a dialog to change options.</p>
+<p>This component displays a button or a box to change options.</p>
 <table class="params">
 <tr>
 <th>Parameter</th>
@@ -1416,110 +1300,34 @@ whenever possible. If 0, it displays the coordinates of the move.</td>
 <th>Default value</th>
 </tr>
 <tr>
-<td><span class="parameter">hideAnimatedStoneOn</span></td>
-<td><span class="attribute">data-maxigos-hide-animated-stone-on</span></td>
-<td>If 1, maxiGos hides <span class="parameter">animatedStoneOn</span>
-checkbox.</td>
-<td>(0,1)</td>
-<td>0</td>
+<td><span class="parameter">hideInOptions</span></td>
+<td><span class="attribute">data-maxigos-hide-in-options</span></td>
+<td>Set of options items to hide. The items can be:
+<ul>
+<li>AnimatedStoneOn,</li>
+<li>AnimatedStoneTime,</li>
+<li>AsInBookOn,</li>
+<li>CanGuess,</li>
+<li>CanVariation,</li>
+<li>In3dOn,</li>
+<li>IndicesOn,</li>
+<li>LoopTime,</li>
+<li>MarksAndLabelsOn,</li>
+<li>MarkOnLastOn,</li>
+<li>NumberingOn,</li>
+<li>ScoreMethod,</li>
+<li>SiblingsOn,</li>
+<li>VariationMarksOn.</li>
+</ul>
+</td>
+<td>Set of strings (comma-separated)</td>
+<td>""</td>
 </tr>
 <tr>
-<td><span class="parameter">hideAnimatedStoneTime</span></td>
-<td><span class="attribute">data-maxigos-hide-animated-stone-time</span></td>
-<td>If 1, maxiGos hides <span class="parameter">animatedStoneTime</span> text input.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">hideAsInBookOn</span></td>
-<td><span class="attribute">data-maxigos-as-in-book-on</span></td>
-<td>If 1, maxiGos hides <span class="parameter">asInBookOn</span>
-checkbox.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">hideCanGuess</span></td>
-<td><span class="attribute">data-maxigos-can-guess</span></td>
-<td>If 1, maxiGos hides <span class="parameter">canGuess</span> radio button.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">hideCanVariation</span></td>
-<td><span class="attribute">data-maxigos-can-variation</span></td>
-<td>If 1, maxiGos hides <span class="parameter">canVariation</span> radio button.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">hideIn3dOn</span></td>
-<td><span class="attribute">data-maxigos-hide-in3d-on</span></td>
-<td>If 1, maxiGos hides <span class="parameter">in3dOn</span> checkbox.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">hideIndicesOn</span></td>
-<td><span class="attribute">data-maxigos-hide-indices-on</span></td>
-<td>If 1, maxiGos hides <span class="parameter">indicesOn</span> checkbox.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">hideLoopTime</span></td>
-<td><span class="attribute">data-maxigos-hide-loop-time</span></td>
-<td>If 1, maxiGos hides <span class="parameter">loopTime</span> text input.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">hideMarksAndLabelsOn</span></td>
-<td><span class="attribute">data-maxigos-hide-marks-and-labels-on</span></td>
-<td>If 1, maxiGos hides <span class="parameter">marksAndLabelsOn</span> checkbox.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">hideMarkOnLastOn</span></td>
-<td><span class="attribute">data-maxigos-hide-mark-on-last-on</span></td>
-<td>If 1, maxiGos hides <span class="parameter">markOnLastOn</span>checkbox.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">hideNumberingOn</span></td>
-<td><span class="attribute">data-maxigos-hide-numbering-on</span></td>
-<td>If 1, maxiGos hides <span class="parameter">numberingOn</span> checkbox.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">hideScoreMethod</span></td>
-<td><span class="attribute">data-maxigos-hide-score-method</span></td>
-<td>If 1, maxiGos hide <span class="parameter">scoreMethod</span> radio buttons.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">hideSiblingsOn</span></td>
-<td><span class="attribute">data-maxigos-hide-siblings-on</span></td>
-<td>If 1, maxiGos hides <span class="parameter">siblingsOn</span> checkbox.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">hideVariationMarksOn</span></td>
-<td><span class="attribute">data-maxigos-hide-variation-marks-on</span></td>
-<td>If 1, maxiGos hides <span class="parameter">variationMarksOn</span> checkbox.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">optionAlias</span></td>
-<td><span class="attribute">data-maxigos-option-alias</span></td>
+<td><span class="parameter">optionsAlias</span></td>
+<td><span class="attribute">data-maxigos-options-alias</span></td>
 <td>Specify what element of the translation array
-one has to use to display the label of the "Option" button.
+one has to use to display the label of the "Options" button.
 The string should contain a "_", and "_" alone means
 an empty string.
 If null, maxiGos displays "Options" on the button.</td>
@@ -1527,25 +1335,24 @@ If null, maxiGos displays "Options" on the button.</td>
 <td>null</td>
 </tr>
 <tr>
-<td><span class="parameter">optionBoxOn</span></td>
-<td><span class="attribute">data-maxigos-option-box-on</span></td>
-<td>If 1, maxiGos displays "Option" dialog in the component box.
+<td><span class="parameter">optionsBoxOn</span></td>
+<td><span class="attribute">data-maxigos-options-box-on</span></td>
+<td>If 1, maxiGos displays options in the component box.
 </td>
 <td>(0,1)</td>
 <td>0</td>
 </tr>
 <tr>
-<td><span class="parameter">optionBtnOn</span></td>
-<td><span class="attribute">data-maxigos-option-btn-on</span></td>
-<td>If 1,
-maxiGos displays "Option" button in the component box.</td>
+<td><span class="parameter">optionsBtnOn</span></td>
+<td><span class="attribute">data-maxigos-options-btn-on</span></td>
+<td>If 1, maxiGos displays the "Options" button in the component box.</td>
 <td>(0,1)</td>
 <td>0</td>
 </tr>
 </table>
 
 <h3><span class="component">Pass</span> component</h3>
-<p>This component displays "Pass" button in its own box.</p>
+<p>This component displays the "Pass" button in its own box.</p>
 <table class="params">
 <tr>
 <th>Parameter</th>
@@ -1557,7 +1364,7 @@ maxiGos displays "Option" button in the component box.</td>
 <tr>
 <td><span class="parameter">canPassOnlyIfPassInSgf</span></td>
 <td><span class="attribute">data-maxigos-can-pass-only-if-in-sgf</span></td>
-<td>If 1, maxiGos enables "Pass" button only if
+<td>If 1, maxiGos enables the "Pass" button only if
 one of the next moves in the sgf is a pass.</td>
 <td>(0,1)</td>
 <td>0</td>
@@ -1576,14 +1383,14 @@ If null, maxiGos displays "Pass" on the button.</td>
 <tr>
 <td><span class="parameter">passBtnOn</span></td>
 <td><span class="attribute">data-maxigos-pass-btn-on</span></td>
-<td>If 1, maxiGos displays "Pass" button in the component box.</td>
+<td>If 1, maxiGos displays the "Pass" button in the component box.</td>
 <td>(0,1)</td>
 <td>0</td>
 </tr>
 </table>
 
 <h3><span class="component">Score</span> component</h3>
-<p>This component displays "Score" button in its own box.</p>
+<p>This component displays the "Score" button in its own box.</p>
 <table class="params">
 <tr>
 <th>Parameter</th>
@@ -1614,7 +1421,7 @@ If null, maxiGos displays "Score" on the button.</td>
 <tr>
 <td><span class="parameter">scoreBtnOn</span></td>
 <td><span class="attribute">data-maxigos-score-btn-on</span></td>
-<td>If 1, maxiGos displays "Score" button in the component box.</td>
+<td>If 1, maxiGos displays the "Score" button in the component box.</td>
 <td>(0,1)</td>
 <td>0</td>
 </tr>
@@ -1628,12 +1435,12 @@ If null, maxiGos displays "Score" on the button.</td>
 <tr>
 <td><span class="parameter">scoreMethod</span></td>
 <td><span class="attribute">data-maxigos-score-method</span></td>
-<td>Specify the method to add/remove TB and TW :<br><br>
-trivial:
+<td>Specify the method to add/remove TB and TW.<br><br>
+Trivial:
 a click on a stone adds or removes a TB or a TW of the opposite color of that stone.
 A click on an empty point adds, swaps or removes a TB or a TW.
 <br><br>
-counting:
+Counting:
 a click on a stone adds or removes a TB or a TW of the opposite color of that stone,
 as well as on all empty points and stones of the same color next to this stone.
 A click on an empty point adds or removes a TB or TW
@@ -1664,7 +1471,7 @@ if these points are surrounded by stones of the same color.
 <tr>
 <td><span class="parameter">sgfAction</span></td>
 <td><span class="attribute">data-maxigos-sgf-action</span></td>
-<td>Action when one clicks on "Sgf" button.
+<td>Action when one clicks on the "Sgf" button.
 If "Show", the sgf is display in a box over the goban.
 If "Download", the sgf is downloaded
 (if it is possible with the device in use).</td>
@@ -1685,7 +1492,7 @@ If null, maxiGos displays "Sgf" on the button.</td>
 <tr>
 <td><span class="parameter">sgfBtnOn</span></td>
 <td><span class="attribute">data-maxigos-sgf-btn-on</span></td>
-<td>If 1, maxiGos displays "Sgf" button in the component box.</td>
+<td>If 1, maxiGos displays the "Sgf" button in the component box.</td>
 <td>(0,1)</td>
 <td>0</td>
 </tr>
@@ -1724,13 +1531,13 @@ to retry, undo, show a hint or pass.</p>
 <td>If 1, maxiGos places the user move it is in the sgf,
 and answers this move.</td>
 <td>(0,1)</td>
-<td>1</td>
+<td>0</td>
 </tr>
 <tr>
 <td><span class="parameter">oldSolveBtnOn</span></td>
 <td><span class="attribute">data-maxigos-old-solve-btn-on</span></td>
-<td>If 1, maxiGos displays "Retry" button as "First" button,
-"Undo" button as "Pred" button, and "Hint" button
+<td>If 1, maxiGos displays the "Retry" button as "First" button,
+the "Undo" button as "Pred" button, and the "Hint" button
 as "Next" button.</td>
 <td>(0,1)</td>
 <td>0</td>
@@ -1790,41 +1597,6 @@ the loop speed (i.e. <span class="parameter">loopTime</span> parameter).</p>
 </tr>
 </table>
 
-<h3><span class="component">Title</span> component</h3>
-<p>This component displays the title of the sgf
-(made from EV and RO sgf properties).</p>
-<table class="params">
-<tr>
-<th>Parameter</th>
-<th>Attribute</th>
-<th>Description</th>
-<th>Possible values</th>
-<th>Default value</th>
-</tr>
-<tr>
-<td><span class="parameter">titleBoxOn</span></td>
-<td><span class="attribute">data-maxigos-title-box-on</span></td>
-<td>If 1, maxiGos displays the title in the component box.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">translateTitleOn</span></td>
-<td><span class="attribute">data-maxigos-translate-title-on</span></td>
-<td>If 1, maxiGos tries to translate the title,
-using translation functions in "_i18n" scripts files.<br><br>
-The title is built from sgf EV and RO properties. 
-EV should be "x t" with x as
-"1st" or "2nd" or "3rd" or "nth", n a number, 
-and t a title name such as "Honinbo", "Meijin", "Ing Cup", ...
-RO should be "n" or "n (s)", n a number, 
-and s a string among "final", "semi-final", "quarter-final", "playoff", "round" or "game".
-</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-</table>
-
 <h3><span class="component">Tree</span> component</h3>
 <p>This component displays the moves tree.</p>
 <table class="params">
@@ -1860,9 +1632,9 @@ by a "?" in the tree.</td>
 <td>1</td>
 </tr>
 <tr>
-<td><span class="parameter">treeLabelOn</span></td>
-<td><span class="attribute">data-maxigos-tree-label-on</span></td>
-<td>If 1, maxiGos displays the title of the tree box.</td>
+<td><span class="parameter">treeCaptionOn</span></td>
+<td><span class="attribute">data-maxigos-tree-caption-on</span></td>
+<td>If 1, maxiGos displays a caption ("Game tree") for the tree box.</td>
 <td>(0,1)</td>
 <td>0</td>
 </tr></table>
@@ -1932,7 +1704,7 @@ by the sgf ST property.</td>
 </tr>
 </table>
 
-<h3>Composant Version</h3>
+<h3><span class="component">Version</span> component</h3>
 <p>This component displays maxiGos version in its box.</p>
 <table class="params">
 <tr>
@@ -1968,14 +1740,15 @@ folder of the samples.</p>
 <p>Tags are:</p>
 <ul>
 <li>a global <span class="tag">&lt;div&gt;</span></li>
-<li>a <span class="tag">&lt;div&gt;</span> that encapsulates each component (excepting <span class="component">Title</span>
-which is encapsulated in a <span class="tag">&lt;h1&gt;</span> tag)</li>
+<li>tags that encapsulate each component
+(in practice a <span class="tag">&lt;div&gt;</span> tag,
+even if it is not a requirement)</li>
 <li>various internal tags in components</li>
-<li>Some <span class="tag">&lt;div&gt;</span> that group other <span class="tag">&lt;div&gt;</span>.</li>
+<li>Some <span class="tag">&lt;div&gt;</span> that group other tags.</li>
 </ul>
 <p>Each viewer has an id starting by "d", followed by a number
 ("1" for the first viewer of the page, "2" for the second, etc.)</p>
-<p>Each component <span class="tag">&lt;div&gt;</span> id
+<p>Each component tag id
 is prefixed by its viewer id and followed by the component name and the tag name.
 For instance the goban component <span class="tag">&lt;div&gt;</span> id
 of the third viewer in the page is "d3GobanDiv".</p>
@@ -1984,298 +1757,534 @@ of the third viewer in the page is "d3GobanDiv".</p>
 is "GlobalBox". Therefore its id is "dnGlobalBoxDiv",
 and its class is "mxGlobalBoxDiv".</p>
 <p>As a result, the whole tags of the third viewer in a page are in:</p>
-<code><pre>
+<pre><code>
 &lt;div class="mxGlobalBoxDiv" id="d3GlobalBoxDiv"&gt;...&lt;/div&gt;
-</pre></code>
-<p>Some other classes are added by maxiGos.</p>
-<p>A class called "mx" + name of a theme + "Theme" is added to
-the global <span class="tag">&lt;div&gt;</span>.</p>
-<p>A class called "mx" + name of a configuration + "Config" is added to
-the global <span class="tag">&lt;div&gt;</span>.</p>
-<p>If <span class="tag">in3dOn</span> parameter is set to 1,
-a class called "mxIn3dOn" is added to
-the global <span class="tag">&lt;div&gt;</span>.
-Otherwise, a class called "mxIn2dOn" is added to
-the global <span class="tag">&lt;div&gt;</span>.</p>
+</code></pre>
+<p>Some other classes can be added by maxiGos.</p>
 <h3>Class and tag list</h3>
+<p>Here is a list of tags that can be styled and the name of the associated classes.</p>
 
 <section class="classList">
-
 <h4>Global box</h4>
-<div>div.mxGlobalBoxDiv,</div> 
-<div>div.mx + theme name + Theme,</div>
-<div>div.mx + configuration name + Config,</div>
-<div>div.mxIn3d or div.mxIn2d according to <span class="parameter">in3dOn</span> value.</div>
+<ul>
+<li>div.mxGlobalBoxDiv,</li>
+<li>div.mx + theme name + Theme,</li>
+<li>div.mx + configuration name + Config,</li>
+<li>div.mxIn3d or div.mxIn2d according to <span class="parameter">in3dOn</span> value.</li>
+<li>div.mxIndicesOn or div.mxIndicesOff according to <span class="parameter">indicesOn</span> value.</li>
+</ul>
 
 <h4> Grouping boxes</h4>
-<div>div.mx + component name + ParentDiv</div>
-<div>div.mx + component name + GrandParentDiv</div>
-<div>div.mx + component name + GreatGrandParentDiv</div>
-<div>div.mx + component name + GreatGreatGrandParentDiv</div>
-<div>...</div>
+<ul>
+<li>div.mx + component name + ParentDiv</li>
+<li>div.mx + component name + GrandParentDiv</li>
+<li>div.mx + component name + GreatGrandParentDiv</li>
+<li>div.mx + component name + GreatGreatGrandParentDiv</li>
+<li>...</li>
+</ul>
 
 <h4>Components</h4>
 
-<div>div.mxAboutDiv
-	<div>button.mxBtn span (if <span class="parameter">aboutBtnOn</span> is set to 1)</div>
-</div>
+<ul>
+<li>div.mxAboutDiv (<span class="parameter">aboutBtnOn</span>=1)
+	<ul>
+	<li>button.mxBtn.mxAboutBtn</li>
+	</ul>
+</ul>
 
-<div>div.mxBackToMainDiv
-	<div>button.mxBtn span (if <span class="parameter">backToMainBtnOn</span> is set to 1)</div>
-</div>
+<ul>
+<li>div.mxBackToMainDiv (<span class="parameter">backToMainBtnOn</span>=1)
+	<ul>
+	<li>button.mxBtn.mxBackToMainBtn</li>
+	</ul>
+</li>
+</ul>
 
-<div>div.mxCommentDiv
-	<div>div.mxCommentContentDiv
-		<div>span.mxMoveNumberSpan (if <span class="parameter">allInComment</span> is set to 1)</div>
-		<div>Balises du composant <span class="component">Header</span> (if <span class="parameter">headerInComment</span> is set to 1)</div>
-	</div>
-</div>
+<ul>
+<li>div.mxCommentDiv
+	<ul>
+	<li>div.mxCommentCaptionDiv (<span class="parameter">commentCaptionOn</span>=1)</li>
+	<li>div.mxCommentContentDiv
+		<ul>
+		<li>composant <span class="component">Header</span> tags (<span class="parameter">headerInComment</span>=1)</li>
+		<li>p
+			<ul>
+			<li>span.mxMoveNumberSpan (<span class="parameter">allInComment</span>=1)</li>
+			<li>span.mxInitialSpan (<span class="component">Solve</span> component)</li>
+			<li>span.mxOffpathSpan (<span class="component">Solve</span> component)</li>
+			<li>span.mxFailSpan (<span class="component">Solve</span> component)</li>
+			<li>span.mxSuccessSpan (<span class="component">Solve</span> component)</li>
+			<li>span.mxNowhereSpan (<span class="component">Solve</span> component)</li>
+			<li>span.mxForbiddenSpan (<span class="component">Solve</span> component)</li>
+			<li>span.mxEndSpan (<span class="component">Solve</span> component)</li>
+			</ul>
+		</li>
+			</ul>
+		</li>
+		</ul>
+	</li>
+	</ul>
+</li>
+</ul>
 
-<div>div.mxCommentLabelDiv (if <span class="parameter">commentLabelOn</span> is set to 1)</div>
+<ul>
+<li>div.mxCutDiv (<span class="parameter">cutBtnOn</span>=1)
+	<ul>
+	<li>button.mxBtn.mxCutBtn</li>
+	</ul>
+</li>
+</ul>
 
-<div>div.mxCutDiv
-	<div>button.mxBtn span (if <span class="parameter">cutBtnOn</span> is set to 1)</div>
-</div>
+<ul>
+<li>div.mxEditToolBarDiv (<span class="component">Edit</span> component)
+	<ul>
+	<li>button svg, and input + (.mxUnselectedEditTool or .mxSelectedEditTool)</li>
+	</ul>
+</li>
+</ul>
 
-<div>div.mxEditToolBarDiv (in <span class="component">Edit</span> component)
-	<div>button svg, and input + (.mxUnselectedEditTool or .mxSelectedEditTool)</div>
-</div>
+<ul>
+<li>div.mxEditCommentToolDiv (<span class="component">Edit</span> component)
+	<ul>
+	<li>textarea</li>
+	</ul>
+</li>
+</ul>
 
-<div>div.mxEditCommentToolDiv (in <span class="component">Edit</span> component)
-	<div>textarea</div>
-</div>
+<ul>
+<li>div.mxGobanDiv
+	<ul>
+	<li>div.mxInnerGobanDiv
+		<ul>
+		<li>svg</li>
+		</ul>
+	</li>
+	</ul>
+</li>
+</ul>
 
-<div>div.mxGobanDiv
-	<div>div.mxInnerGobanDiv
-		<div>svg (to draw the goban)
-			<div>Internal tags</div>
-		</div>
-	</div>
-</div>
+<ul>
+<li>div.mxGotoDiv svg</li>
+</ul>
 
-<div>div.mxGotoDiv svg</div>
+<ul>
+<li>div.mxGuessDiv svg</li>
+</ul>
 
-<div>div.mxGuessDiv svg</div>
+<ul>
+<li>div.mxHeaderDiv (<span class="parameter">headerBtnOn</span>=0)
+	<ul>
+	<li>p.mxTitleP
+		<ul>
+		<li>span.mxEVTitleSpan</li>
+		<li>span.mxROTitleSpan</li>
+		</ul>
+	</li>
+	<li>p.mxHeaderContentP
+		<ul>
+		<li>span.mxHeaderSpan</li>
+		<li>span.mxPBSpan</li>
+		<li>span.mxPWSpan</li>
+		<li>span.mxDTSpan</li>
+		<li>span.mxPCSpan</li>
+		<li>span.mxRUSpan</li>
+		<li>span.mxTMSpan</li>
+		<li>span.mxKMSpan</li>
+		<li>span.mxHASpan</li>
+		<li>span.mxNMSpan</li>
+		<li>span.mxRESpan</li>
+		</ul>
+	<li>p.mxGeneralCommentP</li>
+	</ul>
+</li>
+<li>div.mxHeaderDiv (<span class="parameter">headerBtnOn</span>=1)
+	<ul>
+	<li>button.mxBtn.mxHeaderBtn</li>
+	</ul>
+</li>
+</ul>
 
-<div>div.mxHeaderDiv
-	<div>button.mxBtn span (if <span class="parameter">headerBtnOn</span> is set to 1)</div>
-	<div>div.mxShowContentDiv h1 (if <span class="parameter">headerBoxOn</span> is set to 1)</div>
-	<div>div.mxShowContentDiv div.mxP span.mxHeaderSpan (if <span class="parameter">headerBoxOn</span> is set to 1)</div>
-</div>
+<ul>
+<li>div.mxHelpDiv (<span class="parameter">helpBtnOn</span>=1)
+	<ul>
+	<li>button.mxBtn.mxHelpBtn</li>
+	</ul>
+</li>
+</ul>
 
-<div>div.mxHelpDiv
-	<div>button.mxBtn span (if <span class="parameter">helpBtnOn</span> is set to 1)</div>
-</div>
+<ul>
+<li>div.mxLessonDiv+(.mxBM, .mxDO, .mxIT, .mxTE or nothing)
+	<ul>
+	<li>div</li>
+	<li>img</li>
+	</ul>
+</li>
+</ul>
 
-<div>div.mxLessonDiv+(.mxBM, .mxDO, .mxIT, .mxTE or rien)
-	<div>div.mxBalloonDiv div.mxBalloonContentDiv</div>
-	<div>img.mxAssistantImg</div>
-</div>
+<ul>
+<li>div.mxMenuDiv
+	<ul>
+	<li>div.mxOneMenuDiv
+		<ul>
+		<li>button</li>
+		</ul>
+	</li>
+	<li>div.mxSubMenuDiv
+		<ul>
+		<li>button</li>
+		</ul>
+	</li>
+	</ul>
+</li>
+</ul>
 
-<div>div.mxMenuDiv
-	<div>div.mxOneMenuDiv
-		<div>button span</div>
-	</div>
-	<div>div.mxSubMenuDiv
-		<div>button span</div>
-	</div>
-</div>
+<ul>
+<li>div.mxMoveInfoDiv
+	<ul>
+	<li>svg</li>
+	</ul>
+</li>
+</ul>
 
-<div>div.mxMoveInfoDiv svg</div>
-	
-<div>div.mxNavigationDiv
-	<div>button.mxBtn span svg</div>
-	<div>input (type=text), inserted by <span class="component">Goto</span>
-	to show or set a move number</div>
-</div>
+<ul>
+<li>div.mxNavigationDiv
+	<ul>
+	<li>button.mxBtn.mxFirstBtn
+		<ul>
+		<li>svg</li>
+		</ul>
+	</li>
+	<li>button.mxBtn.mxTenPredBtn
+		<ul>
+		<li>svg</li>
+		</ul>
+	</li>
+	<li>button.mxBtn.mxPredBtn
+		<ul>
+		<li>svg</li>
+		</ul>
+	</li>
+	<li>button.mxBtn.mxNextBtn
+		<ul>
+		<li>svg</li>
+		</ul>
+	</li>
+	<li>button.mxBtn.mxTenNextBtn
+		<ul>
+		<li>svg</li>
+		</ul>
+	</li>
+	<li>button.mxBtn.mxLastBtn
+		<ul>
+		<li>svg</li>
+		</ul>
+	</li>
+	<li>input[type=text] (<span class="component">Goto</span> component)</li>
+	<li>button.mxBtn.mxAutoBtn (<span class="component">Loop</span> component)
+		<ul>
+		<li>svg</li>
+		</ul>
+	</li>
+	<li>button.mxBtn.mxPauseBtn (<span class="component">Loop</span> component)
+		<ul>
+		<li>svg</li>
+		</ul>
+	</li>
+	</ul>
+</li>
+</ul>
 
-<div>div.mxNotSeenDiv
-	<div>div.mxInnerNotSeenDiv svg</div>
-</div>
+<ul>
+<li>div.mxNotSeenDiv
+	<ul>
+	<li>div.mxInnerNotSeenDiv
+		<ul>
+		<li>svg</li>
+		</ul>
+	</ul>
+</li>
+</ul>
 
-<div>div.mxOptionsDiv
-	<div>button span (if <span class="parameter">optionBtnOn</span> is set to 1)</div>
-	<div>h1 (if <span class="parameter">optionBoxOn</span> is set to 1)</div>
-	<div>div.mxP input (if <span class="parameter">optionBoxOn</span> is set to 1)</div>
-	<div>div.mxP label (if <span class="parameter">optionBoxOn</span> is set to 1)</div>
-</div>
+<ul>
+<li>div.mxOptionsDiv (<span class="parameter">optionsBtnOn</span>=0)
+	<ul>
+	<li>p
+		<ul>
+		<li>label
+			<ul>
+			<li>input</li>
+			</ul>
+		</li>
+		</ul>
+	</li>
+	</ul>
+</li>
+<li>div.mxOptionsDiv (<span class="parameter">optionsBtnOn</span>=1)
+	<ul>
+	<li>button.mxBtn.mxOptionsBtn</li>
+	</ul>
+</li>
+</ul>
 
-<div>div.mxPassDiv
-	<div>button.mxPassBtn span (if <span class="parameter">passBtnOn</span> is set to 1)</div>
-	<div>button.mxJustPlayedPassBtn span</div>
-	<div>button.mxOnVariationPassBtn span</div>
-	<div>button.mxOnFocusPassBtn span</div>
-</div>
+<ul>
+<li>div.mxPassDiv (<span class="parameter">passBtnOn</span>=1)
+	<ul>
+	<li>button.mxBtn.mxPassBtn
+		<ul>
+		<li>svg</li>
+		</ul>
+	<li>button.mxBtn.mxJustPlayedPassBtn
+		<ul>
+		<li>svg</li>
+		</ul>
+	</li>
+	<li>button.mxBtn.mxOnVariationPassBtn
+		<ul>
+		<li>svg</li>
+		</ul>
+	</li>
+	<li>button.mxBtn.mxOnFocusPassBtn
+		<ul>
+		<li>svg</li>
+		</ul>
+	</li>
+	</ul>
+</li>
+</ul>
 
-<div>div.mxPngDiv (in <span class="component">Image</span> component)
-	<div>button.mxBtn span (if <span class="parameter">pngBtnOn</span> is set to 1)</div>
-</div>
+<ul>
+<li>div.mxPngDiv (<span class="component">Image</span> component, <span class="parameter">pngBtnOn</span>=1)
+	<ul>
+	<li>button.mxBtn.mxPngBtn</li>
+	</ul>
+</li>
+</ul>
 
-<div>div.mxScoreDiv
-	<div>button.mxBtn span (if <span class="parameter">scoreBtnOn</span> is set to 1)</div>
-</div>
+<ul>
+<li>div.mxScoreDiv (<span class="parameter">scoreBtnOn</span>=1)
+	<ul>
+	<li>button.mxBtn.mxScoreBtn</li>
+	</ul>
+</li>
+</ul>
 
-<div>div.mxSgfDiv
-	<div>button.mxBtn span (if <span class="parameter">sgfBtnOn</span> is set to 1)</div>
-</div>
+<ul>
+<li>div.mxSgfDiv (<span class="parameter">sgfBtnOn</span>=1)
+	<ul>
+	<li>button.mxBtn.mxSgfBtn</li>
+	</ul>
+</li>
+</ul>
 
-<div>div.mxSolveDiv
-	<div>button.mxBtn span svg</div>
-</div>
+<ul>
+<li>div.mxSolveDiv
+	<ul>
+	<li>button.mxBtn.mxHint
+		<ul>
+		<li>svg</li>
+		</ul>
+	</li>
+	<li>button.mxBtn.mxPassBtn
+		<ul>
+		<li>svg</li>
+		</ul>
+	</li>
+	<li>button.mxBtn.mxRetry
+		<ul>
+		<li>svg</li>
+		</ul>
+	</li>
+	<li>button.mxBtn.mxUndo
+		<ul>
+		<li>svg</li>
+		</ul>
+	</li>
+	</ul>
+</li>
+</ul>
 
-<div>div.mxSpeedDiv
-	<div>button.mxSpeedPlusBtn, the "+"</div>
-	<div>div.mxSpeedBarDiv svg, bar and cursor</div>
-	<div>button.mxSpeedMinusBtn, le "-"</div>
-</div>
+<ul>
+<li>div.mxSpeedDiv
+	<ul>
+	<li>button.mxSpeedPlusBtn, the "+"</li>
+	<li>div.mxSpeedBarDiv svg, bar and cursor</li>
+	<li>button.mxSpeedMinusBtn, le "-"</li>
+	</ul>
+</li>
+</ul>
 
-<div>div.mxSvgDiv (in <span class="component">Image</span> component)
-	<div>button span (if <span class="parameter">svgBtnOn</span> the set to 1)</div>
-</div>
+<ul>
+<li>div.mxSvgDiv (<span class="component">Image</span> component, <span class="parameter">svgBtnOn</span>=1)
+	<ul>
+	<li>button.mxBtn.mxPngBtn</li>
+	</ul>
+</li>
+</ul>
 
-<div>h1.mxTitleH1</div>
+<ul>
+<li>div.mxTreeDiv
+	<ul>
+	<li>div.mxTreeCaptionDiv (<span class="parameter">treeCaptionOn</span>=1)</li>
+	<li>div.mxTreeContentDiv
+		<ul>
+		<li>svg
+			<ul>
+			<li>Balises internes au svg</li>
+			</ul>
+		</li>
+		</ul>
+	</li>
+	</ul>
+</li>
+</ul>
 
-<div>div.mxTreeDiv
-	<div>div.mxTreeContentDiv
-		<div>svg</div>
-	</div>
-</div>
-
-<div>div.mxTreeLabelDiv (if <span class="parameter">treeLabelOn</span> is set to 1)</div>
-	
-<div>div.mxVersionDiv span</div>
+<ul>
+<li>div.mxVersionDiv (<span class="parameter">versionBoxOn</span>=1)</li>
+</ul>
 
 <p>Warning: some components such as "animatedStone", "loop", ... have no box, 
-and some other component boxes are displayed over other boxes (see below).</p>
+and some other component boxes are displayed in dialogs (see below).</p>
 
-<h4> Popup boxes displayed over another box (.mxGobanDiv by default)</h4>
-<div>div.mxGBoxDiv.mxColorsDiv
-	<div>div.mxShowContentDiv
-		<div>h1</div>
-		<div>div.mxP
-			<div>label</div>
-			<div>input</div>
-		</div>
-	</div>
-	<div>div.mxOKDiv button span</div>
-</div>
+<h4>Dialogs</h4>
+<p>Below, Xxx can be
+Alert,
+EditColors, EditInfo, EditNumbering, EditOptions, EditSgf,
+New, Open, Save, Send,
+ShowAbout, ShowHeader, ShowHelp and ShowSgf.
+<ul>
+<li>dialog.mxXxxDialog
+	<ul>
+	<li>form
+		<ul>
+		<li>fieldset.mxContentFieldset
+			<ul>
+			<li>p</li>
+			<li>span</li>
+			<li>label</li>
+			<li>input</li>
+			</ul>
+		</li>
+		<li>fieldset.mxMenuFieldset
+			<ul>
+			<li>button</li>
+			</ul>
+		</li>
+		</ul>
+	</li>
+	</ul>
+</li>
+</ul>
 
-<div>div.mxGBoxDiv.mxNewDiv
-	<div>div.mxShowContentDiv
-		<div>h1</div>
-		<div>div.mxP
-			<div>label</div>
-			<div>input</div>
-		</div>
-	</div>
-	<div>div.mxOKDiv button span</div>
-</div>
-	
-<div>div.mxGBoxDiv.mxNumberingDiv
-	<div>div.mxShowContentDiv
-		<div>h1</div>
-		<div>div.mxP
-			<div>label</div>
-			<div>input</div>
-		</div>
-	</div>
-	<div>div.mxOKDiv button span</div>
-</div>
+<ul>
+<li>dialog.mxEditInfoDialog form fieldset.mxContentFieldset
+	<ul>
+	<li>label
+		<ul>
+		<li>span</li>
+		<li>input</li>
+		<li>textarea</li>
+		</ul>
+	</li>
+	<li>div.mxResultDiv
+		<ul>
+		<li>label
+			<ul>
+			<li>span</li>
+			</ul>
+		</li>
+		<li>select</li>
+		<li>input</li>
+		</ul>
+	</li>
+	</ul>
+</li>
+</ul>
 
-<div>div.mxGBoxDiv.mxOpenDiv
-	<div>div.mxShowContentDiv
-		<div>h1</div>
-		<div>div.mxP
-			<div>label</div>
-			<div>input</div>
-		</div>
-	</div>
-	<div>div.mxOKDiv button span</div>
-</div>
+<ul>
+<li>dialog.mxEditNumberingDialog form fieldset.mxContentFieldset
+	<ul>
+	<li>p.mxFigureOrNotP</li>
+	<li>p.mxTabNumberingP</li>
+	</ul>
+</li>
+</ul>
 
-<div>div.mxGBoxDiv.mxSaveDiv
-	<div>div.mxShowContentDiv
-		<div>h1</div>
-		<div>div.mxP
-			<div>label</div>
-			<div>input</div>
-		</div>
-	</div>
-	<div>div.mxOKDiv button span</div>
-</div>
+<ul>
+<li>dialog.mxEditOptionsDialog form fieldset.mxContentFieldset
+	<ul>
+	<li>p
+		<ul>
+		<li>span.mxNumFromTextSpan</li>
+		<li>input.mxNumFromTextInput</li>
+		<li>span.mxNumWithTextSpan</li>
+		<li>input.mxNumWithTextInput</li>
+		<li>input.mxLoopTimeTextInput</li>
+		<li>input.mxAnimatedStoneTimeTextInput</li>
+		</ul>
+	</ul>
+</li>
+</ul>
 
-<div>div.mxGBoxDiv.mxSendDiv
-	<div>div.mxShowContentDiv
-		<div>h1</div>
-		<div>div.mxP
-			<div>label</div>
-			<div>input</div>
-		</div>
-	</div>
-	<div>div.mxOKDiv button span</div>
-</div>
+<ul>
+<li>dialog.mxEditSgfDialog form fieldset.mxContentFieldset
+	<ul>
+	<li>textarea</li>
+	</ul>
+</li>
+</ul>
 
-<div>div.mxShowHeaderDiv
-	<div>div.mxShowContentDiv
-		<div>h1</div>
-		<div>div.mxP span.mxHeaderSpan</div>
-	</div>
-	<div>div.mxOKDiv button span</div>
-</div>
+<ul>
+<li>dialog.mxShowHeaderDialog form fieldset.mxContentFieldset
+	<ul>
+	<li>h1.mxTitleH1
+		<ul>
+		<li>span.mxEVTitleSpan</li>
+		<li>span.mxROTitleSpan</li>
+		</ul>
+	</li>
+	<li>p
+		<ul>
+		<li>span.mxHeaderSpan</li>
+		<li>span.mxPBSpan</li>
+		<li>span.mxPWSpan</li>
+		<li>span.mxDTSpan</li>
+		<li>span.mxPCSpan</li>
+		<li>span.mxRUSpan</li>
+		<li>span.mxTMSpan</li>
+		<li>span.mxKMSpan</li>
+		<li>span.mxHASpan</li>
+		<li>span.mxNMSpan</li>
+		<li>span.mxRESpan</li>
+		</ul>
+	</li>
+	<li>p.mxGeneralCommentP</li>
+	</ul>
+</li>
+</ul>
 
-<div>div.mxShowHelpDiv
-	<div>div.mxShowContentDiv
-		<div>h1,h2,h3</div>
-		<div>div.mxP</div>
-	</div>
-	<div>div.mxOKDiv button span</div>
-</div>
+<ul>
+<li>dialog.mxShowHelpDialog form fieldset.mxContentFieldset
+	<ul>
+	<li>h1,h2,h3</li>
+	</ul>
+</li>
+</ul>
 
-<div>div.mxShowInfoDiv
-	<div>div.mxShowContentDiv
-		<div>div.mxInfoPageMenuDiv button.mxInfoPageBtn</div>
-		<div>div.mxInfoPageMenuDiv button.mxInfoSelectedPageBtn</div>
-		<div>div.mxInfoPageDiv
-			<div>label</div>
-			<div>input</div>
-			<div>textarea</div>
-		</div>
-	</div>
-	<div>div.mxOKDiv button span</div>
-</div>
+<ul>
+<li>dialog.mxShowPngDialog form fieldset.mxContentFieldset
+	<ul>
+	<li>img</li>
+	</ul>
+</li>
+</ul>
 
-<div>div.mxShowOptionDiv
-	<div>div.mxShowContentDiv
-		<div>h1</div>
-		<div>div.mxP
-			<div>label</div>
-			<div>input</div>
-		</div>
-	</div>
-	<div>div.mxOKDiv button span</div>
-</div>
-
-<div>div.mxShowPngDiv
-	<div>div.mxShowContentDiv
-		<div>img</div>
-	</div>
-	<div>div.mxOKDiv button span</div>
-</div>
-
-<div>div.mxShowSgfDiv
-	<div>div.mxShowContentDiv
-		<div>div.mxP (if <span class="parameter">allowEditSgf</span> is set to 0)</div>
-		<div>textarea (if <span class="parameter">allowEditSgf</span> is set to 1)</div>
-	</div>
-	<div>div.mxOKDiv button span</div>
-</div>
-
-<div>div.mxShowSvgDiv
-	<div>div.mxShowContentDiv
-		<div>img</div>
-	</div>
-	<div>div.mxOKDiv button span</div>
-</div>
+<ul>
+<li>dialog.mxShowSvgDialog form fieldset.mxContentFieldset
+	<ul>
+	<li>img</li>
+	</ul>
+</li>
+</ul>
 
 </section>
 
@@ -2296,25 +2305,33 @@ and some other component boxes are displayed over other boxes (see below).</p>
 
 <h3>The line that specifies that the output is a javascript script</h3>
 <p>This is a php line that uses the header() function:</p>
-<code><pre>header("content-type:application/x-javascript;charset=UTF-8");</pre></code>
+<pre><code>header("content-type:application/x-javascript;charset=UTF-8");</code></pre>
 
 <h3>The part where one includes some maxiGos components</h3>
 <p>One has to include at least the following scripts:
 "mgos_lib.js" (utilities), "mgos_rls.js" (go rules management), "mgos_prs.js" (sgf parser),
 "mgos_scr.js" (svg builder), "mgos.js" (main code) and "mgosGoban.js" (goban code).</p>
 <p>For instance, to include the goban, the php code is:</p>
-<code><pre>include "../../../_js/mgosGoban.js";</pre></code>
+<pre><code>include "../../../_js/mgosGoban.js";</code></pre>
 <em>You can also create your own component.</em>
 <em>For instance, to create a component
-called "Cute", just make a javascript script that contains at least
-the following code:</em>
-<code><pre>mxG.G.prototype.createCute=function()
+called "Cute" that just displays "Baduk Go Weiqi",
+make a javascript script that contains
+a code such as:</em>
+<pre><code>if(!mxG.G.prototype.createCute)
 {
-	return "&lt;div&gt;I am here!&lt;/div&gt;";
-};</pre></code>
-<em>Save the code in a file called "mgosCute.js", then
-include it in the maker using for instance:</em>
-<code><pre>include "../../../_js/mgosCute.js";</pre></code>
+	mxG.G.prototype.createCute=function()
+	{
+		return "&lt;div&gt;Baduk Go Weiqi&lt;/div&gt;";
+	};
+}</code></pre>
+<em>Save the code in a file called "Cute.js", then
+include it in the maker. For instance,
+if the maker is in a folder called "_maker",
+and "Cute.js" in a folder called "_js",
+and both "_maker" and "_js" folders are in the same folder,
+add the following code in the maker:</em>
+<pre><code>include "../_js/Cute.js";</code></pre>
 
 <h3>The part where one inserts some javascript instructions to create a viewer object</h3>
 <p>In this part, one adds the javascript instructions to create
@@ -2323,39 +2340,40 @@ the viewer counter mxG.K by one.
 Then one has to specify what are the boxes we want to display,
 in which order, and evenly if they have to be grouped together.
 Then one creates the object. Then one sets its theme and its configuration.</p>
-<p>For instance, to create a viewer of "Ephemeral" theme,
-"Simple" configuration, that has a goban, a navigation bar
-and allows variations, the code is:</p> 
-<code><pre>mxG.K++;
-mxG.B=[["Goban"],"Navigation","Variation"];
+<p>For instance, to create a viewer of the "Ephemeral" theme +
+"Simple" configuration, that has the cute component one just created,
+a goban, a navigation bar and allows variations, the code is:</p> 
+<pre><code>mxG.K++;
+mxG.B=[Cute,["Goban"],"Navigation","Variation"];
 mxG.D[mxG.K]=new mxG.G(mxG.K,mxG.B);
 mxG.D[mxG.K].theme="Ephemeral";
 mxG.D[mxG.K].config="Simple";
-</pre></code>
+</code></pre>
 
 <h3>The line that inserts the style sheet in the code of the viewer</h3>
 <p>This line is:</p>
-<code><pre>include "../../_php/insertCss.php";</pre></code>
+<pre><code>include "../../_php/insertCss.php";</code></pre>
 <p>The "insertCss.php" script expects that there is an existing
-css style sheet named "_common.css" in a folder "_css" which is
-in the same folder as the parent directory of the make is.</p>
-<p>For instance, if the maker is in a folder called "_maker",
-and the "_common.css" in a folder called "_css",
+css style sheet named "_common.css" in a folder called "_css" which is
+in the same folder where the parent directory of the maker is.</p>
+<p>For instance, if the maker is in a folder called "_maker"
+and "_common.css" is in a folder called "_css",
 both "_maker" and "_css" folders have to be in the same folder.</p>
 
 <h3>The part where one sets some parameters</h3>
 <p>In this part, on sets the parameters of the components.</p>
 <p>For instance, to set <span class="parameter">in3dOn</span> parameter to 1,
 on adds in this part:</p>
-<code><pre>mxG.D[mxG.K].a.in3dOn=1;</pre></code>
+<pre><code>mxG.D[mxG.K].a.in3dOn=1;</code></pre>
 
 <h3>The line to start the viewer</h3>
 <p>Just add the following line:</p>
-<code><pre>mxG.D[mxG.K].start();</pre></code>
+<pre><code>mxG.D[mxG.K].start();</code></pre>
 
 <h3>Full sample</h3>
-<p>The "maker" php code:</p>
-<code><pre>&lt;?php
+<p>One creates a folder called "ephemeral" in the "_sample" folder of maxiGos.</p>
+<p>The "maker" php code (stored in "ephemeral/_maker/ephemeral.php") is:</p>
+<pre><code>&lt;?php
 header("content-type:application/x-javascript;charset=UTF-8");
 include "../../../_js/mgos_lib.js";
 include "../../../_js/mgos_prs.js";
@@ -2365,9 +2383,10 @@ include "../../../_js/mgos.js";
 include "../../../_js/mgosGoban.js";
 include "../../../_js/mgosNavigation.js";
 include "../../../_js/mgosVariation.js";
+include "../_js/cute.js";
 ?&gt;
 mxG.K++;
-mxG.B=[["Goban"],"Navigation","Variation"];
+mxG.B=["Cute",["Goban"],"Navigation","Variation"];
 mxG.D[mxG.K]=new mxG.G(mxG.K,mxG.B);
 mxG.D[mxG.K].theme="Ephemeral";
 mxG.D[mxG.K].config="Simple";
@@ -2378,11 +2397,16 @@ mxG.D[mxG.K].a.eraseGridUnder=1;
 mxG.D[mxG.K].a.in3dOn=1;
 mxG.D[mxG.K].a.hideSingleVariationMarkOn=1;
 mxG.D[mxG.K].a.canPlaceVariation=1;
-mxG.D[mxG.K].start();</pre></code>
-<p>The css style sheet code:</p>
-<code><pre>.mxEphemeralTheme.mxSimpleConfig
+mxG.D[mxG.K].a.initMethod="42";
+mxG.D[mxG.K].start();</code></pre>
+<p>The css style sheet code (stored in "ephemeral/_css/_common.css") is:</p>
+<pre><code>.mxEphemeralTheme.mxSimpleConfig
 {
 	max-width:30em;
+}
+.mxEphemeralTheme.mxSimpleConfig svg
+{
+	display:block;
 }
 .mxEphemeralTheme.mxSimpleConfig .mxGobanDiv svg
 {
@@ -2415,16 +2439,79 @@ mxG.D[mxG.K].start();</pre></code>
 {
 	fill:red;
 }
-.mxEphemeralTheme.mxSimpleConfig button::-moz-focus-inner
+.mxEphemeralTheme.mxSimpleConfig>div:first-of-type
 {
-	padding:0;border:0;
-}
-.mxEphemeralTheme.mxSimpleConfig .mxInnerGobanDiv,
-.mxEphemeralTheme.mxSimpleConfig .mxNavigationDiv,
-.mxEphemeralTheme.mxSimpleConfig .mxNavigationDiv button
+	color:red;
+	padding-bottom:0.5em;
+}</code></pre>
+<p>The javascript code for the additional "Cute" component (stored in "ephemeral/_js/cute.js") is:</p>
+<pre><code>if(!mxG.G.prototype.createCute)
 {
-	outline:none;
-}</pre></code>
+	mxG.G.prototype.createCute=function()
+	{
+		return "&lt;div&gt;Baduk Go Weiqi&lt;/div&gt;";
+	};
+}</code></pre>
+<p>To test, just display the following html page in a browser
+(stored in "ephemeral/index.html"):</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width,initial-scale=1.0"&gt;
+&lt;title&gt;Ephemeral&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Ephemeral&lt;/h1&gt;
+&lt;script
+	src="_maker/ephemeral.php"
+	data-maxigos.sgf="(;
+		GM[1]
+		FF[4]
+		CA[UTF-8]
+		SZ[19]
+		EV[吐血の一局]
+		DT[1835-07-27]
+		PW[本因坊丈和]
+		PB[赤星因徹]
+		PC[日本]
+		RU[Japanese]
+		KM[0]
+		RE[W+R]
+		;B[cp];W[pq];B[qd];W[ed];B[oc];W[eq];B[qo];W[qk]
+		;B[qi];W[op];B[iq];W[dn];B[ep];W[dp];B[do];W[dq]
+		;B[co];W[eo];B[fp];W[cq];B[bq];W[br];B[cm];W[gr]
+		;B[hp];W[en];B[bp];W[ck];B[dl];W[dk];B[el];W[gn]
+		;B[cr];W[dr];B[bs];W[fq];B[go];W[ar];B[hn];W[gm]
+		;B[hm];W[gl];B[ek];W[hl];B[di];W[io];B[ho];W[fo]
+		;B[ch];W[cd];B[lq];W[pn];B[gc];W[qn];B[dc];W[cc]
+		;B[ec];W[cf];B[il];W[gp];B[nq];W[ic];B[fd];W[lc]
+		;B[bg];W[bf];B[af];W[bi];B[dj];W[eh];B[fj];W[qg]
+		;B[oi];W[qe];B[pd];W[nf];B[ok];W[pk];B[ol];W[pj]
+		;B[rn];W[rm];B[qq];W[qr];B[rr];W[qp];B[rq];W[pr]
+		;B[rp];W[po];B[pp];W[mp];B[qm];W[pm];B[np];W[mq]
+		;B[mo];W[lp];B[lo];W[kp];B[no];W[nr];B[or];W[qp]
+		;B[mr];W[ro];B[pi];W[lr];B[ns];W[ip];B[jr];W[hq]
+		;B[jn];W[ko];B[kq];W[kn];B[jm];W[km];B[ik];W[mk]
+		;B[mm];W[ir];B[jq];W[kk];B[mi];W[nm];B[ml];W[ki]
+		;B[lj];W[lk];B[kj];W[jj];B[kl];W[ll];B[lm];W[oj]
+		;B[mg];W[jl];B[jk];W[nj];B[ni];W[im];B[in];W[jo]
+		;B[kl];W[js];B[ks];W[jl];B[im];W[is];B[kl];W[ei]
+		;B[ej];W[jl];B[hr];W[hs];B[kl];W[cn];B[bn];W[jl]
+		;B[gs];W[fs];B[kl];W[hi];B[ij];W[jl];B[ls];W[ji]
+		;B[hj];W[oe];B[kg];W[jg];B[gi];W[nc];B[jf];W[nb]
+		;B[re];W[if];B[je];W[hd];B[fe];W[gf];B[ff];W[fg]
+		;B[gg];W[gh];B[hg];W[fi];B[gj];W[ig];B[hh];W[hf]
+		;B[ii];W[rf];B[pe];W[pf];B[le];W[kd];B[ad];W[kh]
+		;B[qf];W[ef];B[de];W[qe];B[ld];W[lg];B[kc];W[jd]
+		;B[qf];W[db];B[eb];W[qe];B[jb];W[od];B[ib];W[mf]
+		;B[qf];W[jp];B[kr];W[qe];B[lf];W[kf];B[qf];W[hc]
+		;B[qe];W[hb];B[pg];W[og];B[of];W[cg];B[bh];W[pf]
+		;B[ph];W[bb];B[da];W[cb];B[fh];W[ac];B[eg];W[bd]
+		;B[ob];W[oa];B[of];W[mh];B[rj];W[kl])"&gt;
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
 <p>Et voilà!</p>
 
 <h2>Annexes</h2>
@@ -2438,7 +2525,7 @@ mxG.D[mxG.K].start();</pre></code>
 <li>"_sample": contains maxiGos samples,
 including stand-alone viewers, style sheets, and viewer makers.</li>
 </ul>
-<h3 name="faq">Questions and answers</h3>
+<h3 id="faq">Questions and answers</h3>
 <p class="important">Question: what is the minimum I have to do to include a maxiGos viewer
 in one of my web page using a stand-alone script?</p>
 <ol>
@@ -2448,7 +2535,10 @@ in one of my web page using a stand-alone script?</p>
 <li>Insert in the page to the place where you want the viewer displays &lt;script&gt; and &lt;/script&gt;
 tags with src value set to "/maxiGos/maxigos-neo-classic-basic.js",
 and insert between these tags a sgf record. For instance:<br>
-<code><pre>&lt;script data-maxigos-l="en" src="/maxiGos/maxigos-basic.js"&gt;(;FF[4]CA[UTF-8]GM[1]SZ[19];B[pd];W[dc];B[pp];W[fp];B[de];W[ee];B[ef];W[ed];B[dg];W[co])&lt;/script&gt;</pre></code></li>
+<pre><code>&lt;script
+	src="/maxiGos/maxigos-basic.js"
+	data-maxigos-sgf="(;FF[4]CA[UTF-8]GM[1]SZ[19];B[pd];W[dc];B[pp];W[fp];B[de];W[ee];B[ef];W[ed];B[dg];W[co])"&gt;
+&lt;/script&gt;</code></pre></li>
 <li>Et voilà!</li>
 </ol>
 <p class="important">Question: is maxiGos working with any browsers?</p>
@@ -2477,20 +2567,20 @@ the value of this variable is another way to consider.</p>
 <p>Th common way is to change the background of the svg that draws
 the goban, or one of its ancestor (if they have the same size) using css.
 For instance, for the minimalist theme:</p>
-<code><pre>div.mxMinimalistTheme .mxGobanDiv svg
+<pre><code>div.mxMinimalistTheme .mxGobanDiv svg
 {
 	background-color:#9cf;
-}</pre></code>
+}</code></pre>
 <p>Another way is to change the fill value of the .mxWholeRect svg rect.
 For instance, for the minimalist theme:</p>
-<code><pre>div.mxMinimalistTheme .mxWholeRect
+<pre><code>div.mxMinimalistTheme .mxWholeRect
 {
 	fill:#9cf;
-}</pre></code>
+}</code></pre>
 <p class="important">Question: what about "responsive design"?</p>
 <p>In theory, maxiGos does all the job.</p>
 <p>But don't forget the magic <span class="tag">&lt;meta&gt;</span> tag:</p>
-<code><pre>&lt;meta name="viewport" content="width=device-width,initial-scale=1.0"&gt;</pre></code>
+<pre><code>&lt;meta name="viewport" content="width=device-width,initial-scale=1.0"&gt;</code></pre>
 <p class="important">Question: I use a maxiGos stand-alone script
 which displays all its texts in french and it is the latest thing I want.
 What can I do?</p>
@@ -2513,14 +2603,16 @@ Finally, save the file in UTF-8.</p>
 What is the correct way to insert it?</p>
 <p>If you use a stand-alone viewer, add charset="UTF-8" to any maxiGos script tag.</p>
 <p>For instance:</p>
-<code><pre>&lt;script charset="UTF-8" src="_alone/maxigos-minimal-basic.js"&gt;
-../_sgf/game/blood-vomit.sgf
-&lt;/script&gt;</pre></code>
+<pre><code>&lt;script
+	charset="UTF-8"
+	src="_alone/maxigos-minimal-basic.js"
+	data-maxigos-sgf="../_sgf/game/blood-vomit.sgf"&gt;
+&lt;/script&gt;</code></pre>
 <em>Aknowledgements to Adachi K., Alfredo Pernin, Chantal Gajdos, Julien Payrat, Lao Lilin, Mickaël Simon, Motoki Noguchi, 
 Olivier Besson, Olivier Dulac, Patrice Fontaine, Tony Yamanaka
 and many others for their advices or contributions to this project!</em>
-<p><?php if (file_exists("../../index.php")) print "<a href=\"../../index.php?lang=en\">Home</a>";?><!--
---><a href="<?php print str_replace("/_fr/","/_en/",$_SERVER["SCRIPT_NAME"]);?>"><img class="flag" src="../../_img/flag/en.svg">English</a><!--
---><a href="<?php print str_replace("/_en/","/_fr/",$_SERVER["SCRIPT_NAME"]);?>"><img class="flag" src="../../_img/flag/fr.svg">Fran&ccedil;ais</a></p>
+<p><?=(file_exists("../../../index.php")?"<a href=\"../../../index.php?lang=en\">Home</a>":"")?><!--
+--><a href="<?=str_replace("/_fr/","/_en/",$_SERVER["SCRIPT_NAME"])?>"><img alt="English" class="flag" src="../../_img/flag/en.svg">English</a><!--
+--><a href="<?=str_replace("/_en/","/_fr/",$_SERVER["SCRIPT_NAME"])?>"><img alt="Français" class="flag" src="../../_img/flag/fr.svg">Fran&ccedil;ais</a></p>
 </body>
 </html>

@@ -13,9 +13,8 @@ include "../../../_js/mgosGoban.js";
 include "../../../_js/mgosNavigation.js";
 include "../../../_js/mgosLoop.js";
 include "../../../_js/mgosVariation.js";
-include "../../../_js/mgosTitle.js";
 include "../../../_js/mgosHeader.js";
-include "../../../_js/mgosOption.js";
+include "../../../_js/mgosOptions.js";
 include "../../../_js/mgosSpeed.js";
 include "../../../_js/mgosImage.js";
 include "../../../_js/mgosPass.js";
@@ -24,16 +23,15 @@ include "../../../_js/mgosGuess.js";
 include "../../../_js/mgosVersion.js";
 ?>
 mxG.K++;
-mxG.B=[[["Goban"],"Navigation","Loop","Variation"],["Title","Header","Option","Speed",["Image","Pass","Sgf"],"Guess","Version"]];
+mxG.B=[["Goban","Navigation","Loop","Variation","Guess"],["Header","Options","Speed",["Image","Pass","Sgf"],"Version"]];
 mxG.D[mxG.K]=new mxG.G(mxG.K,mxG.B);
-mxG.D[mxG.K].theme="<?php echo $theme ?>";
-mxG.D[mxG.K].config="<?php echo $config ?>";
+mxG.D[mxG.K].theme="<?=$theme?>";
+mxG.D[mxG.K].config="<?=$config?>";
 <?php
 include "../../_php/insertCss.php";
 ?>
 // general
-mxG.D[mxG.K].a.in3dOn=1; // (0,1) default 1
-mxG.D[mxG.K].a.htmlParenthesis=1; // (0,1) default 0
+mxG.D[mxG.K].a.in3dOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.allowStringAsSource=1; // (0,1) default 1
 mxG.D[mxG.K].a.allowFileAsSource=1; // (0,1) default 1
 // mxG.D[mxG.K].a.sourceFilter=""; // (str) default ""
@@ -42,7 +40,7 @@ mxG.D[mxG.K].a.initMethod="last"; // ("first","loop","last") default "first"
 mxG.D[mxG.K].a.pointsNumMax=0; // (positive integer) default 0
 mxG.D[mxG.K].a.stoneShadowOn=0; // (0,1) default 0 (require in3dOn=1)
 mxG.D[mxG.K].a.stretching="0,0,1,1"; // (list) default "0,0,1,1"
-mxG.D[mxG.K].a.gridPadding=0; // (float) default 0
+mxG.D[mxG.K].a.gridPadding=2; // (float) default 0
 mxG.D[mxG.K].a.gridMargin=0; // (float) default 0
 mxG.D[mxG.K].a.gobanPadding=0; // (float) default 0
 mxG.D[mxG.K].a.gobanMargin=2; // (float) default 0
@@ -60,44 +58,22 @@ mxG.D[mxG.K].a.guessBoxOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.canPlaceGuess=1; // (0,1) default 0
 // Header
 mxG.D[mxG.K].a.headerBoxOn=1; // (0,1) default 0
-mxG.D[mxG.K].a.headerBtnOn=0; // (0,1) default 0
-mxG.D[mxG.K].a.hideTitle=1; // (0,1) default 0
-mxG.D[mxG.K].a.hideNumOfMoves=1; // (0,1) default 0
-mxG.D[mxG.K].a.concatDateToTitle=1; // (0,1) default 0
-mxG.D[mxG.K].a.concatTeamToPlayer=1; // (0,1) default 0
-mxG.D[mxG.K].a.concatKomiToResult=1; // (0,1) default 0
-mxG.D[mxG.K].a.concatHandicapToResult=1; // (0,1) default 0
-mxG.D[mxG.K].a.concatNumOfMovesToResult=0; // (0,1) default 0
+mxG.D[mxG.K].a.hideInHeader="NumOfMoves"; // (set) default ""
+mxG.D[mxG.K].a.concatInHeader="DateToTitle,TeamToPlayer,KomiToResult,HandicapToResult"; // (set) default ""
 // Image
 mxG.D[mxG.K].a.svgBtnOn=1; // (0,1) default 0
 // Loop
 mxG.D[mxG.K].a.loopTime=1000; // (positive integer) default 1000
 // Navigation
-mxG.D[mxG.K].a.navigations="First,TenPred,Pred,Loop,Next,TenNext,Last"; // (list) default "First,TenPred,Pred,Next,TenNext,Last"
-// Option
-mxG.D[mxG.K].a.optionBoxOn=1; // (0,1,null) default 0
-mxG.D[mxG.K].a.optionBtnOn=0; // (0,1) default 0
-mxG.D[mxG.K].a.hideCanScore=1; // (0,1) default 0
-mxG.D[mxG.K].a.hideMarkOnlastOn=0; // (0,1) default 0
-mxG.D[mxG.K].a.hideNumberingOn=0; // (0,1) default 0
-mxG.D[mxG.K].a.hideMarksAndLabelsOn=0; // (0,1) default 0
-mxG.D[mxG.K].a.hideAsInBookOn=0; // (0,1) default 0
-mxG.D[mxG.K].a.hideIndicesOn=0; // (0,1) default 0
-mxG.D[mxG.K].a.hideVariationMarksOn=0; // (0,1) default 0
-mxG.D[mxG.K].a.hideSiblingsOn=1; // (0,1) default 0
-mxG.D[mxG.K].a.hideIn3dOn=0; // (0,1) default 0
-mxG.D[mxG.K].a.hideCanVariation=0; // (0,1) default 0
-mxG.D[mxG.K].a.hideCanGuess=0; // (0,1) default 0
-mxG.D[mxG.K].a.hideLoopTime=1; // (0,1) default 0
-mxG.D[mxG.K].a.hideAnimatedStoneOn=1; // (0,1) default 0
-mxG.D[mxG.K].a.hideAnimatedStoneTime=1; // (0,1) default 0
+mxG.D[mxG.K].a.navigations="First,TenPred,Pred,Loop,Next,TenNext,Last"; // (set) default "First,TenPred,Pred,Next,TenNext,Last"
+// options
+mxG.D[mxG.K].a.optionsBoxOn=1; // (0,1,null) default 0
+mxG.D[mxG.K].a.optionsBtnOn=0; // (0,1) default 0
+mxG.D[mxG.K].a.hideInOptions="CanScore,SiblingsOn,AnimatedStoneOn,AnimatedStoneTime"; // (set) default ""
 // Pass
 mxG.D[mxG.K].a.passBtnOn=1; // (0,1) default 0
 // Sgf
 mxG.D[mxG.K].a.sgfBtnOn=1; // (0,1) default 0
-// Title
-mxG.D[mxG.K].a.titleBoxOn=1; // (0,1,null) default 0
-mxG.D[mxG.K].a.translateTitleOn=1; // (0,1) default 0
 // Variation
 mxG.D[mxG.K].a.variationMarksOn=0; // (0,1,null) default 0
 mxG.D[mxG.K].a.siblingsOn=0; // (0,1,null) default 0

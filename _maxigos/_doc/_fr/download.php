@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <?php $lang="fr";?>
-<html lang="<?php echo $lang;?>">
+<html lang="<?=$lang?>">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="initial-scale=1.0,user-scalable=yes">
 <?php include_once "../../_php/version.php";?>
-<title>Page de téléchargement de maxiGos v<?php print $v;?></title>
+<title>Page de téléchargement de maxiGos v<?=$v?></title>
 <style>
 .flag
 {
@@ -36,12 +36,12 @@ code
 </style>
 </head>
 <body>
-<nav class="menu"><?php if (file_exists("../../../index.php")) print "<a href=\"../../../index.php?lang=fr\">Accueil</a>";?><!--
+<nav class="menu"><?=(file_exists("../../../index.php")?"<a href=\"../../../index.php?lang=fr\">Accueil</a>":"")?><!--
 --><a href="documentation.php">Documentation</a><!--
---><a href="<?php print str_replace("/_fr/","/_en/",$_SERVER["SCRIPT_NAME"]);?>"><img class="flag" src="../../_img/flag/en.svg"> English</a><!--
---><a href="<?php print str_replace("/_en/","/_fr/",$_SERVER["SCRIPT_NAME"]);?>"><img class="flag" src="../../_img/flag/fr.svg"> Fran&ccedil;ais</a></nav>
-<h1>MaxiGos v<?php print $v.".".$r;?> - Page de téléchargement</h1>
-<p><em>Copyright 1998-<?php print date("Y");?> - FM&SH</em></p>
+--><a href="<?=str_replace("/_fr/","/_en/",$_SERVER["SCRIPT_NAME"])?>"><img class="flag" src="../../_img/flag/en.svg"> English</a><!--
+--><a href="<?=str_replace("/_en/","/_fr/",$_SERVER["SCRIPT_NAME"])?>"><img class="flag" src="../../_img/flag/fr.svg"> Fran&ccedil;ais</a></nav>
+<h1>MaxiGos v<?=$v.".".$r?> - Page de téléchargement</h1>
+<p><em>Copyright 1998-<?=date("Y")?> - FM&SH</em></p>
 <p>MaxiGos est un ensemble de lecteurs sgf permettant d'afficher
 des diagrammes, parties ou problèmes de go dans une page web. 
 L'utilisateur final n'a rien d'autre à faire que d'avoir laissé javascript activé dans son navigateur.</p>
@@ -54,7 +54,7 @@ $mxL="fr";
 ?>
 <?php if (file_exists($dir.$vbne)) { ?>
 <h2>Téléchargement de la version complète de maxiGos</h2>
-<p><a href="<?php print $dir.$vbne;?>">Cliquez ici pour télécharger maxiGos V<?php print $v.".".$r;?></a>.</p>
+<p><a href="<?=$dir.$vbne?>">Cliquez ici pour télécharger maxiGos V<?=$v.".".$r?></a>.</p>
 <?php }?>
 <h2>Téléchargement d'un lecteur autonome maxGos</h2>
 <p>Ces lecteurs sont conçus pour fonctionner seuls.
@@ -103,30 +103,30 @@ include("../../_php/lib.php");
 ?>
 <h3>Thèmes principaux</h3>
 <p>MaxiGos est décliné en plusieurs thèmes et plusieurs configurations.</p>
-<?php printOneThemeDownloadLines("classic");?>
-<?php printOneThemeDownloadLines("minimalist");?>
-<?php printOneThemeDownloadLines("neo-classic");?>
-<?php printOneThemeDownloadLines("rosewood");?>
-<?php printOneThemeDownloadLines("tatami");?>
-<?php printOneThemeDownloadLines("troyes");?>
+<?=printOneThemeDownloadLines("classic")?>
+<?=printOneThemeDownloadLines("minimalist")?>
+<?=printOneThemeDownloadLines("neo-classic")?>
+<?=printOneThemeDownloadLines("rosewood")?>
+<?=printOneThemeDownloadLines("tatami")?>
+<?=printOneThemeDownloadLines("troyes")?>
 
 <h3>Autres thèmes</h3>
-<?php printOneThemeDownloadLines("eidogo");?>
-<?php printOneThemeDownloadLines("forum");?>
-<?php printOneThemeDownloadLines("fm");?>
-<?php printOneThemeDownloadLines("iroha");?>
-<?php printOneThemeDownloadLines("jdg");?>
-<?php printOneThemeDownloadLines("kifla");?>
-<?php printOneThemeDownloadLines("rfg");?>
-<?php printOneThemeDownloadLines("tiger");?>
-<?php printOneThemeDownloadLines("wgo");?>
+<?=printOneThemeDownloadLines("eidogo")?>
+<?=printOneThemeDownloadLines("forum")?>
+<?=printOneThemeDownloadLines("fm")?>
+<?=printOneThemeDownloadLines("iroha")?>
+<?=printOneThemeDownloadLines("jdg")?>
+<?=printOneThemeDownloadLines("kifla")?>
+<?=printOneThemeDownloadLines("rfg")?>
+<?=printOneThemeDownloadLines("tiger")?>
+<?=printOneThemeDownloadLines("wgo")?>
 
 <h3>Scripts d'internationalisation</h3>
 <p>Ci-dessous la liste des scripts d'internationalisation disponibles dans maxiGos :</p>
 <ul>
-<?php printOneInternationalizationScriptLine('ja');?>
-<?php printOneInternationalizationScriptLine('zh-hans');?>
-<?php printOneInternationalizationScriptLine('zh-hant');?>
+<?=printOneInternationalizationScriptLine('ja')?>
+<?=printOneInternationalizationScriptLine('zh-hans')?>
+<?=printOneInternationalizationScriptLine('zh-hant')?>
 </ul>
 
 <h2>Alerte pour ceux qui utilisaient maxiGos v6</h2>
@@ -195,9 +195,9 @@ de s'afficher en entier avec firefox.</li>
 <li>Nombreuses autres optimisations et corrections.</li>
 </ul>
 
-<nav class="menu"><?php if (file_exists("../../index.php")) print "<a href=\"../../index.php?lang=fr\">Accueil</a>";?><!--
+<nav class="menu"><?=(file_exists("../../index.php")?"<a href=\"../../index.php?lang=fr\">Accueil</a>":"")?><!--
 --><a href="documentation.php">Documentation</a><!--
---><a href="<?php print str_replace("/fr/","/en/",$_SERVER["SCRIPT_NAME"]);?>"><img class="flag" src="../../_img/flag/en.svg"> English</a><!--
---><a href="<?php print str_replace("/en/","/fr/",$_SERVER["SCRIPT_NAME"]);?>"><img class="flag" src="../../_img/flag/fr.svg"> Fran&ccedil;ais</a></nav>
+--><a href="<?=str_replace("/fr/","/en/",$_SERVER["SCRIPT_NAME"])?>"><img class="flag" src="../../_img/flag/en.svg"> English</a><!--
+--><a href="<?=str_replace("/en/","/fr/",$_SERVER["SCRIPT_NAME"])?>"><img class="flag" src="../../_img/flag/fr.svg"> Fran&ccedil;ais</a></nav>
 </body>
 </html>

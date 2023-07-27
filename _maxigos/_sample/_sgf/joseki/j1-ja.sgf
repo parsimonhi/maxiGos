@@ -9,6 +9,6 @@ AB[cp]
 ;B[dq]
 ;W[fp]
 ;B[cn]
-(;W[jp]C[Joseki]TR[jp]LB[jq:あ])
-(;W[jq]C[Joseki]TR[jq]LB[jp:あ])
+(;W[jp]C[定石]TR[jp]LB[jq:あ])
+(;W[jq]C[定石]TR[jq]LB[jp:い])
 )

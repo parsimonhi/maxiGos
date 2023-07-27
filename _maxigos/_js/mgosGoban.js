@@ -1,34 +1,19 @@
-// maxiGos v7 > mgosGoban.js
+// maxiGos v8 > mgosGoban.js
 if(!mxG.G.prototype.createGoban)
 {
-// Words below are used in mgos_src.js
-mxG.fr("Goban","Goban");
-mxG.fr("Bowl","Bol");
-mxG.fr("Black","Noir");
-mxG.fr("White","Blanc");
-mxG.fr("B","N");
-mxG.fr("W","B");
-mxG.G.prototype.deplonkGoban=function(a)
+mxG.G.prototype.deplonkGoban=function()
 {
 	this.ig.style.visibility="visible";
-	this.doNotFocusGobanJustAfter=a;
-	this.ig.focus();
+	this.ig.firstChild.focus();
 };
 mxG.G.prototype.plonk=function()
 {
-	if(!this.silentFail)
-	{
-		let a=this.doNotFocusGobanJustAfter?1:0,z=this.k;
-		this.ig.style.visibility="hidden";
-		setTimeout(function(){mxG.D[z].deplonkGoban(a);},50);
-	}
+	let z=this.k;
+	this.ig.style.visibility="hidden";
+	setTimeout(function(){mxG.D[z].deplonkGoban();},50);
 };
-mxG.G.prototype.xy=function(x,y)
-{
-	return (x-this.xl)*(this.yb-this.yt+1)+y-this.yt;
-};
-mxG.G.prototype.xy2s=function(x,y)
-{return (x&&y)?String.fromCharCode(x+((x>26)?38:96),y+((y>26)?38:96)):"";};
+mxG.G.prototype.xy=function(x,y){return (x-this.xl)*(this.yb-this.yt+1)+y-this.yt;};
+mxG.G.prototype.xy2s=function(x,y){return (x&&y)?String.fromCharCode(x+((x>26)?38:96),y+((y>26)?38:96)):"";};
 mxG.G.prototype.getEmphasisColor=function(k)
 {
 	if(k)
@@ -47,13 +32,14 @@ mxG.G.prototype.getEmphasisClass=function(k)
 {
 	if(k)
 	{
-		if(k&this.goodnessCode.Good) return "mxGood";
-		if(k&this.goodnessCode.Bad) return "mxBad";
-		if(k&this.goodnessCode.Even) return "mxEven";
-		if(k&this.goodnessCode.Warning) return "mxEven";
-		if(k&this.goodnessCode.Unclear) return "mxUnclear";
-		if(k&this.goodnessCode.OffPath) return "mxOffPath";
-		if(k&this.goodnessCode.Focus) return "mxFocus";
+		let g=this.goodnessCode;
+		if(k&g.Good) return "mxGood";
+		if(k&g.Bad) return "mxBad";
+		if(k&g.Even) return "mxEven";
+		if(k&g.Warning) return "mxEven";
+		if(k&g.Unclear) return "mxUnclear";
+		if(k&g.OffPath) return "mxOffPath";
+		if(k&g.Focus) return "mxFocus";
 	}
 	return "mxNeutral";
 };
@@ -61,49 +47,37 @@ mxG.G.prototype.inView=function(x,y)
 {
 	return (x>=this.xl)&&(y>=this.yt)&&(x<=this.xr)&&(y<=this.yb);
 };
-mxG.G.prototype.isNextMove=function(x,y)
+mxG.G.prototype.setIn3d=function()
 {
-	var aN,s,a,b;
-	if(!(this.styleMode&3))
-	{
-		aN=this.kidOnFocus(this.cN);
-		if(aN)
-		{
-			if(aN.P.B) s=aN.P.B[0];
-			else if(aN.P.W) s=aN.P.W[0];
-			else s="";
-			if(s)
-			{
-				a=s.c2n(0);
-				b=s.c2n(1);
-				if((a==x)&&(b==y)) return aN;
-			}
-		}
-	}
-	return 0;
-};
+	let e=this.getE("GlobalBoxDiv"),z=this.in3dOn;
+	e.classList.remove(z?"mxIn2d":"mxIn3d");
+	e.classList.add(z?"mxIn3d":"mxIn2d");
+}
 mxG.G.prototype.setIndices=function()
 {
-	var indicesOn=this.indicesOn;
+	let z,e=this.getE("GlobalBoxDiv");
 	if(this.configIndicesOn===null)
-		this.indicesOn=((parseInt(this.getInfoS("FG")+"")&1)?0:1);
-	if(this.indicesOn&&(this.xl==1)) this.xli=0;else this.xli=this.xl;
-	if(this.indicesOn&&(this.yt==1)) this.yti=0;else this.yti=this.yt;
-	if(this.indicesOn&&(this.xr==this.DX)) this.xri=this.DX+1;else this.xri=this.xr;
-	if(this.indicesOn&&(this.yb==this.DY)) this.ybi=this.DY+1;else this.ybi=this.yb;
+		this.indicesOn=((parseInt(this.getInfo("FG")+"")&1)?0:1);
+	z=this.indicesOn;
+	if(z&&(this.xl==1)) this.xli=0;else this.xli=this.xl;
+	if(z&&(this.yt==1)) this.yti=0;else this.yti=this.yt;
+	if(z&&(this.xr==this.DX)) this.xri=this.DX+1;else this.xri=this.xr;
+	if(z&&(this.yb==this.DY)) this.ybi=this.DY+1;else this.ybi=this.yb;
+	e.classList.remove(z?"mxIndicesOff":"mxIndicesOn");
+	e.classList.add(z?"mxIndicesOn":"mxIndicesOff");
 };
 mxG.G.prototype.setNumbering=function()
 {
 	if(this.configAsInBookOn===null)
-		this.asInBookOn=((parseInt(this.getInfoS("FG")+"")&256)?1:0);
+		this.asInBookOn=((parseInt(this.getInfo("FG")+"")&256)?1:0);
 	if((this.configNumberingOn===null)||this.numberingOn)
 	// doubtful test (not as in maxigos 6.x but why)
 	{
-		var aN=this.cN;
-		this.numberingOn=parseInt(this.getInfoS("PM")+"");
+		let aN=this.cN;
+		this.numberingOn=parseInt(this.getInfo("PM")+"");
 		if(this.numberingOn&&(aN!=this.rN))
 		{
-			var ka=0,kb=0,kc=0,de,bN=null,cN=null,fg;
+			let ka=0,kb=0,kc=0,de,bN=null,cN=null,fg;
 			while(aN!=this.rN)
 			{
 				if(!bN&&aN.P.MN) {kb=ka;bN=aN;}
@@ -120,24 +94,15 @@ mxG.G.prototype.setNumbering=function()
 			if(this.numberingOn==2) fg=fg%100;
 			this.numWith=fg;
 		}
-		else
-		{
-			this.numFrom=1;
-			this.numWith=1;
-		}
+		else this.numFrom=this.numWith=1;
 	}
 };
 mxG.G.prototype.addMarksAndLabels=function()
 {
-	if(!this.marksAndLabelsOn) return;
-	var MX=["MA","TR","SQ","CR","LB","TB","TW"];
-	var k,aLen,s,s2,x,y,x1,y1,x2,y2,z;
+	let MX=["MA","TR","SQ","CR","LB","TB","TW"],k,aLen,s,x,y,z;
 	for(z=0;z<7;z++)
 	{
-		if(this.cN.P[MX[z]])
-			aLen=this.cN.P[MX[z]].length;
-		else
-			aLen=0;
+		aLen=this.cN.P[MX[z]]?this.cN.P[MX[z]].length:0;
 		for(k=0;k<aLen;k++)
 		{
 			s=this.cN.P[MX[z]][k];
@@ -148,29 +113,21 @@ mxG.G.prototype.addMarksAndLabels=function()
 					x=s.c2n(0);
 					y=s.c2n(1);
 					if(this.inView(x,y))
-					{
-						s2=s.substring(3).replace(/\(/g,'&#40;').replace(/\)/g,'&#41;');
-						this.vStr[this.xy(x,y)]="|"+s2+"|";
-					}
+						this.vStr[this.xy(x,y)]="|"+s.substring(3).noP().noT()+"|";
 				}
 			}
 			else if(s.length==2)
 			{
 				x=s.c2n(0);
 				y=s.c2n(1);
-				if(this.inView(x,y))
-					this.vStr[this.xy(x,y)]="_"+MX[z]+"_";
+				if(this.inView(x,y)) this.vStr[this.xy(x,y)]="_"+MX[z]+"_";
 			}
 			else if(s.length==5)
 			{
-				x1=s.c2n(0);
-				y1=s.c2n(1);
-				x2=s.c2n(3);
-				y2=s.c2n(4);
+				let x1=s.c2n(0),y1=s.c2n(1),x2=s.c2n(3),y2=s.c2n(4);
 				for(x=x1;x<=x2;x++)
 					for(y=y1;y<=y2;y++)
-						if(this.inView(x,y))
-							this.vStr[this.xy(x,y)]="_"+MX[z]+"_";
+						if(this.inView(x,y)) this.vStr[this.xy(x,y)]="_"+MX[z]+"_";
 			}
 		}
 	}
@@ -179,7 +136,7 @@ mxG.G.prototype.isNumbered=function(aN)
 {
 	if(!(aN.P["B"]||aN.P["W"])) return 0;
 	if(this.configNumberingOn!==null) return this.numberingOn;
-	var bN=((aN==this.rN)?this.kidOnFocus(aN):aN);
+	let bN=((aN==this.rN)?this.kidOnFocus(aN):aN);
 	while(bN!=this.rN)
 	{
 		if(bN.P["PM"]) return parseInt(bN.P["PM"][0]+"");
@@ -190,7 +147,7 @@ mxG.G.prototype.isNumbered=function(aN)
 mxG.G.prototype.getAsInTreeNum=function(xN)
 {
 	// return num of the node as it was when placed
-	var aN=xN,ka=0,kb=0,kc=0,de,bN=null,cN=null,fg;
+	let aN=xN,ka=0,kb=0,kc=0,de,bN=null,cN=null,fg;
 	while(aN!=this.rN)
 	{
 		if(!bN&&aN.P["MN"]) {bN=aN;kb=ka;}
@@ -213,7 +170,7 @@ mxG.G.prototype.getVisibleMove=function(x,y)
 //		else return 0
 // else return the last move played at (x,y) if any
 {
-	var k,kmin,kmax;
+	let k,kmin,kmax;
 	if(this.asInBookOn&&this.numberingOn)
 	{
 		kmin=Math.min(this.gor.setup+this.numFrom,this.gor.play);
@@ -234,17 +191,17 @@ mxG.G.prototype.getVisibleNat=function(n)
 };
 mxG.G.prototype.getTenuki=function(m,n)
 {
-	var k,r=0;
+	let k,r=0;
 	for(k=m;k>n;k--) if(this.gor.getNat(k)==this.gor.getNat(k-1)) r++;
 	return r;
 };
 mxG.G.prototype.getCoreNum=function(m)
 {
 	// m is the num of the move in gor history
-	var s=this.gor.setup;
+	let s=this.gor.setup;
 	if(m>s)
 	{
-		var n=s+this.numFrom,r;
+		let n=s+this.numFrom,r;
 		if(m>=n) {r=m-n+this.numWith+this.getTenuki(m,n);return (r<1)?"":r+"";}
 	}
 	return "";
@@ -269,73 +226,127 @@ mxG.G.prototype.preTerritory=function(x,y,nat,m)
 };
 mxG.G.prototype.addNatAndNum=function(x,y,z)
 {
-	var m=this.getVisibleMove(x,y),n=this.getVisibleNum(m),k=this.xy(x,y);
+	let m=this.getVisibleMove(x,y),n=this.getVisibleNum(m),k=this.xy(x,y);
 	this.vNat[k]=this.getVisibleNat(m);
 	this.vStr[k]=(this.markOnLastOn&&(z==k)&&!n)?
 					(this.numAsMarkOnLastOn?this.getCoreNum(m):"_ML_"):n;
 	this.vStr[k]=this.preTerritory(x,y,this.vNat[k],this.vStr[k]);
 };
-mxG.G.prototype.disableGoban=function()
+mxG.G.prototype.moveFocusInView=function()
 {
-	var e=this.ig;
-	if(!e.hasAttribute("data-maxigos-disabled"))
-	{
-		e.setAttribute("data-maxigos-disabled","1");
-		if(this.canGobanFocus) e.setAttribute("tabindex","-1");
-	}
+	this.xFocus=Math.min(Math.max(this.xFocus,this.xl),this.xr);
+	this.yFocus=Math.min(Math.max(this.yFocus,this.yt),this.yb);
 };
-mxG.G.prototype.enableGoban=function()
+mxG.G.prototype.doClickGoban=function(ev)
 {
-	var e=this.ig;
-	if(e.hasAttribute("data-maxigos-disabled"))
-	{
-		e.removeAttribute("data-maxigos-disabled");
-		if(this.canGobanFocus) e.setAttribute("tabindex","0");
-	}
+	let c=this.scr.getGxy(ev);
+	if(!this.inView(c.x,c.y)) {this.plonk();return;}
+	this.xFocus=c.x;
+	this.yFocus=c.y;
+	if(this.canPlaceEdit) this.checkEdit(c.x,c.y);
+	else if(this.canPlaceSolve) this.checkSolve(c.x,c.y);
+	else if(this.canPlaceVariation) this.checkVariation(c.x,c.y);
+	else if(this.canPlaceGuess) this.checkGuess(c.x,c.y);
+	else if(this.canPlaceScore) this.checkScore(c.x,c.y);
+	ev.preventDefault();
 };
-mxG.G.prototype.isGobanDisabled=function()
+mxG.G.prototype.doKeydownGoban=function(ev)
 {
-	return this.ig.hasAttribute("data-maxigos-disabled");
+	let r=0;
+	if((ev.key==" ")||(ev.key=="Enter"))
+	{
+		let x=this.xFocus,y=this.yFocus;
+		if(this.canPlaceEdit)
+		{
+			if(this.editTool=="Select") this.doKeydownSelect(x,y);
+			else this.checkEdit(x,y);
+		}
+		else if(this.canPlaceSolve) this.checkSolve(x,y);
+		else if(this.canPlaceVariation) this.checkVariation(x,y);
+		else if(this.canPlaceGuess) this.checkGuess(x,y);
+		else if(this.canPlaceScore) this.checkScore(x,y);
+		ev.preventDefault();
+		return;
+	}
+	if(ev.altKey||ev.key.match(/^[FGHJKLUN]$/i))
+	{
+		if(this.hasC("Navigation")) this.doKeydownNavigation(ev);
+		else if(this.hasC("Solve")) this.doKeydownSolve(ev);
+		return;
+	}
+	switch(ev.key)
+	{
+		case "ArrowLeft":this.xFocus--;r=1;break;
+		case "ArrowRight":this.xFocus++;r=1;break;
+		case "ArrowUp":this.yFocus--;r=1;break;
+		case "ArrowDown":this.yFocus++;r=1;break;
+	}
+	if(r)
+	{
+		this.moveFocusInView();
+		if(this.hasC("Edit")&&(this.editTool=="Select"))
+		{
+			if(this.inSelect==2) this.selectGobanArea(this.xFocus,this.yFocus);
+			this.updateAll();
+		}
+		else this.scr.setGobanFocusTitleDesc(0); // no need to updateAll()
+		ev.preventDefault();
+	}
 };
 mxG.G.prototype.setGoban=function()
 {
 	// has to set goban when first drawing
 	// or after modifying sgf, indicesOn, DX, DY, ...
-	this.scr.setInternalParameters();
+	let k=this.k,g;
+	this.moveFocusInView();
+	this.scr.setInternalParams();
 	this.ig.innerHTML=this.scr.makeGoban();
+	g=this.getE("GobanSvg");
+	g.getMClick=mxG.getMClick;
+	g.addEventListener("click",function(ev){mxG.D[k].doClickGoban(ev);});
+	g.addEventListener("keydown",function(ev){mxG.D[k].doKeydownGoban(ev);});
+	if(this.hasC("Navigation"))
+		g.addEventListener("wheel",function(ev){mxG.D[k].doWheelNavigation(ev);});
+	if(this.hasC("Edit"))
+	{
+		g.addEventListener("mousemove",function(ev){mxG.D[k].doMouseMoveEdit(ev);});
+		g.addEventListener("mouseup",function(ev){mxG.D[k].doMouseUpEdit(ev);});
+		g.addEventListener("mousedown",function(ev){mxG.D[k].doMouseDownEdit(ev);});
+		g.addEventListener("mouseout",function(ev){mxG.D[k].doMouseOutEdit(ev);});
+	}
 	this.hasToSetGoban=0;
 };
 mxG.G.prototype.updateGoban=function()
 {
-	var i,j,k,x,y,z=-1,m,pFocus;
-	if(this.scr.in3dOn!=this.in3dOn)
+	let i,j,k,x,y,z=-1,m,q;
+	if(this.scr.in3dOn!==this.in3dOn)
 	{
 		this.scr.in3dOn=this.in3dOn;
 		this.hasToSetGoban=1;
 	}
-	if(this.scr.stoneShadowOn!=this.stoneShadowOn)
+	if(this.scr.stoneShadowOn!==this.stoneShadowOn)
 	{
 		this.scr.stoneShadowOn=this.stoneShadowOn;
 		this.hasToSetGoban=1;
 	}
-	if(this.scr.stretching!=this.stretching)
+	if(this.scr.stretching!==this.stretching)
 	{
 		this.scr.stretching=this.stretching;
 		this.hasToSetGoban=1;
 	}
-	if(this.scr.indicesOn!=this.indicesOn)
+	if(this.scr.indicesOn!==this.indicesOn)
 	{
 		this.scr.indicesOn=this.indicesOn;
 		this.hasToSetGoban=1;
 	}
-	if((this.scr.DX!=this.DX)||(this.scr.DY!=this.DY))
+	if((this.scr.DX!==this.DX)||(this.scr.DY!==this.DY))
 	{
 		this.scr.DX=this.DX;
 		this.scr.DY=this.DY;
 		this.hasToSetGoban=1;
 	}
-	if((this.scr.xl!=this.xl)||(this.scr.xr!=this.xr)
-		||(this.scr.yt!=this.yt)||(this.scr.yb!=this.yb))
+	if((this.scr.xl!==this.xl)||(this.scr.xr!==this.xr)
+		||(this.scr.yt!==this.yt)||(this.scr.yb!==this.yb))
 	{
 		this.scr.xl=this.xl;
 		this.scr.xr=this.xr;
@@ -358,108 +369,21 @@ mxG.G.prototype.updateGoban=function()
 	for(i=this.xl;i<=this.xr;i++)
 		for(j=this.yt;j<=this.yb;j++)
 			this.addNatAndNum(i,j,z); // (i,j) is in view
-	this.addMarksAndLabels();
+	if(this.marksAndLabelsOn) this.addMarksAndLabels();
 	if(this.hasC("Variation")) this.addVariationMarks();
-	if(this.gobanFocusVisible&&this.inView(this.xFocus,this.yFocus))
-		pFocus={x:this.xFocus,y:this.yFocus};
-	else
-		pFocus={x:0,y:0};
-	if(this.hasToSetGoban) {this.setGoban();q=1;}
-	else q=0;
-	this.scr.draw(this.vNat,this.vStr,pFocus);
+	if(this.hasToSetGoban) {this.setGoban();q=1;} else q=0;
+	this.scr.drawGoban(this.vNat,this.vStr);
 	if(q&&this.hasC("Edit")&&this.selection) this.selectView();
-	if(this.gBox) this.disableGoban(); else this.enableGoban();
-};
-mxG.G.prototype.moveFocusInView=function()
-{
-	this.xFocus=Math.min(Math.max(this.xFocus,this.xl),this.xr);
-	this.yFocus=Math.min(Math.max(this.yFocus,this.yt),this.yb);
-};
-mxG.G.prototype.doFocusGoban=function(ev)
-{
-	// warning: all browsers don't manage event order in the same way
-	if(this.doNotFocusGobanJustAfter) return;
-	this.moveFocusInView();
-	this.gobanFocusVisible=1;
-	if(this.inView(this.xFocus,this.yFocus))
-		this.scr.draw(this.vNat,this.vStr,{x:this.xFocus,y:this.yFocus});
-	else
-		this.scr.draw(this.vNat,this.vStr,{x:0,y:0});
-};
-mxG.G.prototype.hideGobanFocus=function()
-{
-	this.gobanFocusVisible=0;
-	this.scr.draw(this.vNat,this.vStr,{x:0,y:0});
-};
-mxG.G.prototype.doBlur4FocusGoban=function(ev)
-{
-	// when leaving a document, document.activeElement remains the last focused element
-	// if the goban was on focus with an invisible focus mark, do not focus it just after 
-	var magic=(!this.gobanFocusVisible&&(document.activeElement==this.ig));
-	if(this.gobanFocusVisible) this.hideGobanFocus();
-	this.doNotFocusGobanJustAfter=(magic?1:0);
-};
-mxG.G.prototype.doMouseDown4FocusGoban=function(ev)
-{
-	// after a click on the goban, hide focus mark if any,
-	// and do not focus the goban just after
-	if(this.gobanFocusVisible) this.hideGobanFocus();
-	this.doNotFocusGobanJustAfter=1;
-};
-mxG.G.prototype.doContextMenu4FocusGoban=function(ev)
-{
-	if(this.gobanFocusVisible) this.hideGobanFocus();
-	this.doNotFocusGobanJustAfter=0;
-};
-mxG.G.prototype.doKeydownGoban=function(ev)
-{
-	var r=0;
-	if(!this.gobanFocusVisible)
-	{
-		if(this.hasC("Navigation")) this.doKeydownNavigation(ev);
-		else if(this.hasC("Solve")) this.doKeydownSolve(ev);
-		return;
-	}
-	switch(mxG.getKCode(ev))
-	{
-		case 37:case 72:this.xFocus--;r=1;break;
-		case 39:case 74:this.xFocus++;r=1;break;
-		case 38:case 85:this.yFocus--;r=1;break;
-		case 40:case 78:this.yFocus++;r=1;break;
-	}
-	if(r)
-	{
-		this.moveFocusInView();
-		if(this.hasC("Edit")&&(this.editTool=="Select"))
-		{
-			if(this.inSelect==2) this.selectGobanArea(this.xFocus,this.yFocus);
-			else this.gobanFocusVisible=1;
-		}
-		this.updateAll();
-		ev.preventDefault();
-	}
 };
 mxG.G.prototype.initGoban=function()
 {
-	var k=this.k;
-	if(this.specialStoneOn&&this.in3dOn) this.alea8=mxG.shuffle([0,1,2,3,4,5,6,7]);
-	if(this.canGobanFocus)
-	{
-		// add event listeners to InnerGobanDiv otherwise side effect when a gBox is shown
-		this.ig.addEventListener("keydown",function(ev){mxG.D[k].doKeydownGoban(ev);},false);
-		this.ig.addEventListener("focus",function(ev){mxG.D[k].doFocusGoban(ev);},false);
-		this.ig.addEventListener("blur",function(ev){mxG.D[k].doBlur4FocusGoban(ev);},false);
-		this.ig.addEventListener("mousedown",function(ev){mxG.D[k].doMouseDown4FocusGoban(ev);},false);
-		this.ig.addEventListener("contextmenu",function(ev){mxG.D[k].doContextMenu4FocusGoban(ev);},false);
-	}
+	this.alea=Math.floor(Math.random()*6)+2; // !(0||1)%8
 	this.scr.init();
 	this.hasToSetGoban=1;
 };
 mxG.G.prototype.createGoban=function()
 {
-	var s="";
 	this.pointsNumMax=this.setA("pointsNumMax",0,"int");
-	this.magicParentNum=this.setA("magicParentNum",0,"int");
 	this.stoneShadowOn=this.setA("stoneShadowOn",0,"bool");
 	this.stretching=this.setA("stretching","0,0,1,1","string");
 	this.specialStoneOn=this.setA("specialStoneOn",0,"bool");
@@ -482,38 +406,19 @@ mxG.G.prototype.createGoban=function()
 	this.gobanPadding=this.setA("gobanPadding",0,"float");
 	this.gobanMargin=this.setA("gobanMargin",0,"float");
 	this.territoryMark=this.setA("territoryMark","MS","string");
-	//this.canGobanFocus=this.setA("canGobanFocus",0,"bool");
-	// to improve!
-	this.canGobanFocus=(this.hasC("Solve")
-				   ||this.hasC("Variation")
-				   ||this.hasC("Guess")
-				   ||this.hasC("Score"))?1:0;
 	if(this.hasC("Edit"))
-	{
-		this.configIndicesOn=null;
-		this.configAsInBookOn=null;
-		this.configNumberingOn=null;
-	}
+		this.configIndicesOn=this.configAsInBookOn=this.configNumberingOn=null;
 	else
 	{
 		this.configIndicesOn=this.indicesOn;
 		this.configAsInBookOn=this.asInBookOn;
 		this.configNumberingOn=this.numberingOn;
 	}
-	if(this.canGobanFocus)
-	{
-		this.xFocus=0;
-		this.yFocus=0;
-	}
-	this.numFrom=1;
-	this.numWith=1;
+	this.xFocus=this.yFocus=0;
+	this.numFrom=this.numWith=1;
 	this.goodnessCode={Good:1,Bad:2,Even:4,Warning:8,Unclear:16,OffPath:32,Focus:64};
-	s+="<div class=\"mxGobanDiv\" id=\""+this.n+"GobanDiv\">";
+	let s="<div class=\"mxGobanDiv\" id=\""+this.n+"GobanDiv\">";
 	s+="<div class=\"mxInnerGobanDiv\" id=\""+this.n+"InnerGobanDiv\"";
-	s+=" tabindex=\""+(this.canGobanFocus?0:-1)+"\"";
-	s+=">";
-	s+="</div>";
-	s+="</div>";
-	return s;
+	return s+"></div></div>";
 };
 }

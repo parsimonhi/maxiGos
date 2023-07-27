@@ -71,31 +71,36 @@ Black could also have played his stone at 'a'.]
 ;B[ed]C[Black connects.]
 ;W[dd]C[White occupies a neutral point (neutral point is a point between a black border and a white border).]
 ;B[ff]C[Black occupies the last neutral point. After this move, there is nothing more to do, because the territories of the two players are all closed, and none of their boundaries can be captured by the opponent.]
-;W[]C[So White passes.]
-;B[]C[And Black passes too.]
-;W[]C[As Black put the last stone of the board, White gives him an extra stone. Thus, since Black played the first move of the game, both players have consumed the same number of stone.]
-;MA[bg]C[White then removes the black stone 'X' from the board, that would be in any way caught sooner or later, if Black had forced him to do so (check it).]
-;AE[bg]C[Scoring (Method 1):
-One add territories and borders.]
-;TB[aa][ab][ac][gh][gi][hi][ih][ii][ba][bc][cb][cc][hg]
+;W[]C[So White passes and gives a stone to Black.]
+;B[]MA[bg]C[And Black passes too and gives a stone to White. As Black put the last stone on the board, White gives him an extra stone. Thus, since Black played the first move of the game, both players have consumed the same number of stone.
+
+White then removes the black stone 'X' from the board, that would be in any way caught sooner or later, if Black had forced him to do so.]
+;AE[bg]
+TB[aa][ab][ac][gh][gi][hi][ih][ii][ba][bc][cb][cc][hg]
 TW[ga][ha][hb][ia][ib][ic][ag][ah][ai][bg][bi][fb][bf][ci][dh]
-C[- Black has 7 points of territory on the top left and 6 points on the bottom right. He has also 26 stones on the board, i.e. a total of 39 points.
-- White has 8 points of territory on the bottom left, and 7 points on the top right. He has also 27 stones on the board, i.e. a total of 42 points.
-- White has therefore 3 points more than Black on the board.]
-;C[Moreover, as Black started, White adds to his total 7.5 points as compensation.
-White thus wins by 10.5 points.]
-;C[In practice, this method is hardly used, and one prefers method 2 explained on the next page.]
+C[Scoring (Method 1)
+
+We count territories and borders.
+
+- Black has 7 territory points at the top left, and 6 at the bottom right. He also has 26 stones on the board. His total is 39 points.
+- White has 8 territory points at the bottom left, and 7 at the top right. He also has 27 stones on the board. His total is 42 points.
+
+White therefore has 3 points more than Black on the board. As Black started, White adds 7.5 compensation points to his total. White wins by 10.5 points.]
 ;AB[ba][bc][cb][cc][hg]AW[fb][bf][ci][dh]MA[ba][bc][cb][cc][hg][fb][bf][ci][dh]
-C[Scoring (Method 2):
-Each player put in the other's territory opposing stones (with a 'X' in the figure) he has in his possession. Then, it is sure that there is on the board as many stones of each color without having to count them (check it).]
-;TB[aa][ab][ac][gh][gi][hi][ih][ii]
+TB[aa][ab][ac][gh][gi][hi][ih][ii]
 TW[ga][ha][hb][ia][ib][ic][ag][ah][ai][bg][bi]
-C[- Black has a 3 points territory on the upper left and 5 points on the lower right, i.e. a total of 8 points.
-- White has 5 points territory on the bottom left and 6 points on the top right, i.e. a total of 11 points.
-- White has therefore 3 points more than Black on the board.]
-;C[Moreover, as Black started, White adds to his total 7.5 points as compensation.
-White thus wins by 10.5 points.]
-;C[Both methods always give the same result.]
+C[Scoring (Method 2)
+
+We count the territories and the enemy stones possessed.
+
+Each player places in the territory of the other the opposing stones (denoted 'X' in the figure) that he has in his possession. We are then sure that there are as many stones of each color on the board.
+
+- Black has 3 territory points at the top left and 5 at the bottom right. His total is 8 points.
+- White has 5 territory points at the bottom left and 6 at the top right. His total is 11 points.
+
+White therefore has 3 points more than Black on the board. As Black started, White adds 7.5 compensation points to his total. White wins by 10.5 points.
+
+Both methods always give the same result.]
 )
 (
 ;B[ge]C[In this variation, Black takes a white stone, but...]

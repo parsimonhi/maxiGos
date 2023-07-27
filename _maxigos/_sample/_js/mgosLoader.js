@@ -1,4 +1,4 @@
-// maxiGos v7 > mgosLoader.js
+// maxiGos v8 > mgosLoader.js
 // special thanks to Lao Lilin, the first to adapt maxiGos code in order to use a loader
 
 // load maxigos several times to display sgf stored in several targets
@@ -18,11 +18,11 @@
 	// assume maxigos scripts are in theme+"/_"+scriptType+"/" folder
 	function loader(f,q)
 	{
-		var xhr=new XMLHttpRequest();
+		let xhr=new XMLHttpRequest();
 		xhr.q=q;
 		xhr.onreadystatechange=function()
 		{
-			var s,a,b;
+			let s,a,b;
 			if ((xhr.readyState==4)&&(xhr.status==200))
 			{
 				s=xhr.responseText;
@@ -35,7 +35,7 @@
 		xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 		xhr.send();
 	}
-	var k,km,s,p,q,u,f,t,c,d={},a,b,config,theme,list;
+	let k,km,s,p,q,u,f,t,c,d={},a,b,config,theme,list;
 	list=document.querySelectorAll("[data-maxigos]");
 	km=list.length;
 	d.config=[];

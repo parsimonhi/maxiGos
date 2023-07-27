@@ -1,4 +1,4 @@
-// maxiGos v7 > mgosCut.js
+// maxiGos v8s > mgosCut.js
 if(!mxG.G.prototype.createCut)
 {
 mxG.fr("Cut","Couper");
@@ -6,12 +6,12 @@ mxG.fr("Cut_Short","X");
 mxG.en("Cut_Short","X");
 mxG.G.prototype.doSimpleCut=function()
 {
-	var aN,SZ,ST;
+	let aN,SZ,ST;
 	aN=this.cN.Dad;
 	if((aN==this.rN)&&(aN.Kid.length==1))
 	{
-		SZ=this.getInfoS("SZ");
-		ST=this.getInfoS("ST");
+		SZ=this.getInfo("SZ");
+		ST=this.getInfo("ST");
 	}
 	aN.Kid.splice(aN.Focus-1,1);
 	aN.Focus=(aN.Kid.length)?1:0;
@@ -31,15 +31,6 @@ mxG.G.prototype.doSimpleCut=function()
 	if(this.hasC("Tree")) this.hasToSetTree=1;
 	this.updateAll();
 };
-mxG.G.prototype.updateCut=function()
-{
-	if(this.getE("SimpleCutBtn"))
-	{
-		if(this.gBox||(this.hasC("Score")&&this.canPlaceScore))
-			this.disableBtn("SimpleCut");
-		else this.enableBtn("SimpleCut");
-	}
-};
 mxG.G.prototype.initCut=function()
 {
 	if(this.cutBtnOn)
@@ -49,6 +40,6 @@ mxG.G.prototype.createCut=function()
 {
 	this.cutBtnOn=this.setA("cutBtnOn",0,"bool");
 	this.cutAlias=this.setA("cutAlias",null,"string");
-	return this.createBtnBox("Cut");
+	return this.cutBtnOn?this.createBtnBox("Cut"):"";
 };
 }

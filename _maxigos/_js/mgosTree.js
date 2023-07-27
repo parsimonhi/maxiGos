@@ -1,108 +1,73 @@
-// maxiGos v7 > mgosTree.js
+// maxiGos v8 > mgosTree.js
 if(!mxG.G.prototype.createTree)
 {
 mxG.fr("Game tree","Arbre des coups");
-mxG.G.prototype.idt=function(x,y) {return x+"_"+y;};
-mxG.G.prototype.getTreeRatio=function()
+
+// mxG.S section
+mxG.S.prototype.getTxy=function(ev,xo,yo)
 {
-	// return (size in px)/(size in svg corrdinates) ratio 
-	var e=this.getE("TreeBlockSvg"+this.idt(0,0)),
-		w=this.ddT*this.treeM,
-		b=e.getBoundingClientRect();
-	return b.width/w;
-};
-mxG.G.prototype.getCT=function(ev,xo,yo)
-{
-	var e=this.getE("TreeBlockSvg"+this.idt(xo,yo)),
-		w=this.ddT*this.getTreeRatio(),
+	let e=this.p.getE("TreeBlockSvg"+this.p.idt(xo,yo)),
+		w=this.ddT*this.p.getTreeRatio(),
 		c=e.getMClick(ev),
 		x,y;
 	x=xo+Math.floor(c.x/w);
 	y=yo+Math.floor(c.y/w);
-	return {x:x,y:y}
+	return {x:x,y:y};
 };
-mxG.G.prototype.doClickTree=function(ev,xo,yo)
+mxG.S.prototype.makeTreeTriangle=function(x,y,d,c,cls)
 {
-	var aN,c,x,y;
-	if(this.isTreeDisabled()) return;
-	c=this.getCT(ev,xo,yo);
-	x=c.x;
-	y=c.y;
-	if((this.tree[y]!=undefined)&&(this.tree[y][x]!=undefined))
-	{
-		aN=this.tree[y][x];
-		this.backNode(aN);
-		this.updateAll();
-	}
-	// keep focus on tree
-	// arrow keys are for scrolling the tree
-	// if the user want to use arrow keys to navigate,
-	// he has to go back to navigation bar
+	let e,x1,y1,x2,y2,x3,y3,z;
+	z=d*0.32;
+	x1=x;
+	y1=y-z;
+	x2=x-z;
+	y2=y+z*0.8;
+	x3=x+z;
+	y3=y+z*0.8;
+	e=document.createElementNS(this.xmlnsUrl,"polygon");
+	e.setAttributeNS(null,"fill","none");
+	e.setAttributeNS(null,"stroke",c);
+	e.setAttributeNS(null,"stroke-width",this.sw4mark);
+	e.setAttributeNS(null,"points",x1+" "+y1+" "+x2+" "+y2+" "+x3+" "+y3);
+	e.classList.add(cls);
+	return e;
 };
-mxG.G.prototype.doScrollTree=function(ev)
+mxG.S.prototype.makeOneTreeBlockContainer=function(x,y)
 {
-	if(this.treeLock) return;
-	var w=this.ddT*this.getTreeRatio(),
-		st=this.td.scrollTop,
-		y=Math.floor(st/w),
-		n=this.treeN,
-		ko=Math.floor(y/n),k,km;
-	// add visible blocks around block #ko
-	this.addVisibleTreeBlocksOnly(ko);
-};
-mxG.G.prototype.buildOneTreeBlockContainer=function(x,y)
-{
-	var gr,dd=this.ddT,k=this.k,m=this.treeM,n=this.treeN;
-	n=Math.min(n,this.treeRowMax-y);
-	gr=document.createElementNS("http://www.w3.org/2000/svg","svg");
-	gr.setAttribute("id",this.n+"TreeBlockSvg"+this.idt(x,y));
+	let gr,dd=this.ddT,k=this.p.k,m=this.p.treeM,n=this.p.treeN;
+	n=Math.min(n,this.p.treeRowMax-y);
+	gr=document.createElementNS(this.xmlnsUrl,"svg");
+	gr.setAttribute("id",this.p.n+"TreeBlockSvg"+this.p.idt(x,y));
+	gr.setAttributeNS(null,"width",m*dd);
+	gr.setAttributeNS(null,"height",n*dd);
 	gr.setAttributeNS(null,"viewBox","0 0 "+(m*dd)+" "+(n*dd));
-	gr.setAttributeNS(null,"font-family",this.scr.ff);
-	gr.setAttributeNS(null,"font-size",this.scr.fs); // 14 if stone diameter is 23
-	gr.setAttributeNS(null,"font-weight",this.scr.fw);
+	gr.setAttributeNS(null,"font-family",this.ff);
+	gr.setAttributeNS(null,"font-size",this.fs); // 14 if stone diameter is 23
+	gr.setAttributeNS(null,"font-weight",this.fw);
 	gr.setAttributeNS(null,"text-anchor","middle");
 	gr.setAttributeNS(null,"fill","none");
 	gr.setAttributeNS(null,"stroke","none");
-	gr.style.display="block";
-	// 2.5em per tree stone and its tree line is the simplest
-	gr.style.width=m*2.5+"em";
 	gr.style.maxWidth="none"; // to be sure (some cms may set it to 100%)
 	gr.getMClick=mxG.getMClick;
-	if(gr.addEventListener)
-		gr.addEventListener("click",function(ev){mxG.D[k].doClickTree(ev,x,y);},false);
+	gr.addEventListener("click",function(ev){mxG.D[k].doClickTree(ev,x,y);});
 	return gr;
 };
-mxG.G.prototype.buildTreeBlocksContainer=function()
+mxG.S.prototype.drawTreeLine=function(s,x,y,c)
 {
-	var i,j,n,m;
-	m=this.treeColumnMax;
-	n=this.treeN;
-	this.treeBlocks=[];
-	k=0;
-	for(j=0;j<this.treeRowMax;j=j+n)
-		for(i=0;i<this.treeColumnMax;i=i+m)
-			this.treeBlocks.push(this.buildOneTreeBlockContainer(i,j));
-};
-mxG.G.prototype.drawTreeLine=function(s,x,y,c)
-{
-	var e,d,dd,r,r2,r3,xo,yo,x1,y1,x2,y2,n=this.treeN;
+	let e,d=this.dT,dd=this.ddT,r=this.rT,r2=this.r2T,r3=this.r3T,
+		xo,yo,x1,y1,x2,y2,n=this.p.treeN,k;
 	if(!c) c="#000";
 	k=Math.floor(y/n);
-	d=this.dT;
-	dd=this.ddT;
-	r=d/2;
-	r2=r/2;
-	r3=r2+0.15*d;
 	xo=x*dd;
 	yo=(y-k*n)*dd;
 	x1=xo+r2+r;
 	y1=yo+r2+r;
 	x2=xo+dd;
 	y2=yo+dd;
-	gr=this.treeBlocks[k];
-	e=document.createElementNS("http://www.w3.org/2000/svg","path");
+	gr=this.p.treeBlocks[k];
+	e=document.createElementNS(this.xmlnsUrl,"path");
 	e.setAttributeNS(null,"stroke",c);
-	e.setAttributeNS(null,"stroke-width",this.scr.sw4grid);
+	e.setAttributeNS(null,"stroke-width",this.sw4grid);
 	if(s=="H2L")
 		e.setAttributeNS(null,"d","M"+xo+" "+y1+"L"+(xo+r2)+" "+y1);
 	else if(s=="D2TL")
@@ -120,78 +85,34 @@ mxG.G.prototype.drawTreeLine=function(s,x,y,c)
 	else if(s=="T1")
 		e.setAttributeNS(null,"d","M"+x1+" "+yo+"L"+x1+" "+y2+"M"+x1+" "+y1+"L"+x2+" "+y2);
 	e.classList.add("mxTreeLine");
-	this.treeBlocks[k].appendChild(e);
+	this.p.treeBlocks[k].appendChild(e);
 };
-mxG.G.prototype.hasEmphasis=function(aN)
+mxG.S.prototype.drawTreePoint=function(aN)
 {
-	// for customization
-	if(aN==this.cN) return this.goodnessCode.Focus;
-	return 0;
-};
-mxG.G.prototype.makeTreeTriangle=function(x,y,d,c,cls)
-{
-	var e,x1,y1,x2,y2,x3,y3,z;
-	z=d*0.32;
-	x1=x;
-	y1=y-z;
-	x2=x-z;
-	y2=y+z*0.8;
-	x3=x+z;
-	y3=y+z*0.8;
-	e=document.createElementNS("http://www.w3.org/2000/svg","polygon");
-	e.setAttributeNS(null,"fill","none");
-	e.setAttributeNS(null,"stroke",c);
-	e.setAttributeNS(null,"stroke-width",this.scr.sw4mark);
-	e.setAttributeNS(null,"points",x1+" "+y1+" "+x2+" "+y2+" "+x3+" "+y3);
-	e.classList.add(cls);
-	return e;
-};
-mxG.G.prototype.buildTreeEmphasis=function(x,y,d,c,cls)
-{
-	var e,z=d*0.625;
-	e=document.createElementNS("http://www.w3.org/2000/svg","rect");
-	// use opacity instead of rgba() to be consistent with goban
-	// assume c format is #nnnnnnnn at the moment
-	e.setAttributeNS(null,"fill",c?c.substring(0,7):"#000");
-	e.setAttributeNS(null,"opacity",c?parseInt(c.substring(7,9),16)/255:"0.1");
-	e.setAttributeNS(null,"stroke","none");
-	e.setAttributeNS(null,"x",x-z);
-	e.setAttributeNS(null,"y",y-z);
-	e.setAttributeNS(null,"width",z*2);
-	e.setAttributeNS(null,"height",z*2);
-	e.classList.add(cls);
-	return e;
-};
-mxG.G.prototype.drawTreePoint=function(aN)
-{
-	var gr,e,d,r,r2,rg,a,cx,cy,
-		nat,s="",x,y,xo,yo,xx,yy,dd,c,ac,cls,good,
-		n=this.treeN,m=this.treeM;
+	let gr,e,d=this.dT,dd=this.ddT,r=this.rT,r2=this.r2T,rg,a,cx,cy,
+		nat,s="",x,y,xo,yo,xx,yy,c,ac,cls,good,
+		n=this.p.treeN,m=this.p.treeM,tree=this.p.tree;
 	if(aN.P["B"]) nat="B";else if(aN.P["W"]) nat="W";else nat="KA";
-	if(!this.hideTreeNumbering&&((nat=="B")||(nat=="W")))
+	if(!this.p.hideTreeNumbering&&((nat=="B")||(nat=="W")))
 	{
-		if(aN.P.C&&this.markCommentOnTree) s="?";
-		else s=this.getAsInTreeNum(aN)+"";
+		if(aN.P.C&&this.p.markCommentOnTree) s="?";
+		else s=this.p.getAsInTreeNum(aN)+"";
 	}
 	x=aN.iTree;
 	y=aN.jTree;
 	xx=Math.floor(x/m)*m;
 	yy=Math.floor(y/n)*n;
-	d=this.dT;
-	r=d/2;
-	r2=r/2;
-	dd=this.ddT;
 	xo=(x-xx)*dd;
 	yo=(y-yy)*dd;
 	cx=xo+r2+r;
 	cy=yo+r2+r;
-	gr=this.treeBlocks[yy/n];
-	if(good=this.hasEmphasis(aN))
+	gr=this.p.treeBlocks[yy/n];
+	if(good=this.p.hasEmphasis(aN))
 	{
-		c=this.getEmphasisColor(good);
-		cls=this.getEmphasisClass(good);
-		e=this.buildTreeEmphasis(cx,cy,d,c,cls);
-		e.setAttribute("id",this.n+"TreeEmphasis"+this.idt(x,y));
+		c=this.p.getEmphasisColor(good);
+		cls=this.p.getEmphasisClass(good);
+		e=this.p.buildTreeEmphasis(cx,cy,d,c,cls);
+		e.setAttribute("id",this.p.n+"TreeEmphasis"+this.p.idt(x,y));
 		gr.appendChild(e);
 	}
 	if((nat=="B")||(nat=="W"))
@@ -200,9 +121,9 @@ mxG.G.prototype.drawTreePoint=function(aN)
 		ac=(nat=="B")?"White":"Black";
 		if(this.stoneShadowOn)
 		{
-			let sw=this.scr.stoneShadowWidth;
-			e=document.createElementNS("http://www.w3.org/2000/svg","circle");
-			e.setAttribute("id",this.n+"TreeNodeShadow"+this.idt(x,y));
+			let sw=this.stoneShadowWidth;
+			e=document.createElementNS(this.xmlnsUrl,"circle");
+			e.setAttribute("id",this.p.n+"TreeNodeShadow"+this.p.idt(x,y));
 			e.setAttributeNS(null,"cx",cx+sw);
 			e.setAttributeNS(null,"cy",cy+sw);
 			e.setAttributeNS(null,"r",r);
@@ -212,14 +133,14 @@ mxG.G.prototype.drawTreePoint=function(aN)
 			e.setAttributeNS(null,"stroke","none");
 			gr.appendChild(e);
 		}
-		e=document.createElementNS("http://www.w3.org/2000/svg","circle");
-		e.setAttribute("id",this.n+"TreeNode"+this.idt(x,y));
+		e=document.createElementNS(this.xmlnsUrl,"circle");
+		e.setAttribute("id",this.p.n+"TreeNode"+this.p.idt(x,y));
 		e.setAttributeNS(null,"cx",cx);
 		e.setAttributeNS(null,"cy",cy);
 		if(this.in3dOn)
 		{
-			rg=this.specialStoneOn?"A":"";
-			e.setAttributeNS(null,"fill","url(#"+this.n+c[0]+"RG"+rg+")");
+			rg=this.p.specialStoneOn?"A":"";
+			e.setAttributeNS(null,"fill","url(#"+this.p.n+c[0]+"RG"+rg+")");
 			e.setAttributeNS(null,"stroke","none");
 			e.setAttributeNS(null,"r",r);
 		}
@@ -227,51 +148,45 @@ mxG.G.prototype.drawTreePoint=function(aN)
 		{
 			e.setAttributeNS(null,"fill",c);
 			e.setAttributeNS(null,"stroke","Black");
-			e.setAttributeNS(null,"stroke-width",this.scr.sw4stone);
-			e.setAttributeNS(null,"r",r-(this.scr.sw4stone-1)/2);
+			e.setAttributeNS(null,"stroke-width",this.sw4stone);
+			e.setAttributeNS(null,"r",r-(this.sw4stone-1)/2);
 		}
 		e.classList.add("mx"+c);
 		gr.appendChild(e);
-		if(this.in3dOn&&this.specialStoneOn)
+		if(this.in3dOn&&this.p.specialStoneOn)
 		{
-			e=document.createElementNS("http://www.w3.org/2000/svg","circle");
-			e.setAttribute("id",this.n+"TreeNode"+this.idt(x,y));
+			e=document.createElementNS(this.xmlnsUrl,"circle");
+			e.setAttribute("id",this.p.n+"TreeNode"+this.p.idt(x,y));
 			e.setAttributeNS(null,"cx",cx);
 			e.setAttributeNS(null,"cy",cy);
 			e.setAttributeNS(null,"r",r);
 			e.classList.add("mx"+c);
-			rg=this.specialStoneOn?"B":"";
-			if(c=="White")
-			{
-				a=this.alea8[((x>>1)+y)%8];
-				rg+=a?a:"";
-			}
-			e.setAttributeNS(null,"fill","url(#"+this.n+c[0]+"RG"+rg+")");
+			a=(c=="White")?Math.floor(x*this.p.alea+y)%8:"";
+			e.setAttributeNS(null,"fill","url(#"+this.p.n+c[0]+"RGB"+a+")");
 			e.setAttributeNS(null,"stroke","none");
 			gr.appendChild(e);
 		}
 		if(s)
 		{
 			let dy=5; // vertical align need 5/14*font-size
-			e=document.createElementNS("http://www.w3.org/2000/svg","text");
+			e=document.createElementNS(this.xmlnsUrl,"text");
 			e.setAttributeNS(null,"x",cx);
 			e.setAttributeNS(null,"y",cy+dy);
 			e.setAttributeNS(null,"fill",ac);
-			if(this.scr.sw4text)
+			if(this.sw4text!="0")
 			{
 				e.setAttributeNS(null,"stroke",ac);
-				e.setAttributeNS(null,"stroke-width",this.scr.sw4text);
+				e.setAttributeNS(null,"stroke-width",this.sw4text);
 			}
 			if(s.length>1)
 			{
 				// using svg transform seems to be the safest way to shrink text width
-				let v;
-				v="translate("+cx+",0)";
-				if(s.length>2) v+=" scale(0.8,1)";
-				else v+=" scale(0.9,1)";
-				v+=" translate(-"+cx+",0)";
+				// transform: translate(cx,0) scale(sx,1) translate(-cx,0)
+				let v,sx=(s.length>2)?0.8:0.9;
+				v="matrix("+sx+",0,0,1,"+Math.round(cx*(1-sx)*100)/100+",0)";
 				e.setAttributeNS(null,"transform",v);
 			}
+			e.setAttribute("aria-hidden",true);
 			e.classList.add="mxOn"+c;
 			e.textContent=s;
 			gr.appendChild(e);
@@ -280,36 +195,136 @@ mxG.G.prototype.drawTreePoint=function(aN)
 	else
 	{
 		e=this.makeTreeTriangle(cx,cy,d,"#000","mxMark");
-		e.setAttribute("id",this.n+"TreeNode"+this.idt(x,y));
+		e.setAttribute("id",this.p.n+"TreeNode"+this.p.idt(x,y));
 		gr.appendChild(e);
 	}
 	if(x)
 	{
 		// from dad line
-		c=this.getEmphasisColor(aN.Good);
-		if(this.tree[y][x-1]==aN.Dad) this.drawTreeLine("H2L",x,y,c);
+		c=this.p.getEmphasisColor(aN.Good);
+		if(tree[y][x-1]==aN.Dad) this.drawTreeLine("H2L",x,y,c);
 		else this.drawTreeLine("D2TL",x,y,c);
 	}
 	if(aN.Kid&&aN.Kid.length)
 	{
 		// to kids lines
-		if((this.tree[y][x+1]!=undefined)&&(this.tree[y][x+1]!=undefined)&&(this.tree[y][x+1].Dad==aN))
+		if((tree[y][x+1]!=undefined)&&(tree[y][x+1]!=undefined)&&(tree[y][x+1].Dad==aN))
 		{
-			c=this.getEmphasisColor(this.tree[y][x+1].Good);
+			c=this.p.getEmphasisColor(tree[y][x+1].Good);
 			this.drawTreeLine("H2R",x,y,c);
 		}
-		if((this.tree[y+1]!=undefined)&&(this.tree[y+1][x+1]!=undefined)&&(this.tree[y+1][x+1].Dad==aN))
+		if((tree[y+1]!=undefined)&&(tree[y+1][x+1]!=undefined)&&(tree[y+1][x+1].Dad==aN))
 		{
-			c=this.getEmphasisColor(this.tree[y+1][x+1].Good);
+			c=this.p.getEmphasisColor(tree[y+1][x+1].Good);
 			this.drawTreeLine("D2BR",x,y,c);
 		}
-		if((this.tree[y+1]!=undefined)&&(this.tree[y+1][x]!=undefined)
-			&&((this.tree[y+1][x].Shape==-1)||(this.tree[y+1][x].Shape==-2)||(this.tree[y+1][x].Shape==-3)))
+		if((tree[y+1]!=undefined)&&(tree[y+1][x]!=undefined)
+			&&((tree[y+1][x].Shape==-1)||(tree[y+1][x].Shape==-2)||(tree[y+1][x].Shape==-3)))
 		{
-			c=this.getEmphasisColor(this.tree[y+1][x].Good);
+			c=this.p.getEmphasisColor(tree[y+1][x].Good);
 			this.drawTreeLine("V2B",x,y,c);
 		}
 	}
+};
+mxG.S.prototype.drawTreeBlock=function(k,nv)
+{
+	// draw part of tree only (nv lines from line #k)
+	let i,j,jo,jm,c;
+	jo=Math.max(0,k);
+	jm=Math.min(k+nv,this.p.treeRowMax);
+	for(j=jo;j<jm;j++)
+	{
+		if(!this.p.treeCheck[j])
+		{
+			this.p.treeCheck[j]=1;
+			for(i=0;i<this.p.treeColumnMax;i++)
+				if((this.p.tree[j]!=undefined)&&(this.p.tree[j][i]!=undefined))
+				{
+					if(this.p.tree[j][i]&&this.p.tree[j][i].Dad) this.drawTreePoint(this.p.tree[j][i]);
+					else
+					{
+						// not an object thus add V1, T1, A1
+						if(this.p.tree[j][i]) c=this.p.getEmphasisColor(this.p.tree[j][i].Good);
+						if(this.p.tree[j][i]&&(this.p.tree[j][i].Shape==-1)) this.drawTreeLine("A1",i,j,c);
+						else if(this.p.tree[j][i]&&(this.p.tree[j][i].Shape==-2)) this.drawTreeLine("T1",i,j,c);
+						else if(this.p.tree[j][i]&&(this.p.tree[j][i].Shape==-3)) this.drawTreeLine("V1",i,j,c);
+					}
+				}
+		}
+	}
+};
+mxG.S.prototype.initTree=function()
+{
+	let d=this.d,r=d/2,r2=Math.floor(r/2);
+	this.dT=d;
+	this.ddT=d+2*r2;
+	this.rT=r;
+	this.r2T=r2;
+	this.r3T=r2+0.15*d;
+};
+
+// mxG.G section
+mxG.G.prototype.idt=function(x,y) {return x+"_"+y;};
+mxG.G.prototype.getTreeRatio=function()
+{
+	// return (size in px)/(size in svg coordinates) ratio 
+	let b=this.getE("TreeDiv").querySelector('svg').getBoundingClientRect();
+	return b.width/(this.scr.ddT*this.treeM);
+};
+mxG.G.prototype.doClickTree=function(ev,xo,yo)
+{
+	let aN,c,x,y;
+	if(this.isTreeDisabled()) return;
+	c=this.scr.getTxy(ev,xo,yo);
+	x=c.x;
+	y=c.y;
+	if((this.tree[y]!=undefined)&&(this.tree[y][x]!=undefined))
+	{
+		aN=this.tree[y][x];
+		this.backNode(aN);
+		this.updateAll();
+	}
+	// keep focus on the tree
+	// arrow keys are for scrolling the tree
+	// if the user want to use arrow keys to navigate,
+	// he has to go back to navigation bar
+};
+mxG.G.prototype.doKeydownTree=function(ev)
+{
+	this.doKeydownNavigation(ev);
+};
+mxG.G.prototype.buildTreeBlocksContainer=function()
+{
+	let i,j,n,m;
+	m=this.treeColumnMax;
+	n=this.treeN;
+	this.treeBlocks=[];
+	k=0;
+	for(j=0;j<this.treeRowMax;j=j+n)
+		for(i=0;i<this.treeColumnMax;i=i+m)
+			this.treeBlocks.push(this.scr.makeOneTreeBlockContainer(i,j));
+};
+mxG.G.prototype.hasEmphasis=function(aN)
+{
+	// for customization
+	if(aN==this.cN) return this.goodnessCode.Focus;
+	return 0;
+};
+mxG.G.prototype.buildTreeEmphasis=function(x,y,d,c,cls)
+{
+	let e,z=d*0.625;
+	e=document.createElementNS(this.scr.xmlnsUrl,"rect");
+	// use opacity instead of rgba() to be consistent with goban
+	// assume c format is #nnnnnnnn at the moment
+	e.setAttributeNS(null,"fill",c?c.substring(0,7):"#000");
+	e.setAttributeNS(null,"opacity",c?parseInt(c.substring(7,9),16)/255:"0.125");
+	e.setAttributeNS(null,"stroke","none");
+	e.setAttributeNS(null,"x",x-z);
+	e.setAttributeNS(null,"y",y-z);
+	e.setAttributeNS(null,"width",z*2);
+	e.setAttributeNS(null,"height",z*2);
+	e.classList.add(cls);
+	return e;
 };
 mxG.G.prototype.computeGoodness=function(aN,good)
 {
@@ -318,7 +333,7 @@ mxG.G.prototype.computeGoodness=function(aN,good)
 };
 mxG.G.prototype.buildTree=function(aN,io,jo)
 {
-	var i=io,j=jo,k,km=aN.Kid.length,l,good=0,path,p,pm;
+	let i=io,j=jo,k,km=aN.Kid.length,l,good=0,path,p,pm;
 	if(!this.uC) this.setPl();
 	if(j==this.treeRowMax) {this.tree[j]=[];this.treeRowMax++;}
 	this.tree[j][i]=aN;
@@ -359,65 +374,14 @@ mxG.G.prototype.buildTree=function(aN,io,jo)
 	this.treeColumnMax=Math.max(this.treeColumnMax,i+1);
 	return aN.Good=this.computeGoodness(aN,good);
 };
-mxG.G.prototype.drawTreeBlock=function(k,nv)
-{
-	// draw part of tree only (nv lines from line #k)
-	var i,j,jo,jm,c;
-	jo=Math.max(0,k);
-	jm=Math.min(k+nv,this.treeRowMax);
-	for(j=jo;j<jm;j++)
-	{
-		if(!this.treeCheck[j])
-		{
-			this.treeCheck[j]=1;
-			for(i=0;i<this.treeColumnMax;i++)
-				if((this.tree[j]!=undefined)&&(this.tree[j][i]!=undefined))
-				{
-					if(this.tree[j][i]&&this.tree[j][i].Dad) this.drawTreePoint(this.tree[j][i]);
-					else
-					{
-						// not an object thus add V1, T1, A1
-						if(this.tree[j][i]) c=this.getEmphasisColor(this.tree[j][i].Good);
-						if(this.tree[j][i]&&(this.tree[j][i].Shape==-1)) this.drawTreeLine("A1",i,j,c);
-						else if(this.tree[j][i]&&(this.tree[j][i].Shape==-2)) this.drawTreeLine("T1",i,j,c);
-						else if(this.tree[j][i]&&(this.tree[j][i].Shape==-3)) this.drawTreeLine("V1",i,j,c);
-					}
-				}
-		}
-	}
-};
-mxG.G.prototype.afterDrawTree=function()
-{
-	// for customization
-	this.scrollTreeToShowFocus();
-};
-mxG.G.prototype.drawTree=function()
-{
-	var nv,k,ko,km,e;
-	this.treeCheck=[];
-	this.buildTreeBlocksContainer();
-	nv=Math.min(this.treeN,this.treeRowMax);
-	ko=Math.floor(this.cN.jTree/this.treeN);
-	// draw around current node only
-	for(k=ko-1;k<=ko+1;k++) this.drawTreeBlock(k*this.treeN,nv);
-	km=this.treeBlocks.length;
-	// remove previously appended blocks to TreeDiv at the very last moment
-	while(e=this.tcd.firstChild) this.tcd.removeChild(e); 
-	// append blocks to TreeDiv
-	for(k=0;k<km;k++)
-		this.tcd.appendChild(this.treeBlocks[k]);
-	this.afterDrawTree();
-};
 mxG.G.prototype.scrollTreeToShowFocus=function()
 {
-	var e,i,j,r,
-		left,top,right,bottom,width,height,
-		scrollLeft,scrollTop;
+	let e,i,j,r,left,top,right,bottom,width,height,scrollLeft,scrollTop;
 	if(!this.treeNodeOnFocus) return;
 	e=this.td;
 	i=this.treeNodeOnFocus.iTree;
 	j=this.treeNodeOnFocus.jTree;
-	dd=this.ddT;
+	dd=this.scr.ddT;
 	r=this.getTreeRatio();
 	left=dd*i*r;
 	top=dd*j*r;
@@ -437,6 +401,44 @@ mxG.G.prototype.scrollTreeToShowFocus=function()
 	else if((right-width)>scrollLeft) e.scrollLeft=right-width;
 	if(top<scrollTop) e.scrollTop=top;
 	else if((bottom-height)>scrollTop) e.scrollTop=bottom-height;
+};
+mxG.G.prototype.afterDrawTree=function()
+{
+	// for customization
+	this.scrollTreeToShowFocus();
+};
+mxG.G.prototype.computeKTB=function()
+{
+	let grh=this.tcd.firstChild.getBoundingClientRect().height,h=this.td.offsetHeight;
+	return Math.ceil(h/grh);
+};
+mxG.G.prototype.drawTree=function()
+{
+	let nv,k,ko,km,f,e,tcd=this.tcd,kTB;
+	this.treeCheck=[];
+	f=!this.treeBlocks;
+	this.buildTreeBlocksContainer();
+	nv=Math.min(this.treeN,this.treeRowMax);
+	ko=Math.floor(this.cN.jTree/this.treeN);
+	km=this.treeBlocks.length;
+	// compute kTB
+	if(f&&(km>1)) tcd.appendChild(this.treeBlocks[0]);
+	kTB=(km>1)?this.computeKTB():1;
+	if(f&&(km>1)) tcd.replaceChildren();
+	// draw around current node only
+	for(k=ko-kTB;k<=ko+kTB;k++)
+	{
+		if((k>=0)&&this.treeBlocks[k])
+		{
+			this.treeBlocks[k].innerHTML="<title>"+this.local("Game tree")+"</title>";
+			this.scr.drawTreeBlock(k*this.treeN,nv);
+		}
+	}
+	// remove previously appended blocks to the tree box at the very last moment
+	tcd.replaceChildren();
+	// append blocks to the tree box
+	for(k=0;k<km;k++) tcd.appendChild(this.treeBlocks[k]);
+	this.afterDrawTree();
 };
 mxG.G.prototype.disableTree=function()
 {
@@ -460,8 +462,8 @@ mxG.G.prototype.isTreeDisabled=function()
 };
 mxG.G.prototype.setTree=function()
 {
-	// remember: remove previous treeDiv children at the very last moment
-	var k,km=this.rN.Kid.length,aN;
+	// remember: remove previous tree box children at the very last moment
+	let k,km=this.rN.Kid.length,aN;
 	this.tree=[];
 	this.treeRowMax=0;
 	this.treeColumnMax=0;
@@ -473,7 +475,7 @@ mxG.G.prototype.setTree=function()
 		this.buildTree(this.rN.Kid[k],0,this.treeRowMax);
 	}
 	this.treeM=this.treeColumnMax;
-	this.treeN=20; // assume no more than 20 visible lines in TreeDiv
+	this.treeN=8; // number of line of a block in the tree box
 	this.drawTree();
 	this.treeNodeOnFocus=this.cN;
 	this.hasToSetTree=0;
@@ -481,24 +483,24 @@ mxG.G.prototype.setTree=function()
 mxG.G.prototype.addVisibleTreeBlocksOnly=function(ko)
 {
 	// add only some blocks that are visible or nearly visible in tree content
-	// otherwise window resize or window may be very slow when big tree
+	// otherwise window resize and refreshing may be very slow when big tree
 	// ko is the indice of a visible block in this.treeBlocks
 	// assume ko block is at least half of the visible part of the tree
 	// thus add also some blocks around ko to try to miss nothing
 	// remove other blocks content to minimize the number of tree content elements
-	var k,km,nv,gr,jo,j,jm;
+	let k,km,nv,gr,jo,j,jm,kTB;
 	this.treeLock=1; // to avoid problems when scroll tree
 	km=this.treeBlocks.length;
 	nv=Math.min(this.treeN,this.treeRowMax);
+	kTB=(km>1)?this.computeKTB():1;
 	for(k=0;k<km;k++)
 	{
 		gr=this.treeBlocks[k];
-		if((k<(ko-1))||(k>(ko+1)))
+		if((k<(ko-kTB))||(k>(ko+kTB))) // empty block #k
 		{
-			// remove block #k
 			if(gr.firstChild)
 			{
-				while(gr.firstChild) gr.removeChild(gr.firstChild);
+				gr.replaceChildren();
 				jo=k*nv;
 				jm=jo+nv;
 				for(j=jo;j<jm;j++) this.treeCheck[j]=0;
@@ -506,8 +508,8 @@ mxG.G.prototype.addVisibleTreeBlocksOnly=function(ko)
 		}
 		else if(!gr.firstChild)
 		{
-			// add block #k
-			this.drawTreeBlock(k*nv,nv);
+			gr.innerHTML="<title>"+this.local("Game tree")+"</title>";
+			this.scr.drawTreeBlock(k*nv,nv); // add block #k
 		}
 		// else keep block #k as is
 	}
@@ -515,7 +517,7 @@ mxG.G.prototype.addVisibleTreeBlocksOnly=function(ko)
 };
 mxG.G.prototype.updateTreeEmphasis=function()
 {
-	var aN,i,j,e,good,treeNode,cx,cy,d,c,cls;
+	let aN,i,j,e,good,treeNode,cx,cy,d,c,cls;
 	if(this.treeNodeOnFocus==this.cN) return;
 	if(this.treeNodeOnFocus)
 	{
@@ -543,13 +545,13 @@ mxG.G.prototype.updateTreeEmphasis=function()
 		{
 			e=this.getE("TreeEmphasis"+this.idt(i,j));
 			if(e) e.parentNode.removeChild(e);
-			d=this.dT+2;
-			if(treeNode.tagName=="circle")
+			d=this.scr.dT+2;
+			if(treeNode.tagName.match(/circle/i))
 			{
 				cx=treeNode.getAttributeNS(null,"cx");
 				cy=treeNode.getAttributeNS(null,"cy");
 			}
-			else if(treeNode.tagName=="polygon")
+			else if(treeNode.tagName.match(/polygon/i))
 			{
 				points=treeNode.getAttributeNS(null,"points");
 				cx=parseFloat(points.replace(/^([0-9.]+).*$/,"$1"));
@@ -572,46 +574,55 @@ mxG.G.prototype.updateTreeEmphasis=function()
 	}
 	this.treeNodeOnFocus=aN;
 };
+mxG.G.prototype.doScrollTree=function(ev)
+{
+	if(this.treeLock||!this.treeBlocks) return;
+	let w=this.scr.ddT*this.getTreeRatio(),
+		st=this.td.scrollTop,
+		y=Math.floor(st/w),
+		n=this.treeN,
+		ko=Math.floor(y/n),k,km;
+	// add visible blocks around block #ko
+	this.addVisibleTreeBlocksOnly(ko);
+};
 mxG.G.prototype.updateTree=function()
 {
-	var ko;
 	if(this.hasToSetTree) this.setTree();
 	else
 	{
-		ko=Math.floor(this.cN.jTree/this.treeN);
+		let ko=Math.floor(this.cN.jTree/this.treeN);
 		this.addVisibleTreeBlocksOnly(ko);
 		this.updateTreeEmphasis();
 	}
 	this.afterDrawTree();
-	if(this.gBox||(this.hasC("Score")&&this.canPlaceScore)) this.disableTree();
-	else this.enableTree();
 };
 mxG.G.prototype.initTree=function()
 {
-	var k=this.k;
-	this.hasToSetTree=1;
-	this.dT=this.scr.d; // tree stone d = goban stone d (in svg coordinates)
-	this.ddT=this.dT*1.5;
+	let k=this.k;
 	this.td=this.getE("TreeDiv");
 	this.tcd=this.getE("TreeContentDiv");
-	this.td.addEventListener("scroll",function(ev){mxG.D[k].doScrollTree(ev);},false);
+	this.td.addEventListener("scroll",function(ev){mxG.D[k].doScrollTree(ev);});
+	this.td.addEventListener("keydown",function(ev){mxG.D[k].doKeydownTree(ev);});
+	this.scr.initTree();
+	this.hasToSetTree=1;
+	if(ResizeObserver) new ResizeObserver(function(){mxG.D[k].doScrollTree();}).observe(this.td);
 };
 mxG.G.prototype.createTree=function()
 {
-	var s="",a="";
+	let s="",a="";
 	this.canTreeFocus=this.setA("canTreeFocus",0,"bool");
 	this.hideTreeNumbering=this.setA("hideTreeNumbering",0,"bool");
 	this.markCommentOnTree=this.setA("markCommentOnTree",0,"bool");
-	this.treeLabelOn=this.setA("treeLabelOn",0,"bool");
-	if(this.treeLabelOn)
-	{
-		s+="<div class=\"mxTreeLabelDiv\" id=\""+this.n+"TreeLabelDiv\">";
-		s+=this.local("Game tree");
-		s+="</div>";
-	}
+	this.treeCaptionOn=this.setA("treeCaptionOn",0,"bool");
 	// add tabindex="0" to this div if it can be scrolled (for keyboard navigation)
 	a=this.canTreeFocus?" tabindex=\"0\"":"";
 	s+="<div class=\"mxTreeDiv\" id=\""+this.n+"TreeDiv\""+a+">";
+	if(this.treeCaptionOn)
+	{
+		s+="<div class=\"mxTreeCaptionDiv\" id=\""+this.n+"TreeCaptionDiv\">";
+		s+=this.local("Game tree");
+		s+="</div>";
+	}
 	s+="<div class=\"mxTreeContentDiv\" id=\""+this.n+"TreeContentDiv\">";
 	s+="</div>";
 	s+="</div>";

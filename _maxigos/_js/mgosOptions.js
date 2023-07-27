@@ -1,47 +1,48 @@
-// maxiGos v7 > mgosOption.js
-if(!mxG.G.prototype.createOption)
+// maxiGos v8 > mgosOptions.js
+if(!mxG.G.prototype.createOptions)
 {
 mxG.fr("Options","Options");
 mxG.fr("Options_Short","O");
 mxG.fr("Cancel","Annuler");
 mxG.fr("OK","OK");
-mxG.fr("Mark on last","Affichage d'une marque sur le dernier coup");
+// mxG.fr("Mark on last","Marque sur le dernier coup");
 mxG.fr("Indices","Affichage des coordonnées");
 mxG.fr("As in book","Comme dans les livres");
 mxG.fr("Numbering","Numérotation");
 mxG.fr("Marks and labels","Marques et étiquettes");
+mxG.fr("Mark on last","Marque sur le dernier coup");
 mxG.fr("Variation marks","Indication des variations");
 mxG.fr("Show variations of current move instead of next move","Affichage des alternatives au coup courant au lieu des variations du coup suivant");
 mxG.fr("In 3d","Affichage en 3d");
-mxG.fr("When clicking on the goban","Un click sur le goban :");
+mxG.fr("When clicking on the goban","Un click sur le goban");
 mxG.fr("place a variation","place une variation");
 mxG.fr("try to guess the next move","essaie de deviner le coup suivant");
 mxG.fr(" from "," à partir de ");
 mxG.fr(" with "," avec "); // cannot use just "with" because with is a keyword?
-mxG.fr("Loop time:","Temps pour l'affichage en boucle :");
+mxG.fr("Loop time","Temps pour l'affichage en boucle");
 mxG.fr("Animated stone","Pierres animées");
-mxG.fr("Animated stone time:","Temps pour l'animation des pierres :");
+mxG.fr("Animated stone time","Temps pour l'animation des pierres");
 mxG.en("Options_Short","O");
 mxG.G.prototype.getValidNum=function(v)
 {
-	var n=parseInt(v);
+	let n=parseInt(v);
 	if(isNaN(n)) return 1;
 	return n;
 };
 mxG.G.prototype.doChangeMarkOnLast=function()
 {
-	var e=this.getE("MarkOnLastOnCheckbox");
+	let e=this.getE("MarkOnLastOnCheckbox");
 	this.markOnLastOn=e.checked?1:0;
 	this.updateAll();
 };
 mxG.G.prototype.doChangeNumbering=function()
 {
-	var e=this.getE("NumberingOnCheckbox"),nf,nw;
+	let e=this.getE("NumberingOnCheckbox"),nf,nw;
 	nf=this.getE("NumFromTextInput");
 	nw=this.getE("NumWithTextInput");
 	if(nf) nf.disabled=!e.checked;
 	if(nw) nw.disabled=!e.checked;
-	if(this.optionBoxOn)
+	if(this.optionsBoxOn)
 	{
 		this.numberingOn=e.checked?1:0;
 		this.configNumberingOn=this.numberingOn;
@@ -51,41 +52,41 @@ mxG.G.prototype.doChangeNumbering=function()
 };
 mxG.G.prototype.doKeyupNumFrom=function()
 {
-	var e=this.getE("NumFromTextInput");
+	let e=this.getE("NumFromTextInput");
 	this.numFrom=this.getValidNum(e.value);
 	if(this.hasC("Tree")) this.hasToSetTree=1;
 	this.updateAll();
 };
 mxG.G.prototype.doKeyupNumWith=function()
 {
-	var e=this.getE("NumWithTextInput");
+	let e=this.getE("NumWithTextInput");
 	this.numWith=this.getValidNum(e.value);
 	if(this.hasC("Tree")) this.hasToSetTree=1;
 	this.updateAll();
 };
 mxG.G.prototype.doChangeMarksAndLabels=function()
 {
-	var e=this.getE("MarksAndLabelsOnCheckbox");
+	let e=this.getE("MarksAndLabelsOnCheckbox");
 	this.marksAndLabelsOn=e.checked?1:0;
 	this.updateAll();
 };
 mxG.G.prototype.doChangeAsInBook=function()
 {
-	var e=this.getE("AsInBookOnCheckbox");
+	let e=this.getE("AsInBookOnCheckbox");
 	this.asInBookOn=e.checked?1:0;
 	this.configAsInBookOn=this.asInBookOn;
 	this.updateAll();
 };
 mxG.G.prototype.doChangeIndices=function()
 {
-	var e=this.getE("IndicesOnCheckbox");
+	let e=this.getE("IndicesOnCheckbox");
 	this.indicesOn=e.checked?1:0;
 	this.configIndicesOn=this.indicesOn;
 	this.updateAll();
 };
 mxG.G.prototype.doChangeVariationMarks=function()
 {
-	var e=this.getE("VariationMarksOnCheckbox");
+	let e=this.getE("VariationMarksOnCheckbox");
 	this.variationMarksOn=e.checked?1:0;
 	this.configVariationMarksOn=this.variationMarksOn;
 	this.styleMode=this.variationMarksOn?this.styleMode&~2:this.styleMode|2;
@@ -93,7 +94,7 @@ mxG.G.prototype.doChangeVariationMarks=function()
 };
 mxG.G.prototype.doChangeSiblings=function()
 {
-	var e=this.getE("SiblingsOnCheckbox");
+	let e=this.getE("SiblingsOnCheckbox");
 	this.siblingsOn=e.checked?1:0;
 	this.configSiblingsOn=this.siblingsOn;
 	this.styleMode=this.siblingsOn?this.styleMode|1:this.styleMode&~1;
@@ -101,37 +102,37 @@ mxG.G.prototype.doChangeSiblings=function()
 };
 mxG.G.prototype.setIn3dClass=function()
 {
-	var e=this.getE("GlobalBoxDiv");
+	let e=this.getE("GlobalBoxDiv");
 	e.className=e.className.replace((this.in3dOn?"mxIn2d":"mxIn3d"),(this.in3dOn?"mxIn3d":"mxIn2d"));
 };
 mxG.G.prototype.doChangeIn3d=function()
 {
-	var e=this.getE("In3dOnCheckbox");
+	let e=this.getE("In3dOnCheckbox");
 	this.in3dOn=e.checked?1:0;
 	this.setIn3dClass();
 	this.updateAll();
 };
 mxG.G.prototype.doKeyupLoopTime=function()
 {
-	var e=this.getE("LoopTimeTextInput");
+	let e=this.getE("LoopTimeTextInput");
 	this.loopTime=this.getValidNum(e.value);
 	this.updateAll();
 };
 mxG.G.prototype.doChangeAnimatedStone=function()
 {
-	var e=this.getE("AnimatedStoneOnCheckbox");
+	let e=this.getE("AnimatedStoneOnCheckbox");
 	this.animatedStoneOn=e.checked?1:0;
 	this.updateAll();
 };
 mxG.G.prototype.doKeyupAnimatedStoneTime=function()
 {
-	var e=this.getE("AnimatedStoneTextInput");
+	let e=this.getE("AnimatedStoneTextInput");
 	this.animatedStoneTime=this.getValidNum(e.value);
 	this.updateAll();
 };
 mxG.G.prototype.doChangeCan=function()
 {
-	var e;
+	let e;
 	e=this.getE("CanVariationRadio");
 	this.canPlaceVariation=e.checked?1:0;
 	e=this.getE("CanGuessRadio");
@@ -148,9 +149,9 @@ mxG.G.prototype.doChangeScoreMethod=function(m)
 	if(z) this.scoreMethod=z;
 	this.updateAll();
 };
-mxG.G.prototype.doOptionOK=function()
+mxG.G.prototype.doOptionsOK=function()
 {
-	var e;
+	let e;
 	if(e=this.getE("MarkOnLastOnCheckbox")) this.markOnLastOn=e.checked?1:0;
 	if(e=this.getE("NumberingOnCheckbox")) {this.numberingOn=e.checked?1:0;this.configNumberingOn=this.numberingOn;if(this.hasC("Tree")) this.hasToSetTree=1;}
 	if(e=this.getE("NumFromTextInput")) {this.numFrom=this.getValidNum(e.value);if(this.hasC("Tree")) this.hasToSetTree=1;}
@@ -161,8 +162,8 @@ mxG.G.prototype.doOptionOK=function()
 	if(e=this.getE("VariationMarksOnCheckbox")) {this.variationMarksOn=e.checked?1:0;this.configVariationMarksOn=this.variationMarksOn;this.styleMode=this.variationMarksOn?this.styleMode&~2:this.styleMode|2;}
 	if(e=this.getE("SiblingsOnCheckbox")) {this.siblingsOn=e.checked?1:0;this.configSiblingsOn=this.siblingsOn;this.styleMode=this.siblingsOn?this.styleMode|1:this.styleMode&~1;}
 	if(e=this.getE("In3dOnCheckbox")) {this.in3dOn=e.checked?1:0;this.setIn3dClass();if(this.hasC("Tree")) this.hasToSetTree=1;}
-	if(e=this.getE("CanVariationRadio")) this.canPlaceVariation=e.checked?1:0;
-	if(e=this.getE("CanGuessRadio")) this.canPlaceGuess=e.checked?1:0;
+	if(e=this.getE("CanVariationRadio")) {this.canPlaceVariation=e.checked?1:0;this.hasToSetGoban=1;}
+	if(e=this.getE("CanGuessRadio")) {this.canPlaceGuess=e.checked?1:0;this.hasToSetGoban=1;}
 	if(e=this.getE("LoopTimeTextInput")) this.loopTime=this.getValidNum(e.value);
 	if(e=this.getE("AnimatedStoneOnCheckbox")) this.animatedStoneOn=e.checked?1:0;
 	if(e=this.getE("AnimatedStoneTimeTextInput")) this.animatedStoneTime=this.getValidNum(e.value);
@@ -175,195 +176,161 @@ mxG.G.prototype.doOptionOK=function()
 		if(e=this.getE("EstimateScoreMethodRadio")) if(e.checked) z="estimate";
 		if(z) this.scoreMethod=z;
 	}
-	this.hideGBox("ShowOption");
+	this.updateAll();
 };
-mxG.G.prototype.buildOption=function()
+mxG.G.prototype.buildOptions=function()
 {
-	var s="",c;
-	s+="<div class=\"mxP\">";
+	let s="",a="";
+	if(!this.optionsBoxOn) s+="<h1 tabindex=\"0\">"+this.local("Options")+"</h1>";
 	if(!this.hideMarkOnLastOn)
 	{
-		s+="<div><label><input type=\"checkbox\"";
-		if(this.optionBoxOn) s+=" onchange=\""+this.g+".doChangeMarkOnLast()\"";
-		s+=" id=\""+this.n+"MarkOnLastOnCheckbox\">";
-		s+=this.local("Mark on last")+"</label></div>";
+		a+="<label><input type=\"checkbox\"";
+		if(this.optionsBoxOn) a+=" onchange=\""+this.g+".doChangeMarkOnLast()\"";
+		a+=" id=\""+this.n+"MarkOnLastOnCheckbox\">";
+		a+=this.local("Mark on last")+"</label>";
 	}
 	if(!this.hideNumberingOn)
 	{
-		s+="<div>";
-		s+="<label>";
-		s+="<input type=\"checkbox\"";
-		s+=" onchange=\""+this.g+".doChangeNumbering()\"";
-		s+=" id=\""+this.n+"NumberingOnCheckbox\">";
-		s+=this.local("Numbering");
-		s+=" <span class=\"mxNumFromTextSpan\">";
-		s+=mxG.Z[this.lang]["•"]?"":("<label for=\""+this.n+"NumFromTextInput\">"+this.local(" from ")+"</label>");
-		s+=" <input class=\"mxNumFromTextInput\" type=\"text\" id=\""+this.n+"NumFromTextInput\" size=\"3\" maxlength=\"3\" ";
-		s+=this.optionBoxOn?"onkeyup=\""+this.g+".doKeyupNumFrom()\">":">";
-		s+="</span>";
-		s+=" <span class=\"mxNumWithTextSpan\">";
-		s+=mxG.Z[this.lang]["•"]?("<label for=\""+this.n+"NumFromTextInput\">"+this.local(" from ")+"</label>"):("<label for=\""+this.n+"NumWithTextInput\">"+this.local(" with ")+"</label>");
-		s+=" <input class=\"mxNumWithTextInput\" type=\"text\" id=\""+this.n+"NumWithTextInput\" size=\"3\" maxlength=\"3\" ";
-		s+=this.optionBoxOn?"onkeyup=\""+this.g+".doKeyupNumWith()\">":">";
-		s+=mxG.Z[this.lang]["•"]?("<label for=\""+this.n+"NumWithTextInput\">"+this.local(" with ")+"</label>"):"";
-		s+="</span>";
-		s+="</label>";
-		s+="</div>";
+		a+="<label>";
+		a+="<input type=\"checkbox\" class=\"mxNumberingOnCheckbox\"";
+		a+=" onchange=\""+this.g+".doChangeNumbering()\"";
+		a+=" id=\""+this.n+"NumberingOnCheckbox\">";
+		a+=this.local("Numbering");
+		a+=" <span class=\"mxNumFromTextSpan\">";
+		a+=mxG.Z[this.lang]["•"]?"":("<label for=\""+this.n+"NumFromTextInput\">"+this.local(" from ")+"</label>");
+		a+=" <input class=\"mxNumFromTextInput\" type=\"text\" id=\""+this.n+"NumFromTextInput\" size=\"3\" maxlength=\"3\" ";
+		a+=this.optionsBoxOn?"onkeyup=\""+this.g+".doKeyupNumFrom()\">":">";
+		a+="</span>";
+		a+=" <span class=\"mxNumWithTextSpan\">";
+		a+=mxG.Z[this.lang]["•"]?("<label for=\""+this.n+"NumFromTextInput\">"+this.local(" from ")+"</label>"):("<label for=\""+this.n+"NumWithTextInput\">"+this.local(" with ")+"</label>");
+		a+=" <input class=\"mxNumWithTextInput\" type=\"text\" id=\""+this.n+"NumWithTextInput\" size=\"3\" maxlength=\"3\" ";
+		a+=this.optionsBoxOn?"onkeyup=\""+this.g+".doKeyupNumWith()\">":">";
+		a+=mxG.Z[this.lang]["•"]?("<label for=\""+this.n+"NumWithTextInput\">"+this.local(" with ")+"</label>"):"";
+		a+="</span>";
+		a+="</label>";
 	}
 	if(!this.hideMarksAndLabelsOn)
 	{
-		s+="<div>";
-		s+="<label><input type=\"checkbox\"";
-		if(this.optionBoxOn) s+=" onchange=\""+this.g+".doChangeMarksAndLabels()\"";
-		s+=" id=\""+this.n+"MarksAndLabelsOnCheckbox\">";
-		s+=this.local("Marks and labels")+"</label>";
-		s+="</div>";
+		a+="<label><input type=\"checkbox\"";
+		if(this.optionsBoxOn) a+=" onchange=\""+this.g+".doChangeMarksAndLabels()\"";
+		a+=" id=\""+this.n+"MarksAndLabelsOnCheckbox\">";
+		a+=this.local("Marks and labels")+"</label>";
 	}
 	if(!this.hideAsInBookOn)
 	{
-		s+="<div>";
-		s+="<label><input type=\"checkbox\"";
-		if(this.optionBoxOn) s+=" onchange=\""+this.g+".doChangeAsInBook()\"";
-		s+=" id=\""+this.n+"AsInBookOnCheckbox\">";
-		s+=this.local("As in book")+"</label>";
-		s+="</div>";
+		a+="<label><input type=\"checkbox\"";
+		if(this.optionsBoxOn) a+=" onchange=\""+this.g+".doChangeAsInBook()\"";
+		a+=" id=\""+this.n+"AsInBookOnCheckbox\">";
+		a+=this.local("As in book")+"</label>";
 	}
 	if(!this.hideIndicesOn)
 	{
-		s+="<div>";
-		s+="<label><input type=\"checkbox\"";
-		if(this.optionBoxOn) s+=" onchange=\""+this.g+".doChangeIndices()\"";
-		s+=" id=\""+this.n+"IndicesOnCheckbox\">";
-		s+=this.local("Indices")+"</label>";
-		s+="</div>";
+		a+="<label><input type=\"checkbox\"";
+		if(this.optionsBoxOn) a+=" onchange=\""+this.g+".doChangeIndices()\"";
+		a+=" id=\""+this.n+"IndicesOnCheckbox\">";
+		a+=this.local("Indices")+"</label>";
 	}
 	if(this.hasC("Variation")&&!this.hideVariationMarksOn)
 	{
-		s+="<div>";
-		s+="<label><input type=\"checkbox\"";
-		if(this.optionBoxOn) s+=" onchange=\""+this.g+".doChangeVariationMarks()\"";
-		s+=" id=\""+this.n+"VariationMarksOnCheckbox\">";
-		s+=this.local("Variation marks")+"</label>";
-		s+="</div>";
+		a+="<label><input type=\"checkbox\"";
+		if(this.optionsBoxOn) a+=" onchange=\""+this.g+".doChangeVariationMarks()\"";
+		a+=" id=\""+this.n+"VariationMarksOnCheckbox\">";
+		a+=this.local("Variation marks")+"</label>";
 	}
 	if(this.hasC("Variation")&&!this.hideSiblingsOn)
 	{
-		s+="<div>";
-		s+="<label><input type=\"checkbox\"";
-		if(this.optionBoxOn) s+=" onchange=\""+this.g+".doChangeSiblings()\"";
-		s+=" id=\""+this.n+"SiblingsOnCheckbox\">";
-		s+=this.local("Show variations of current move instead of next move")+"</label>";
-		s+="</div>";
+		a+="<label><input type=\"checkbox\"";
+		if(this.optionsBoxOn) a+=" onchange=\""+this.g+".doChangeSiblings()\"";
+		a+=" id=\""+this.n+"SiblingsOnCheckbox\">";
+		a+=this.local("Show variations of current move instead of next move")+"</label>";
 	}
 	if(!this.hideIn3dOn)
 	{
-		s+="<div>";
-		s+="<label><input type=\"checkbox\"";
-		if(this.optionBoxOn) s+=" onchange=\""+this.g+".doChangeIn3d()\"";
-		s+=" id=\""+this.n+"In3dOnCheckbox\">";
-		s+=this.local("In 3d")+"</label>";
-		s+="</div>";
+		a+="<label><input type=\"checkbox\"";
+		if(this.optionsBoxOn) a+=" onchange=\""+this.g+".doChangeIn3d()\"";
+		a+=" id=\""+this.n+"In3dOnCheckbox\">";
+		a+=this.local("In 3d")+"</label>";
 	}
-	s+="</div>";
-	c=0;
-	if(this.hasC("Variation")&&!this.hideCanVariation) c++;
-	if(this.hasC("Guess")&&!this.hideCanGuess) c++;
-	if(c>1)
+	if(a) s+="<p>"+a+"</p>";
+	if((this.hasC("Variation")&&!this.hideCanVariation)
+		&&(this.hasC("Guess")&&!this.hideCanGuess))
 	{
-		s+="<div class=\"mxP\">";
-		s+="<div>"+this.local("When clicking on the goban")+"</div>";
+		s+="<p>";
+		s+=this.local("When clicking on the goban")+"\n";
 		if(this.hasC("Variation")&&!this.hideCanVariation)
 		{
-			s+="<div>";
 			s+="<label>";
 			s+="<input name=\""+this.n+"ChangeCanRadio\" value=\"1\" type=\"radio\"";
-			if(this.optionBoxOn) s+=" onchange=\""+this.g+".doChangeCan()\"";
+			if(this.optionsBoxOn) s+=" onchange=\""+this.g+".doChangeCan()\"";
 			s+=" id=\""+this.n+"CanVariationRadio\">";
 			s+=this.local("place a variation")+"</label>";
-			s+="</div>";
 		}
 		if(this.hasC("Guess")&&!this.hideCanGuess)
 		{
-			s+="<div>";
 			s+="<label>";
 			s+="<input name=\""+this.n+"ChangeCanRadio\" value=\"2\" type=\"radio\"";
-			if(this.optionBoxOn) s+=" onchange=\""+this.g+".doChangeCan()\"";
+			if(this.optionsBoxOn) s+=" onchange=\""+this.g+".doChangeCan()\"";
 			s+=" id=\""+this.n+"CanGuessRadio\">";
 			s+=this.local("try to guess the next move")+"</label>";
-			s+="</div>";
 		}
-		s+="</div>";
+		s+="</p>";
 	}
-	s+="<div class=\"mxP\">";
+	a="";
 	if(this.hasC("Loop")&&!this.hideLoopTime)
 	{
-		s+="<div>";
-		s+="<label>"+this.local("Loop time:");
-		s+=" <input type=\"text\" size=\"9\" maxlength=\"9\"";
-		if(this.optionBoxOn) s+=" onkeyup=\""+this.g+".doKeyupLoopTime()\"";
-		s+=" id=\""+this.n+"LoopTimeTextInput\" class=\"mxLoopTimeTextInput\"";
-		s+="</label>";
-		s+="</div>";
+		a+="<label>"+this.local("Loop time");
+		a+=" <input type=\"text\" size=\"9\" maxlength=\"9\"";
+		if(this.optionsBoxOn) a+=" onkeyup=\""+this.g+".doKeyupLoopTime()\"";
+		a+=" id=\""+this.n+"LoopTimeTextInput\" class=\"mxLoopTimeTextInput\">";
+		a+="</label>";
 	}
 	if(this.hasC("AnimatedStone")&&!this.hideAnimatedStoneOn)
 	{
-		s+="<div>";
-		s+="<label><input type=\"checkbox\"";
-		if(this.optionBoxOn) s+=" onchange=\""+this.g+".doChangeAnimatedStone()\"";
-		s+=" id=\""+this.n+"AnimatedStoneOnCheckbox\">";
-		s+=this.local("Animated stone")+"</label>";
-		s+="</div>";
+		a+="<label><input type=\"checkbox\"";
+		if(this.optionsBoxOn) a+=" onchange=\""+this.g+".doChangeAnimatedStone()\"";
+		a+=" id=\""+this.n+"AnimatedStoneOnCheckbox\">";
+		a+=this.local("Animated stone")+"</label>";
 	}
 	if(this.hasC("AnimatedStone")&&!this.hideAnimatedStoneTime)
 	{
-		s+="<div>";
-		s+="<label>"+this.local("Animated stone time:");
-		s+=" <input class=\"mxAnimatedStoneTimeTextInput\" type=\"text\" size=\"9\" maxlength=\"9\" ";
-		if(this.optionBoxOn) s+=" onkeyup=\""+this.g+".doKeyupAnimatedStoneTime()\"";
-		s+=" id=\""+this.n+"AnimatedStoneTimeTextInput\" class=\"mxAnimatedStoneTimeTextInput\">";
-		s+="</label>";
-		s+="</div>";
+		a+="<label>"+this.local("Animated stone time");
+		a+=" <input type=\"text\" size=\"9\" maxlength=\"9\" ";
+		if(this.optionsBoxOn) a+=" onkeyup=\""+this.g+".doKeyupAnimatedStoneTime()\"";
+		a+=" id=\""+this.n+"AnimatedStoneTimeTextInput\" class=\"mxAnimatedStoneTimeTextInput\">";
+		a+="</label>";
 	}
+	if(a) s+="<p>"+a+"</p>";
 	if(this.hasC("Score")&&!this.hideScoreMethod)
 	{
-		s+="<div class=\"mxP\">";
-		s+="<div>"+this.local("Score method:")+"</div>";
-		s+="<div>";
+		s+="<p>";
+		s+=this.local("Score method")+"\n";
 		s+="<label>";
 		s+="<input name=\""+this.n+"ChangeScoreMethodRadio\" value=\"1\" type=\"radio\"";
-		if(this.optionBoxOn) s+=" onchange=\""+this.g+".doChangeScoreMethod()\"";
+		if(this.optionsBoxOn) s+=" onchange=\""+this.g+".doChangeScoreMethod()\"";
 		s+=" id=\""+this.n+"TrivialScoreMethodRadio\">";
 		s+=this.local("trivial")+"</label>";
-		s+="</div>";
-		s+="<div>";
 		s+="<label>";
 		s+="<input name=\""+this.n+"ChangeScoreMethodRadio\" value=\"2\" type=\"radio\"";
-		if(this.optionBoxOn) s+=" onchange=\""+this.g+".doChangeScoreMethod()\"";
+		if(this.optionsBoxOn) s+=" onchange=\""+this.g+".doChangeScoreMethod()\"";
 		s+=" id=\""+this.n+"CountingScoreMethodRadio\">";
 		s+=this.local("counting")+"</label>";
-		s+="</div>";
-		s+="<div>";
 		s+="<label>";
 		s+="<input name=\""+this.n+"ChangeScoreMethodRadio\" value=\"3\" type=\"radio\"";
-		if(this.optionBoxOn) s+=" onchange=\""+this.g+".doChangeScoreMethod()\"";
+		if(this.optionsBoxOn) s+=" onchange=\""+this.g+".doChangeScoreMethod()\"";
 		s+=" id=\""+this.n+"PropagateScoreMethodRadio\">";
 		s+=this.local("propagate")+"</label>";
-		s+="</div>";
-		s+="<div>";
 		s+="<label>";
 		s+="<input name=\""+this.n+"ChangeScoreMethodRadio\" value=\"4\" type=\"radio\"";
-		if(this.optionBoxOn) s+=" onchange=\""+this.g+".doChangeScoreMethod()\"";
+		if(this.optionsBoxOn) s+=" onchange=\""+this.g+".doChangeScoreMethod()\"";
 		s+=" id=\""+this.n+"EstimateScoreMethodRadio\">";
 		s+=this.local("estimate")+"</label>";
-		s+="</div>";
-		s+="</div>";
+		s+="</p>";
 	}
-	s+="</div>";
 	return s;
 };
-mxG.G.prototype.setInputOption=function()
+mxG.G.prototype.setInputOptions=function()
 {
-	var e;
+	let e;
 	if(e=this.getE("MarkOnLastOnCheckbox")) e.checked=(this.markOnLastOn==1);
 	if(e=this.getE("NumberingOnCheckbox")) e.checked=(this.numberingOn>=1);
 	if(e=this.getE("NumFromTextInput")) {e.value=this.numFrom;e.disabled=!this.numberingOn;}
@@ -392,63 +359,33 @@ mxG.G.prototype.setInputOption=function()
 	if(e=this.getE("AnimatedStoneTimeTextInput"))
 		e.value=(this.animatedStoneTime?this.animatedStoneTime:this.loopTime?this.loopTime:1000);
 };
-mxG.G.prototype.doOption=function()
+mxG.G.prototype.doOptions=function()
 {
-	var s;
-	if(this.gBox=="ShowOption") {this.hideGBox("ShowOption");return;}
-	if(!this.getE("ShowOptionDiv"))
-	{
-		s="<div class=\"mxShowContentDiv\" tabindex=\"0\">";
-		s+="<h1>"+this.local("Options")+"</h1>";
-		s+=this.buildOption();
-		s+="</div>";
-		s+="<div class=\"mxOKDiv\">";
-		s+="<button type=\"button\" onclick=\""+this.g+".doOptionOK()\"><span>"+this.local("OK")+"</span></button>";
-		s+="<button type=\"button\" onclick=\""+this.g+".hideGBox('ShowOption')\"><span>"+this.local("Cancel")+"</span></button>";
-		s+="</div>";
-		this.createGBox("ShowOption").innerHTML=s;
-	}
-	this.setInputOption();
-	this.showGBox("ShowOption");
+	let btns=[{n:"OK",a:"Options"},{n:"Cancel"}];
+	this.doDialog("EditOptions",this.buildOptions(),btns);
+	this.setInputOptions();
 };
-mxG.G.prototype.updateOption=function()
+mxG.G.prototype.updateOptions=function()
 {
-	if(this.optionBoxOn) this.setInputOption();
-	if(this.getE("OptionBtn"))
-	{
-		if(this.gBox=="ShowOption") this.selectBtn("Option");
-		else this.unselectBtn("Option");
-	}
+	if(this.optionsBoxOn) this.setInputOptions();
 };
-mxG.G.prototype.initOption=function()
+mxG.G.prototype.initOptions=function()
 {
-	if(this.optionBtnOn)
-		this.addBtn(this.getE("OptionDiv"),{n:"Option",v:this.alias("Options","optionAlias")});
+	if(this.optionsBtnOn)
+		this.addBtn(this.getE("OptionsDiv"),{n:"Options",v:this.alias("Options","optionsAlias")});
 };
-mxG.G.prototype.createOption=function()
+mxG.G.prototype.createOptions=function()
 {
-	var s="";
-	this.optionBoxOn=this.setA("optionBoxOn",0,"bool");
-	this.optionBtnOn=this.setA("optionBtnOn",0,"bool");
-	this.optionAlias=this.setA("optionAlias",null,"string");
-	this.hideCanGuess=this.setA("hideCanGuess",0,"bool");
-	this.hideCanVariation=this.setA("hideCanVariation",0,"bool");
-	this.hideMarkOnLastOn=this.setA("hideMarkOnLastOn",0,"bool");
-	this.hideNumberingOn=this.setA("hideNumberingOn",0,"bool");
-	this.hideMarksAndLabelsOn=this.setA("hideMarksAndLabelsOn",0,"bool");
-	this.hideAsInBookOn=this.setA("hideAsInBookOn",0,"bool");
-	this.hideIndicesOn=this.setA("hideIndicesOn",0,"bool");
-	this.hideVariationMarksOn=this.setA("hideVariationMarksOn",0,"bool");
-	this.hideSiblingsOn=this.setA("hideSiblingsOn",0,"bool");
-	this.hideIn3dOn=this.setA("hideIn3dOn",0,"bool");
-	this.hideLoopTime=this.setA("hideLoopTime",0,"bool");
-	this.hideAnimatedStoneOn=this.setA("hideAnimatedStoneOn",0,"bool");
-	this.hideAnimatedStoneTime=this.setA("hideAnimatedStoneTime",0,"bool");
-	this.hideScoreMethod=this.setA("hideScoreMethod",0,"bool");
-	if(this.optionBoxOn||this.optionBtnOn)
+	let s="";
+	this.optionsBoxOn=this.setA("optionsBoxOn",0,"bool");
+	this.optionsBtnOn=this.setA("optionsBtnOn",0,"bool");
+	this.optionsAlias=this.setA("optionsAlias",null,"string");
+	this.hideInOptions=this.setA("hideInOptions",new Set(),"set");
+	for(let k of this.hideInOptions) this["hide"+k]=1;
+	if(this.optionsBoxOn||this.optionsBtnOn)
 	{
-		s+="<div class=\"mxOptionDiv\" id=\""+this.n+"OptionDiv\">";
-		if(!this.optionBtnOn) s+=this.buildOption();
+		s+="<div class=\"mxOptionsDiv\" id=\""+this.n+"OptionsDiv\">";
+		if(!this.optionsBtnOn) s+=this.buildOptions();
 		s+="</div>";
 	}
 	return s;

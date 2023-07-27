@@ -18,14 +18,13 @@ include "../../../_js/mgosVersion.js";
 mxG.K++;
 mxG.B=["Comment","Goban","Solve","Pass","Version"];
 mxG.D[mxG.K]=new mxG.G(mxG.K,mxG.B);
-mxG.D[mxG.K].theme="<?php echo $theme ?>";
-mxG.D[mxG.K].config="<?php echo $config ?>";
+mxG.D[mxG.K].theme="<?=$theme?>";
+mxG.D[mxG.K].config="<?=$config?>";
 <?php
 include "../../_php/insertCss.php";
 ?>
 // general
-mxG.D[mxG.K].a.in3dOn=1; // (0,1) default 1
-mxG.D[mxG.K].a.htmlParenthesis=1; // (0,1) default 0
+mxG.D[mxG.K].a.in3dOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.allowStringAsSource=1; // (0,1) default 1
 mxG.D[mxG.K].a.allowFileAsSource=1; // (0,1) default 1
 // mxG.D[mxG.K].a.sourceFilter=""; // (str) default ""
@@ -50,7 +49,8 @@ mxG.D[mxG.K].a.eraseGridUnder=1; // (0,1) default 0
 // Pass
 mxG.D[mxG.K].a.passBtnOn=0; // (0,1) default 0
 mxG.D[mxG.K].a.canPassOnlyIfPassInSgf=0; // (0,1) default 0
-// solve
-mxG.D[mxG.K].a.canPlaceSolve=1; // (0,1) default 1
+// Solve
+mxG.D[mxG.K].a.canPlaceSolve=1; // (0,1) default 0
 mxG.D[mxG.K].a.solves="Retry,Undo,Hint,Pass"; // (list) default "Retry,Undo"
+// Start
 mxG.D[mxG.K].start();

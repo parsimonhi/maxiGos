@@ -2,6 +2,7 @@
 // output is plain text
 header("Content-type:text/plain");
 include_once "../../_sample/_php/lib.php";
+include_once "../../_php/version.php";
 
 function makeJsForTheme($theme,$configs)
 {
@@ -9,8 +10,7 @@ function makeJsForTheme($theme,$configs)
 	foreach($configs as $config)
 	{
 		echo " ".$config." config: ";
-		if (makeJs($config,$theme))
-			echo "done!\n";
+		if (makeJs($config,$theme)) echo "done!\n";
 		else echo "fail!\n";
 	}
 }
@@ -27,7 +27,7 @@ if (isConvenientServer())
 	makeJsForTheme($theme,$configs);
 
 	$theme="Fm";
-	$configs=["Game"];
+	$configs=["Diagram","Game","Problem"];
 	makeJsForTheme($theme,$configs);
 
 	$theme="Forum";

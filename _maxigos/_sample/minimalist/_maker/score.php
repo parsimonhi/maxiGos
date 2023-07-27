@@ -12,24 +12,24 @@ include "../../../_js/mgos.js";
 include "../../../_js/mgosGoban.js";
 include "../../../_js/mgosNavigation.js";
 include "../../../_js/mgosVariation.js";
-include "../../../_js/mgosOption.js";
+include "../../../_js/mgosOptions.js";
 include "../../../_js/mgosCut.js";
+include "../../../_js/mgosImage.js";
 include "../../../_js/mgosSgf.js";
 include "../../../_js/mgosScore.js";
 include "../../../_js/mgosComment.js";
 include "../../../_js/mgosVersion.js";
 ?>
 mxG.K++;
-mxG.B=[["Goban"],"Navigation","Variation",["Option","Sgf","Score","Cut"],"Comment","Version"];
+mxG.B=["Goban","Navigation","Variation",["Options","Sgf","Score","Cut","Image"],"Comment","Version"];
 mxG.D[mxG.K]=new mxG.G(mxG.K,mxG.B);
-mxG.D[mxG.K].theme="<?php echo $theme ?>";
-mxG.D[mxG.K].config="<?php echo $config ?>";
+mxG.D[mxG.K].theme="<?=$theme?>";
+mxG.D[mxG.K].config="<?=$config?>";
 <?php
 include "../../_php/insertCss.php";
 ?>
 // general
-mxG.D[mxG.K].a.in3dOn=0; // (0,1) default 1
-mxG.D[mxG.K].a.htmlParenthesis=1; // (0,1) default 0
+mxG.D[mxG.K].a.in3dOn=0; // (0,1) default 0
 mxG.D[mxG.K].a.allowStringAsSource=1; // (0,1) default 1
 mxG.D[mxG.K].a.allowFileAsSource=1; // (0,1) default 1
 // mxG.D[mxG.K].a.sourceFilter=""; // (str) default ""
@@ -53,18 +53,12 @@ mxG.D[mxG.K].a.oldJapaneseIndicesOn=0; // (0,1) default 0 (require indicesOn=1)
 mxG.D[mxG.K].a.eraseGridUnder=1; // (0,1) default 0
 // Cut
 mxG.D[mxG.K].a.cutBtnOn=1; // (0,1) default 0
-// Navigation
-mxG.D[mxG.K].a.navigations="First,TenPred,Pred,Next,TenNext,Last"; // (list) default "First,TenPred,Pred,Next,TenNext,Last"
-// Option
-mxG.D[mxG.K].a.optionBtnOn=1; // (0,1) default 0
-mxG.D[mxG.K].a.hideIn3dOn=1; // (0,1) default 0
-mxG.D[mxG.K].a.hideIndicesOn=1; // (0,1) default 0
-mxG.D[mxG.K].a.hideMarkOnLastOn=1; // (0,1) default 0
-mxG.D[mxG.K].a.hideNumberingOn=1; // (0,1) default 0
-mxG.D[mxG.K].a.hideMarksAndLabelsOn=1; // (0,1) default 0
-mxG.D[mxG.K].a.hideAsInBookOn=1; // (0,1) default 0
-mxG.D[mxG.K].a.hideVariationMarksOn=1; // (0,1) default 0
-mxG.D[mxG.K].a.hideSiblingsOn=1; // (0,1) default 0
+// Image
+mxG.D[mxG.K].a.pngBtnOn=1; // (0,1) default 0
+mxG.D[mxG.K].a.svgBtnOn=1; // (0,1) default 0
+// options
+mxG.D[mxG.K].a.optionsBtnOn=1; // (0,1) default 0
+mxG.D[mxG.K].a.hideInOptions="In3dOn,IndicesOn,MarkOnLastOn,NumberingOn,MarksAndLabelsOn,AsInBookOn,VariationMarksOn,SiblingsOn"; // (set) default ""
 // Score
 mxG.D[mxG.K].a.ephemeralScore=1; // (0,1) default 0
 mxG.D[mxG.K].a.scoreBtnOn=1; // (0,1) default 0

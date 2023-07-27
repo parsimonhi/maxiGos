@@ -12,25 +12,29 @@ include "../../../_js/mgos.js";
 include "../../../_js/mgosHeader.js";
 include "../../../_js/mgosGoban.js";
 include "../../../_js/mgosNavigation.js";
+include "../../../_js/mgosLoop.js";
 include "../../../_js/mgosVariation.js";
 include "../../../_js/mgosGuess.js";
 include "../../../_js/mgosVersion.js";
 ?>
 mxG.K++;
-mxG.B=["Header","Goban","Navigation","Variation","Guess","Version"];
+mxG.B=["Header","Goban","Navigation","Loop","Variation","Guess","Version"];
 mxG.D[mxG.K]=new mxG.G(mxG.K,mxG.B);
-mxG.D[mxG.K].theme="<?php echo $theme ?>";
-mxG.D[mxG.K].config="<?php echo $config ?>";
+mxG.D[mxG.K].theme="<?=$theme?>";
+mxG.D[mxG.K].config="<?=$config?>";
 <?php
 include "../../_php/insertCss.php";
 ?>
 // general
-mxG.D[mxG.K].a.in3dOn=0; // (0,1) default 1
-mxG.D[mxG.K].a.htmlParenthesis=1; // (0,1) default 0
+mxG.D[mxG.K].a.in3dOn=0; // (0,1) default 0
 mxG.D[mxG.K].a.allowStringAsSource=1; // (0,1) default 1
 mxG.D[mxG.K].a.allowFileAsSource=1; // (0,1) default 1
 // mxG.D[mxG.K].a.sourceFilter=""; // (str) default ""
 mxG.D[mxG.K].a.initMethod="last"; // ("first","loop","last") default "first"
+// guessing variations is not very interesting in general
+// so one chooses to ignore them here
+// since canPlaceGuess=1, canPlaceVariation=0 and no Options component
+mxG.D[mxG.K].a.sgfLoadMainOnly=1; // (0,1) default 0
 // Goban
 mxG.D[mxG.K].a.pointsNumMax=19; // (positive integer) default 0
 mxG.D[mxG.K].a.stoneShadowOn=0; // (0,1) default 0 (require in3dOn=1)
@@ -53,11 +57,10 @@ mxG.D[mxG.K].a.guessBoxOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.canPlaceGuess=1; // (0,1) default 0
 // Header
 mxG.D[mxG.K].a.headerBoxOn=1; // (0,1) default 0
-mxG.D[mxG.K].a.headerBtnOn=0; // (0,1) default 0
-mxG.D[mxG.K].a.concatNumOfMovesToResult=1; // (0,1) default 0
-mxG.D[mxG.K].a.hideNumOfMovesLabel=1; // (0,1) default 0
+mxG.D[mxG.K].a.hideInHeader="NumOfMovesLabel"; // (set) default ""
+mxG.D[mxG.K].a.concatInHeader="NumOfMovesToResult"; // (set) default ""
 // Navigation
-mxG.D[mxG.K].a.navigations="First,TenPred,Pred,Loop,Next,TenNext,Last"; // (list) default "First,TenPred,Pred,Next,TenNext,Last"
+mxG.D[mxG.K].a.navigations="First,TenPred,Pred,Loop,Next,TenNext,Last"; // (set) default "First,TenPred,Pred,Next,TenNext,Last"
 // Variation
 mxG.D[mxG.K].a.variationMarksOn=1; // (0,1,null) default 0
 mxG.D[mxG.K].a.siblingsOn=0; // (0,1,null) default 0

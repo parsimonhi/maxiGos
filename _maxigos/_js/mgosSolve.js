@@ -1,4 +1,4 @@
-// maxiGos v7 > mgosSolve.js
+// maxiGos v8 > mgosSolve.js
 if(!mxG.G.prototype.createSolve)
 {
 mxG.fr("Retry","Recommencer tout");
@@ -18,9 +18,34 @@ mxG.en("_failMessage_","Fail!");
 mxG.en("_forbiddenMessage_","Forbidden!");
 mxG.en("_offpathMessage_","Off path!");
 mxG.en("_endMessage_","End!");
+
+// mxG.S section
+mxG.S.prototype.makeRetryBtn=function()
+{
+	let s="<path d=\"M0 64L64 64L32 92L0 64ZM24 65A50 50 0 1 1 49 107L57 94A34 34 0 1 0 40 65Z\"/>";
+	return this.makeBtnIcon(s,"Retry");
+};
+mxG.S.prototype.makeUndoBtn=function()
+{
+	let s="<path d=\"M20,105H108C114.6,105 120,99 120,93V44C120,37 114,32 108,32H40V8L8,40 40,72V48H96C100,48 104,51 104,56V81C104,85 100,89 96,89H20 Z\"/>";
+	return this.makeBtnIcon(s,"Undo");
+};
+mxG.S.prototype.makeHintBtn=function()
+{
+	let s="<rect x=\"54\" y=\"10\" width=\"20\" height=\"64\" rx=\"5\" ry=\"5\"/>";
+	s+="<circle cx=\"64\" cy=\"104\" r=\"14\"/>";
+	return this.makeBtnIcon(s,"Hint");
+};
+mxG.S.prototype.makePassBtn=function()
+{
+	let s="<path fill-rule=\"evenodd\" d=\"M64,10L118,64L64,118L10,64ZM64,35L93,64L64,93L35,64Z\"/>";
+	return this.makeBtnIcon(s,"Pass");
+};
+
+// mxG.G section
 mxG.G.prototype.setSFocus=function(b)
 {
-	var a,e,g;
+	let a,e,g;
 	a=document.activeElement;
 	g=this.ig;
 	if(g==a) return;
@@ -36,7 +61,7 @@ mxG.G.prototype.hasMessage=function(s)
 };
 mxG.G.prototype.doUndo=function()
 {
-	var aN=this.cN;
+	let aN=this.cN;
 	// if something is strange (case of aN with no move)
 	// simplify and go back to the beginning
 	if((aN.Dad==this.rN)||(!aN.P["B"]&&!aN.P["W"])) {this.doRetry();return;}
@@ -83,10 +108,10 @@ mxG.G.prototype.doHint=function()
 };
 mxG.G.prototype.addExtraPlay=function(nat,x,y,tenuki)
 {
-	var aN,v=this.xy2s(x,y),bN=this.kidOnFocus(this.cN),cN;
+	let aN,v=this.xy2s(x,y),bN=this.kidOnFocus(this.cN),cN;
 	if(bN)
 	{
-		this.zN=bN.Clone(null);
+		this.zN=bN.clone(null);
 	}
 	if(tenuki||!bN)
 	{
@@ -110,13 +135,13 @@ mxG.G.prototype.addExtraPlay=function(nat,x,y,tenuki)
 };
 mxG.G.prototype.updateVirtualComment=function(s)
 {
-	var c,span=s.ucFirst()+"Span";
-	c="<span class=\"mx"+span+"\" id=\""+this.n+span+"\">"+this.local("_"+s+"Message_")+"</span>";
+	let c,span=s.ucF()+"Span";
+	c="<p><span class=\"mx"+span+"\" id=\""+this.n+span+"\">"+this.local("_"+s+"Message_")+"</span></p>";
 	if(this.hasC("Comment")) this.getE("CommentContentDiv").innerHTML=c;
 };
 mxG.G.prototype.updateSolveComment=function()
 {
-	var c,s,e;
+	let c,s,e;
 	if(!this.hasC("Comment")) return;
 	e=this.getE("CommentDiv");
 	if(this.cN.P.BM) e.className="mxCommentDiv mxBM";
@@ -152,7 +177,7 @@ mxG.G.prototype.doVirtualNext=function()
 };
 mxG.G.prototype.doSolve=function(a,b)
 {
-	var x,y,s,aN=this.cN,bN,k=0,km=aN.Kid.length,kz=-1,nat,tenuki=0;
+	let x,y,s,aN=this.cN,bN,k=0,km=aN.Kid.length,kz=-1,nat,tenuki=0;
 	if(km) do
 	{
 		bN=aN.Kid[k];
@@ -241,7 +266,7 @@ mxG.G.prototype.doSolve=function(a,b)
 };
 mxG.G.prototype.checkSolve=function(x,y)
 {
-	var aN=this.cN,bN,k,km=aN.Kid.length;
+	let aN=this.cN,bN,k,km=aN.Kid.length;
 	if(!this.uC) this.setPl();
 	if(km)
 	{
@@ -266,47 +291,15 @@ mxG.G.prototype.checkSolve=function(x,y)
 		}
 	}
 };
-mxG.G.prototype.doClickSolve=function(ev)
-{
-	var c;
-	if(this.isGobanDisabled()) return;
-	if(this.canPlaceSolve)
-	{
-		c=this.scr.getC(ev);
-		if(!this.inView(c.x,c.y)) {this.plonk();return;}
-		this.checkSolve(c.x,c.y);
-	}
-};
-mxG.G.prototype.doKeydownGobanForSolve=function(ev)
-{
-	var c;
-	if(this.isGobanDisabled()) return;
-	if(this.canPlaceSolve&&this.gobanFocusVisible)
-	{
-		c=mxG.getKCode(ev);
-		if((c==13)||(c==32))
-		{
-			this.checkSolve(this.xFocus,this.yFocus);
-			ev.preventDefault();
-		}
-		else if(c==187)
-		{
-			this.checkSolve(0,0);
-			ev.preventDefault();
-		}
-	}
-};
 mxG.G.prototype.doKeydownSolve=function(ev)
 {
-	var r=0,s=ev.shiftKey?1:0;
-	switch(mxG.getKCode(ev))
+	let r=0;
+	switch(ev.key)
 	{
-		case 36:case 70:
+		case "ArrowLeft":
 			if(this.cN.Dad!=this.rN) {this.doRetry();r=1;} break;
-		case 37:case 72:
+		case "Home":
 			if(this.cN.Dad!=this.rN) {this.doUndo();r=1;} break;
-		case 187:
-			if(this.hasC("Pass")) {this.doPass2();r=5;} break;
 	}
 	if(r) ev.preventDefault();
 };
@@ -328,15 +321,9 @@ mxG.G.prototype.updateSolve=function()
 };
 mxG.G.prototype.initSolve=function()
 {
-	var e,k=this.k,b,bm,bk;
-	this.ig.getMClick=mxG.getMClick;
-	this.ig.addEventListener("click",
-		function(ev){mxG.D[k].doClickSolve(ev);},false);
-	if(this.canGobanFocus)
-		this.ig.addEventListener("keydown",
-			function(ev){mxG.D[k].doKeydownGobanForSolve(ev);},false);
+	let e,k=this.k,b,bm,bk;
 	e=this.getE("SolveDiv");
-	e.addEventListener("keydown",function(ev){mxG.D[k].doKeydownSolve(ev);},false);
+	e.addEventListener("keydown",function(ev){mxG.D[k].doKeydownSolve(ev);});
 	b=this.solves;
 	bm=b.length;
 	for(bk=0;bk<bm;bk++)
@@ -368,8 +355,8 @@ mxG.G.prototype.initSolve=function()
 };
 mxG.G.prototype.createSolve=function()
 {
-	var s="",a=["Retry","Undo"];
-	this.canPlaceSolve=this.setA("canPlaceSolve",1,"bool");
+	let s="",a=["Retry","Undo"];
+	this.canPlaceSolve=this.setA("canPlaceSolve",0,"bool");
 	this.oldSolveBtnOn=this.setA("oldSolveBtnOn",0,"bool");
 	this.solves=this.setA("solves",a,"list");
 	// set specialMoveMatch parameter to manage tenuki

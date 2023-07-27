@@ -1,9 +1,47 @@
-// maxiGos v7 > mgosAnimatedStone.js
+// maxiGos v8 > mgosAnimatedStone.js
 if(!mxG.G.prototype.createAnimatedStone)
 {
+
+// mxG.S section
+mxG.S.prototype.addAnimatedGoban=function(c)
+{
+	let s,tpl,list,k,km,co,xo,yo,xn,yn,z,r=this.d/2,o;
+	s="<svg "+this.xmlns+" "+this.xlink;
+	s+=" viewBox=\"0 0 "+this.w+" "+this.h+"\"";
+	s+=" width=\"100%\" height=\"100%\"";
+	s+=" class=\"mxAnimatedGobanSvg\"";
+	s+=">";
+	co=(c.nat=="B")?"Black":"White";
+	xo=(c.nat=="B")?this.w-r:r;
+	yo=(c.nat=="B")?this.h-r:r;
+	xn=this.i2x(c.x)-xo;
+	yn=this.j2y(c.y)-yo;
+	o={opacity:1,in3dOn:this.in3dOn,stoneShadowOn:this.stoneShadowOn,animatedStone:1};
+	s+=this.makeStone(co,xo,yo,this.d/2,o);
+	s+="</svg>";
+	tpl=document.createElement("template");
+	tpl.innerHTML=s;
+	list=tpl.content.querySelectorAll("circle");
+	km=list.length;
+	z="transform "+this.p.animatedStoneTime/1000+"s ease-out";
+	for(k=0;k<km;k++) list[k].style.transition=z;
+	this.ig.appendChild(tpl.content);
+	list=this.ig.lastChild.querySelectorAll("circle");
+	km=list.length;
+	this.ig.offsetHeight;
+	z="translate("+xn+"px,"+yn+"px)";
+	for(k=0;k<km;k++) list[k].style.transform=z;
+};
+mxG.S.prototype.removeAnimatedGoban=function(c)
+{
+	let e=this.ig.querySelector("svg:nth-of-type(2)");
+	if(e) this.ig.removeChild(e);
+};
+
+// mxG.G section
 mxG.G.prototype.getAnimated=function()
 {
-	var aN,s,nat,a,b;
+	let aN,s,nat,a,b;
 	aN=this.kidOnFocus(this.cN);
 	while(aN&&aN.inMove) aN=this.kidOnFocus(aN);
 	if(aN)
@@ -22,7 +60,7 @@ mxG.G.prototype.getAnimated=function()
 };
 mxG.G.prototype.doAnimatedStone=function(f)
 {
-	var c;
+	let c;
 	if(this.animatedStoneOn)
 	{
 		c=this.getAnimated();
@@ -36,7 +74,7 @@ mxG.G.prototype.doAnimatedStone=function(f)
 		{
 			let z=this.k;
 			setTimeout(function(){
-				var list;
+				let list;
 				if(c)
 				{
 					mxG.D[z].scr.removeAnimatedGoban(c);

@@ -1,11 +1,11 @@
-// maxiGos v7 > mgosVariation.js
+// maxiGos v8 > mgosVariation.js
 if(!mxG.G.prototype.createVariation)
 {
-mxG.fr("Variations: ","Variations : ");
+mxG.fr("Variations","Variations");
 mxG.fr("no variation","aucune");
 mxG.G.prototype.setMode=function()
 {
-	this.styleMode=parseInt(this.getInfoS("ST"));
+	this.styleMode=parseInt(this.getInfo("ST"));
 	if(this.configVariationMarksOn===null) this.variationMarksOn=(this.styleMode&2)?0:1;
 	else
 	{
@@ -20,9 +20,9 @@ mxG.G.prototype.setMode=function()
 	}
 	if(this.hideSingleVariationMarkOn) this.styleMode|=4;
 };
-mxG.G.prototype.doClickVariationInBox=function(a)
+mxG.G.prototype.doClickVariation=function(a)
 {
-	var aN=this.styleMode&1?this.cN.Dad:this.cN;
+	let aN=this.styleMode&1?this.cN.Dad:this.cN;
 	if(this.styleMode&1) this.backNode(aN);
 	aN.Focus=a+1;
 	this.placeNode();
@@ -30,24 +30,35 @@ mxG.G.prototype.doClickVariationInBox=function(a)
 };
 mxG.G.prototype.addVariationMarkInBox=function(a,m)
 {
-	var i=document.createElement("input"),k=this.k;
+	let b=document.createElement("button"),k=this.k;
 	if(this.scr.isLabel(m)) m=this.scr.removeLabelDelimiters(m);
-	m=m.replace(/&#40;/g,'(').replace(/&#41;/g,')');
-	i.type="button";
-	i.value=m;
-	i.addEventListener("click",function(ev){mxG.D[k].doClickVariationInBox(a);},false);
-	this.getE("VariationDiv").appendChild(i);
+	b.innerHTML=m;
+	b.addEventListener("click",function(ev){mxG.D[k].doClickVariation(a);});
+	this.getE("VariationDiv").appendChild(b);
 };
 mxG.G.prototype.buildVariationMark=function(l)
 {
 	if(this.variationMarkSeed) return this.variationMarkSeed[l-1];
 	return l+"";
 };
+mxG.G.prototype.isNextMove=function(x,y)
+{
+	if(!(this.styleMode&3))
+	{
+		let aN=this.kidOnFocus(this.cN);
+		if(aN)
+		{
+			let s=aN.P.B?aN.P.B[0]:aN.P.W?aN.P.W[0]:"";
+			if(s&&(s.c2n(0)==x)&&(s.c2n(1)==y)) return 1;
+		}
+	}
+	return 0;
+};
 mxG.G.prototype.addVariationMarks=function()
 {
-	var aN,s,k,km,l=0,x,y,z,m,e=this.getE("VariationDiv");
-	var s1="<span class=\"mxVariationsSpan\">"+this.local("Variations: ")+"</span>";
-	var s2="<span class=\"mxNoVariationSpan\">"+this.local("no variation")+"</span>";
+	let aN,k,km,l=0,e=this.getE("VariationDiv"),
+		s1="<span class=\"mxVariationsSpan\">"+this.local("Variations")+this.local(": ")+"</span>",
+		s2="<span class=\"mxNoVariationSpan\">"+this.local("no variation")+"</span>";
 	if(this.variationBoxOn) e.innerHTML=s1;
 	if(this.styleMode&1)
 	{
@@ -76,19 +87,13 @@ mxG.G.prototype.addVariationMarks=function()
 	for(k=0;k<km;k++)
 		if(aN.Kid[k]!=this.cN)
 		{
-			s="";
+			let s=aN.Kid[k].P.B?aN.Kid[k].P.B[0]:aN.Kid[k].P.W?aN.Kid[k].P.W[0]:"",m;
 			l++;
-			if(aN.Kid[k].P.B) s=aN.Kid[k].P.B[0];
-			else if(aN.Kid[k].P.W) s=aN.Kid[k].P.W[0];
 			if(s.length==2)
 			{
-				x=s.c2n(0);
-				y=s.c2n(1);
-				z=this.xy(x,y);
-				if(this.inView(x,y))
-					m=this.vStr[z];
-				else
-					m=this.buildVariationMark(l);
+				let x=s.c2n(0),y=s.c2n(1),z=this.xy(x,y);
+				if(this.inView(x,y)) m=this.vStr[z];
+				else m=this.buildVariationMark(l);
 				if((m+"").search(/^\((.*)\)$/)==-1)
 				{
 					if(!m) m=this.buildVariationMark(l);
@@ -98,8 +103,7 @@ mxG.G.prototype.addVariationMarks=function()
 						if(this.isNextMove(x,y)) this.vStr[z]="("+this.vStr[z]+")";
 					}
 				}
-				if((m+"").search(/^_.*_$/)==0)
-					m=this.buildVariationMark(l);
+				if((m+"").search(/^_.*_$/)==0) m=this.buildVariationMark(l);
 			}
 			else m=this.buildVariationMark(l);
 			if(this.variationBoxOn&&(aN.Kid[k]!=this.cN)) this.addVariationMarkInBox(k,m);
@@ -107,7 +111,7 @@ mxG.G.prototype.addVariationMarks=function()
 };
 mxG.G.prototype.getVariationNextNat=function()
 {
-	var aN,k,km;
+	let aN,k;
 	if(this.hasC("Edit")&&this.editNextNat) return this.editNextNat;
 	// get color from PL
 	aN=this.cN;
@@ -127,16 +131,14 @@ mxG.G.prototype.getVariationNextNat=function()
 	if(aN.P.AB&&!aN.P.AW) return "W";
 	else if(aN.P.AW&&!aN.P.AB) return "B";
 	// get color of cN children
-	km=this.cN.Kid.length;
-	for(k=0;k<km;k++)
+	for(let k=0;k<this.cN.Kid.length;k++)
 	{
 		aN=this.cN.Kid[k];
 		if(aN.P.B) return "B";
 		if(aN.P.W) return "W";
 	}
 	// get opposite color of cN brothers
-	km=this.cN.Dad.Kid.length;
-	for(k=0;k<km;k++)
+	for(let k=0;k<this.cN.Dad.Kid.length;k++)
 	{
 		aN=this.cN.Dad.Kid[k];
 		if(aN.P.B) return "W";
@@ -147,17 +149,16 @@ mxG.G.prototype.getVariationNextNat=function()
 };
 mxG.G.prototype.addPlay=function(aP,x,y)
 {
-	var aN,aV=this.xy2s(x,y);
+	let aN,aV=this.xy2s(x,y);
 	aN=new mxG.N(this.cN,aP,aV);
 	aN.Add=1;
 	this.cN.Focus=this.cN.Kid.length;
 };
 mxG.G.prototype.checkBW=function(aN,a,b)
 {
-	var s="",x,y;
 	if(aN.P.B||aN.P.W)
 	{
-		if(aN.P.B) s=aN.P.B[0];else s=aN.P.W[0];
+		let s=aN.P.B?aN.P.B[0]:aN.P.W[0],x,y;
 		if(s.length==2) {x=s.c2n(0);y=s.c2n(1);}
 		else {x=0;y=0;}
 		return (x==a)&&(y==b);
@@ -166,29 +167,17 @@ mxG.G.prototype.checkBW=function(aN,a,b)
 };
 mxG.G.prototype.checkAX=function(aN,a,b)
 {
-	var AX=["AB","AW","AE"];
-	var s,x,y,aP,z,k,aLen,x1,x2,y1,y2;
-	s="";
-	if(aN.P.AB) aP="AB";
-	else if(aN.P.AW) aP="AW";
-	else if(aN.P.AE) aP="AE";
-	else aP=0;
-	if(aP) for(z=0;z<3;z++)
+	let AX=["AB","AW","AE"];
+	for(let z=0;z<3;z++)
 	{
-		aP=AX[z];
+		let aP=AX[z];
 		if(aN.P[aP])
 		{
-			aLen=aN.P[aP].length;
-			for(k=0;k<aLen;k++)
+			for(let k=0;k<aN.P[aP].length;k++)
 			{
-				s=aN.P[aP][k];
-				if(s.length==2)
-				{
-					x=s.c2n(0);
-					y=s.c2n(1);
-					if((x==a)&&(y==b)) return 1;
-				}
-				else if(s.length==5)
+				let s=aN.P[aP][k],x,y,x1,x2,y1,y2;
+				if((s.length==2)&&(s.c2n(0)==a)&&(s.c2n(1)==b)) return 1;
+				if(s.length==5)
 				{
 					x1=s.c2n(0);
 					y1=s.c2n(1);
@@ -203,7 +192,7 @@ mxG.G.prototype.checkAX=function(aN,a,b)
 };
 mxG.G.prototype.checkVariation=function(a,b)
 {
-	var aN,bN,k,km,ok=0;
+	let aN,bN,ok=0;
 	if((this.styleMode&1)&&(this.cN.Dad==this.rN)) {this.plonk();return;}
 	if(a&&b&&this.gor.isOccupied(a,b))
 	{
@@ -221,8 +210,7 @@ mxG.G.prototype.checkVariation=function(a,b)
 		return;
 	}
 	aN=this.styleMode&1?this.cN.Dad:this.cN;
-	km=aN.Kid.length;
-	for(k=0;k<km;k++)
+	for(let k=0;k<aN.Kid.length;k++)
 	{
 		bN=aN.Kid[k];
 		if(this.checkBW(bN,a,b))
@@ -242,51 +230,11 @@ mxG.G.prototype.checkVariation=function(a,b)
 	if(this.hasC("Tree")) this.hasToSetTree=1;
 	this.updateAll();
 };
-mxG.G.prototype.doClickVariation=function(ev)
-{
-	var c;
-	if(this.isGobanDisabled()) return;
-	if(this.canPlaceVariation)
-	{
-		c=this.scr.getC(ev);
-		if(!this.inView(c.x,c.y)) {this.plonk();return;}
-		this.checkVariation(c.x,c.y);
-	}
-};
-mxG.G.prototype.doKeydownGobanForVariation=function(ev)
-{
-	var c;
-	if(this.isGobanDisabled()) return;
-	if(this.canPlaceVariation&&this.gobanFocusVisible)
-	{
-		c=mxG.getKCode(ev);
-		if((c==13)||(c==32))
-		{
-			this.checkVariation(this.xFocus,this.yFocus);
-			ev.preventDefault();
-		}
-		else if(c==187)
-		{
-			this.checkVariation(0,0);
-			ev.preventDefault();
-		}
-	}
-};
-mxG.G.prototype.initVariation=function()
-{
-	var k=this.k;
-	this.ig.getMClick=mxG.getMClick;
-	this.ig.addEventListener("click",function(ev){mxG.D[k].doClickVariation(ev);},false);
-	if(this.canGobanFocus)
-		this.ig.addEventListener("keydown",
-			function(ev){mxG.D[k].doKeydownGobanForVariation(ev);},false);
-};
 mxG.G.prototype.createVariation=function()
 {
-	var s="";
-	// if both canPlaceGuess and canPlaceVariation are 1, canPlaceGuess is ignored
+	// if canPlaceVariation is 1, canPlaceGuess is ignored
 	this.canPlaceVariation=this.setA("canPlaceVariation",0,"bool");
-	if(this.canPlaceGuess&&this.canPlaceVariation) this.canPlaceGuess=0;
+	if(this.canPlaceVariation) this.canPlaceGuess=0;
 	this.hideSingleVariationMarkOn=this.setA("hideSingleVariationMarkOn",0,"bool");
 	this.siblingsOn=this.setA("siblingsOn",null,"bool");
 	this.variationBoxOn=this.setA("variationBoxOn",0,"bool");
@@ -303,7 +251,7 @@ mxG.G.prototype.createVariation=function()
 		this.configSiblingsOn=this.siblingsOn;
 	}
 	if(this.variationBoxOn)
-		s+="<div class=\"mxVariationDiv\" id=\""+this.n+"VariationDiv\"></div>";
-	return s;
+		return "<div class=\"mxVariationDiv\" id=\""+this.n+"VariationDiv\"></div>";
+	return "";
 };
 }

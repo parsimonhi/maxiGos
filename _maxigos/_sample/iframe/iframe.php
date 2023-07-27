@@ -39,9 +39,9 @@ else if(isset($_GET["sgf"]))
 	if(strlen($sgf)>256) $sgf=""; // 64 not enough here
 }
 else $sgf="";
-$sgf=str_replace("<","&lt;",str_replace(">","&gt;",$sgf));
+$sgf=str_replace("<","&lt;",str_replace(">","&gt;",str_replace("\"","&quot;",$sgf)));
 ?>
-<html lang="<?php echo $lang; ?>">
+<html lang="<?=$lang?>">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -60,16 +60,10 @@ body
 </style>
 </head>
 <body>
-<?php
-	//echo "sgf=".$sgf."<br>";
-	//echo "config=".$config."<br>";
-	//echo "theme=".$theme."<br>";
-	//echo "lang=".$lang."<br>";
-?>
-<script src="<?php echo $_maxigosPath;?>_maxigos/_i18n/maxigos-i18n-<?php echo $lang;?>.js"></script>
-<script src="<?php echo $_maxigosPath;?>_maxigos/_sample/<?php echo $theme;?>/_alone/maxigos-<?php echo $theme.'-'.$config;?>.js">
-<?php echo $sgf;?>
+<script src="<?=$_maxigosPath?>_maxigos/_i18n/maxigos-i18n-<?=$lang?>.js"></script>
+<script src="<?=$_maxigosPath?>_maxigos/_sample/<?=$theme?>/_alone/maxigos-<?=$theme.'-'.$config?>.js"
+		data-maxigos-sgf="<?=$sgf?>">
 </script>
-<script src="<?php echo $_maxigosPath;?>_maxigos/_sample/_js/mgosIframe.js"></script>
+<script src="<?=$_maxigosPath?>_maxigos/_sample/_js/mgosIframe.js"></script>
 </body>
 </html>

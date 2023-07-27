@@ -71,31 +71,35 @@ Noir aurait aussi pu jouer sa pierre en 'a'.]
 ;B[ed]C[Noir connecte.]
 ;W[dd]C[Blanc occupe un point neutre (un point neutre est un point situé entre une frontière noire et une frontière blanche).]
 ;B[ff]C[Noir occupe le dernier point neutre. Après ce coup, il n'y a plus rien à faire, car les territoires des deux joueurs sont tous fermés, et aucune de leurs frontières ne peuvent être capturées par l'adversaire.]
-;W[]C[Blanc passe.]
-;B[]C[Noir passe.]
-;W[]C[Comme Noir a posé la dernière pierre sur le jeu, Blanc lui donne une pierre supplémentaire. Ainsi, Noir ayant joué le premier coup de la partie, les deux joueurs auront consommé le même nombre de pierre.]
-;MA[bg]C[Puis Blanc retire du jeu la pierre noire 'X', qu'il aurait de toute façon capturée tôt ou tard, si Noir l'avait forcé à le faire (vérifiez-le).]
-;AE[bg]C[Comptage des points (méthode 1) :
-On compte les territoires et les frontières.]
-;TB[aa][ab][ac][gh][gi][hi][ih][ii][ba][bc][cb][cc][hg]
+;W[]C[Blanc passe. Il donne une pierre à son adversaire.]
+;B[]MA[bg]C[Noir passe. Il donne une pierre à son adversaire et la partie est terminée. Comme Noir a posé la dernière pierre sur le jeu, Blanc lui donne une pierre supplémentaire. Ainsi, Noir ayant joué le premier coup de la partie, les deux joueurs auront consommé le même nombre de pierre.
+
+Puis Blanc retire du jeu la pierre noire 'X', qu'il aurait de toute façon capturée tôt ou tard si Noir l'avait forcé à le faire.]
+;AE[bg]TB[aa][ab][ac][gh][gi][hi][ih][ii][ba][bc][cb][cc][hg]
 TW[ga][ha][hb][ia][ib][ic][ag][ah][ai][bg][bi][fb][bf][ci][dh]
-C[- Noir a 7 points de territoire en haut à gauche, et 6 en bas à droite. Il a de plus 26 pierres sur le jeu. Son total est de 39 points.
-- Blanc a 8 points de territoire en bas à gauche, et 7 en haut à droite. Il a de plus 27 pierres sur le jeu. Son total est de 42 points.
-- Blanc a donc 3 points de plus que Noir sur le jeu.]
-;C[Par ailleurs, comme Noir a commencé, Blanc ajoute à son total les 7,5 points de compensation.
-Blanc gagne donc de 10,5 points.]
-;C[En pratique, on n'utilise guère cette méthode, et on lui préfère la méthode 2 expliquée à la page suivante.]
+C[Comptage des points (méthode 1)
+
+On compte les territoires et les frontières.
+
+- Noir a 7 points de territoire en haut à gauche, et 6 en bas à droite. Il a de plus 26 pierres sur la grille. Son total est de 39 points.
+- Blanc a 8 points de territoire en bas à gauche, et 7 en haut à droite. Il a de plus 27 pierres sur la grille. Son total est de 42 points.
+
+Blanc a donc 3 points de plus que Noir sur la grille. Comme Noir a commencé, Blanc ajoute à son total 7,5 points de compensation. Blanc gagne de 10,5 points.]
 ;AB[ba][bc][cb][cc][hg]AW[fb][bf][ci][dh]MA[ba][bc][cb][cc][hg][fb][bf][ci][dh]
-C[Comptage des points (méthode 2) :
-Chaque joueur placent dans le territoire de l'autre les pierres adverses (notées 'X' sur la figure), qu'il a en sa possession. On est alors sûr qu'il y a sur le jeu autant de pierres de chaque couleur sans avoir à les compter (vérifiez-le).]
-;TB[aa][ab][ac][gh][gi][hi][ih][ii]
+TB[aa][ab][ac][gh][gi][hi][ih][ii]
 TW[ga][ha][hb][ia][ib][ic][ag][ah][ai][bg][bi]
-C[- Noir a 3 points de territoire en haut à gauche, et 5 en bas à droite, soit 8 points.
-- Blanc a 5 points de territoire en bas à gauche, et 6 en haut à droite, soit 11 points.
-- Blanc a donc 3 points de plus que Noir sur le jeu.]
-;C[Par ailleurs, comme Noir a commencé, Blanc ajoute à son total les 7,5 points de compensation.
-Blanc gagne donc de 10,5 points.]
-;C[Les deux méthodes donnent toujours le même résultat.]
+C[Comptage des points (méthode 2)
+
+On compte les territoires et les pierres adverses possédées.
+
+Chaque joueur place dans le territoire de l'autre les pierres adverses (notées 'X' sur la figure) qu'il a en sa possession. On est alors sûr qu'il y a sur la grille autant de pierres de chaque couleur.
+
+- Noir a 3 points de territoire en haut à gauche et 5 en bas à droite, soit 8 points.
+- Blanc a 5 points de territoire en bas à gauche et 6 en haut à droite, soit 11 points.
+
+Blanc a donc 3 points de plus que Noir sur la grille. Comme Noir a commencé, Blanc ajoute à son total 7,5 points de compensation. Blanc gagne de 10,5 points.
+
+Les deux méthodes donnent toujours le même résultat.]
 )
 (
 ;B[ge]C[Dans cette variante, Noir prend une pierre blanche, mais ...]
