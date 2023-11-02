@@ -2,7 +2,7 @@
 if(typeof mxG=='undefined') mxG={};
 if(!mxG.V)
 {
-mxG.V="8.00";
+mxG.V="8.01";
 mxG.Y="2023";
 mxG.C="FM&SH";
 mxG.D=[];
@@ -6141,7 +6141,7 @@ mxG.G.prototype.getInfoFromBox=function()
 	for(p=0;p<pm;p++)
 	{
 		if(IX[p]=="RE") this.encodeResult();
-		if(this.getE(IX[p])&&(v=this.getE(IX[p]).value)) this.kidOnFocus(this.rN).Put(IX[p],v);
+		if(this.getE(IX[p])&&(v=this.getE(IX[p]).value)) this.kidOnFocus(this.rN).put(IX[p],v);
 		else this.popInfo(IX[p]);
 	}
 };

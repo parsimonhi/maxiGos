@@ -180,7 +180,7 @@ mxG.G.prototype.getInfoFromBox=function()
 	for(p=0;p<pm;p++)
 	{
 		if(IX[p]=="RE") this.encodeResult();
-		if(this.getE(IX[p])&&(v=this.getE(IX[p]).value)) this.kidOnFocus(this.rN).Put(IX[p],v);
+		if(this.getE(IX[p])&&(v=this.getE(IX[p]).value)) this.kidOnFocus(this.rN).put(IX[p],v);
 		else this.popInfo(IX[p]);
 	}
 };

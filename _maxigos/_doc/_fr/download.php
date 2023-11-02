@@ -128,6 +128,10 @@ include("../../_php/lib.php");
 <?=printOneInternationalizationScriptLine('zh-hans')?>
 <?=printOneInternationalizationScriptLine('zh-hant')?>
 </ul>
+<h2>Quoi de neuf dans la version 8.01 ?</h2>
+<ul>
+<li>Correction d'un bug dans mgosInfo.js qui empêchait le SGF d'être mis à jour lorsque l'on en modifiait l'entête.</li>
+</ul>
 <h2>Quoi de neuf dans la version 8.00 ?</h2>
 <ul>
 <li>Priorité à l'usage de l'attribut "data-maxigos-sgf"
@@ -138,15 +142,15 @@ quand on insère un enregistrement sgf comme valeur de l'attribut "data-maxigos-
 (ce remplacement est par contre inutile si le sgf est dans un fichier sgf).
 Insérer un sgf entre les balises &lt;script&gt; et &lt;/script&gt;
 continue de fonctionner mais est déprécié.</li>
-<li>Réduction de la taille du code</li>
-<li>Amélioration de la vitesse d'exécution</li>
-<li>Amélioration de la netteté des lignes du goban</li>
-<li>Ajout d'une description du goban pour les lecteurs d'écran</li>
-<li>Simplification du html interne (comme par exemple pour le contenu des boutons)</li>
-<li>Nombreux changements dans le css</li>
+<li>Réduction de la taille du code.</li>
+<li>Amélioration de la vitesse d'exécution.</li>
+<li>Amélioration de la netteté des lignes du goban.</li>
+<li>Ajout d'une description du goban pour les lecteurs d'écran.</li>
+<li>Simplification du html interne (comme par exemple pour le contenu des boutons).</li>
+<li>Nombreux changements dans le css.</li>
 <li>Séparation automatique du css en plusieurs parties
 afin de réduire la taille du code des lecteurs
-Fait pour les configurations "Edit", "Lesson" et "Problem"</li>
+Fait pour les configurations "Edit", "Lesson" et "Problem".</li>
 <li>Amélioration de l'affichage de l'arbre des coups
 (en particulier quand cet arbre est très grand).
 Affiche toujours une portion suffisante de l'arbre pour couvrir
@@ -155,27 +159,27 @@ toute la surface visible par l'utilisateur
 excepté quand les styles ont été désactivés dans le navigateur.
 Dans ce cas, quand l'arbre est très grand, l'utilisateur doit cliquer sur l'arbre
 pour provoquer l'affichage de nouvelles parties de l'arbre
-(générer automatiquement les très grands arbres peut sinon être très longs)</li>
+(générer automatiquement les très grands arbres peut sinon être très longs).</li>
 <li>Remplacement de la GBox (qui étaient des sortes de dialogues faits maison)
-par une balise html dialog</li>
-<li>Remplacement des balises internes de "GotoDiv" par une balise input[type=range]</li>
-<li>Remplacement des balises internes de "GuessDiv" par une balise meter</li>
-<li>Remplacement des balises internes de "SpeedDiv" par une balise input[type=range]</li>
+par une balise html dialog.</li>
+<li>Remplacement des balises internes de "GotoDiv" par une balise input[type=range].</li>
+<li>Remplacement des balises internes de "GuessDiv" par une balise meter.</li>
+<li>Remplacement des balises internes de "SpeedDiv" par une balise input[type=range].</li>
 <li>Affichage des marques et étiquettes (quand il y en a sur le goban)
 dans la liste des coups invisibles.
-Précédemment, seuls les numéros et coordonnées des coups étaient affichées</li>
-<li>Remplacement des paramètres concatXxx par concatInHeader</li>
-<li>Remplacement des paramètres hideXxx par hideInHeader et hideInOptions</li>
-<li>Suppression des paramètres mainVariationOnlyLoop, htmlParenthesis, gotoInputOn, gotoInputBefore</li>
-<li>Changement du nom du composant "Option" en "Options"</li>
+Précédemment, seuls les numéros et coordonnées des coups étaient affichées.</li>
+<li>Remplacement des paramètres concatXxx par concatInHeader.</li>
+<li>Remplacement des paramètres hideXxx par hideInHeader et hideInOptions.</li>
+<li>Suppression des paramètres mainVariationOnlyLoop, htmlParenthesis, gotoInputOn, gotoInputBefore.</li>
+<li>Changement du nom du composant "Option" en "Options".</li>
 <li>Les classes XxxParentDiv, XxxGrandParentDiv, XxxGreatGrandParentDiv, etc.
 ne sont plus ajoutées aux classes de la boite globale.
 Elles sont ajoutées seulements aux boites de regroupement.</li>
-<li>suppression du composant Title (déplacement de son code dans le compsant Header)</li>
+<li>suppression du composant Title (déplacement de son code dans le compsant Header).</li>
 <li>Ajout des items "Reset" et "Thickness" dans le menu "View".</li>
 <li>Simplification de la gestion du focus
-(utilisation de :focus-visible dans le css pour afficher ou cacher la marque de focus sur le goban)</li>
-<li>Correction de bogues mineurs</li>
+(utilisation de :focus-visible dans le css pour afficher ou cacher la marque de focus sur le goban).</li>
+<li>Correction de bogues mineurs.</li>
 </ul>
 <h2>Quoi de neuf dans la version 7.05 ?</h2>
 <ul>
