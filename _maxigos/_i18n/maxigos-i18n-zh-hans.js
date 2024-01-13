@@ -15,7 +15,6 @@ mxG.Z["zh-hans"]["Source code:"]="源代码：";
 mxG.Z["zh-hans"]["Theme:"]="主题：";
 mxG.Z["zh-hans"]["Configuration:"]="配置：";
 mxG.Z["zh-hans"]["License:"]="许可证：";
-mxG.Z["zh-hans"]["About_Short"]="?";
 // mgosBackToGame.js
 mxG.Z["zh-hans"]["Back to game"]="回到游戏";
 // mgosCartouche.js
@@ -86,6 +85,7 @@ mxG.Z["zh-hans"]["No symmetry"]="没有";
 mxG.Z["zh-hans"]["Horizontal mirror"]="水平";
 mxG.Z["zh-hans"]["Vertical mirror"]="垂直";
 mxG.Z["zh-hans"]["Rotate"]="回转";
+// mxG.Z["zh-hant"]["Comments"]="註釋";
 // mgosFile.js
 mxG.Z["zh-hans"]["New"]="新建";
 mxG.Z["zh-hans"]["Open"]="打开";

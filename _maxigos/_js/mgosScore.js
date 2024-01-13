@@ -746,7 +746,12 @@ mxG.G.prototype.initScore=function()
 {
 	let k=this.k;
 	if(this.scoreBtnOn)
-		this.addBtn(this.getE("ScoreDiv"),{n:"Score",v:this.alias("Score","scoreAlias")});
+	{
+		let o={n:"Score",v:this.alias("Score","scoreAlias")},
+			s=this.local("Score");
+		if(o.v!=s) o.t=s;
+		this.addBtn(this.getE("ScoreDiv"),o);
+	}
 };
 mxG.G.prototype.createScore=function()
 {

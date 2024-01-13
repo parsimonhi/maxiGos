@@ -635,17 +635,18 @@ mxG.S.prototype.makeGoban=function()
 	// by default, no style is applied on the svg (minimalist style)
 	// in order to be able to display it even if css is disabled 
 	s="<svg "+this.xmlns+" "+this.xlink;
-	// aria-hidden="true" on all svg text is used to prevent data from being read twice
+	// use aria-hidden="true" on all svg text to prevent data from being read twice
 	s+=" id=\""+this.p.n+"GobanSvg\" class=\"mxGobanSvg\" tabindex=\"0\"";
 	s+=" viewBox=\"0 0 "+this.w+" "+this.h+"\" width=\""+this.w+"\" height=\""+this.h+"\"";
 	s+=" font-family=\""+this.ff+"\" font-size=\""+this.fs+"\" font-weight=\""+this.fw+"\"";
 	s+=" stroke-linecap=\"square\" text-anchor=\"middle\"";
 	s+=">";
-	s+="<title id=\""+this.p.n+"GobanTitle\"></title>";
-	s+="<desc id=\""+this.p.n+"GobanDesc\"></desc>"; // accessible?
+	// use custom title and desc tags
+	// to prevent the title from being displayed when hovering over the goban
+	s+="<my-title id=\""+this.p.n+"GobanTitle\"></my-title>";
+	s+="<my-desc id=\""+this.p.n+"GobanDesc\"></my-desc>";
 	if(this.in3dOn)
 		s+="<defs>"+this.makeGradient("Black")+this.makeGradient("White")+"</defs>";
-	s+=this.makeBackground("Ghost");
 	s+=this.makeBackground("Whole");
 	s+=this.makeBackground("Outer");
 	if(this.indicesOn) s+=this.makeIndices();
@@ -903,7 +904,8 @@ mxG.S.prototype.makeOneInfo=function(i,j,k,nat,str,sayLast)
 			else
 			{
 				if(this.isLabel(str)) str=this.removeLabelDelimiters(str);
-				s+=str;
+				// better reading by screen readers if quote or double quote
+				s+="'"+str+"'";
 			}
 		}
 	}
@@ -911,30 +913,45 @@ mxG.S.prototype.makeOneInfo=function(i,j,k,nat,str,sayLast)
 	if(this.p.lang!="ja") this.latinCoordinates=1;
 	s+=this.k2c(i)+this.k2n(j);
 	if(this.p.lang!="ja") this.latinCoordinates=0;
-	if(sayLast&&last) s+=", "+this.p.local("Last played move");
+	if(sayLast&&last) s+=". "+this.p.local("Last played move");
 	return s;
 };
-mxG.S.prototype.makeGobanTitle=function()
+mxG.S.prototype.makeShortGobanTitle=function()
 {
 	let s="",xf,yf,k,nat,str;
-	s=this.p.local("Goban")+" "+this.DX+"x"+this.DY;
-	if((this.xl!=1)||(this.yt!=1)||(this.xr!=this.DX)||(this.yb!=this.DY))
-	{
-		s+=", "+this.p.local("Partial view");
-		s+=" "+this.k2c(this.xl)+this.k2n(this.yb);
-		s+=" "+this.k2c(this.xr)+this.k2n(this.yt);
-	}
 	if((xf=this.p.xFocus)&&(yf=this.p.yFocus))
 	{
 		k=this.p.xy(xf,yf);
 		nat=this.vNat[k];
 		str=this.vStr[k];
-		if(s) s+=", ";
+		if(s) s+=". ";
 		s+=this.p.local("Cursor on");
 		if(s) s+=" ";
 		s+=this.makeOneInfo(xf,yf,k,nat,str,1);
 	}
-	return s;
+	if(this.p.whenVirtualNext)
+	{
+		// add information about the move played just before (solve only?)
+		let x,y;
+		x=this.p.whenVirtualNext.x;
+		y=this.p.whenVirtualNext.y;
+		k=this.p.xy(x,y);
+		nat=this.vNat[k];
+		str=this.vStr[k];
+		s=this.makeOneInfo(x,y,k,nat,str,0)+". "+s;
+	}
+	return s+".";
+};
+mxG.S.prototype.makeGobanTitle=function()
+{
+	let s=this.p.local("Goban")+" "+this.DX+"x"+this.DY;
+	if((this.xl!=1)||(this.yt!=1)||(this.xr!=this.DX)||(this.yb!=this.DY))
+	{
+		s+=". "+this.p.local("Partial view");
+		s+=" "+this.k2c(this.xl)+this.k2n(this.yb);
+		s+=" "+this.k2c(this.xr)+this.k2n(this.yt);
+	}
+	return s+". "+this.makeShortGobanTitle();
 };
 mxG.S.prototype.makeGobanDescription=function()
 {
@@ -947,30 +964,32 @@ mxG.S.prototype.makeGobanDescription=function()
 			str=this.vStr[k];
 			if((nat=="B")||(nat=="W")||str)
 			{
-				if(s) s+=", ";
+				if(s) s+=". ";
 				s+=this.makeOneInfo(i,j,k,nat,str,0);
 			}
 		}
 	if(!s) s=this.p.local("Empty goban");
-	return s;
+	return s+".";
 };
-mxG.S.prototype.setGobanFocusTitleDesc=function(verbose)
+mxG.S.prototype.setGobanFocusTitleDesc=function(kind)
 {
-	let x=this.p.xFocus,y=this.p.yFocus,ghost,a;
+	if(this.p.noLabelledBy) return;
+	let x=this.p.xFocus,y=this.p.yFocus,z;
 	if(!this.p.inView(x,y)) {x=0;y=0;}
 	if(x&&y)this.p.getE("Focus").innerHTML=this.makeFocusMark(this.i2x(x),this.j2y(y));
 	else this.p.getE("Focus").innerHTML="";
-	this.p.getE("GobanTitle").innerHTML=this.makeGobanTitle()+(verbose?".":"");
-	this.p.getE("GobanDesc").innerHTML=this.makeGobanDescription();
-	a=this.p.n+"GobanTitle"+(verbose?" "+this.p.n+"GobanDesc":"");
-	this.p.getE("GobanSvg").setAttribute("aria-labelledby",a);
-	// below is a trick to force reading by screen readers
-	ghost=this.p.getE("GobanSvg").querySelector('.mxGhostRect');
-	if(ghost)
+	if(kind>0) this.p.getE("GobanDesc").innerHTML=this.makeGobanDescription();
+	if(this.p.shortTitleOnly)
 	{
-		if(ghost.style.display) ghost.style.display="";
-		else ghost.style.display="none";
+		this.p.getE("GobanTitle").innerHTML=this.makeShortGobanTitle();
+		z=this.p.n+"GobanTitle";
 	}
+	else
+	{
+		this.p.getE("GobanTitle").innerHTML=this.makeGobanTitle();
+		z=this.p.n+"GobanTitle"+" "+this.p.n+"GobanDesc";
+	}
+	this.p.getE("GobanSvg").setAttribute("aria-labelledby",z);
 };
 mxG.S.prototype.drawGoban=function(vNat,vStr)
 {

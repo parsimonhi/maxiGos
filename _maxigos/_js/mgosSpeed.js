@@ -6,7 +6,7 @@ mxG.G.prototype.doChangeSpeed=function(ev)
 {
 	let z=this.inLoop;
 	if(z) this.doPause();
-	this.loopTime=(1-ev.target.value/100)*this.loopTimeMax;
+	this.loopTime=Math.round((1-ev.target.value/100)*this.loopTimeMax);
 	if(z) {this.doAuto();ev.target.focus();}
 };
 mxG.G.prototype.initSpeed=function()

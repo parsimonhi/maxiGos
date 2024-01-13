@@ -29,6 +29,9 @@ mxG.D[mxG.K].config="<?=$config?>";
 <?php
 include "../../_php/insertCss.php";
 ?>
+// special
+if(!mxG.Z.ja) mxG.Z.ja=[];
+if(!mxG.ja) mxG.ja=function(a,b){mxG.Z.ja[a]=b;};
 // general
 mxG.D[mxG.K].a.in3dOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.allowStringAsSource=1; // (0,1) default 1
@@ -64,13 +67,17 @@ mxG.D[mxG.K].a.hideInHeader="NumOfMoves"; // (set) default ""
 // Navigation
 mxG.D[mxG.K].a.navigations="First,TenPred,Pred,Goto,Next,TenNext,Last"; // (set) default "First,TenPred,Pred,Next,TenNext,Last"
 // options
-mxG.D[mxG.K].a.optionsAlias="Options_Short"; // (string) default null
+mxG.D[mxG.K].a.optionsAlias="Options_forum"; // (string) default null
+mxG.ja("Options_forum","<span aria-hidden='true'>オ</span>");
+mxG.en("Options_forum","<span aria-hidden='true'>O</span>");
 mxG.D[mxG.K].a.optionsBtnOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.hideInOptions="In3dOn"; // (set) default ""
 // Pass
 mxG.D[mxG.K].a.passBtnOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.canPassOnlyIfPassInSgf=0; // (0,1) default 0
-mxG.D[mxG.K].a.passAlias="Pass_Short"; // (string) default null
+mxG.D[mxG.K].a.passAlias="Pass_forum"; // (string) default null
+mxG.ja("Pass_forum","<span aria-hidden='true'>パ</span>");
+mxG.en("Pass_forum","<span aria-hidden='true'>P</span>");
 // Tree
 mxG.D[mxG.K].a.canTreeFocus=1; // (0,1) default 0
 // Variation

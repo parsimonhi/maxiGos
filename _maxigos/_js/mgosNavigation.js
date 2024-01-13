@@ -61,37 +61,6 @@ mxG.G.prototype.setNFocus=function(b)
 	if(e&&!e.disabled) {if(a!=e) e.focus();return;}
 	this.getE("NavigationDiv").focus();
 };
-mxG.G.prototype.moveFocusMarkOnLast=function()
-{
-	let a,e,g,m=this.gor.play;
-	if(this.gor.getAct(m)=="")
-	{
-		this.xFocus=this.gor.getX(m);
-		this.yFocus=this.gor.getY(m);
-		this.moveFocusInView();
-	}
-	this.scr.setGobanFocusTitleDesc(0);
-};
-mxG.G.prototype.moveFocusMarkOnVariationOnFocus=function()
-{
-	let g=this.getE("GobanSvg"),e;
-	e=g.querySelector(".mxVariation.mxOnFocus[data-maxigos-ij]");
-	if(e)
-	{
-		let v=e.getAttribute("data-maxigos-ij");
-		if(v)
-		{
-			let c=v.split("_");
-			if(c&&(c.length==2))
-			{
-				this.xFocus=-(-c[0]);
-				this.yFocus=-(-c[1]);
-				this.moveFocusInView();
-				this.scr.setGobanFocusTitleDesc(0);
-			}
-		}
-	}
-};
 mxG.G.prototype.doFirst=function()
 {
 	this.backNode(this.kidOnFocus(this.rN));
@@ -150,7 +119,7 @@ mxG.G.prototype.doLast=function()
 };
 mxG.G.prototype.doTopVariation=function(s)
 {
-	// if(s) shift key is pressed
+	// if(s) option key is pressed
 	// useful to change of sgf record in case of collection
 	let aN,k,km;
 	if((this.styleMode&1)||s) aN=this.cN.Dad;else aN=this.cN;
@@ -165,7 +134,7 @@ mxG.G.prototype.doTopVariation=function(s)
 };
 mxG.G.prototype.doBottomVariation=function(s)
 {
-	// if(s) it means shift key is pressed
+	// if(s) option key is pressed
 	// used to change of sgf record in case of collection
 	let aN,bN,k,km;
 	if((this.styleMode&1)||s) aN=this.cN.Dad;else aN=this.cN;
@@ -195,30 +164,32 @@ mxG.G.prototype.hasVariation=function(s)
 mxG.G.prototype.doKeydownNavigation=function(ev)
 {
 	if(this.hasC("Score")&&this.canPlaceScore) return false;
-	let r=0,s=ev.shiftKey?1:0;
-	if(ev.altKey||ev.key.match(/^[FGHJKLUN]$/i)) switch(ev.key)
+	let r=0,s=ev.altKey?1:0;
+	if(ev.shiftKey) switch(ev.key)
 	{
-		case "Home":case "F":case "f":
+		case "Home":case "F":
 			if(this.hasPred()) {this.doFirst();r=1;} break;
-		case "PageUp":case "G":case "g":
+		case "PageUp":case "G":
 			if(this.hasPred()) {this.doTenPred();r=1;} break;
-		case "ArrowLeft":case "H":case "h":
+		case "ArrowLeft":case "H":
 			if(this.hasPred()) {this.doPred();r=1;} break;
-		case "ArrowRight":case "J":case "j":
-			if(this.hasNext()) {this.doNext();r=1;} break;
-		case "PageDown":case "K":case "k":
+		case "ArrowRight":case "J":
+			if(this.hasNext()) {this.doNext();r=(this.animatedStoneOn?4:1);} break;
+		case "PageDown":case "K":
 			if(this.hasNext()) {this.doTenNext();r=1;} break;
-		case "End":case "L":case "l":
+		case "End":case "L":
 			if(this.hasNext()) {this.doLast();r=1;} break;
-		case "ArrowUp":case "N":case "n":
+		case "ArrowUp":case "U":
 			if(this.hasVariation(s)) {this.doTopVariation(s);r=2;} break;
-		case "ArrowDown":case "U":case "u":
+		case "ArrowDown":case "N":
 			if(this.hasVariation(s)) {this.doBottomVariation(s);r=2;} break;
 	}
 	if(r)
 	{
 		if(r&1) this.moveFocusMarkOnLast();
-		else this.moveFocusMarkOnVariationOnFocus();
+		else if(r&2) this.moveFocusMarkOnVariationOnFocus();
+		// if r==4, stones are animated
+		// the focus mark is moved at the end of the animation
 		ev.preventDefault();
 	}
 };

@@ -2329,26 +2329,8 @@ dont beaucoup ont aussi des classes ou des ids, mais c'est moins systématique</
 <ul>
 <li>div.mxHeaderDiv (<span class="parameter">headerBtnOn</span>=0)
 	<ul>
-	<li>p.mxTitleP
-		<ul>
-		<li>span.mxEVTitleSpan</li>
-		<li>span.mxROTitleSpan</li>
-		</ul>
-	</li>
-	<li>p.mxHeaderContentP
-		<ul>
-		<li>span.mxHeaderSpan</li>
-		<li>span.mxPBSpan</li>
-		<li>span.mxPWSpan</li>
-		<li>span.mxDTSpan</li>
-		<li>span.mxPCSpan</li>
-		<li>span.mxRUSpan</li>
-		<li>span.mxTMSpan</li>
-		<li>span.mxKMSpan</li>
-		<li>span.mxHASpan</li>
-		<li>span.mxNMSpan</li>
-		<li>span.mxRESpan</li>
-		</ul>
+	<li>p.mxTitleP</li>
+	<li>p.mxHeaderContentP</li>
 	<li>p.mxGeneralCommentP</li>
 	</ul>
 </li>

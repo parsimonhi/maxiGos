@@ -51,7 +51,8 @@ mxG.D[mxG.K].a.oldJapaneseIndicesOn=0; // (0,1) default 0 (require indicesOn=1)
 mxG.D[mxG.K].a.eraseGridUnder=1; // (0,1) default 0
 // About
 mxG.D[mxG.K].a.aboutBtnOn=1; // (0,1) default 0
-mxG.D[mxG.K].a.aboutAlias="About_Short"; // (string) default null
+mxG.D[mxG.K].a.aboutAlias="About_wgo"; // (string) default null
+mxG.en("About_wgo","<span aria-hidden='true'>?</span>");
 mxG.D[mxG.K].a.aboutThemeAlias="Theme_WGo"; // (string) default null
 mxG.en("Theme_WGo","WGo (<a href=\"http://wgo.waltheri.net/\">WGo.js</a> copyright Jan Prokop)"); 
 // Cartouche
@@ -62,7 +63,8 @@ mxG.D[mxG.K].a.gotoBoxOn=0; // (0,1) default 0
 mxG.D[mxG.K].a.headerBoxOn=0; // (0,1) default 0
 mxG.D[mxG.K].a.headerBtnOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.hideInHeader="NumOfMoves,Place,Rules,TimeLimits"; // (set) default ""
-mxG.D[mxG.K].a.headerAlias="Header_Short"; // (string) default null
+mxG.D[mxG.K].a.headerAlias="Header_wgo"; // (string) default null
+mxG.en("Header_wgo","<span aria-hidden='true'>I</span>");
 // Navigation
 mxG.D[mxG.K].a.navigations="First,TenPred,Pred,Goto,Next,TenNext,Last"; // (set) default "First,TenPred,Pred,Next,TenNext,Last"
 // Variation

@@ -1121,7 +1121,7 @@ If null, maxiGos displays "PNG" on the button.</td>
 <td>Specify what element of the translation array
 one has to use to display the label of the "Svg" button.
 The string should contain a "_", and "_" alone means an empty string.
-If null, maxiGos displays "Svg" on the button.</td>
+If null, maxiGos displays "SVG" on the button.</td>
 <td>A string</td>
 <td>null</td>
 </tr>
@@ -1874,26 +1874,8 @@ and its class is "mxGlobalBoxDiv".</p>
 <ul>
 <li>div.mxHeaderDiv (<span class="parameter">headerBtnOn</span>=0)
 	<ul>
-	<li>p.mxTitleP
-		<ul>
-		<li>span.mxEVTitleSpan</li>
-		<li>span.mxROTitleSpan</li>
-		</ul>
-	</li>
-	<li>p.mxHeaderContentP
-		<ul>
-		<li>span.mxHeaderSpan</li>
-		<li>span.mxPBSpan</li>
-		<li>span.mxPWSpan</li>
-		<li>span.mxDTSpan</li>
-		<li>span.mxPCSpan</li>
-		<li>span.mxRUSpan</li>
-		<li>span.mxTMSpan</li>
-		<li>span.mxKMSpan</li>
-		<li>span.mxHASpan</li>
-		<li>span.mxNMSpan</li>
-		<li>span.mxRESpan</li>
-		</ul>
+	<li>p.mxTitleP</li>
+	<li>p.mxHeaderContentP</li>
 	<li>p.mxGeneralCommentP</li>
 	</ul>
 </li>

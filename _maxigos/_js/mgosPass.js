@@ -2,8 +2,6 @@
 if(!mxG.G.prototype.createPass)
 {
 mxG.fr("Pass","Passe");
-mxG.fr("Pass_Short","P");
-mxG.en("Pass_Short","P");
 mxG.G.prototype.doPass=function()
 {
 	if(this.hasC("Edit")) this.checkEditPlay(0,0);
@@ -68,7 +66,12 @@ mxG.G.prototype.updatePass=function()
 mxG.G.prototype.initPass=function()
 {
 	if(this.passBtnOn)
-		this.addBtn(this.getE("PassDiv"),{n:"Pass",v:this.alias("Pass","passAlias")});
+	{
+		let o={n:"Pass",v:this.alias("Pass","passAlias")},
+			s=this.local("Pass");
+		if(o.v!=s) o.t=s;
+		this.addBtn(this.getE("PassDiv"),o);
+	}
 };
 mxG.G.prototype.createPass=function()
 {

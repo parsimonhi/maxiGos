@@ -14,7 +14,7 @@ mxG.fr("Circle","Cercle");
 mxG.fr("Empty goban","Goban vide");
 mxG.fr("Cursor on","Curseur sur");
 mxG.fr("Goban","Goban");
-mxG.fr("Last played move","dernier coup joué");
+mxG.fr("Last played move","Dernier coup joué");
 mxG.fr("Mark","Marque");
 mxG.fr("Partial view","Vue partielle");
 mxG.fr("Square","Carré");
@@ -77,7 +77,7 @@ mxG.G.prototype.addBtn=function(e,b)
 {
 	let k=this.k,a=document.createElement("button");
 	a.id=this.n+b.n+"Btn";
-	a.title=(b.t?b.t:this.local(b.n));
+	if(b.t) a.title=b.t;
 	if(b.v) a.innerHTML=b.v;
 	a.classList.add("mxBtn","mx"+b.n+"Btn");
 	if(b.first) e.prepend(a); else e.appendChild(a);

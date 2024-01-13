@@ -3,9 +3,7 @@ if(!mxG.G.prototype.createSgf)
 {
 mxG.fr(" Close ","Fermer");
 mxG.fr("SGF","SGF");
-mxG.fr("SGF_Short","S");
 mxG.fr("SGF_Long","Télécharger le SGF");
-mxG.en("SGF_Short","S");
 mxG.en("SGF_Long","Download SGF");
 mxG.nl2br=function(s)
 {
@@ -252,7 +250,12 @@ mxG.G.prototype.doSgf=function()
 mxG.G.prototype.initSgf=function()
 {
 	if(this.sgfBtnOn)
-		this.addBtn(this.getE("SgfDiv"),{n:"Sgf",v:this.alias("SGF","sgfAlias")});
+	{
+		let o={n:"Sgf",v:this.alias("SGF","sgfAlias")},
+			s=this.local("SGF");
+		if(o.v!=s) o.t=s;
+		this.addBtn(this.getE("SgfDiv"),o);
+	}
 };
 mxG.G.prototype.createSgf=function()
 {

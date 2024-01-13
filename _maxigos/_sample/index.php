@@ -154,11 +154,11 @@ function langMenu()
 {
 	global $sample,$lang,$lang2,$HomeLabel,$DocumentationLabel;
 	$s="<nav>\n";
-	$s.="<a lang=\"en\" href=\"?sample=$sample&lang=en\"><img alt=\"english\" src=\"../_img/flag/en.svg\"></a>\n";
-	$s.="<a lang=\"fr\" href=\"?sample=$sample&lang=fr\"><img alt=\"français\" src=\"../_img/flag/fr.svg\"></a>\n";
-	$s.="<a lang=\"ja\" href=\"?sample=$sample&lang=ja\"><img alt=\"日本語\" src=\"../_img/flag/ja.svg\"></a>\n";
-	$s.="<a lang=\"zh-hans\" href=\"?sample=$sample&lang=zh-hans\"><img alt=\"简体字\" src=\"../_img/flag/zh-cn.svg\"></a>\n";
-	$s.="<a lang=\"zh-hant\" href=\"?sample=$sample&lang=zh-hant\"><img alt=\"繁體字\" src=\"../_img/flag/zh-tw.svg\"></a>\n";
+	$s.="<a lang=\"en\" href=\"?sample=$sample&lang=en\"><img width=\"30\" height=\"20\" alt=\"english\" src=\"../_img/flag/en.svg\"></a>\n";
+	$s.="<a lang=\"fr\" href=\"?sample=$sample&lang=fr\"><img width=\"30\" height=\"20\" alt=\"français\" src=\"../_img/flag/fr.svg\"></a>\n";
+	$s.="<a lang=\"ja\" href=\"?sample=$sample&lang=ja\"><img width=\"30\" height=\"20\" alt=\"日本語\" src=\"../_img/flag/ja.svg\"></a>\n";
+	$s.="<a lang=\"zh-hans\" href=\"?sample=$sample&lang=zh-hans\"><img width=\"30\" height=\"20\" alt=\"简体字\" src=\"../_img/flag/zh-cn.svg\"></a>\n";
+	$s.="<a lang=\"zh-hant\" href=\"?sample=$sample&lang=zh-hant\"><img width=\"30\" height=\"20\" alt=\"繁體字\" src=\"../_img/flag/zh-tw.svg\"></a>\n";
 	$s.="<a href=\"../../?lang=$lang\">$HomeLabel</a>\n";
 	$s.="<a href=\"../_doc/_$lang2/documentation.php\">$DocumentationLabel</a>\n";
 	$s.="</nav>\n";
@@ -233,32 +233,30 @@ body
 	padding:0;
 	min-width:10em;
 }
-header, footer
-{
-	padding:4px;
-	background:#0002;
-}
-section.sample>nav
+header, footer, section.sample>nav
 {
 	background:#0002;
-	display:block;
 }
 section.sampleBody
 {
 	padding:0.125em;
 }
+header nav, footer nav, section.sample>nav
+{
+	display:flex;
+	flex-wrap:wrap;
+}
 header nav a, footer nav a, section.sample>nav a
 {
-	display:inline-block;
-	padding:0.5em;
+	display:flex;
 	color:#000;
-	vertical-align:middle;
+	margin:0.5em;
 }
 header nav img, footer nav img
 {
-	width:2.1em;
+	width:1.875em;
 	height:auto;
-	vertical-align:center;
+	margin:auto;
 }
 h1.z
 {
@@ -283,6 +281,10 @@ h3.z
 p.z
 {
 	margin:1em 0.5em;
+}
+p.z a
+{
+	color:inherit;
 }
 .aloneLink
 {
@@ -1483,7 +1485,7 @@ data-maxigos-sgf="_sgf/game/TV9x9-<?=(($lang=="fr")?"fr":"en")?>.sgf">
 <p class="z">Theme=<a href="https://github.com/jkk/eidogo/tree/master">Eidogo</a>, code=<a href="https://github.com/parsimonhi/maxiGos">maxiGos</a></p>
 <?php }?>
 <?php if (($sample=="Forum")) {?>
-<p class="z">Theme=Forum</p>
+<p class="z">Theme=Forum (<a href="https://www.gludion.com/go/">Goswf</a>)</p>
 <?php }?>
 <?php if (($sample=="Iroha")) {?>
 <p class="z">Theme=Iroha</p>

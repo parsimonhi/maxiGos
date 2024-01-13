@@ -2,6 +2,7 @@
 {
 	--gobanMaxWidth:calc(1em * 511 / 16);
 	max-width:calc(var(--gobanMaxWidth) * 54.5 / 30);
+	min-width:10em;
 	background:#f3f3f3;
 	margin:0 auto;
 	overflow:auto;
@@ -22,6 +23,7 @@
 /* common */
 .mxTatamiTheme .mxGobanParentDiv
 {
+	box-sizing:border-box;
 	margin:0 auto;
 	background-image:url(data:image/jpg;base64,/9j/4AAQSkZJRgABAQEASABIAAD//gAcQ3JlYXRlZCB3aXRoIEdJTVAgb24gYSBNYWP/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wgARCAA8ABQDAREAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAwUAAQQCB//EABgBAQEBAQEAAAAAAAAAAAAAAAABAgUG/9oADAMBAAIQAxAAAAH2XynVlYTRFDilISGYrzedxTmupKrHR9Jk5pYWcQShQrj/xAAiEAACAQMEAgMAAAAAAAAAAAABAgMAERIEFCEjEyIxMkL/2gAIAQEAAQUCP2VbGaJnFmwlDKkEZvbrdchBMqUQfKmVarMV+lAWpdOXoLw49NKnPwLBjvttWPZGtTqCP//EABQRAQAAAAAAAAAAAAAAAAAAAED/2gAIAQMBAT8BR//EABgRAAMBAQAAAAAAAAAAAAAAAAABERAw/9oACAECAQE/AZkIImLpdYj/xAAuEAABAgIFCgcAAAAAAAAAAAABAAIDERIhYXKiIjFBQlGCkbLBwjNScYOhsdH/2gAIAQEABj8CnaThkmWOYOAUOWhsihd71FsbEOJRb/RbndNOtpjiVEJ1nTTr55FD9YZw1qFLyKlvYZJlhZ8BMlqtkUK9Hen16InMFGytfoFLZ+0kRtJHGtZvEy1vHkTPb+lCuL//xAAlEAACAQEIAgMBAAAAAAAAAAABEQAhMUFhcZGhscGB8FHR4fH/2gAIAQEAAT8hzHNVvBYiDmA7lRy0sWLLlWCakeKNooBYHiiGWYAo0QCoNwBY1hpEH+VPAjs3fJAdQsWF4/UYSI7BTlARqpepjDB6PbKuoHslcwWNGpMufF/XaWb16kRisEL4QWjNZUPjR+kLiRRTyNOooK0oWdAlIySTfOePW4RuZ//aAAwDAQACAAMAAAAQL7skT+bfoDxr/8QAGBEBAAMBAAAAAAAAAAAAAAAAEQABIBD/2gAIAQMBAT8Q0cIYqupHf//EABkRAAMBAQEAAAAAAAAAAAAAAAABESEQMf/aAAgBAgEBPxCaRLwhjeFJaUxvBOL3j9JvZg1ohGBuui48H//EACEQAQACAQQDAQEBAAAAAAAAAAEAETEhUYGhQXGxkcHw/9oACAEBAAE/EAaLQDrsfsH8gStFiYFEnkuoYNbuo0Qi6ObIIAIEHKX3cANQAX293MIFpbumdQcyk/ZP05iLAoZ4poVIUu18GvYlZqjNcq+CB0KCr8hnQRHWBQ+wMjGgRGG1eH3KCVRG37GUs1lt8Z/HMIrbEqngNqvmCJs3VWP8XzFkNJp3T8iRNtBLsovxxKEFhnYB0Zn4Uy4FN4b9wazh2Wqar+s12tFr4s/s/9k=);
 	text-align:center;
@@ -35,7 +37,8 @@
 .mxTatamiTheme.mxTreeConfig .mxGobanParentDiv
 {
 	/* to center the goban vertically *
-	/* if it is less hight than bowl */
+	/* if it is less hight than bowls */
+	/* and to have enough room to display bowls */
 	min-height:calc(var(--gobanMaxWidth) * 3 / 5);
 	display:flex;
 	flex-direction:column;
@@ -299,8 +302,7 @@
 {
 	position:absolute;
 	max-width:calc(var(--gobanMaxWidth) / 2);
-	height:calc(var(--gobanMaxWidth) * 3 / 5);
-	max-height:100%;
+	height:100%;
 	overflow:hidden;
 	text-align:center;
 }
@@ -313,15 +315,15 @@
 {
 	text-align:left;
 	top:0;
-	margin-right:calc(var(--gobanMaxWidth) * 41 / 30);
-	left:calc(var(--gobanMaxWidth) * 1 / 60);
+	left:0;
+	margin-right:calc(var(--gobanMaxWidth) * 81 / 60);
 }
 .mxTatamiTheme .mxCartoucheDiv:last-of-type .mxPrisonersDiv
 {
 	text-align:right;
 	bottom:0;
-	margin-left:calc(var(--gobanMaxWidth) * 41 / 30);
-	right:calc(var(--gobanMaxWidth) * 1 / 60);
+	right:0;
+	margin-left:calc(var(--gobanMaxWidth) * 81 / 60);
 }
 .mxTatamiTheme .mxPrisonersSpan
 {
@@ -331,6 +333,14 @@
 {
 	display:inline-block;
 	width:calc(var(--gobanMaxWidth) / 3);
+}
+.mxTatamiTheme .mxCartoucheDiv:first-of-type .mxPrisonersStoneSpan
+{
+	vertical-align:top;
+}
+.mxTatamiTheme .mxCartoucheDiv:last-of-type .mxPrisonersStoneSpan
+{
+	vertical-align:baseline; /* not bottom */
 }
 .mxTatamiTheme .mxPrisonersStoneSpan svg
 {
@@ -342,7 +352,7 @@
 	/* used as a trick to hide bowl and cap when narrow width */
 	display:inline-block;
 	width:1px;
-	height:calc(var(--gobanMaxWidth) * 3 / 5);
+	height:100%;
 	overflow:hidden;
 	opacity:0;
 }
@@ -515,22 +525,21 @@
 	display:flex;
 	justify-content:center;
 	align-items:center;
+	gap:2%;
 }
 .mxTatamiTheme .mxNavigationDiv button
 {
 	flex:1 1;
 	border:0;
 	background:none;
-	margin:0 2%;
 	padding:0;
 	max-width:4em;
 }
 .mxTatamiTheme .mxNavigationDiv button svg
 {
-	max-width:60%;
-	width:100%;
+	width:60%;
 	height:auto;
-	margin:20% auto;
+	margin:20%;
 }
 .mxTatamiTheme .mxNavigationDiv button.mxAutoBtn[disabled],
 .mxTatamiTheme .mxNavigationDiv button.mxPauseBtn[disabled]

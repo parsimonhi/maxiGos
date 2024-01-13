@@ -2,8 +2,6 @@
 if(!mxG.G.prototype.createBackToGame)
 {
 mxG.fr("Back to game","Revenir à la partie");
-mxG.fr("BackToGame_Short","R");
-mxG.en("BackToGame_Short","B");
 mxG.G.prototype.isInMain=function(aN)
 {
 	let bN=aN;
@@ -29,7 +27,12 @@ mxG.G.prototype.updateBackToGame=function()
 mxG.G.prototype.initBackToGame=function()
 {
 	if(this.backToGameBtnOn)
-		this.addBtn(this.getE("BackToGameDiv"),{n:"BackToGame",v:this.alias("Back to game","backToGameAlias")});
+	{
+		let o={n:"BackToGame",v:this.alias("Back to game","backToGameAlias")},
+			s=this.local("Back to game");
+		if(o.v!=s) o.t=s;
+		this.addBtn(this.getE("BackToGameDiv"),o);
+	}
 };
 mxG.G.prototype.createBackToGame=function()
 {

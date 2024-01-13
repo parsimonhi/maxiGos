@@ -40,8 +40,6 @@ mxG.fr(" wins"," gagne");
 mxG.fr("no result","sans résultat");
 mxG.fr("draw","partie nulle");
 mxG.fr("unknown","inconnu");
-mxG.fr("Info_Short","E");
-mxG.en("Info_Short","H");
 mxG.G.prototype.popInfo=function(aPropName)
 {
 	// pop info from this.kidOnFocus(this.rN)

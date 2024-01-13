@@ -132,6 +132,14 @@ chapter of the documentation for more details.</p>
 <?=printOneInternationalizationScriptLine('zh-hans')?>
 <?=printOneInternationalizationScriptLine('zh-hant')?>
 </ul>
+<h2>What is new in the 8.02 version?</h2>
+<ul>
+<li>Improved the functioning of tooltips, and texts by screen readers.</li>
+<li>Changing key combinations to navigate the move tree
+(you must now press the "Shift" key instead of the "Option" or "Alt" key while pressing one of the keyboard arrows to navigate in the move tree).</li>
+<li>Simplification of tags and classes of the "Header" component.</li>
+<li>Various minor changes.</li>
+</ul>
 <h2>What is new in the 8.01 version?</h2>
 <ul>
 <li>Fixed a bug in mgosInfo.js which prevented the SGF from being updated when the header was modified.</li>

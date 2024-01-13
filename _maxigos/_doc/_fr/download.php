@@ -128,6 +128,15 @@ include("../../_php/lib.php");
 <?=printOneInternationalizationScriptLine('zh-hans')?>
 <?=printOneInternationalizationScriptLine('zh-hant')?>
 </ul>
+<h2>Quoi de neuf dans la version 8.02 ?</h2>
+<ul>
+<li>Amélioration du fonctionnement des infobulles et des textes lus par les lecteurs d'écran.</li>
+<li>Modification des combinaisons de touche pour naviguer dans l'arbre des coups
+(on doit désormais appuyer sur la touche "Majuscule" au lieu de la touche "Option"
+ou "Alt" tout en appuyant sur l'une des flèches du clavier pour naviguer dans l'arbre des coups).</li>
+<li>Simplification des balises et classes du composant "Header".</li>
+<li>Diverses modifications mineures.</li>
+</ul>
 <h2>Quoi de neuf dans la version 8.01 ?</h2>
 <ul>
 <li>Correction d'un bug dans mgosInfo.js qui empêchait le SGF d'être mis à jour lorsque l'on en modifiait l'entête.</li>

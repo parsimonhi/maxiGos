@@ -82,6 +82,7 @@ mxG.G.prototype.doAnimatedStone=function(f)
 					mxG.D[z].animatedList.shift();
 				}
 				mxG.D[z][f]();
+				if(f=="doNextAsUsual") mxG.D[z].moveFocusMarkOnLast();
 			},this.animatedStoneTime);
 		}
 		else this[f]();

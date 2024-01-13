@@ -1,9 +1,9 @@
-// maxiGos v8 Forum+Tree copyright 1998-2023 FM&SH, BSD license
+// maxiGos v8 Forum+Tree copyright 1998-2024 FM&SH, BSD license
 if(typeof mxG=='undefined') mxG={};
 if(!mxG.V)
 {
-mxG.V="8.01";
-mxG.Y="2023";
+mxG.V="8.02";
+mxG.Y="2024";
 mxG.C="FM&SH";
 mxG.D=[];
 mxG.K=0;
@@ -974,11 +974,10 @@ mxG.S.prototype.makeGoban=function()
 	s+=" font-family=\""+this.ff+"\" font-size=\""+this.fs+"\" font-weight=\""+this.fw+"\"";
 	s+=" stroke-linecap=\"square\" text-anchor=\"middle\"";
 	s+=">";
-	s+="<title id=\""+this.p.n+"GobanTitle\"></title>";
-	s+="<desc id=\""+this.p.n+"GobanDesc\"></desc>";
+	s+="<my-title id=\""+this.p.n+"GobanTitle\"></my-title>";
+	s+="<my-desc id=\""+this.p.n+"GobanDesc\"></my-desc>";
 	if(this.in3dOn)
 		s+="<defs>"+this.makeGradient("Black")+this.makeGradient("White")+"</defs>";
-	s+=this.makeBackground("Ghost");
 	s+=this.makeBackground("Whole");
 	s+=this.makeBackground("Outer");
 	if(this.indicesOn) s+=this.makeIndices();
@@ -1226,7 +1225,7 @@ mxG.S.prototype.makeOneInfo=function(i,j,k,nat,str,sayLast)
 			else
 			{
 				if(this.isLabel(str)) str=this.removeLabelDelimiters(str);
-				s+=str;
+				s+="'"+str+"'";
 			}
 		}
 	}
@@ -1234,30 +1233,44 @@ mxG.S.prototype.makeOneInfo=function(i,j,k,nat,str,sayLast)
 	if(this.p.lang!="ja") this.latinCoordinates=1;
 	s+=this.k2c(i)+this.k2n(j);
 	if(this.p.lang!="ja") this.latinCoordinates=0;
-	if(sayLast&&last) s+=", "+this.p.local("Last played move");
+	if(sayLast&&last) s+=". "+this.p.local("Last played move");
 	return s;
 };
-mxG.S.prototype.makeGobanTitle=function()
+mxG.S.prototype.makeShortGobanTitle=function()
 {
 	let s="",xf,yf,k,nat,str;
-	s=this.p.local("Goban")+" "+this.DX+"x"+this.DY;
-	if((this.xl!=1)||(this.yt!=1)||(this.xr!=this.DX)||(this.yb!=this.DY))
-	{
-		s+=", "+this.p.local("Partial view");
-		s+=" "+this.k2c(this.xl)+this.k2n(this.yb);
-		s+=" "+this.k2c(this.xr)+this.k2n(this.yt);
-	}
 	if((xf=this.p.xFocus)&&(yf=this.p.yFocus))
 	{
 		k=this.p.xy(xf,yf);
 		nat=this.vNat[k];
 		str=this.vStr[k];
-		if(s) s+=", ";
+		if(s) s+=". ";
 		s+=this.p.local("Cursor on");
 		if(s) s+=" ";
 		s+=this.makeOneInfo(xf,yf,k,nat,str,1);
 	}
-	return s;
+	if(this.p.whenVirtualNext)
+	{
+		let x,y;
+		x=this.p.whenVirtualNext.x;
+		y=this.p.whenVirtualNext.y;
+		k=this.p.xy(x,y);
+		nat=this.vNat[k];
+		str=this.vStr[k];
+		s=this.makeOneInfo(x,y,k,nat,str,0)+". "+s;
+	}
+	return s+".";
+};
+mxG.S.prototype.makeGobanTitle=function()
+{
+	let s=this.p.local("Goban")+" "+this.DX+"x"+this.DY;
+	if((this.xl!=1)||(this.yt!=1)||(this.xr!=this.DX)||(this.yb!=this.DY))
+	{
+		s+=". "+this.p.local("Partial view");
+		s+=" "+this.k2c(this.xl)+this.k2n(this.yb);
+		s+=" "+this.k2c(this.xr)+this.k2n(this.yt);
+	}
+	return s+". "+this.makeShortGobanTitle();
 };
 mxG.S.prototype.makeGobanDescription=function()
 {
@@ -1270,29 +1283,32 @@ mxG.S.prototype.makeGobanDescription=function()
 			str=this.vStr[k];
 			if((nat=="B")||(nat=="W")||str)
 			{
-				if(s) s+=", ";
+				if(s) s+=". ";
 				s+=this.makeOneInfo(i,j,k,nat,str,0);
 			}
 		}
 	if(!s) s=this.p.local("Empty goban");
-	return s;
+	return s+".";
 };
-mxG.S.prototype.setGobanFocusTitleDesc=function(verbose)
+mxG.S.prototype.setGobanFocusTitleDesc=function(kind)
 {
-	let x=this.p.xFocus,y=this.p.yFocus,ghost,a;
+	if(this.p.noLabelledBy) return;
+	let x=this.p.xFocus,y=this.p.yFocus,z;
 	if(!this.p.inView(x,y)) {x=0;y=0;}
 	if(x&&y)this.p.getE("Focus").innerHTML=this.makeFocusMark(this.i2x(x),this.j2y(y));
 	else this.p.getE("Focus").innerHTML="";
-	this.p.getE("GobanTitle").innerHTML=this.makeGobanTitle()+(verbose?".":"");
-	this.p.getE("GobanDesc").innerHTML=this.makeGobanDescription();
-	a=this.p.n+"GobanTitle"+(verbose?" "+this.p.n+"GobanDesc":"");
-	this.p.getE("GobanSvg").setAttribute("aria-labelledby",a);
-	ghost=this.p.getE("GobanSvg").querySelector('.mxGhostRect');
-	if(ghost)
+	if(kind>0) this.p.getE("GobanDesc").innerHTML=this.makeGobanDescription();
+	if(this.p.shortTitleOnly)
 	{
-		if(ghost.style.display) ghost.style.display="";
-		else ghost.style.display="none";
+		this.p.getE("GobanTitle").innerHTML=this.makeShortGobanTitle();
+		z=this.p.n+"GobanTitle";
 	}
+	else
+	{
+		this.p.getE("GobanTitle").innerHTML=this.makeGobanTitle();
+		z=this.p.n+"GobanTitle"+" "+this.p.n+"GobanDesc";
+	}
+	this.p.getE("GobanSvg").setAttribute("aria-labelledby",z);
 };
 mxG.S.prototype.drawGoban=function(vNat,vStr)
 {
@@ -1421,7 +1437,7 @@ mxG.fr("Circle","Cercle");
 mxG.fr("Empty goban","Goban vide");
 mxG.fr("Cursor on","Curseur sur");
 mxG.fr("Goban","Goban");
-mxG.fr("Last played move","dernier coup joué");
+mxG.fr("Last played move","Dernier coup joué");
 mxG.fr("Mark","Marque");
 mxG.fr("Partial view","Vue partielle");
 mxG.fr("Square","Carré");
@@ -1484,7 +1500,7 @@ mxG.G.prototype.addBtn=function(e,b)
 {
 	let k=this.k,a=document.createElement("button");
 	a.id=this.n+b.n+"Btn";
-	a.title=(b.t?b.t:this.local(b.n));
+	if(b.t) a.title=b.t;
 	if(b.v) a.innerHTML=b.v;
 	a.classList.add("mxBtn","mx"+b.n+"Btn");
 	if(b.first) e.prepend(a); else e.appendChild(a);
@@ -2422,9 +2438,41 @@ mxG.G.prototype.moveFocusInView=function()
 	this.xFocus=Math.min(Math.max(this.xFocus,this.xl),this.xr);
 	this.yFocus=Math.min(Math.max(this.yFocus,this.yt),this.yb);
 };
+mxG.G.prototype.moveFocusMarkOnLast=function()
+{
+	let a,e,g,m=this.gor.play;
+	if(this.gor.getAct(m)=="")
+	{
+		this.xFocus=this.gor.getX(m);
+		this.yFocus=this.gor.getY(m);
+		this.moveFocusInView();
+	}
+	this.scr.setGobanFocusTitleDesc(0);
+};
+mxG.G.prototype.moveFocusMarkOnVariationOnFocus=function()
+{
+	let g=this.getE("GobanSvg"),e;
+	e=g.querySelector(".mxVariation.mxOnFocus[data-maxigos-ij]");
+	if(e)
+	{
+		let v=e.getAttribute("data-maxigos-ij");
+		if(v)
+		{
+			let c=v.split("_");
+			if(c&&(c.length==2))
+			{
+				this.xFocus=-(-c[0]);
+				this.yFocus=-(-c[1]);
+				this.moveFocusInView();
+				this.scr.setGobanFocusTitleDesc(0);
+			}
+		}
+	}
+};
 mxG.G.prototype.doClickGoban=function(ev)
 {
 	let c=this.scr.getGxy(ev);
+	this.shortTitleOnly=1;
 	if(!this.inView(c.x,c.y)) {this.plonk();return;}
 	this.xFocus=c.x;
 	this.yFocus=c.y;
@@ -2438,6 +2486,7 @@ mxG.G.prototype.doClickGoban=function(ev)
 mxG.G.prototype.doKeydownGoban=function(ev)
 {
 	let r=0;
+	this.shortTitleOnly=1;
 	if((ev.key==" ")||(ev.key=="Enter"))
 	{
 		let x=this.xFocus,y=this.yFocus;
@@ -2453,7 +2502,7 @@ mxG.G.prototype.doKeydownGoban=function(ev)
 		ev.preventDefault();
 		return;
 	}
-	if(ev.altKey||ev.key.match(/^[FGHJKLUN]$/i))
+	if(ev.shiftKey||ev.altKey)
 	{
 		if(this.hasC("Navigation")) this.doKeydownNavigation(ev);
 		else if(this.hasC("Solve")) this.doKeydownSolve(ev);
@@ -2461,10 +2510,10 @@ mxG.G.prototype.doKeydownGoban=function(ev)
 	}
 	switch(ev.key)
 	{
-		case "ArrowLeft":this.xFocus--;r=1;break;
-		case "ArrowRight":this.xFocus++;r=1;break;
-		case "ArrowUp":this.yFocus--;r=1;break;
-		case "ArrowDown":this.yFocus++;r=1;break;
+		case "ArrowLeft":case "h":this.xFocus--;r=1;break;
+		case "ArrowRight":case "j":this.xFocus++;r=1;break;
+		case "ArrowUp":case "u":this.yFocus--;r=1;break;
+		case "ArrowDown":case "n":this.yFocus++;r=1;break;
 	}
 	if(r)
 	{
@@ -2478,6 +2527,11 @@ mxG.G.prototype.doKeydownGoban=function(ev)
 		ev.preventDefault();
 	}
 };
+mxG.G.prototype.doBlurGoban=function(ev)
+{
+	this.shortTitleOnly=0;
+	this.scr.setGobanFocusTitleDesc(0);
+};
 mxG.G.prototype.setGoban=function()
 {
 	let k=this.k,g;
@@ -2488,6 +2542,7 @@ mxG.G.prototype.setGoban=function()
 	g.getMClick=mxG.getMClick;
 	g.addEventListener("click",function(ev){mxG.D[k].doClickGoban(ev);});
 	g.addEventListener("keydown",function(ev){mxG.D[k].doKeydownGoban(ev);});
+	g.addEventListener("blur",function(ev){mxG.D[k].doBlurGoban(ev);});
 	if(this.hasC("Navigation"))
 		g.addEventListener("wheel",function(ev){mxG.D[k].doWheelNavigation(ev);});
 	if(this.hasC("Edit"))
@@ -2608,7 +2663,6 @@ mxG.G.prototype.createGoban=function()
 if(!mxG.G.prototype.createOptions)
 {
 mxG.fr("Options","Options");
-mxG.fr("Options_Short","O");
 mxG.fr("Cancel","Annuler");
 mxG.fr("OK","OK");
 mxG.fr("Indices","Affichage des coordonnées");
@@ -2627,7 +2681,6 @@ mxG.fr(" with "," avec ");
 mxG.fr("Loop time","Temps pour l'affichage en boucle");
 mxG.fr("Animated stone","Pierres animées");
 mxG.fr("Animated stone time","Temps pour l'animation des pierres");
-mxG.en("Options_Short","O");
 mxG.G.prototype.getValidNum=function(v)
 {
 	let n=parseInt(v);
@@ -2975,7 +3028,12 @@ mxG.G.prototype.updateOptions=function()
 mxG.G.prototype.initOptions=function()
 {
 	if(this.optionsBtnOn)
-		this.addBtn(this.getE("OptionsDiv"),{n:"Options",v:this.alias("Options","optionsAlias")});
+	{
+		let o={n:"Options",v:this.alias("Options","optionsAlias")},
+			s=this.local("Options");
+		if(o.v!=s) o.t=s;
+		this.addBtn(this.getE("OptionsDiv"),o);
+	}
 };
 mxG.G.prototype.createOptions=function()
 {
@@ -3051,37 +3109,6 @@ mxG.G.prototype.setNFocus=function(b)
 	e=this.getE(b+"Btn");
 	if(e&&!e.disabled) {if(a!=e) e.focus();return;}
 	this.getE("NavigationDiv").focus();
-};
-mxG.G.prototype.moveFocusMarkOnLast=function()
-{
-	let a,e,g,m=this.gor.play;
-	if(this.gor.getAct(m)=="")
-	{
-		this.xFocus=this.gor.getX(m);
-		this.yFocus=this.gor.getY(m);
-		this.moveFocusInView();
-	}
-	this.scr.setGobanFocusTitleDesc(0);
-};
-mxG.G.prototype.moveFocusMarkOnVariationOnFocus=function()
-{
-	let g=this.getE("GobanSvg"),e;
-	e=g.querySelector(".mxVariation.mxOnFocus[data-maxigos-ij]");
-	if(e)
-	{
-		let v=e.getAttribute("data-maxigos-ij");
-		if(v)
-		{
-			let c=v.split("_");
-			if(c&&(c.length==2))
-			{
-				this.xFocus=-(-c[0]);
-				this.yFocus=-(-c[1]);
-				this.moveFocusInView();
-				this.scr.setGobanFocusTitleDesc(0);
-			}
-		}
-	}
 };
 mxG.G.prototype.doFirst=function()
 {
@@ -3181,30 +3208,30 @@ mxG.G.prototype.hasVariation=function(s)
 mxG.G.prototype.doKeydownNavigation=function(ev)
 {
 	if(this.hasC("Score")&&this.canPlaceScore) return false;
-	let r=0,s=ev.shiftKey?1:0;
-	if(ev.altKey||ev.key.match(/^[FGHJKLUN]$/i)) switch(ev.key)
+	let r=0,s=ev.altKey?1:0;
+	if(ev.shiftKey) switch(ev.key)
 	{
-		case "Home":case "F":case "f":
+		case "Home":case "F":
 			if(this.hasPred()) {this.doFirst();r=1;} break;
-		case "PageUp":case "G":case "g":
+		case "PageUp":case "G":
 			if(this.hasPred()) {this.doTenPred();r=1;} break;
-		case "ArrowLeft":case "H":case "h":
+		case "ArrowLeft":case "H":
 			if(this.hasPred()) {this.doPred();r=1;} break;
-		case "ArrowRight":case "J":case "j":
-			if(this.hasNext()) {this.doNext();r=1;} break;
-		case "PageDown":case "K":case "k":
+		case "ArrowRight":case "J":
+			if(this.hasNext()) {this.doNext();r=(this.animatedStoneOn?4:1);} break;
+		case "PageDown":case "K":
 			if(this.hasNext()) {this.doTenNext();r=1;} break;
-		case "End":case "L":case "l":
+		case "End":case "L":
 			if(this.hasNext()) {this.doLast();r=1;} break;
-		case "ArrowUp":case "N":case "n":
+		case "ArrowUp":case "U":
 			if(this.hasVariation(s)) {this.doTopVariation(s);r=2;} break;
-		case "ArrowDown":case "U":case "u":
+		case "ArrowDown":case "N":
 			if(this.hasVariation(s)) {this.doBottomVariation(s);r=2;} break;
 	}
 	if(r)
 	{
 		if(r&1) this.moveFocusMarkOnLast();
-		else this.moveFocusMarkOnVariationOnFocus();
+		else if(r&2) this.moveFocusMarkOnVariationOnFocus();
 		ev.preventDefault();
 	}
 };
@@ -3674,8 +3701,6 @@ mxG.G.prototype.createGoto=function()
 if(!mxG.G.prototype.createPass)
 {
 mxG.fr("Pass","Passe");
-mxG.fr("Pass_Short","P");
-mxG.en("Pass_Short","P");
 mxG.G.prototype.doPass=function()
 {
 	if(this.hasC("Edit")) this.checkEditPlay(0,0);
@@ -3740,7 +3765,12 @@ mxG.G.prototype.updatePass=function()
 mxG.G.prototype.initPass=function()
 {
 	if(this.passBtnOn)
-		this.addBtn(this.getE("PassDiv"),{n:"Pass",v:this.alias("Pass","passAlias")});
+	{
+		let o={n:"Pass",v:this.alias("Pass","passAlias")},
+			s=this.local("Pass");
+		if(o.v!=s) o.t=s;
+		this.addBtn(this.getE("PassDiv"),o);
+	}
 };
 mxG.G.prototype.createPass=function()
 {
@@ -3824,7 +3854,6 @@ mxG.G.prototype.createComment=function()
 if(!mxG.G.prototype.createHeader)
 {
 mxG.fr("Header","Informations");
-mxG.fr("Header_Short","E");
 mxG.fr(" "," ");
 mxG.fr(", ",", ");
 mxG.fr(": "," : ");
@@ -3897,8 +3926,6 @@ mxG.fr("translateTitle",function(ev,ro)
 	s=c+s;
 	if(s&&(a.search(/^[a-zA-Z0-9]/)==0)) s+=", ";else if(s&&a) s+=" ";
 	if(s) s=s.ucF(); else if(a) a=a.ucF();
-	if(s) s="<span class=\"mxEVTitleSpan\">"+s+"</span>";
-	if(a) a="<span class=\"mxROTitleSpan\">"+a+"</span>";
 	return s+a;
 });
 mxG.en("translateTitle",function(ev,ro)
@@ -3974,7 +4001,6 @@ mxG.fr("buildDate",function(s)
 	}
 	return s;
 });
-mxG.en("Header_Short","H");
 mxG.G.prototype.buildTitle=function()
 {
 	let ev,ro,f;
@@ -4080,66 +4106,64 @@ mxG.G.prototype.buildHeader=function(u=0)
 	a=(this.hideBlack)?0:this.getInfo("PB");
 	if(a)
 	{
-		h+="<span class=\"mxPBSpan\"><span class=\"mxHeaderSpan\">"+this.local("Black")+this.local(": ")+"</span>"+a;
+		h+=this.local("Black")+this.local(": ")+a;
 		a=this.getInfo("BR");
 		if(a) h+=this.local(" ")+this.build("Rank",a);
 		if(this.concatTeamToPlayer&&(b=this.getInfo("BT"))) h+=(a?" (":"")+b+(a?")":"");
-		h+="</span>";
 		z=1;
 	}
 	a=(this.hideWhite)?0:this.getInfo("PW");
 	if(a)
 	{
 		if(z) h+="<br>";
-		h+="<span class=\"mxPWSpan\"><span class=\"mxHeaderSpan\">"+this.local("White")+this.local(": ")+"</span>"+a;
+		h+=this.local("White")+this.local(": ")+a;
 		a=this.getInfo("WR");
 		if(a) h+=this.local(" ")+this.build("Rank",a);
 		if(this.concatTeamToPlayer&&(b=this.getInfo("WT"))) h+=(a?" (":"")+b+(a?")":"");
-		h+="</span>";
 		z=1;
 	}
 	if(this.hideDate) a="";else a=this.getInfo("DT");
 	if(a&&!this.concatDateToTitle)
 	{
 		if(z) h+="<br>";
-		h+="<span class=\"mxDTSpan\"><span class=\"mxHeaderSpan\">"+this.local("Date")+this.local(": ")+"</span>"+this.build("Date",a)+"</span>";
+		h+=this.local("Date")+this.local(": ")+this.build("Date",a);
 		z=1;
 	}
 	if(this.hidePlace) a="";else a=this.getInfo("PC");
 	if(a)
 	{
 		if(z) h+="<br>";
-		h+="<span class=\"mxPCSpan\"><span class=\"mxHeaderSpan\">"+this.local("Place")+this.local(": ")+"</span>"+a+"</span>";
+		h+=this.local("Place")+this.local(": ")+a;
 		z=1;
 	}
 	if(this.hideRules) a="";else a=this.getInfo("RU");
 	if(a)
 	{
 		if(z) h+="<br>";
-		h+="<span class=\"mxRUSpan\"><span class=\"mxHeaderSpan\">"+this.local("Rules")+this.local(": ")+"</span>"+this.build("Rules",a)+"</span>";
+		h+=this.local("Rules")+this.local(": ")+this.build("Rules",a);
 		z=1;
 	}
 	if(this.hideTimeLimits) a="";else a=this.getInfo("TM");
 	if(a)
 	{
 		if(z) h+="<br>";
-		h+="<span class=\"mxTMSpan\"><span class=\"mxHeaderSpan\">"+this.local("Time limits")+this.local(": ")+"</span>"+this.build("TimeLimits",a)+"</span>";
+		h+=this.local("Time limits")+this.local(": ")+this.build("TimeLimits",a);
 		z=1;
 	}
 	if(this.hideKomi) a="";else a=this.getInfo("KM");
-	if(a) b="<span class=\"mxHeaderSpan\">"+this.local("Komi")+this.local(": ")+"</span>"+this.build("Komi",a);else b="";
+	if(a) b=this.local("Komi")+this.local(": ")+this.build("Komi",a);else b="";
 	if(b&&!this.concatKomiToResult)
 	{
 		if(z) h+="<br>";
-		h+="<span class=\"mxKMSpan\">"+b+"</span>";
+		h+=b;
 		z=1;
 	}
 	if(this.hideHandicap) a="";else a=this.getInfo("HA");
-	if(a) c="<span class=\"mxHeaderSpan\">"+this.local("Handicap")+this.local(": ")+"</span>"+this.build("handicap",a);else c="";
+	if(a) c=this.local("Handicap")+this.local(": ")+this.build("handicap",a);else c="";
 	if(c&&!this.concatHandicapToResult)
 	{
 		if(z) h+="<br>";
-		h+="<span class=\"mxHASpan\">"+c+"</span>";
+		h+=c;
 		z=1;
 	}
 	if(this.hideNumOfMoves) d="";
@@ -4147,20 +4171,19 @@ mxG.G.prototype.buildHeader=function(u=0)
 	{
 		a=this.getNumOfMoves()+"";
 		if(this.hideNumOfMovesLabel) d=this.build("NumOfMoves",a);
-		else d="<span class=\"mxHeaderSpan\">"+this.local("Number of moves")+this.local(": ")+"</span>"+a;
+		else d=this.local("Number of moves")+this.local(": ")+a;
 		if(!this.concatNumOfMovesToResult)
 		{
 			if(z) h+="<br>";
-			h+="<span class=\"mxNMSpan\">"+d+"</span>";
+			h+=d;
 			z=1;
 		}
 	}
 	if(!this.hideResult&&(a=this.getInfo("RE")))
 	{
 		if(z) h+="<br>";
-		h+="<span class=\"mxRESpan\">";
 		r=this.build("Result",a);
-		if(!this.hideResultLabel) h+=("<span class=\"mxHeaderSpan\">"+this.local("Result")+this.local(": ")+"</span>"+r);
+		if(!this.hideResultLabel) h+=(this.local("Result")+this.local(": ")+r);
 		else h+=r.ucF();
 		if((d&&this.concatNumOfMovesToResult)
 			||(c&&this.concatHandicapToResult)
@@ -4178,7 +4201,6 @@ mxG.G.prototype.buildHeader=function(u=0)
 			if(b2) h+=b2;
 			h+=")";
 		}
-		h+="</span>";
 		z=1;
 	}
 	if(h) h="<p class=\"mxHeaderContentP\">"+h+"</p>";
@@ -4205,7 +4227,12 @@ mxG.G.prototype.updateHeader=function()
 mxG.G.prototype.initHeader=function()
 {
 	if(this.headerBtnOn)
-		this.addBtn(this.getE("HeaderDiv"),{n:"Header",v:this.alias("Header","headerAlias")});
+	{
+		let o={n:"Header",v:this.alias("Header","headerAlias")},
+			s=this.local("Header");
+		if(o.v!=s) o.t=s;
+		this.addBtn(this.getE("HeaderDiv"),o);
+	}
 };
 mxG.G.prototype.createHeader=function()
 {
@@ -4835,6 +4862,8 @@ mxG.D[mxG.K]=new mxG.G(mxG.K,mxG.B);
 mxG.D[mxG.K].theme="Forum";
 mxG.D[mxG.K].config="Tree";
 mxG.D[mxG.K].style=".mxForumTheme{--gobanMaxWidth:calc(1em * 491 / 16);--globalBk:transparent;--outerGobanBk:#0688C822;--barBk:#0688C8CC;--barColor:#000000;--focusColor:#bd2a4d;--onBlackColor:#fff;--onWhiteColor:#000;--commentBk:#0688C822;--headerBk:#0688C844;--treeBk:#0688C844;--dialogBk:#0688C822;--dialogMenuBk:#0688C822;text-align:left;}.mxForumTheme.mxIndicesOff{--gobanMaxWidth:calc(1em * 445 / 16);}.mxForumTheme button{-webkit-appearance:none;-moz-appearance:none;}.mxForumTheme text{cursor:default;}.mxForumTheme input[type=text][disabled],.mxForumTheme button[disabled]{cursor:default;}.mxForumTheme fieldset{border:0;margin:0;padding:0;}.mxForumTheme svg{display:block;}.mxForumTheme{font-family:sans-serif;}.mxForumTheme svg{font-family:arial,sans-serif;}.mxForumTheme button{font-family:sans-serif;}.mxForumTheme{max-width:var(--gobanMaxWidth);margin:0 auto;}.mxForumTheme .mxTitleP{font-weight:bold}.mxForumTheme .mxInnerGobanDiv{margin:0 auto;}.mxForumTheme.mxIn3d.mxDiagramConfig .mxInnerGobanDiv,.mxForumTheme.mxIn3d.mxProblemConfig .mxInnerGobanDiv{box-shadow:0 0.1em 0.2em rgba(0,0,0,0.2);}.mxForumTheme .mxGobanDiv svg{width:100%;height:100%;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAABCAIAAABYG7kIAAAAAXNSR0IArs4c6QAAACVJREFUCNdjvLMpmoOdmYGB4c+ff3/+/oewf/36y8DAwMaGRRwA1rMT7jfYpPIAAAAASUVORK5CYII=);background-repeat:repeat;}.mxForumTheme text.mxOnBlack.mxLabel,.mxForumTheme text.mxOnBlack.mxVariation{fill:var(--onBlackColor);stroke:var(--onBlackColor);}.mxForumTheme text.mxOnWhite.mxLabel,.mxForumTheme text.mxOnWhite.mxVariation,.mxForumTheme text.mxOnEmpty.mxLabel,.mxForumTheme text.mxOnEmpty.mxVariation{fill:var(--onWhiteColor);stroke:var(--onWhiteColor);}.mxForumTheme text.mxOnEmpty.mxVariation{paint-order:stroke;stroke-width:2px;stroke:var(--onBlackColor);font-weight:bold;}.mxForumTheme text.mxOnEmpty.mxVariation.mxOnFocus{fill:var(--focusColor);stroke:var(--onBlackColor);}.mxForumTheme .mxMark.mxOnEmpty.mxVariation.mxOnFocus{stroke:var(--focusColor);}.mxForumTheme .mxPointBackground.mxOnEmpty.mxVariation.mxOnFocus{stroke:none;}.mxForumTheme .mxMarkOnLast{fill:var(--focusColor);stroke:var(--focusColor);}.mxForumTheme .mxFocusMark{fill:none;stroke:var(--focusColor);stroke-width:2px;}.mxForumTheme .mxWhiteRadialGradient stop:nth-of-type(2){stop-color:#bbb;}.mxForumTheme .mxWhiteRadialGradient stop:nth-of-type(3){stop-color:#000;}.mxForumTheme.mxBasicConfig,.mxForumTheme.mxCommentConfig,.mxForumTheme.mxGameConfig,.mxForumTheme.mxTreeConfig{background:var(--globalBk);}.mxForumTheme.mxCommentConfig .mxCommentDiv,.mxForumTheme.mxTreeConfig .mxCommentDiv,.mxForumTheme.mxTreeConfig .mxTreeDiv{height:7em;border:1px solid transparent;padding:0.25em;overflow:auto;resize:vertical;background:var(--commentBk);}.mxForumTheme.mxTreeConfig .mxTreeDiv{margin:0;max-height:42em;}.mxForumTheme.mxBasicConfig .mxGobanDiv,.mxForumTheme.mxCommentConfig .mxGobanDiv,.mxForumTheme.mxGameConfig .mxGobanDiv,.mxForumTheme.mxTreeConfig .mxGobanDiv{background:var(--outerGobanBk);}.mxForumTheme.mxGameConfig .mxHeaderDiv{padding:0.25em;background:var(--headerBk);}.mxForumTheme.mxTreeConfig .mxTreeDiv{background:var(--treeBk);}.mxForumTheme.mxTreeConfig .mxTreeDiv svg .mxFocus{fill:var(--focusColor);opacity:1;}.mxForumTheme .mxInnerNotSeenDiv:not(:empty){margin:0.5em auto 0 auto;}.mxForumTheme .mxInnerNotSeenDiv{margin:0 auto;}.mxForumTheme .mxNotSeenSvg{width:100%;height:100%;display:block;}.mxForumTheme.mxProblemConfig .mxCommentDiv{margin:0 auto 0.5em auto;text-align:center;border:1px solid transparent;}.mxForumTheme.mxProblemConfig .mxCommentContentDiv{display:inline-block;text-align:justify;}.mxForumTheme.mxProblemConfig .mxCommentContentDiv p{margin:0;}.mxForumTheme .mxMenuFieldset button,.mxForumTheme .mxOptionsDiv button,.mxForumTheme .mxPassDiv button{font-weight:bold;margin:1px;text-transform:uppercase;color:#bc2a4d;border-radius:0.4em;border:1px solid #858585;background:#f1f1f1;background:linear-gradient(to top,#dfdfdf,#ffffff);padding:0.375em 1em 0.25em 1em;}.mxForumTheme :not(.mxSolveDiv):not(.mxPassDiv) button[disabled]{opacity:0.3;}.mxForumTheme .mxPassDiv button[disabled]{color:#999;}.mxForumTheme .mxSolveDiv button[disabled] svg{fill:#999;}.mxForumTheme input[type=text]{text-align:center;}.mxForumTheme .mxCartoucheDiv{background:var(--barBk);color:var(--barColor);position:relative;min-height:2.5em;line-height:2.5em;padding:0 2.5em 0 2.75em;}.mxForumTheme .mxCartoucheDiv:first-of-type{margin-bottom:1px;}.mxForumTheme .mxCartoucheDiv .mxPlayerStoneDiv{box-sizing:border-box;position:absolute;top:0;left:0;width:2.5em;height:2.5em;padding:0.125em;}.mxForumTheme .mxCartoucheDiv .mxPlayerStoneDiv svg{width:100%;height:100%;}.mxForumTheme .mxCartoucheDiv .mxRankLabelSpan{display:none;}.mxForumTheme .mxCartoucheDiv .mxPlayerDiv,.mxForumTheme .mxCartoucheDiv .mxRankDiv{display:inline-block;margin-right:0.25em;}.mxForumTheme .mxCartoucheDiv .mxPrisonersDiv{font-size:0.75em;position:absolute;right:0;bottom:0;display:flex;margin-right:calc(0.25em / 0.75);}.mxForumTheme .mxCartoucheDiv .mxPrisonersLabelSpan{display:none;}.mxForumTheme .mxCartoucheDiv .mxPrisonersStoneSpan{display:flex;height:2em;width:1em;line-height:2em;margin-left:calc(0.125em / 0.75);}.mxForumTheme .mxCartoucheDiv .mxPrisonersStoneSpan svg{width:1em;height:1em;margin:auto;}.mxForumTheme .mxCartoucheDiv .mxPrisonersSpan{height:2em;line-height:2em;}.mxForumTheme dialog,.mxForumTheme dialog *{box-sizing:border-box;}.mxForumTheme dialog::backdrop{background: rgba(0,0,0,0.5);}.mxForumTheme dialog{min-width:min(50vw,19em);border:1px solid #999;text-align:left;padding:0;background:#fff;}.mxForumTheme dialog form{margin:0;padding:0;background:var(--dialogBk);}.mxForumTheme dialog .mxContentFieldset{padding:0.5em;min-width:100%;}.mxForumTheme dialog.mxEditOptionsDialog .mxContentFieldset{line-height:1.5em;}.mxForumTheme dialog .mxMenuFieldset{background:var(--dialogMenuBk);min-height:3em;line-height:3em;text-align:center;}.mxForumTheme dialog label:not([for]){display:block;}.mxForumTheme input:not(:checked)~.mxNumFromTextSpan,.mxForumTheme input:not(:checked)~.mxNumWithTextSpan{display:none;}.mxForumTheme.mxBasicConfig .mxNavigationDiv,.mxForumTheme.mxGameConfig .mxNavigationDiv{background:var(--barBk);padding:0 0.25em;min-height:3em;line-height:3em;}.mxForumTheme.mxCommentConfig .mxNavigationParentDiv,.mxForumTheme.mxTreeConfig .mxNavigationParentDiv{background:var(--barBk);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:0 0.25em;min-height:3em;line-height:3em;}.mxForumTheme.mxIn3d.mxBasicConfig .mxNavigationDiv,.mxForumTheme.mxIn3d.mxCommentConfig .mxNavigationParentDiv,.mxForumTheme.mxIn3d.mxGameConfig .mxNavigationDiv,.mxForumTheme.mxIn3d.mxTreeConfig .mxNavigationParentDiv{box-shadow:0 0.1em 0.2em rgba(0,0,0,0.2);}.mxForumTheme.mxCommentConfig .mxOptionsDiv,.mxForumTheme.mxCommentConfig .mxPassDiv{flex:0;}.mxForumTheme .mxNavigationDiv{flex:1;margin:0 auto;text-align:center;display:flex;justify-content:space-around;align-items:center;flex-wrap:wrap;padding-top:0.25em;padding-bottom:0.25em;}.mxForumTheme .mxNavigationDiv button{font-size:1em;flex:1 1;display:flex;justify-content:center;align-items:center;border:0.25em solid transparent;border-radius:0.5em;background:transparent;margin:0;padding:0;max-width:3em;min-width:2em;height:2.5em;}.mxForumTheme .mxNavigationDiv button svg{width:2em;height:2em;fill:none;background-size:contain;background-position:center;background-repeat:no-repeat;}.mxForumTheme .mxNavigationDiv .mxFirstBtn,.mxForumTheme .mxNavigationDiv .mxTenPredBtn,.mxForumTheme .mxNavigationDiv .mxPredBtn{transform:scaleX(-1);}.mxForumTheme .mxNavigationDiv .mxPredBtn svg,.mxForumTheme .mxNavigationDiv .mxNextBtn svg{background-image:url(\"data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' fill=\'%23000\' viewBox=\'0 0 1000 1000\' height=\'1000\' width=\'1000\'><path d=\'M786,523C804,506 803,485 786,473L358,207C323,184 300,211 300,241V755C299,794 331,806 358,789Z\'/></svg>\");}.mxForumTheme .mxNavigationDiv .mxTenPredBtn svg,.mxForumTheme .mxNavigationDiv .mxTenNextBtn svg{background-image:url(\"data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' fill=\'%23000\' viewBox=\'0 0 1000 1000\' height=\'1000\' width=\'1000\'><path d=\'M976,521C994,506 994,485 976,475L604,227C572,206 552,229 552,257V739C551,775 580,783 604,769ZM522,521C540,506 540,485 522,475L162,227C131,206 110,230 110,257V739C109,774 138,784 162,769Z\'/></svg>\");}.mxForumTheme .mxNavigationDiv .mxFirstBtn svg,.mxForumTheme .mxNavigationDiv .mxLastBtn svg{background-image:url(\"data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' fill=\'%23000\' viewBox=\'0 0 1000 1000\' height=\'1000\' width=\'1000\'><path d=\'M612,521C631,505 629,487 612,475L250,247C219,227 200,250 200,277V719C199,754 226,763 250,749ZM726,789C775,789 800,769 800,731V265C800,226 775,207 726,207 675,207 650,226 650,265V731C650,769 675,789 726,789Z\'/></svg>\");}.mxForumTheme .mxNavigationDiv .mxPauseBtn svg{background-image:url(\"data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' fill=\'%23000\' viewBox=\'0 0 1000 1000\' height=\'1000\' width=\'1000\'><path d=\'M626,789Q700,789 700,731V265Q700,207 626,207 550,207 550,265V731Q550,789 626,789ZM374,789Q300,789 300,731V265Q300,207 374,207 450,207 450,265V731Q450,789 374,789Z\'/></svg>\");}.mxForumTheme .mxNavigationDiv .mxAutoBtn svg{background-image:url(\"data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' fill=\'%23000\' viewBox=\'0 0 1000 1000\' height=\'1000\' width=\'1000\'><path d=\'M901,521C919,506 919,485 901,475L629,227C597,206 577,229 577,257V739C576,775 605,783 629,769ZM99,521C80,506 80,485 99,475L371,227C402,206 422,229 423,257V739C423,775 394,783 371,769Z\'/></svg>\");}.mxForumTheme .mxNavigationDiv button.mxAutoBtn[disabled],.mxForumTheme .mxNavigationDiv button.mxPauseBtn[disabled]{display:none;}.mxForumTheme .mxNavigationDiv .mxGotoInput{font-size:1em;width:2.5em;height:1.75em;border:1px solid #ccc;text-align:center;margin:0.125em 0;}.mxForumTheme .mxSolveDiv{margin:0.25em auto;display:flex;justify-content:center;align-items:center;}.mxForumTheme .mxSolveDiv button{flex:1;display:flex;justify-content:center;align-items:center;max-width:4em;height:4em;padding:0;margin:0.125em;border-radius:0.4em;border:1px solid #c7c3be;background:#f1f1f1;background:linear-gradient(to bottom,#fcfcfc,#f1f1f1,#e8e8e8);}.mxForumTheme .mxSolveDiv button svg{width:3em;height:3em;fill:#bc2a4d;}.mxForumTheme *:not([type=radio]):not([type=checkbox]):focus{outline:none;}.mxForumTheme .mxGobanSvg:not(:focus-visible) .mxFocus{display:none;}.mxForumTheme.mxCommentConfig .mxCommentDiv:focus,.mxForumTheme.mxTreeConfig .mxCommentDiv:focus,.mxForumTheme.mxTreeConfig .mxTreeDiv:focus,.mxForumTheme.mxProblemConfig .mxCommentDiv:focus{border:1px solid #000;}.mxForumTheme .mxNavigationDiv .mxGotoInput:focus{border:1px solid #000;}.mxForumTheme .mxNavigationDiv button:focus{border:0.25em solid #0003;}.mxForumTheme .mxNavigationDiv button:hover:not([disabled]){border:0.25em solid #0003;}.mxForumTheme .mxNavigationDiv button:focus:hover:not([disabled]){border:0.25em solid #0006;}.mxForumTheme .mxMenuFieldset button:hover,.mxForumTheme .mxMenuFieldset button:focus,.mxForumTheme .mxOptionsDiv button:hover,.mxForumTheme .mxOptionsDiv button:focus,.mxForumTheme .mxPassDiv button:hover,.mxForumTheme .mxPassDiv button:focus{background:#f1f1f1;background:linear-gradient(to top,#ffffff,#dfdfdf);}.mxForumTheme .mxMenuFieldset button:hover,.mxForumTheme .mxOptionsDiv button:hover,.mxForumTheme .mxPassDiv button:hover,.mxForumTheme input[type=text]:hover{border:1px solid #5195d1;}.mxForumTheme .mxMenuFieldset button:focus,.mxForumTheme .mxOptionsDiv button:focus,.mxForumTheme .mxPassDiv button:focus,.mxForumTheme input[type=text]:focus{border:1px solid #000;}.mxForumTheme .mxSolveDiv button:focus{border:1px solid #000;}.mxForumTheme button,.mxForumTheme:not(.mxDiagramConfig) .mxGobanDiv svg,.mxForumTheme .mxTreeDiv svg circle,.mxForumTheme .mxTreeDiv svg polygon,.mxForumTheme .mxTreeDiv svg rect,.mxForumTheme .mxTreeDiv svg text{cursor:pointer;}";
+if(!mxG.Z.ja) mxG.Z.ja=[];
+if(!mxG.ja) mxG.ja=function(a,b){mxG.Z.ja[a]=b;};
 mxG.D[mxG.K].a.in3dOn=1;
 mxG.D[mxG.K].a.allowStringAsSource=1;
 mxG.D[mxG.K].a.allowFileAsSource=1;
@@ -4861,12 +4890,16 @@ mxG.D[mxG.K].a.canCommentFocus=1;
 mxG.D[mxG.K].a.gotoBoxOn=0;
 mxG.D[mxG.K].a.hideInHeader="NumOfMoves";
 mxG.D[mxG.K].a.navigations="First,TenPred,Pred,Goto,Next,TenNext,Last";
-mxG.D[mxG.K].a.optionsAlias="Options_Short";
+mxG.D[mxG.K].a.optionsAlias="Options_forum";
+mxG.ja("Options_forum","<span aria-hidden='true'>オ</span>");
+mxG.en("Options_forum","<span aria-hidden='true'>O</span>");
 mxG.D[mxG.K].a.optionsBtnOn=1;
 mxG.D[mxG.K].a.hideInOptions="In3dOn";
 mxG.D[mxG.K].a.passBtnOn=1;
 mxG.D[mxG.K].a.canPassOnlyIfPassInSgf=0;
-mxG.D[mxG.K].a.passAlias="Pass_Short";
+mxG.D[mxG.K].a.passAlias="Pass_forum";
+mxG.ja("Pass_forum","<span aria-hidden='true'>パ</span>");
+mxG.en("Pass_forum","<span aria-hidden='true'>P</span>");
 mxG.D[mxG.K].a.canTreeFocus=1;
 mxG.D[mxG.K].a.variationMarksOn=1;
 mxG.D[mxG.K].a.siblingsOn=0;

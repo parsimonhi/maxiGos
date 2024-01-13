@@ -2,8 +2,6 @@
 if(!mxG.G.prototype.createCut)
 {
 mxG.fr("Cut","Couper");
-mxG.fr("Cut_Short","X");
-mxG.en("Cut_Short","X");
 mxG.G.prototype.doSimpleCut=function()
 {
 	let aN,SZ,ST;
@@ -34,7 +32,12 @@ mxG.G.prototype.doSimpleCut=function()
 mxG.G.prototype.initCut=function()
 {
 	if(this.cutBtnOn)
-		this.addBtn(this.getE("CutDiv"),{n:"SimpleCut",v:this.alias("Cut","cutAlias")});
+	{
+		let o={n:"SimpleCut",v:this.alias("Cut","cutAlias")},
+			s=this.local("Cut");
+		if(o.v!=s) o.t=s;
+		this.addBtn(this.getE("CutDiv"),o);
+	}
 };
 mxG.G.prototype.createCut=function()
 {

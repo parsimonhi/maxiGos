@@ -31,10 +31,8 @@ mxG.Z.ja["Theme:"]="テーマ：";
 mxG.Z.ja["Configuration:"]="コンフィグ：";
 mxG.Z.ja["License:"]="ライセンス：";
 mxG.Z.ja["Copyright"]="著作権";
-mxG.Z.ja["About_Short"]="？";
 // mgosBackToGame.js
 mxG.Z.ja["Back to game"]="局を戻る";
-mxG.Z.ja["BackToGame_Short"]="局";
 // mgosCartouche.js
 mxG.Z.ja["Bowl"]="碁笥";
 mxG.Z.ja["Caps"]="ハマ";
@@ -48,7 +46,6 @@ mxG.Z.ja["Comments"]="コメント";
 mxG.Z.ja["buildMove"]=function(k){return k+"手";};
 // mgosCut.js
 mxG.Z.ja["Cut"]="カット";
-mxG.Z.ja["Cut_Short"]="切";
 // mgosEdit.js
 mxG.Z.ja["Remove comments"]="コメントを削除";
 mxG.Z.ja["Selection"]="セレクション";
@@ -104,6 +101,7 @@ mxG.Z.ja["No symmetry"]="なし";
 mxG.Z.ja["Horizontal mirror"]="水平";
 mxG.Z.ja["Vertical mirror"]="垂直";
 mxG.Z.ja["Rotate"]="回転";
+// mxG.Z.ja["Comments"]="コメント";
 // mgosFile.js
 mxG.Z.ja["File"]="ファイル";
 mxG.Z.ja["New"]="新規";
@@ -351,7 +349,6 @@ mxG.Z.ja["tenuki"]="手抜き";
 mxG.Z.ja["Invisible moves"]="目に見えない手";
 // mgosOptions.js
 mxG.Z.ja["Options"]="オプション";
-mxG.Z.ja["Options_Short"]="オ";
 // mxG.Z.ja["OK"]="OK";
 // mxG.Z.ja["Cancel"]="キャンセル";
 // mxG.Z.ja["As in book"]="本のように";
@@ -372,7 +369,6 @@ mxG.Z.ja["Animated stone"]="石のアニメーション";
 mxG.Z.ja["Animated stone time"]="石のアニメーション時間";
 // mgosPass.js
 mxG.Z.ja["Pass"]="パス";
-mxG.Z.ja["Pass_Short"]="パ";
 // mgosScore.js
 mxG.Z.ja["Score"]="点数";
 mxG.Z.ja["Score method"]="点数法";

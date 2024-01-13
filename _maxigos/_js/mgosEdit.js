@@ -1187,7 +1187,7 @@ mxG.G.prototype.createEdit=function()
 	for(k=0;k<km;k++) s+=this.makeTool(this.tools[k]);
 	s+="</div>";
 	s+="<div class=\"mxEditCommentToolDiv\" id=\""+this.n+"CommentToolDiv\">";
-	s+="<textarea title=\""+this.local("Comment")+"\" id=\""+this.n+"CommentToolText\"></textarea>";
+	s+="<textarea title=\""+this.local("Comments")+"\" id=\""+this.n+"CommentToolText\"></textarea>";
 	s+="</div>";
 	this.menuEditItems=
 	[

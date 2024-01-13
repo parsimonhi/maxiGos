@@ -1,9 +1,9 @@
-// maxiGos v8 Minimalist+Zero copyright 1998-2023 FM&SH, BSD license
+// maxiGos v8 Minimalist+Zero copyright 1998-2024 FM&SH, BSD license
 if(typeof mxG=='undefined') mxG={};
 if(!mxG.V)
 {
-mxG.V="8.01";
-mxG.Y="2023";
+mxG.V="8.02";
+mxG.Y="2024";
 mxG.C="FM&SH";
 mxG.D=[];
 mxG.K=0;
@@ -974,11 +974,10 @@ mxG.S.prototype.makeGoban=function()
 	s+=" font-family=\""+this.ff+"\" font-size=\""+this.fs+"\" font-weight=\""+this.fw+"\"";
 	s+=" stroke-linecap=\"square\" text-anchor=\"middle\"";
 	s+=">";
-	s+="<title id=\""+this.p.n+"GobanTitle\"></title>";
-	s+="<desc id=\""+this.p.n+"GobanDesc\"></desc>";
+	s+="<my-title id=\""+this.p.n+"GobanTitle\"></my-title>";
+	s+="<my-desc id=\""+this.p.n+"GobanDesc\"></my-desc>";
 	if(this.in3dOn)
 		s+="<defs>"+this.makeGradient("Black")+this.makeGradient("White")+"</defs>";
-	s+=this.makeBackground("Ghost");
 	s+=this.makeBackground("Whole");
 	s+=this.makeBackground("Outer");
 	if(this.indicesOn) s+=this.makeIndices();
@@ -1226,7 +1225,7 @@ mxG.S.prototype.makeOneInfo=function(i,j,k,nat,str,sayLast)
 			else
 			{
 				if(this.isLabel(str)) str=this.removeLabelDelimiters(str);
-				s+=str;
+				s+="'"+str+"'";
 			}
 		}
 	}
@@ -1234,30 +1233,44 @@ mxG.S.prototype.makeOneInfo=function(i,j,k,nat,str,sayLast)
 	if(this.p.lang!="ja") this.latinCoordinates=1;
 	s+=this.k2c(i)+this.k2n(j);
 	if(this.p.lang!="ja") this.latinCoordinates=0;
-	if(sayLast&&last) s+=", "+this.p.local("Last played move");
+	if(sayLast&&last) s+=". "+this.p.local("Last played move");
 	return s;
 };
-mxG.S.prototype.makeGobanTitle=function()
+mxG.S.prototype.makeShortGobanTitle=function()
 {
 	let s="",xf,yf,k,nat,str;
-	s=this.p.local("Goban")+" "+this.DX+"x"+this.DY;
-	if((this.xl!=1)||(this.yt!=1)||(this.xr!=this.DX)||(this.yb!=this.DY))
-	{
-		s+=", "+this.p.local("Partial view");
-		s+=" "+this.k2c(this.xl)+this.k2n(this.yb);
-		s+=" "+this.k2c(this.xr)+this.k2n(this.yt);
-	}
 	if((xf=this.p.xFocus)&&(yf=this.p.yFocus))
 	{
 		k=this.p.xy(xf,yf);
 		nat=this.vNat[k];
 		str=this.vStr[k];
-		if(s) s+=", ";
+		if(s) s+=". ";
 		s+=this.p.local("Cursor on");
 		if(s) s+=" ";
 		s+=this.makeOneInfo(xf,yf,k,nat,str,1);
 	}
-	return s;
+	if(this.p.whenVirtualNext)
+	{
+		let x,y;
+		x=this.p.whenVirtualNext.x;
+		y=this.p.whenVirtualNext.y;
+		k=this.p.xy(x,y);
+		nat=this.vNat[k];
+		str=this.vStr[k];
+		s=this.makeOneInfo(x,y,k,nat,str,0)+". "+s;
+	}
+	return s+".";
+};
+mxG.S.prototype.makeGobanTitle=function()
+{
+	let s=this.p.local("Goban")+" "+this.DX+"x"+this.DY;
+	if((this.xl!=1)||(this.yt!=1)||(this.xr!=this.DX)||(this.yb!=this.DY))
+	{
+		s+=". "+this.p.local("Partial view");
+		s+=" "+this.k2c(this.xl)+this.k2n(this.yb);
+		s+=" "+this.k2c(this.xr)+this.k2n(this.yt);
+	}
+	return s+". "+this.makeShortGobanTitle();
 };
 mxG.S.prototype.makeGobanDescription=function()
 {
@@ -1270,29 +1283,32 @@ mxG.S.prototype.makeGobanDescription=function()
 			str=this.vStr[k];
 			if((nat=="B")||(nat=="W")||str)
 			{
-				if(s) s+=", ";
+				if(s) s+=". ";
 				s+=this.makeOneInfo(i,j,k,nat,str,0);
 			}
 		}
 	if(!s) s=this.p.local("Empty goban");
-	return s;
+	return s+".";
 };
-mxG.S.prototype.setGobanFocusTitleDesc=function(verbose)
+mxG.S.prototype.setGobanFocusTitleDesc=function(kind)
 {
-	let x=this.p.xFocus,y=this.p.yFocus,ghost,a;
+	if(this.p.noLabelledBy) return;
+	let x=this.p.xFocus,y=this.p.yFocus,z;
 	if(!this.p.inView(x,y)) {x=0;y=0;}
 	if(x&&y)this.p.getE("Focus").innerHTML=this.makeFocusMark(this.i2x(x),this.j2y(y));
 	else this.p.getE("Focus").innerHTML="";
-	this.p.getE("GobanTitle").innerHTML=this.makeGobanTitle()+(verbose?".":"");
-	this.p.getE("GobanDesc").innerHTML=this.makeGobanDescription();
-	a=this.p.n+"GobanTitle"+(verbose?" "+this.p.n+"GobanDesc":"");
-	this.p.getE("GobanSvg").setAttribute("aria-labelledby",a);
-	ghost=this.p.getE("GobanSvg").querySelector('.mxGhostRect');
-	if(ghost)
+	if(kind>0) this.p.getE("GobanDesc").innerHTML=this.makeGobanDescription();
+	if(this.p.shortTitleOnly)
 	{
-		if(ghost.style.display) ghost.style.display="";
-		else ghost.style.display="none";
+		this.p.getE("GobanTitle").innerHTML=this.makeShortGobanTitle();
+		z=this.p.n+"GobanTitle";
 	}
+	else
+	{
+		this.p.getE("GobanTitle").innerHTML=this.makeGobanTitle();
+		z=this.p.n+"GobanTitle"+" "+this.p.n+"GobanDesc";
+	}
+	this.p.getE("GobanSvg").setAttribute("aria-labelledby",z);
 };
 mxG.S.prototype.drawGoban=function(vNat,vStr)
 {
@@ -1421,7 +1437,7 @@ mxG.fr("Circle","Cercle");
 mxG.fr("Empty goban","Goban vide");
 mxG.fr("Cursor on","Curseur sur");
 mxG.fr("Goban","Goban");
-mxG.fr("Last played move","dernier coup joué");
+mxG.fr("Last played move","Dernier coup joué");
 mxG.fr("Mark","Marque");
 mxG.fr("Partial view","Vue partielle");
 mxG.fr("Square","Carré");
@@ -1484,7 +1500,7 @@ mxG.G.prototype.addBtn=function(e,b)
 {
 	let k=this.k,a=document.createElement("button");
 	a.id=this.n+b.n+"Btn";
-	a.title=(b.t?b.t:this.local(b.n));
+	if(b.t) a.title=b.t;
 	if(b.v) a.innerHTML=b.v;
 	a.classList.add("mxBtn","mx"+b.n+"Btn");
 	if(b.first) e.prepend(a); else e.appendChild(a);
@@ -2154,9 +2170,41 @@ mxG.G.prototype.moveFocusInView=function()
 	this.xFocus=Math.min(Math.max(this.xFocus,this.xl),this.xr);
 	this.yFocus=Math.min(Math.max(this.yFocus,this.yt),this.yb);
 };
+mxG.G.prototype.moveFocusMarkOnLast=function()
+{
+	let a,e,g,m=this.gor.play;
+	if(this.gor.getAct(m)=="")
+	{
+		this.xFocus=this.gor.getX(m);
+		this.yFocus=this.gor.getY(m);
+		this.moveFocusInView();
+	}
+	this.scr.setGobanFocusTitleDesc(0);
+};
+mxG.G.prototype.moveFocusMarkOnVariationOnFocus=function()
+{
+	let g=this.getE("GobanSvg"),e;
+	e=g.querySelector(".mxVariation.mxOnFocus[data-maxigos-ij]");
+	if(e)
+	{
+		let v=e.getAttribute("data-maxigos-ij");
+		if(v)
+		{
+			let c=v.split("_");
+			if(c&&(c.length==2))
+			{
+				this.xFocus=-(-c[0]);
+				this.yFocus=-(-c[1]);
+				this.moveFocusInView();
+				this.scr.setGobanFocusTitleDesc(0);
+			}
+		}
+	}
+};
 mxG.G.prototype.doClickGoban=function(ev)
 {
 	let c=this.scr.getGxy(ev);
+	this.shortTitleOnly=1;
 	if(!this.inView(c.x,c.y)) {this.plonk();return;}
 	this.xFocus=c.x;
 	this.yFocus=c.y;
@@ -2170,6 +2218,7 @@ mxG.G.prototype.doClickGoban=function(ev)
 mxG.G.prototype.doKeydownGoban=function(ev)
 {
 	let r=0;
+	this.shortTitleOnly=1;
 	if((ev.key==" ")||(ev.key=="Enter"))
 	{
 		let x=this.xFocus,y=this.yFocus;
@@ -2185,7 +2234,7 @@ mxG.G.prototype.doKeydownGoban=function(ev)
 		ev.preventDefault();
 		return;
 	}
-	if(ev.altKey||ev.key.match(/^[FGHJKLUN]$/i))
+	if(ev.shiftKey||ev.altKey)
 	{
 		if(this.hasC("Navigation")) this.doKeydownNavigation(ev);
 		else if(this.hasC("Solve")) this.doKeydownSolve(ev);
@@ -2193,10 +2242,10 @@ mxG.G.prototype.doKeydownGoban=function(ev)
 	}
 	switch(ev.key)
 	{
-		case "ArrowLeft":this.xFocus--;r=1;break;
-		case "ArrowRight":this.xFocus++;r=1;break;
-		case "ArrowUp":this.yFocus--;r=1;break;
-		case "ArrowDown":this.yFocus++;r=1;break;
+		case "ArrowLeft":case "h":this.xFocus--;r=1;break;
+		case "ArrowRight":case "j":this.xFocus++;r=1;break;
+		case "ArrowUp":case "u":this.yFocus--;r=1;break;
+		case "ArrowDown":case "n":this.yFocus++;r=1;break;
 	}
 	if(r)
 	{
@@ -2210,6 +2259,11 @@ mxG.G.prototype.doKeydownGoban=function(ev)
 		ev.preventDefault();
 	}
 };
+mxG.G.prototype.doBlurGoban=function(ev)
+{
+	this.shortTitleOnly=0;
+	this.scr.setGobanFocusTitleDesc(0);
+};
 mxG.G.prototype.setGoban=function()
 {
 	let k=this.k,g;
@@ -2220,6 +2274,7 @@ mxG.G.prototype.setGoban=function()
 	g.getMClick=mxG.getMClick;
 	g.addEventListener("click",function(ev){mxG.D[k].doClickGoban(ev);});
 	g.addEventListener("keydown",function(ev){mxG.D[k].doKeydownGoban(ev);});
+	g.addEventListener("blur",function(ev){mxG.D[k].doBlurGoban(ev);});
 	if(this.hasC("Navigation"))
 		g.addEventListener("wheel",function(ev){mxG.D[k].doWheelNavigation(ev);});
 	if(this.hasC("Edit"))
@@ -2395,37 +2450,6 @@ mxG.G.prototype.setNFocus=function(b)
 	if(e&&!e.disabled) {if(a!=e) e.focus();return;}
 	this.getE("NavigationDiv").focus();
 };
-mxG.G.prototype.moveFocusMarkOnLast=function()
-{
-	let a,e,g,m=this.gor.play;
-	if(this.gor.getAct(m)=="")
-	{
-		this.xFocus=this.gor.getX(m);
-		this.yFocus=this.gor.getY(m);
-		this.moveFocusInView();
-	}
-	this.scr.setGobanFocusTitleDesc(0);
-};
-mxG.G.prototype.moveFocusMarkOnVariationOnFocus=function()
-{
-	let g=this.getE("GobanSvg"),e;
-	e=g.querySelector(".mxVariation.mxOnFocus[data-maxigos-ij]");
-	if(e)
-	{
-		let v=e.getAttribute("data-maxigos-ij");
-		if(v)
-		{
-			let c=v.split("_");
-			if(c&&(c.length==2))
-			{
-				this.xFocus=-(-c[0]);
-				this.yFocus=-(-c[1]);
-				this.moveFocusInView();
-				this.scr.setGobanFocusTitleDesc(0);
-			}
-		}
-	}
-};
 mxG.G.prototype.doFirst=function()
 {
 	this.backNode(this.kidOnFocus(this.rN));
@@ -2524,30 +2548,30 @@ mxG.G.prototype.hasVariation=function(s)
 mxG.G.prototype.doKeydownNavigation=function(ev)
 {
 	if(this.hasC("Score")&&this.canPlaceScore) return false;
-	let r=0,s=ev.shiftKey?1:0;
-	if(ev.altKey||ev.key.match(/^[FGHJKLUN]$/i)) switch(ev.key)
+	let r=0,s=ev.altKey?1:0;
+	if(ev.shiftKey) switch(ev.key)
 	{
-		case "Home":case "F":case "f":
+		case "Home":case "F":
 			if(this.hasPred()) {this.doFirst();r=1;} break;
-		case "PageUp":case "G":case "g":
+		case "PageUp":case "G":
 			if(this.hasPred()) {this.doTenPred();r=1;} break;
-		case "ArrowLeft":case "H":case "h":
+		case "ArrowLeft":case "H":
 			if(this.hasPred()) {this.doPred();r=1;} break;
-		case "ArrowRight":case "J":case "j":
-			if(this.hasNext()) {this.doNext();r=1;} break;
-		case "PageDown":case "K":case "k":
+		case "ArrowRight":case "J":
+			if(this.hasNext()) {this.doNext();r=(this.animatedStoneOn?4:1);} break;
+		case "PageDown":case "K":
 			if(this.hasNext()) {this.doTenNext();r=1;} break;
-		case "End":case "L":case "l":
+		case "End":case "L":
 			if(this.hasNext()) {this.doLast();r=1;} break;
-		case "ArrowUp":case "N":case "n":
+		case "ArrowUp":case "U":
 			if(this.hasVariation(s)) {this.doTopVariation(s);r=2;} break;
-		case "ArrowDown":case "U":case "u":
+		case "ArrowDown":case "N":
 			if(this.hasVariation(s)) {this.doBottomVariation(s);r=2;} break;
 	}
 	if(r)
 	{
 		if(r&1) this.moveFocusMarkOnLast();
-		else this.moveFocusMarkOnVariationOnFocus();
+		else if(r&2) this.moveFocusMarkOnVariationOnFocus();
 		ev.preventDefault();
 	}
 };

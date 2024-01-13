@@ -237,9 +237,41 @@ mxG.G.prototype.moveFocusInView=function()
 	this.xFocus=Math.min(Math.max(this.xFocus,this.xl),this.xr);
 	this.yFocus=Math.min(Math.max(this.yFocus,this.yt),this.yb);
 };
+mxG.G.prototype.moveFocusMarkOnLast=function()
+{
+	let a,e,g,m=this.gor.play;
+	if(this.gor.getAct(m)=="")
+	{
+		this.xFocus=this.gor.getX(m);
+		this.yFocus=this.gor.getY(m);
+		this.moveFocusInView();
+	}
+	this.scr.setGobanFocusTitleDesc(0);
+};
+mxG.G.prototype.moveFocusMarkOnVariationOnFocus=function()
+{
+	let g=this.getE("GobanSvg"),e;
+	e=g.querySelector(".mxVariation.mxOnFocus[data-maxigos-ij]");
+	if(e)
+	{
+		let v=e.getAttribute("data-maxigos-ij");
+		if(v)
+		{
+			let c=v.split("_");
+			if(c&&(c.length==2))
+			{
+				this.xFocus=-(-c[0]);
+				this.yFocus=-(-c[1]);
+				this.moveFocusInView();
+				this.scr.setGobanFocusTitleDesc(0);
+			}
+		}
+	}
+};
 mxG.G.prototype.doClickGoban=function(ev)
 {
 	let c=this.scr.getGxy(ev);
+	this.shortTitleOnly=1;
 	if(!this.inView(c.x,c.y)) {this.plonk();return;}
 	this.xFocus=c.x;
 	this.yFocus=c.y;
@@ -253,6 +285,7 @@ mxG.G.prototype.doClickGoban=function(ev)
 mxG.G.prototype.doKeydownGoban=function(ev)
 {
 	let r=0;
+	this.shortTitleOnly=1;
 	if((ev.key==" ")||(ev.key=="Enter"))
 	{
 		let x=this.xFocus,y=this.yFocus;
@@ -268,7 +301,7 @@ mxG.G.prototype.doKeydownGoban=function(ev)
 		ev.preventDefault();
 		return;
 	}
-	if(ev.altKey||ev.key.match(/^[FGHJKLUN]$/i))
+	if(ev.shiftKey||ev.altKey)
 	{
 		if(this.hasC("Navigation")) this.doKeydownNavigation(ev);
 		else if(this.hasC("Solve")) this.doKeydownSolve(ev);
@@ -276,10 +309,10 @@ mxG.G.prototype.doKeydownGoban=function(ev)
 	}
 	switch(ev.key)
 	{
-		case "ArrowLeft":this.xFocus--;r=1;break;
-		case "ArrowRight":this.xFocus++;r=1;break;
-		case "ArrowUp":this.yFocus--;r=1;break;
-		case "ArrowDown":this.yFocus++;r=1;break;
+		case "ArrowLeft":case "h":this.xFocus--;r=1;break;
+		case "ArrowRight":case "j":this.xFocus++;r=1;break;
+		case "ArrowUp":case "u":this.yFocus--;r=1;break;
+		case "ArrowDown":case "n":this.yFocus++;r=1;break;
 	}
 	if(r)
 	{
@@ -293,6 +326,11 @@ mxG.G.prototype.doKeydownGoban=function(ev)
 		ev.preventDefault();
 	}
 };
+mxG.G.prototype.doBlurGoban=function(ev)
+{
+	this.shortTitleOnly=0;
+	this.scr.setGobanFocusTitleDesc(0);
+};
 mxG.G.prototype.setGoban=function()
 {
 	// has to set goban when first drawing
@@ -305,6 +343,7 @@ mxG.G.prototype.setGoban=function()
 	g.getMClick=mxG.getMClick;
 	g.addEventListener("click",function(ev){mxG.D[k].doClickGoban(ev);});
 	g.addEventListener("keydown",function(ev){mxG.D[k].doKeydownGoban(ev);});
+	g.addEventListener("blur",function(ev){mxG.D[k].doBlurGoban(ev);});
 	if(this.hasC("Navigation"))
 		g.addEventListener("wheel",function(ev){mxG.D[k].doWheelNavigation(ev);});
 	if(this.hasC("Edit"))

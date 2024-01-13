@@ -2,8 +2,8 @@
 if(typeof mxG=='undefined') mxG={};
 if(!mxG.V)
 {
-mxG.V="8.01";
-mxG.Y="2023";
+mxG.V="8.02";
+mxG.Y="2024";
 mxG.C="FM&SH";
 mxG.D=[];
 mxG.K=0;

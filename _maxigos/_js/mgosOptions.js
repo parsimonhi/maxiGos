@@ -2,7 +2,6 @@
 if(!mxG.G.prototype.createOptions)
 {
 mxG.fr("Options","Options");
-mxG.fr("Options_Short","O");
 mxG.fr("Cancel","Annuler");
 mxG.fr("OK","OK");
 // mxG.fr("Mark on last","Marque sur le dernier coup");
@@ -22,7 +21,6 @@ mxG.fr(" with "," avec "); // cannot use just "with" because with is a keyword?
 mxG.fr("Loop time","Temps pour l'affichage en boucle");
 mxG.fr("Animated stone","Pierres animées");
 mxG.fr("Animated stone time","Temps pour l'animation des pierres");
-mxG.en("Options_Short","O");
 mxG.G.prototype.getValidNum=function(v)
 {
 	let n=parseInt(v);
@@ -372,7 +370,12 @@ mxG.G.prototype.updateOptions=function()
 mxG.G.prototype.initOptions=function()
 {
 	if(this.optionsBtnOn)
-		this.addBtn(this.getE("OptionsDiv"),{n:"Options",v:this.alias("Options","optionsAlias")});
+	{
+		let o={n:"Options",v:this.alias("Options","optionsAlias")},
+			s=this.local("Options");
+		if(o.v!=s) o.t=s;
+		this.addBtn(this.getE("OptionsDiv"),o);
+	}
 };
 mxG.G.prototype.createOptions=function()
 {

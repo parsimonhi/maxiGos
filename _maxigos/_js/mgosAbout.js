@@ -8,8 +8,6 @@ mxG.fr("Theme:","Thème :");
 mxG.fr("Configuration:","Configuration :");
 mxG.fr("License:","Licence :");
 mxG.fr("Copyright","Copyright");
-mxG.fr("About_Short","?");
-mxG.en("About_Short","?");
 mxG.G.prototype.buildAbout=function()
 {
 	let a,b,c,d,e,s="";
@@ -34,7 +32,12 @@ mxG.G.prototype.doAbout=function()
 mxG.G.prototype.initAbout=function()
 {
 	if(this.aboutBtnOn)
-		this.addBtn(this.getE("AboutDiv"),{n:"About",v:this.alias("About","aboutAlias")});
+	{
+		let o={n:"About",v:this.alias("About","aboutAlias")},
+			s=this.local("About");
+		if(o.v!=s) o.t=s;
+		this.addBtn(this.getE("AboutDiv"),o);
+	}
 };
 mxG.G.prototype.createAbout=function()
 {

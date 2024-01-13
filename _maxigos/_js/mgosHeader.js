@@ -2,7 +2,6 @@
 if(!mxG.G.prototype.createHeader)
 {
 mxG.fr("Header","Informations");
-mxG.fr("Header_Short","E");
 mxG.fr(" "," ");
 mxG.fr(", ",", ");
 mxG.fr(": "," : ");
@@ -75,8 +74,6 @@ mxG.fr("translateTitle",function(ev,ro)
 	s=c+s;
 	if(s&&(a.search(/^[a-zA-Z0-9]/)==0)) s+=", ";else if(s&&a) s+=" ";
 	if(s) s=s.ucF(); else if(a) a=a.ucF();
-	if(s) s="<span class=\"mxEVTitleSpan\">"+s+"</span>";
-	if(a) a="<span class=\"mxROTitleSpan\">"+a+"</span>";
 	return s+a;
 });
 mxG.en("translateTitle",function(ev,ro)
@@ -152,7 +149,6 @@ mxG.fr("buildDate",function(s)
 	}
 	return s;
 });
-mxG.en("Header_Short","H");
 // buildRules, buildTimeLimits, buildKomi, buildResult, buildNumOfMoves
 // are called by this.build(), but buildTitle() is called directly
 mxG.G.prototype.buildTitle=function()
@@ -260,66 +256,64 @@ mxG.G.prototype.buildHeader=function(u=0)
 	a=(this.hideBlack)?0:this.getInfo("PB");
 	if(a)
 	{
-		h+="<span class=\"mxPBSpan\"><span class=\"mxHeaderSpan\">"+this.local("Black")+this.local(": ")+"</span>"+a;
+		h+=this.local("Black")+this.local(": ")+a;
 		a=this.getInfo("BR");
 		if(a) h+=this.local(" ")+this.build("Rank",a);
 		if(this.concatTeamToPlayer&&(b=this.getInfo("BT"))) h+=(a?" (":"")+b+(a?")":"");
-		h+="</span>";
 		z=1;
 	}
 	a=(this.hideWhite)?0:this.getInfo("PW");
 	if(a)
 	{
 		if(z) h+="<br>";
-		h+="<span class=\"mxPWSpan\"><span class=\"mxHeaderSpan\">"+this.local("White")+this.local(": ")+"</span>"+a;
+		h+=this.local("White")+this.local(": ")+a;
 		a=this.getInfo("WR");
 		if(a) h+=this.local(" ")+this.build("Rank",a);
 		if(this.concatTeamToPlayer&&(b=this.getInfo("WT"))) h+=(a?" (":"")+b+(a?")":"");
-		h+="</span>";
 		z=1;
 	}
 	if(this.hideDate) a="";else a=this.getInfo("DT");
 	if(a&&!this.concatDateToTitle)
 	{
 		if(z) h+="<br>";
-		h+="<span class=\"mxDTSpan\"><span class=\"mxHeaderSpan\">"+this.local("Date")+this.local(": ")+"</span>"+this.build("Date",a)+"</span>";
+		h+=this.local("Date")+this.local(": ")+this.build("Date",a);
 		z=1;
 	}
 	if(this.hidePlace) a="";else a=this.getInfo("PC");
 	if(a)
 	{
 		if(z) h+="<br>";
-		h+="<span class=\"mxPCSpan\"><span class=\"mxHeaderSpan\">"+this.local("Place")+this.local(": ")+"</span>"+a+"</span>";
+		h+=this.local("Place")+this.local(": ")+a;
 		z=1;
 	}
 	if(this.hideRules) a="";else a=this.getInfo("RU");
 	if(a)
 	{
 		if(z) h+="<br>";
-		h+="<span class=\"mxRUSpan\"><span class=\"mxHeaderSpan\">"+this.local("Rules")+this.local(": ")+"</span>"+this.build("Rules",a)+"</span>";
+		h+=this.local("Rules")+this.local(": ")+this.build("Rules",a);
 		z=1;
 	}
 	if(this.hideTimeLimits) a="";else a=this.getInfo("TM");
 	if(a)
 	{
 		if(z) h+="<br>";
-		h+="<span class=\"mxTMSpan\"><span class=\"mxHeaderSpan\">"+this.local("Time limits")+this.local(": ")+"</span>"+this.build("TimeLimits",a)+"</span>";
+		h+=this.local("Time limits")+this.local(": ")+this.build("TimeLimits",a);
 		z=1;
 	}
 	if(this.hideKomi) a="";else a=this.getInfo("KM");
-	if(a) b="<span class=\"mxHeaderSpan\">"+this.local("Komi")+this.local(": ")+"</span>"+this.build("Komi",a);else b="";
+	if(a) b=this.local("Komi")+this.local(": ")+this.build("Komi",a);else b="";
 	if(b&&!this.concatKomiToResult)
 	{
 		if(z) h+="<br>";
-		h+="<span class=\"mxKMSpan\">"+b+"</span>";
+		h+=b;
 		z=1;
 	}
 	if(this.hideHandicap) a="";else a=this.getInfo("HA");
-	if(a) c="<span class=\"mxHeaderSpan\">"+this.local("Handicap")+this.local(": ")+"</span>"+this.build("handicap",a);else c="";
+	if(a) c=this.local("Handicap")+this.local(": ")+this.build("handicap",a);else c="";
 	if(c&&!this.concatHandicapToResult)
 	{
 		if(z) h+="<br>";
-		h+="<span class=\"mxHASpan\">"+c+"</span>";
+		h+=c;
 		z=1;
 	}
 	if(this.hideNumOfMoves) d="";
@@ -327,20 +321,19 @@ mxG.G.prototype.buildHeader=function(u=0)
 	{
 		a=this.getNumOfMoves()+"";
 		if(this.hideNumOfMovesLabel) d=this.build("NumOfMoves",a);
-		else d="<span class=\"mxHeaderSpan\">"+this.local("Number of moves")+this.local(": ")+"</span>"+a;
+		else d=this.local("Number of moves")+this.local(": ")+a;
 		if(!this.concatNumOfMovesToResult)
 		{
 			if(z) h+="<br>";
-			h+="<span class=\"mxNMSpan\">"+d+"</span>";
+			h+=d;
 			z=1;
 		}
 	}
 	if(!this.hideResult&&(a=this.getInfo("RE")))
 	{
 		if(z) h+="<br>";
-		h+="<span class=\"mxRESpan\">";
 		r=this.build("Result",a);
-		if(!this.hideResultLabel) h+=("<span class=\"mxHeaderSpan\">"+this.local("Result")+this.local(": ")+"</span>"+r);
+		if(!this.hideResultLabel) h+=(this.local("Result")+this.local(": ")+r);
 		else h+=r.ucF();
 		if((d&&this.concatNumOfMovesToResult)
 			||(c&&this.concatHandicapToResult)
@@ -358,7 +351,6 @@ mxG.G.prototype.buildHeader=function(u=0)
 			if(b2) h+=b2;
 			h+=")";
 		}
-		h+="</span>";
 		z=1;
 	}
 	if(h) h="<p class=\"mxHeaderContentP\">"+h+"</p>";
@@ -385,7 +377,12 @@ mxG.G.prototype.updateHeader=function()
 mxG.G.prototype.initHeader=function()
 {
 	if(this.headerBtnOn)
-		this.addBtn(this.getE("HeaderDiv"),{n:"Header",v:this.alias("Header","headerAlias")});
+	{
+		let o={n:"Header",v:this.alias("Header","headerAlias")},
+			s=this.local("Header");
+		if(o.v!=s) o.t=s;
+		this.addBtn(this.getE("HeaderDiv"),o);
+	}
 };
 mxG.G.prototype.createHeader=function()
 {

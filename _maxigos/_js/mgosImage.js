@@ -13,7 +13,7 @@ mxG.G.prototype.b64EncodeUnicode=function(str)
 };
 mxG.G.prototype.svgToDataURL=function(b)
 {
-	let e1,e2,a,r=2,z,e,s,v,rect1,rect2,mark1,mark2;
+	let e1,e2,a,r=2,z,e,s,v,rect1,rect2,mark1,mark2,list;
 	e1=this.getE("GobanSvg");
 	e2=e1.cloneNode(true);
 	// get some css properties and put it in the svg image as attributes
@@ -44,13 +44,13 @@ mxG.G.prototype.svgToDataURL=function(b)
 	}
 	else
 	{
-		// set width and height to 100% (svg)
-		e2.setAttribute("width","100%");
-		e2.setAttribute("height","100%");
+		e2.removeAttribute("width");
+		e2.removeAttribute("height");
 	}
 	// clean svg
 	e2.removeAttribute("id");
 	e2.removeAttribute("aria-labelledby");
+	e2.removeAttribute("tabindex");
 	a=e2.querySelectorAll("g[id]");
 	for(let k=0;k<a.length;k++) a[k].removeAttribute("id");
 	a=e2.querySelector(".mxFocus");
@@ -59,6 +59,12 @@ mxG.G.prototype.svgToDataURL=function(b)
 	if(a) a.parentNode.removeChild(a);
 	a=e2.querySelector("desc");
 	if(a) a.parentNode.removeChild(a);
+	a=e2.querySelector("my-title");
+	if(a) a.parentNode.removeChild(a);
+	a=e2.querySelector("my-desc");
+	if(a) a.parentNode.removeChild(a);
+	list=e2.querySelectorAll('[aria-hidden]');
+	for(let k=0;k<list.length;k++) list[k].removeAttribute("aria-hidden");
 	z=e2.outerHTML;
 	z=z.replace(/ class="[^"]*"/g,"");
 	// some applications such as OpenOffice still need to use xlink:href (in 2021)
@@ -106,9 +112,19 @@ mxG.G.prototype.doPng=function()
 mxG.G.prototype.initImage=function()
 {
 	if(this.pngBtnOn)
-		this.addBtn(this.getE("PngDiv"),{n:"Png",v:this.alias("PNG","pngAlias")});
+	{
+		let o={n:"Png",v:this.alias("PNG","pngAlias")},
+			s=this.local("PNG");
+		if(o.v!=s) o.t=s;
+		this.addBtn(this.getE("PngDiv"),o);
+	}
 	if(this.svgBtnOn)
-		this.addBtn(this.getE("SvgDiv"),{n:"Svg",v:this.alias("SVG","svgAlias")});
+	{
+		let o={n:"Svg",v:this.alias("SVG","svgAlias")},
+			s=this.local("SVG");
+		if(o.v!=s) o.t=s;
+		this.addBtn(this.getE("SvgDiv"),o);
+	}
 };
 mxG.G.prototype.createImage=function()
 {

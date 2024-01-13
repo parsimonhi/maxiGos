@@ -47,10 +47,9 @@ mxG.G.prototype.setSFocus=function(b)
 {
 	let a,e,g;
 	a=document.activeElement;
-	g=this.ig;
-	if(g==a) return;
+	if(this.getE("GobanSvg")==a) return;
 	e=this.getE(b+"Btn");
-	if(e&&!e.disabled&&(a==e)) return;
+	if(e&&!e.disabled) {if(a!=e) e.focus();return;}
 	this.getE("SolveDiv").focus();
 };
 mxG.G.prototype.hasMessage=function(s)
@@ -173,6 +172,8 @@ mxG.G.prototype.doVirtualNext=function()
 	{
 		this.placeNode();
 		this.updateAll();
+		this.moveFocusMarkOnLast();
+		this.whenVirtualNext=null;
 	}
 };
 mxG.G.prototype.doSolve=function(a,b)
@@ -208,9 +209,12 @@ mxG.G.prototype.doSolve=function(a,b)
 		{
 			aN.Focus=k+1;
 			this.placeNode();
-			this.updateAll();
 			if(this.cN.Kid.length&&!this.kidOnFocus(this.cN).Add)
 			{
+				this.noLabelledBy=1;
+				this.updateAll();
+				this.noLabelledBy=0;
+				this.whenVirtualNext={x:a,y:b};
 				if(this.animatedStoneOn) this.doVirtualNext();
 				else
 				{
@@ -218,6 +222,7 @@ mxG.G.prototype.doSolve=function(a,b)
 					setTimeout(function(){mxG.D[z].doVirtualNext();},200);
 				}
 			}
+			else this.updateAll();
 			return;
 		}
 		else if(this.specialMoveMatch&&(kz<0))
@@ -247,9 +252,12 @@ mxG.G.prototype.doSolve=function(a,b)
 			// place user move as is
 			aN.Focus=kz; // ok even if !kz
 			this.addExtraPlay(nat,a,b,tenuki);
-			this.updateAll();
 			if(kz && this.cN.Focus)
 			{
+				this.noLabelledBy=1;
+				this.updateAll();
+				this.noLabelledBy=0;
+				this.whenVirtualNext={x:a,y:b};
 				if(this.animatedStoneOn) this.doVirtualNext();
 				else
 				{
@@ -257,6 +265,7 @@ mxG.G.prototype.doSolve=function(a,b)
 					setTimeout(function(){mxG.D[z].doVirtualNext();},200);
 				}
 			}
+			else this.updateAll();
 			return;
 		}
 		else if(this.hasMessage("nowhere")) this.updateVirtualComment("nowhere");
@@ -294,14 +303,18 @@ mxG.G.prototype.checkSolve=function(x,y)
 mxG.G.prototype.doKeydownSolve=function(ev)
 {
 	let r=0;
-	switch(ev.key)
+	if(ev.shiftKey) switch(ev.key)
 	{
-		case "ArrowLeft":
+		case "Home":case "F":case "G":
 			if(this.cN.Dad!=this.rN) {this.doRetry();r=1;} break;
-		case "Home":
+		case "ArrowLeft":case "H":
 			if(this.cN.Dad!=this.rN) {this.doUndo();r=1;} break;
 	}
-	if(r) ev.preventDefault();
+	if(r)
+	{
+		this.moveFocusMarkOnLast();
+		ev.preventDefault();
+	}
 };
 mxG.G.prototype.updateSolve=function()
 {
