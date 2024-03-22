@@ -14,10 +14,9 @@ include "../../../_js/mgosNavigation.js";
 include "../../../_js/mgosPass.js";
 include "../../../_js/mgosVariation.js";
 include "../../../_js/mgosHeader.js";
-include "../../../_js/mgosVersion.js";
 ?>
 mxG.K++;
-mxG.B=[[["Goban"],[["Navigation","Pass"],"Variation","Header"]],"Version"];
+mxG.B=[["Goban"],[["Navigation","Pass"],"Variation","Header"]];
 mxG.D[mxG.K]=new mxG.G(mxG.K,mxG.B);
 mxG.D[mxG.K].theme="<?=$theme?>";
 mxG.D[mxG.K].config="<?=$config?>";
@@ -31,7 +30,6 @@ mxG.D[mxG.K].a.allowFileAsSource=1; // (0,1) default 1
 // mxG.D[mxG.K].a.sourceFilter=""; // (str) default ""
 mxG.D[mxG.K].a.initMethod="last"; // ("first","loop","last") default "first"
 // Goban
-mxG.D[mxG.K].a.pointsNumMax=19; // (positive integer) default 0
 mxG.D[mxG.K].a.stoneShadowOn=0; // (0,1) default 0 (require in3dOn=1)
 mxG.D[mxG.K].a.stretching="1,1,1,1"; // (list) default "0,0,1,1"
 mxG.D[mxG.K].a.gridPadding=2; // (float) default 0
@@ -53,7 +51,6 @@ mxG.D[mxG.K].a.variationBoxOn=0; // (0,1) default 0
 mxG.D[mxG.K].a.canPlaceVariation=1; // (0,1) default 0
 // Header
 mxG.D[mxG.K].a.headerBoxOn=1; // (0,1) default 0
-mxG.D[mxG.K].a.canHeaderFocus=1; // (0,1) default 0
 mxG.D[mxG.K].a.hideInHeader="NumOfMoves"; // (set) default ""
 // Navigation
 mxG.D[mxG.K].a.navigations="First,Pred,Next,Last"; // (set) default "First,TenPred,Pred,Next,TenNext,Last"

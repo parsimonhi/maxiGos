@@ -7,14 +7,19 @@
 <?php include "../../_php/version.php";?>
 <title>Documentation pour maxiGos v<?=$v?></title>
 <style>
+body
+{
+	hyphens:auto;
+	overflow-wrap:anywhere;
+}
+nav a {display:inline-block;margin:0.25em;}
+nav a img {padding-right:0.25em}
 p.note {font-style:italic;}
 h1+em,
 h1+em+nav {display:block;text-align:center;}
 h1+em+nav {margin-top:0.5em;}
-pre,
-.code
+pre
 {
-	color:red;
 	font-family:monaco;
 	font-size:1em;
 	background:#3e3e3e;
@@ -23,7 +28,6 @@ pre,
 	white-space:pre-wrap;
 	text-align:left;
 }
-p.code, div.code {text-align:left;}
 .important {color:black;font-weight:bold;}
 table.params {border-collapse: collapse;}
 table.params th, table.params td {border: 1px solid black;padding: 3px;}
@@ -50,14 +54,10 @@ h5:before {content: counter(h2counter) "." counter(h3counter) "." counter(h4coun
 h5 {font-size:1.2em;counter-increment: h5counter;}
 img.flag
 {
-	margin-left:1em;
-	margin-right:0.5em;
 	vertical-align:middle;
 	width:1.8em;
 	height:auto;
 }
-.classList>div {margin:1em 0;}
-.classList>div div {margin-left:2em;}
 h2 .component,
 h3 .component,
 h4 .component,
@@ -69,15 +69,17 @@ h6 .component
 figure.maxigosSample
 {
 	background:#eee;
-	padding:1rem;
+	margin:0;
+	padding:min(5vw,1rem);
 }
 /* BordeauxSample example */
 .BordeauxSample
 {
 	background:#ddd;
-	padding:1em;
+	margin:0;
+	padding:min(5vw,1rem);
 }
-.BordeauxSample .mxMinimalistTheme .mxInnerGobanDiv svg
+.BordeauxSample .mxMinimalistTheme .mxGobanContent svg
 {
 	background:#a72926;
 }
@@ -101,12 +103,54 @@ figure.maxigosSample
 	fill:#fff;
 	stroke:none;
 }
+@media (max-width:38em)
+{
+	table,tr,th,td
+	{
+		display:block;
+	}
+	th
+	{
+		text-align:left;
+	}
+	th:nth-of-type(1),th:nth-of-type(2)
+	{
+		color:#c33;
+	}
+	table.params th:not(:last-of-type),
+	table.params td:not(:last-of-type)
+	{
+		border-bottom:0;
+	}
+	table.params th:last-of-type,
+	table.params td:last-of-type
+	{
+		margin-bottom:0.5em;
+	}
+	ul,li
+	{
+		margin:0;
+		padding:0;
+	}
+	:not(li)>ul,li
+	{
+		padding-left:min(10vw,0.5em);
+	}
+}
+@media (max-width:19em)
+{
+	nav a
+	{
+		display:block;
+	}
+}
 </style>
 </head>
 <body>
-<nav><?=(file_exists("../../../index.php")?"<a href=\"../../../index.php?lang=fr\">Accueil</a>":"")?><!--
---><a href="<?=str_replace("/_fr/","/_en/",$_SERVER["SCRIPT_NAME"])?>"><img alt="English" class="flag" src="../../_img/flag/en.svg">English</a><!--
---><a href="<?=str_replace("/_en/","/_fr/",$_SERVER["SCRIPT_NAME"])?>"><img alt="Français" class="flag" src="../../_img/flag/fr.svg">Français</a></nav>
+<nav><?=(file_exists("../../../index.php")?"\n<a href=\"../../../index.php?lang=fr\">Accueil</a>\n":"")?>
+<a href="<?=str_replace("/_fr/","/_en/",$_SERVER["SCRIPT_NAME"])?>"><img alt="English" class="flag" src="../../_img/flag/en.svg">English</a>
+<a href="<?=str_replace("/_en/","/_fr/",$_SERVER["SCRIPT_NAME"])?>"><img alt="Français" class="flag" src="../../_img/flag/fr.svg">Français</a>
+</nav>
 
 <h1>Documentation pour maxiGos v<?=$v?></h1>
 <em>Copyright 1998-<?=date("Y")?> - FM&amp;SH</em>
@@ -166,7 +210,7 @@ déclinées en plusieurs thèmes.</p>
 <p>Thèmes principaux :</p>
 <ul>
 <li><span class="theme">Classic</span> (le premier thème de maxiGos)</li>
-<li><span class="theme">Minimalist</span> (un thème en noir et blanc minimaliste, destiné à être modifié par une feuille de style),</li>
+<li><span class="theme">Minimalist</span> (un thème en noir et blanc minimaliste, destiné à être modifié par une feuille de style supplémentaire),</li>
 <li><span class="theme">NeoClassic</span> (longtemps le thème par défaut de maxiGos)</li>
 <li><span class="theme">Rosewood</span> (un thème d'inspiration chinoise)</li>
 <li><span class="theme">Tatami</span> (un thème d'inspiration japonaise)</li>
@@ -353,8 +397,7 @@ mais aussi beaucoup d'autres caractéristiques
 (voir le chapitre <a href="#style">Balises et classes css utilisées par maxiGos</a> pour plus de détails).</p>
 <p>Par exemple, avec le lecteur maxigos-minimalist-diagram.js
 qui est initialement en noir et blanc et en 2d, on peut utiliser le code :</p>
-<pre><code>
-&lt;figure class="BordeauxSample"&gt;
+<pre><code>&lt;figure class="BordeauxSample"&gt;
 &lt;script
 	src="../../_sample/minimalist/_alone/maxigos-minimalist-diagram.js"
 	data-maxigos-in3d-on="1"
@@ -367,7 +410,7 @@ qui est initialement en noir et blanc et en 2d, on peut utiliser le code :</p>
 	background:#ddd;
 	padding:1em;
 }
-.BordeauxSample .mxMinimalistTheme .mxInnerGobanDiv svg
+.BordeauxSample .mxMinimalistTheme .mxGobanContent svg
 {
 	background:#a72926;
 }
@@ -390,8 +433,7 @@ qui est initialement en noir et blanc et en 2d, on peut utiliser le code :</p>
 {
 	fill:#fff;
 	stroke:none;
-}
-</code></pre>
+}</code></pre>
 <p>On obtient :</p>
 <figure class="BordeauxSample">
 <script
@@ -693,34 +735,34 @@ en cas d'utilisation d'un chargeur).</p>
 <h3>Liste des composants prédéfinies</h3>
 <p>Les composants prédéfinis sont :</p>
 <ul>
-<li><span class="component">About</span> (affiche des informations sur le lecteur),</li>
+<li><span class="component">About</span> (bouton affichant des informations sur le lecteur),</li>
 <li><span class="component">AnimatedStone</span> (déplace les pierres depuis les coins du goban
 vers les intersections où elles sont jouées),</li>
-<li><span class="component">BackToGame</span> (permet de revenir au coup
+<li><span class="component">BackToGame</span> (bouton permettant de revenir au coup
 le plus proche dans la variation principale du sgf de départ),</li>
 <li><span class="component">Cartouche</span> (affiche une boite avec le nom des joueurs, leurs niveaux et le nombre de leurs prisonniers),</li>
 <li><span class="component">Comment</span> (boite à commentaire simple, où s'affiche le contenu de la propriété sgf C et éventuellement un contenu généré par le composant <span class="component">Header</span>),</li>
-<li><span class="component">Cut</span> (bouton pour supprimer une branche, ne doit pas être utiliser avec le composant <span class="component">Edit</span>),</li>
 <li><span class="component">Edit</span> (barre d'outils et fonctions d'édition pour créer ou modifier un fichier sgf, à utiliser avec les composants <span class="component">Info</span>, <span class="component">Menu</span>, etc.),</li>
 <li><span class="component">File</span> (fonctions pour créer, ouvrir, fermer, enregistrer ou envoyer par email un fichier sgf, à utiliser avec les composants <span class="component">Sgf</span> et <span class="component">Menu</span>),</li>
 <li><span class="component">Goban</span> (goban où s'affiche le contenu des propriétés sgf B, W, AB, AW, AE, LB, MA, CR, SQ, TR, TB, TW, ST, PL, et FG),</li>
 <li><span class="component">Goto</span> (fonctions de déplacement pour changer le coup courant, via une barre coulissante ou un champ de saisie du numéro du coup).</li>
 <li><span class="component">Guess</span> (fonction de devinette de l'un des coups suivants, et barre d'affichage du résultat),</li>
-<li><span class="component">Header</span> (bouton, et boite d'entête où s'affiche le contenu des propriétés sgf EV, RO, PB, PW, BR, WR, DT, PC, RU, TM, KM, HA, RE, GC, etc.)</li>
-<li><span class="component">Help</span> (bouton et boite d'affichage de l'aide, à utiliser avec le composant <span class="component">Edit</span>),</li>
+<li><span class="component">Header</span> (bouton et boite d'entête où s'affiche le contenu des propriétés sgf EV, RO, PB, PW, BR, WR, DT, PC, RU, TM, KM, HA, RE, GC, etc.)</li>
+<li><span class="component">Help</span> (bouton d'affichage de l'aide, à utiliser avec le composant <span class="component">Edit</span>),</li>
 <li><span class="component">Image</span> (boutons pour générer des images png ou svg),</li>
 <li><span class="component">Info</span> (formulaire de modification des propriétés sgf EV, RO, DT, PC, PB, PW, BR, WR, KM, HA, RE, GC, AN, CP, SO, US, RU, TM, OT, ON, BT, WT, GN),</li>
 <li><span class="component">Lesson</span> (boite à commentaire sous forme de bulle avec un assistant, où s'affiche le contenu des propriétés sgf C, BM, DO, IT et TE),</li>
 <li><span class="component">Loop</span> (boutons d'affichage en boucle),</li>
 <li><span class="component">Menu</span> (gestionnaire de menu, à utiliser avec au moins l'un des composants suivants : <span class="component">File</span>, <span class="component">Edit</span> et <span class="component">View</span>),</li>
 <li><span class="component">MoveInfo</span> (indicateur de la couleur, du numéro, et des coordonnés du dernier coup),</li>
-<li><span class="component">Navigation</span> (boutons permettant de naviguer d'un coup à un autre),</li>
+<li><span class="component">Navigation</span> (barre de boutons permettant de naviguer d'un coup à un autre),</li>
 <li><span class="component">NotSeen</span> (boite listant les coups numérotés déjà joués qui ne sont plus visibles sur le goban, avec leurs coordonnées)</li>
-<li><span class="component">Options</span> (panneau d'options, pour modifier la numérotation, l'affichage d'une marque sur le dernier coup,...),</li>
+<li><span class="component">Options</span> (bouton et panneau d'options pour modifier la numérotation, l'affichage d'une marque sur le dernier coup,...),</li>
 <li><span class="component">Pass</span> (bouton de passe),</li>
+<li><span class="component">Remove</span> (bouton pour couper une branche, ne doit pas être utiliser avec le composant <span class="component">Edit</span>),</li>
 <li><span class="component">Score</span> (bouton pour ajouter ou retirer les marques de territoire, propriétés sgf TB et TW),</li>
-<li><span class="component">Sgf</span> (bouton et boite d'affichage du sgf),</li>
-<li><span class="component">Solve</span> (boutons "recommencer tout" et "reprendre un coup", et affichage d'une réponse au coup de l'utilisateur, à utiliser pour les rejoueurs de problème),</li>
+<li><span class="component">Sgf</span> (bouton pour télécharger ou afficher le sgf, générateur de sgf),</li>
+<li><span class="component">Solve</span> (barre de boutons "Recommencer tout", "Reprendre un coup", "Montrer la suite" et "Passe". Affichage d'une réponse au coup de l'utilisateur, à utiliser pour les rejoueurs de problème),</li>
 <li><span class="component">Speed</span> (barre de réglage de la vitesse d'affichage des coups, à utiliser en conjonction avec <span class="component">Loop</span>),</li>
 <li><span class="component">Tree</span> (arbre des coups),</li>
 <li><span class="component">Variations</span> (affichage et éventuellement ajout des variations sur le goban ou dans la boite du composant),</li>
@@ -964,26 +1006,6 @@ au lieu de ne contenir que le commentaire pour le noeud courant.</td>
 <td>0</td>
 </tr>
 <tr>
-<td><span class="parameter">canCommentFocus</span></td>
-<td><span class="attribute">data-maxigos-can-comment-focus</span></td>
-<td>S'il vaut 1, la boite à commentaire peut prendre le focus
-en navigation clavier (utile quand le commentaire courant
-ne peut pas être affiché en totalité dans la boite à commentaires
-sans barre de défilement).<br><br>
-Par contre, si l'on est certain que le commentaire
-pourra être affiché en totalité, il faut laisser ce paramètre à 0.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
-<td><span class="parameter">commentCaptionOn</span></td>
-<td><span class="attribute">data-maxigos-comment-caption-on</span></td>
-<td>S'il vaut 1, maxiGos affiche un caption ayant pour libellé "Commentaire"
-dans la boite à commentaire.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
 <td><span class="parameter">headerInComment</span></td>
 <td><span class="attribute">data-maxigos-header-in-comment</span></td>
 <td>S'il vaut 1, maxiGos ajoute au commentaire une entête contenant
@@ -994,39 +1016,6 @@ Pour que ce paramètre ait un effet, il faut que le composant
 <td>0</td>
 </tr>
 </table>
-
-<h3>Composant <span class="component">Cut</span></h3>
-<p>Ce composant affiche un bouton permettant 
-de couper l'arbre sgf à partir du noeud courant.</p>
-<table class="params">
-<tr>
-<th>Paramètre</th>
-<th>Attribut</th>
-<th>Description</th>
-<th>Valeurs possibles</th>
-<th>Valeur par défaut</th>
-</tr>
-<tr>
-<td><span class="parameter">cutAlias</span></td>
-<td><span class="attribute">data-maxigos-cut-alias</span></td>
-<td>Indique dans quel élément du tableau de traduction
-il faut rechercher ce qui sera affiché sur le bouton "Cut".<br><br>
-S'il vaut null, maxiGos affiche par défaut "Couper" sur le bouton "Cut".<br><br>
-Il est souhaitable que la valeur contienne au moins un "_".
-Et si la valeur ne contient que "_", cela signifie afficher une chaine vide.</td>
-<td>Une chaine</td>
-<td>null</td>
-</tr>
-<tr>
-<td><span class="parameter">cutBtnOn</span></td>
-<td><span class="attribute">data-maxigos-cut-btn-on</span></td>
-<td>S'il vaut 1, maxiGos affiche le bouton "Cut".</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-</table>
-<p>Note : le bouton s'appelle "SimpleCut" et non pas "Cut" pour éviter une éventuelle
-confusion avec l'outil "Cut" du composant <span class="component">Edit</span>.</p>
 
 <h3>Composant <span class="component">Edit</span></h3>
 <p>Il contient deux sous-composants : "EditToolBar" et "EditCommentTool".</p>
@@ -1184,25 +1173,6 @@ Pour que ce paramètre ait un effet, il faut que <span class="parameter">numberi
 <td>0</td>
 </tr>
 <tr>
-<td><span class="parameter">pointsNumMax</span></td>
-<td><span class="attribute">data-maxigos-points-num-max</span></td>
-<td>Ce paramètre est utile lorsque l'on veut afficher dans une même
-page des gobans de différentes tailles (par exemple des 19x19 avec des 9x9)
-ou des vues partielles de goban en conservant le même espacement entre les lignes.
-S'il vaut 0, maxiGos se contente d'agrandir le lecteur autant qu'il le peut
-dans son conteneur quelque soit son nombre d'intersections.
-Sinon, maxiGos calcule la taille qu'occuperait un goban de référence
-ayant <span class="parameter">pointsNumMax</span> intersections dans sa largeur.
-Il affiche ensuite les gobans plus petits ou
-les vues partielles de goban avec le même espacement entre les intersections
-que pour le goban de référence.
-Les gobans ou vues partielles de goban ayant plus de
-<span class="parameter">pointsNumMax</span> intersections
-dans leur largeur sont affichés avec la même largeur que le goban de référence.</td>
-<td>Un entier positif</td>
-<td>0</td>
-</tr>
-<tr>
 <td><span class="parameter">specialStoneOn</span></td>
 <td><span class="attribute">data-maxigos-special-stone-on</span></td>
 <td>S'il vaut 1, maxiGos affiche des lignes grises courbes
@@ -1244,6 +1214,13 @@ Pour que ce paramètre ait un effet, il faut que <span class="parameter">in3dOn<
 <td>("MA","MS")</td>
 <td>"MS"</td>
 </tr>
+<tr>
+<td><span class="parameter">yaOn</span></td>
+<td><span class="attribute">data-maxigos-ya-on</span></td>
+<td>S'il vaut 1, maxiGos remplace les disques sur les hoshis par des marques dites "ya" (utilisées dans l'ancienne Chine).</td>
+<td>(0,1)</td>
+<td>0</td>
+</tr>
 </table>
 
 <h3>Composant <span class="component">Goto</span></h3>
@@ -1251,8 +1228,7 @@ Pour que ce paramètre ait un effet, il faut que <span class="parameter">in3dOn<
 rapidement dans l'arbre des coups.</p>
 <p>Ce composant fournit également pour la barre de navigation
 un champ de saisie d'un numéro de coup où l'on souhaite se rendre.
-Pour insérer ce champ de saisie dans la barre de navigation
-(paramètre <span class="parameter">navigations</span>),
+Pour insérer ce champ de saisie dans la barre de navigation,
 ajouter simplement "Goto" à la valeur du paramètre
 <span class="parameter">navigations</span>.</p>
 <table class="params">
@@ -1322,17 +1298,6 @@ des propriétés sgf EV, RO, PB, PW, BR, WR, DT, PC, RU, TM, KM, HA, RE, GC, etc
 <th>Valeur par défaut</th>
 </tr>
 <tr>
-<td><span class="parameter">canHeaderFocus</span></td>
-<td><span class="attribute">data-maxigos-can-header-focus</span></td>
-<td>S'il vaut 1, la boite à entête peut prendre le focus
-en navigation clavier (utile quand l'entête
-ne peut pas être affichée en totalité dans sa boite sans barre de défilement).<br><br>
-Par contre, si l'on est certain que l'entête
-pourra être affiché en totalité, il faut laisser ce paramètre à 0.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
 <td><span class="parameter">concatInHeader</span></td>
 <td><span class="attribute">data-maxigos-hide-in-header</span></td>
 <td>Ensemble de paires d'éléments à concaténer éventuellement. Les paires possible sont :
@@ -1340,8 +1305,7 @@ pourra être affiché en totalité, il faut laisser ce paramètre à 0.</td>
 <li>DateToTitle : date après le titre,</li>
 <li>HandicapToResult : handicap après le résultat,</li>
 <li>KomiToResult : komi après le résultat,</li>
-<li>NumOfMovesToResult : nombre de coups après le résultat,</li>
-<li>TeamToPlayer : nom de l'équipe après le nom des joueurs.</li>
+<li>NumOfMovesToResult : nombre de coups après le résultat.</li>
 </ul>
 </td>
 <td>Ensemble de chaines (séparées par des virgules)</td>
@@ -1393,7 +1357,6 @@ Ce paramètre est sans effet si <span class="parameter">headerBoxOn</span> vaut 
 <li>Handicap (handicap, propriété sgf HA)</li>
 <li>Komi (komi, propriété sgf KM)</li>
 <li>NumOfMoves (nombre de coups de la partie)</li>
-<li>NumOfMovesLabel (la chaine "Nombre de coups :" se trouvant devant le nombre de coups)</li>
 <li>Place (lieu, propriété sgf PC)</li>
 <li>Result (résultat, propriété sgf RE)</li>
 <li>ResultLabel (la chaine "Résultat :" se trouvant devant le résultat)</li>
@@ -1410,8 +1373,8 @@ Ce paramètre est sans effet si <span class="parameter">headerBoxOn</span> vaut 
 <td><span class="parameter">translateTitleOn</span></td>
 <td><span class="attribute">data-maxigos-translate-title-on</span></td>
 <td>S'il vaut 1, maxiGos essaie de traduire le titre,
-en utilisant les fonctions se trouvant dans des scripts d'internationalisation
-du dossier "_i18n".<br><br>
+en utilisant les fonctions se trouvant dans les scripts des composants (pour le français)
+ou les scripts d'internationalisation du dossier "_i18n" (pour les autres langues).<br><br>
 Le titre est déduit des propriétés sgf EV et RO. 
 Pour que la traduction soit efficace, EV doit être de la forme "x t" avec x de la forme
 "1st" ou "2nd" ou "3rd" ou "nth", n étant un nombre, 
@@ -1603,13 +1566,6 @@ et "Windows".</td>
 <td>Une liste de chaines</td>
 <td>""</td>
 </tr>
-<tr>
-<td><span class="parameter">menuTimeout</span></td>
-<td><span class="attribute">data-maxigos-menu-timeout</span></td>
-<td>Durée en millisecondes pendant laquelle les sous-menus restent visibles.</td>
-<td>Un entier positif</td>
-<td>10000</td>
-</tr>
 </table>
 
 <h3>Composant <span class="component">MoveInfo</span></h3>
@@ -1790,6 +1746,39 @@ Et si la valeur ne contient que "_", cela signifie afficher une chaine vide.</td
 </tr>
 </table>
 
+<h3>Composant <span class="component">Remove</span></h3>
+<p>Ce composant affiche un bouton permettant 
+de couper l'arbre sgf à partir du noeud courant.</p>
+<table class="params">
+<tr>
+<th>Paramètre</th>
+<th>Attribut</th>
+<th>Description</th>
+<th>Valeurs possibles</th>
+<th>Valeur par défaut</th>
+</tr>
+<tr>
+<td><span class="parameter">removeAlias</span></td>
+<td><span class="attribute">data-maxigos-remove-alias</span></td>
+<td>Indique dans quel élément du tableau de traduction
+il faut rechercher ce qui sera affiché sur le bouton "Remove".<br><br>
+S'il vaut null, maxiGos affiche par défaut "Couper" sur le bouton "Remove".<br><br>
+Il est souhaitable que la valeur contienne au moins un "_".
+Et si la valeur ne contient que "_", cela signifie afficher une chaine vide.</td>
+<td>Une chaine</td>
+<td>null</td>
+</tr>
+<tr>
+<td><span class="parameter">removeBtnOn</span></td>
+<td><span class="attribute">data-maxigos-remove-btn-on</span></td>
+<td>S'il vaut 1, maxiGos affiche le bouton "Remove".</td>
+<td>(0,1)</td>
+<td>0</td>
+</tr>
+</table>
+<p>Note : le bouton ne s'appelle pas "Cut" pour éviter une éventuelle
+confusion avec l'outil "Cut" du composant <span class="component">Edit</span>.</p>
+
 <h3>Composant <span class="component">Score</span></h3>
 <p>Ce composant affiche un bouton "Score".</p>
 <table class="params">
@@ -1950,9 +1939,9 @@ comme le bouton "Next".</td>
 <tr>
 <td><span class="parameter">solves</span></td>
 <td><span class="attribute">data-maxigos-solves</span></td>
-<td>Liste des boutons à afficher pour ce composant.<br><br>
+<td>Ensemble de boutons à afficher pour ce composant.<br><br>
 4 boutons sont possibles : "Retry", "Undo", "Pass" et "Hint".</td>
-<td>Liste de chaines</td>
+<td>Ensemble de chaines (séparées par des virgules)</td>
 <td>"Retry,Undo"</td>
 </tr>
 <tr>
@@ -2011,18 +2000,6 @@ d'un affichage en boucle.</p>
 <th>Valeur par défaut</th>
 </tr>
 <tr>
-<td><span class="parameter">canTreeFocus</span></td>
-<td><span class="attribute">data-maxigos-can-tree-focus</span></td>
-<td>S'il vaut 1, la boite de l'arbre des coups peut prendre le focus
-en navigation clavier (utile quand cet arbre
-ne peut pas être affiché en totalité dans sa boite
-sans barres de défilement).<br><br>
-Par contre, si l'on est certain que l'arbre des coups
-pourra être affiché en totalité, il faut laisser ce paramètre à 0.</td>
-<td>(0,1)</td>
-<td>0</td>
-</tr>
-<tr>
 <td><span class="parameter">hideTreeNumbering</span></td>
 <td><span class="attribute">data-maxigos-hide-tree-numbering</span></td>
 <td>S'il vaut 1, maxiGos cache les numéros des coups
@@ -2037,14 +2014,6 @@ dans l'arbre des coups.</td>
 par un "?" dans l'arbre des coups.</td>
 <td>(0,1)</td>
 <td>1</td>
-</tr>
-<tr>
-<td><span class="parameter">treeCaptionOn</span></td>
-<td><span class="attribute">data-maxigos-tree-caption-on</span></td>
-<td>S'il vaut 1, maxiGos affiche un caption ayant pour libellé "Arbre des coups"
-dans la boite de l'arbre des coups.</td>
-<td>(0,1)</td>
-<td>0</td>
 </tr>
 </table>
 
@@ -2111,7 +2080,7 @@ L'utilisation de nombres permet d'éviter de confondre ces marques
 avec les marques explicitement placés par les commentateurs
 qui sont en général des lettres. 
 Pour remplacer ces marques par autre chose,
-on peut donner une liste de chaines comme valeur de ce paramètre.<br><br>
+on peut donner un ensemble de chaines comme valeur de ce paramètre.<br><br>
 Par exemple, pour utiliser des hiraganas comme marques,
 on peut donner à ce paramètre la valeur
 "あ,い,う,え,お,か,き,く,け,こ,た,ち,つ,て,と,さ,し,す,せ,そ".<br><br>
@@ -2124,8 +2093,8 @@ il faut bien évidemment que la valeur de la propriété ST dans les fichiers sg
 ou la valeur des paramètres <span class="parameter">variationMarksOn</span>
 et <span class="parameter">hideSingleVariationMarkOn</span> le permettent.
 </td>
-<td>Une liste de caractères quelconques</td>
-<td>"1"</td></tr>
+<td>Ensemble de chaines (séparées par des virgules)</td>
+<td>""</td></tr>
 <tr>
 <td><span class="parameter">variationMarksOn</span></td>
 <td><span class="attribute">data-maxigos-variation-marks-on</span></td>
@@ -2185,31 +2154,29 @@ Cela permet de facilement modifier leur style.<p>
 <p>On a comme balises :</p>
 <ul>
 <li>un <span class="tag">&lt;div&gt;</span> global,</li>
-<li>une balise encapsulant chaque composant s'il a sa propre boite d'affichage
-(en pratique une balise <span class="tag">&lt;div&gt;</span>
-bien que ce ne soit pas obligatoire),</li>
+<li>une balise encapsulant chaque composant s'il a sa propre boite d'affichage,</li>
 <li>des balises variées pour les éléments internes des composants,</li>
 <li>et enfin des <span class="tag">&lt;div&gt;</span> regroupant d'autres boites.</li>
 </ul>
 <p>Chaque lecteur a un identifiant qui commence par "d" suivi d'un nombre
 (1 pour le 1er lecteur maxiGos apparaissant dans une page, 2 pour le 2e, etc.)</p>
 <p>Chaque identifiant de balise encapsulant un composant est préfixé par l'identifiant
-de son lecteur, suivi du nom du composant, et suffixé par le nom de la balise.
+de son lecteur, suivi du nom du composant, et suffixé par le nom de la balise ou "Box".
 Par exemple, l'identifiant pour le <span class="tag">&lt;div&gt;</span> encapsulant
 le composant <span class="component">Goban</span> du troisième lecteur maxiGos
-apparaissant dans une page est "d3GobanDiv".</p>
+apparaissant dans une page est "d3GobanBox".</p>
 <p>Chaque classe est préfixée par "mx" au lieu de l'identifiant du lecteur.
 Par exemple, la classe du <span class="tag">&lt;div&gt;</span> encapsulant
-le composant <span class="component">Goban</span> est "mxGobanDiv".</p>
-<p>Le <span class="tag">&lt;div&gt;</span> global a pour nom "GlobalBox". Son identifiant
-est donc l'identifiant du lecteur suivi de "GlobalBox" suivi de "Div". Sa
-classe est "mxGlobalBoxDiv". Pour le 3e lecteur maxiGos apparaissant dans une page,
+le composant <span class="component">Goban</span> est "mxGobanBox".</p>
+<p>Le <span class="tag">&lt;div&gt;</span> global a pour nom "Global". Son identifiant
+est l'identifiant du lecteur suivi de "Global". Sa
+classe est "mxGlobal". Pour le 3e lecteur maxiGos apparaissant dans une page,
 le lecteur produira donc comme html :</p>
-<pre><code>&lt;div class="mxGlobalBoxDiv" id="d3GlobalBoxDiv"&gt;...&lt;/div&gt;</code></pre>
+<pre><code>&lt;div class="mxGlobal" id="d3Global"&gt;...&lt;/div&gt;</code></pre>
 <p>Le lecteur ajoute éventuellement d'autres classes selon les besoins.</p>
 <p>Les <span class="tag">&lt;div&gt;</span> des boites de regroupement
 n'ont pas d'identifiant. Par contre, elles ont plusieurs classes
-de la forme "mx" + nom d'un composant + ("Parent" ou "GrandParent" ou "GreatGrandParent" ou "GreatGreatGrandParent" etc.)+"Div"
+de la forme "mx" + nom d'un composant + ("Parent" ou "GrandParent" ou "GreatGrandParent" ou "GreatGreatGrandParent" etc.)
 (autant de classes qu'elles contiennent de composants).</p>
 <p>À l'intérieur de certains composants, on a d'autres balises 
 dont beaucoup ont aussi des classes ou des ids, mais c'est moins systématique</p>
@@ -2222,94 +2189,72 @@ dont beaucoup ont aussi des classes ou des ids, mais c'est moins systématique</
 <h4> Boite globale</h4>
 
 <ul>
-<li>div.mxGlobalBoxDiv,</li> 
+<li>div.mxGlobal,</li> 
 <li>div.mx + nom de theme + Theme,</li>
 <li>div.mx + nom de configuration + Config,</li>
 <li>div.mxIn3d ou div.mxIn2d selon la valeur du paramètre <span class="parameter">in3dOn</span>,</li>
 <li>div.mxIndicesOn ou div.mxIndicesOff selon la valeur du paramètre <span class="parameter">indicesOn</span>.</li>
 </ul>
 
+<p>MaxiGos ajoute les variables css --gobanIntrinsicWidth et --gobanIntrinsicHeight
+qui contiennent les largeurs et hauteurs en unité "svg" du svg contenant le goban
+aux styles de la boite globale.</p>
+
+<p>Si le composant <span class="component">MoveInfo</span> est présent,
+MaxiGos ajoute les variables css --moveInfoIntrinsicWidth et --moveInfoIntrinsicHeight
+qui contiennent les largeurs et hauteurs en unité "svg" du svg du composant
+aux styles de la boite globale.</p>
+
+<p>Si le composant <span class="component">Tree</span> est présent,
+MaxiGos ajoute les variables css --treeIntrinsicWidth et --treeIntrinsicHeight
+qui contiennent les largeurs et hauteurs en unité "svg" des svgs du composant
+aux styles de la boite globale.</p>
+
 <h4> Boites de regroupement</h4>
 
 <ul>
-<li>div.mx + nom de composant + ParentDiv</li>
-<li>div.mx + nom de composant + GrandParentDiv</li>
-<li>div.mx + nom de composant + GreatGrandParentDiv</li>
-<li>div.mx + nom de composant + GreatGreatGrandParentDiv</li>
+<li>div.mx + nom de composant + Parent</li>
+<li>div.mx + nom de composant + GrandParent</li>
+<li>div.mx + nom de composant + GreatGrandParent</li>
+<li>div.mx + nom de composant + GreatGreatGrandParent</li>
 <li>...</li>
 </ul>
 
 <h4> Boites des composants et éléments internes (liste non exhaustive)</h4>
 
 <ul>
-<li>div.mxAboutDiv (<span class="parameter">aboutBtnOn</span>=1)
-	<ul>
-	<li>button.mxBtn.mxAboutBtn</li>
-	</ul>
-</li>
+<li>button.mxBtn.mxAboutBtn (<span class="parameter">aboutBtnOn</span>=1)</li>
 </ul>
 
 <ul>
-<li>div.mxBackToMainDiv (<span class="parameter">backToMainBtnOn</span>=1)
-	<ul>
-	<li>button.mxBtn.mxBackToMainBtn</li>
-	</ul>
-</li>
+<li>button.mxBtn.mxBackToMainBtn (<span class="parameter">backToMainBtnOn</span>=1)</li>
 </ul>
 
 <ul>
-<li>div.mxCommentDiv
+<li>div.mxCartoucheBox
 	<ul>
-	<li>div.mxCommentCaptionDiv (<span class="parameter">commentCaptionOn</span>=1)</li>
-	<li>div.mxCommentContentDiv
+	<li>div.mxShortHeader
 		<ul>
-		<li>Balises du composant <span class="component">Header</span> (<span class="parameter">headerInComment</span>=1)</li>
-		<li>p
+		<li>span.mxPlayerStone
 			<ul>
-			<li>span.mxMoveNumberSpan (<span class="parameter">allInComment</span>=1)</li>
-			<li>span.mxInitialSpan (composant <span class="component">Solve</span>)</li>
-			<li>span.mxOffpathSpan (composant <span class="component">Solve</span>)</li>
-			<li>span.mxFailSpan (composant <span class="component">Solve</span>)</li>
-			<li>span.mxSuccessSpan (composant <span class="component">Solve</span>)</li>
-			<li>span.mxNowhereSpan (composant <span class="component">Solve</span>)</li>
-			<li>span.mxForbiddenSpan (composant <span class="component">Solve</span>)</li>
-			<li>span.mxEndSpan (composant <span class="component">Solve</span>)</li>
+			<li>svg</li>
+			</ul>
+		</li>
+		<li>span.mxPlayerName</li>
+		<li>span.mxPlayerRank</li>
+		</ul>
+	</li>
+	<li>div.mxPrisoners
+		<ul>
+		<li>span.mxPrisonersNum</li>
+		<li>span.mxPrisonersStone
+			<ul>
+			<li>svg</li>
 			</ul>
 		</li>
 		</ul>
 	</li>
-	</ul>
-</li>
-</ul>
-
-<ul>
-<li>div.mxCutDiv (<span class="parameter">cutBtnOn</span>=1)
-	<ul>
-	<li>button.mxBtn</li>
-	</ul>
-</li>
-</ul>
-
-<ul>
-<li>div.mxEditToolBarDiv (composant <span class="component">Edit</span>)
-	<ul>
-	<li>button svg, et input + (.mxUnselectedEditTool ou .mxSelectedEditTool)</li>
-	</ul>
-</li>
-</ul>
-
-<ul>
-<li>div.mxEditCommentToolDiv (composant <span class="component">Edit</span>)
-	<ul>
-	<li>textarea</li>
-	</ul>
-</li>
-</ul>
-
-<ul>
-<li>div.mxGobanDiv
-	<ul>
-	<li>div.mxInnerGobanDiv
+	<li>div.mxBowl
 		<ul>
 		<li>svg</li>
 		</ul>
@@ -2319,38 +2264,75 @@ dont beaucoup ont aussi des classes ou des ids, mais c'est moins systématique</
 </ul>
 
 <ul>
-<li>div.mxGotoDiv svg</li>
-</ul>
-
-<ul>
-<li>div.mxGuessDiv svg</li>
-</ul>
-
-<ul>
-<li>div.mxHeaderDiv (<span class="parameter">headerBtnOn</span>=0)
+<li>div.mxCommentBox
 	<ul>
-	<li>p.mxTitleP</li>
-	<li>p.mxHeaderContentP</li>
-	<li>p.mxGeneralCommentP</li>
-	</ul>
-</li>
-<li>div.mxHeaderDiv (<span class="parameter">headerBtnOn</span>=1)
-	<ul>
-	<li>button.mxBtn.mxHeaderBtn</li>
+	<li>div.mxCommentContent
+		<ul>
+		<li>Balises du composant <span class="component">Header</span> (<span class="parameter">headerInComment</span>=1)</li>
+		<li>p
+			<ul>
+			<li>span.mxMoveNumber (<span class="parameter">allInComment</span>=1)</li>
+			</ul>
+		</li>
+		</ul>
+	</li>
 	</ul>
 </li>
 </ul>
 
 <ul>
-<li>div.mxHelpDiv (<span class="parameter">helpBtnOn</span>=1)
+<li>div.mxEditToolbar (composant <span class="component">Edit</span>)
 	<ul>
-	<li>button.mxBtn.mxHelpBtn</li>
+	<li>button svg, et input + (.mxUnselectedEditTool ou .mxSelectedEditTool)</li>
 	</ul>
 </li>
 </ul>
 
 <ul>
-<li>div.mxLessonDiv+(.mxBM, .mxDO, .mxIT, .mxTE ou rien)
+<li>textarea.mxEditCommentTool (composant <span class="component">Edit</span>)</li>
+</ul>
+
+<ul>
+<li>div.mxGobanBox
+	<ul>
+	<li>div.mxGobanContent
+		<ul>
+		<li>svg.mxGobanSvg</li>
+		</ul>
+	</li>
+	</ul>
+</li>
+</ul>
+
+<ul>
+<li>div.mxGotoBox input</li>
+</ul>
+
+<ul>
+<li>div.mxGuessBox meter</li>
+</ul>
+
+<ul>
+<li>div.mxHeaderBox (<span class="parameter">headerBtnOn</span>=0)
+	<ul>
+	<li>p.mxHeaderTitle</li>
+	<li>p.mxHeaderContent
+		<ul>
+		<li>span</li>
+		</ul>
+	</li>
+	<li>p.mxGeneralComment</li>
+	</ul>
+</li>
+<li>button.mxBtn.mxHeaderBtn (<span class="parameter">headerBtnOn</span>=1)</li>
+</ul>
+
+<ul>
+<li>button.mxBtn.mxHelpBtn (<span class="parameter">helpBtnOn</span>=1)</li>
+</ul>
+
+<ul>
+<li>div.mxLessonBox+(.mxBM, .mxDO, .mxIT, .mxTE ou rien)
 	<ul>
 	<li>div</li>
 	<li>img</li>
@@ -2359,16 +2341,16 @@ dont beaucoup ont aussi des classes ou des ids, mais c'est moins systématique</
 </ul>
 
 <ul>
-<li>div.mxMenuDiv
+<li>menu.mxMenuBox
 	<ul>
-	<li>div.mxOneMenuDiv
+	<li>li.mxOneMenu
 		<ul>
 		<li>button</li>
-		</ul>
-	</li>
-	<li>div.mxSubMenuDiv
-		<ul>
-		<li>button</li>
+		<li>menu.mxSubMenu
+			<ul>
+			<li>li button</li>
+			</ul>
+		</li>
 		</ul>
 	</li>
 	</ul>
@@ -2376,7 +2358,7 @@ dont beaucoup ont aussi des classes ou des ids, mais c'est moins systématique</
 </ul>
 
 <ul>
-<li>div.mxMoveInfoDiv
+<li>div.mxMoveInfoBox
 	<ul>
 	<li>svg</li>
 	</ul>
@@ -2384,7 +2366,7 @@ dont beaucoup ont aussi des classes ou des ids, mais c'est moins systématique</
 </ul>
 
 <ul>
-<li>div.mxNavigationDiv
+<li>div.mxNavigationBox
 	<ul>
 	<li>button.mxBtn
 		<ul>
@@ -2432,18 +2414,15 @@ dont beaucoup ont aussi des classes ou des ids, mais c'est moins systématique</
 </ul>
 
 <ul>
-<li>div.mxNotSeenDiv
+<li>div.mxNotSeenBox
 	<ul>
-	<li>div.mxInnerNotSeenDiv
-		<ul>
-		<li>svg</li>
-		</ul>
+	<li>svg</li>
 	</ul>
 </li>
 </ul>
 
 <ul>
-<li>div.mxOptionsDiv (<span class="parameter">optionsBtnOn</span>=0)
+<li>div.mxOptionsBox (<span class="parameter">optionsBtnOn</span>=0)
 	<ul>
 	<li>p
 		<ul>
@@ -2456,67 +2435,51 @@ dont beaucoup ont aussi des classes ou des ids, mais c'est moins systématique</
 	</li>
 	</ul>
 </li>
-<li>div.mxOptionsDiv (<span class="parameter">optionsBtnOn</span>=1)
+<li>button.mxBtn.mxOptionsBtn (<span class="parameter">optionsBtnOn</span>=1)</li>
+</ul>
+
+<ul>
+<li>button.mxBtn.mxPassBtn (<span class="parameter">passBtnOn</span>=1)
 	<ul>
-	<li>button.mxBtn.mxOptionsBtn</li>
+	<li>svg</li>
+	</ul>
+<li>button.mxBtn.mxPassBtn.mxJustPlayedPassBtn
+	<ul>
+	<li>svg</li>
+	</ul>
+</li>
+<li>button.mxBtn.mxPassBtn.mxOnVariationPassBtn
+	<ul>
+	<li>svg</li>
+	</ul>
+</li>
+<li>button.mxBtn.mxPassBtn.mxOnFocusPassBtn
+	<ul>
+	<li>svg</li>
 	</ul>
 </li>
 </ul>
 
 <ul>
-<li>div.mxPassDiv (<span class="parameter">passBtnOn</span>=1)
-	<ul>
-	<li>button.mxBtn.mxPassBtn
-		<ul>
-		<li>svg</li>
-		</ul>
-	<li>button.mxBtn.mxJustPlayedPassBtn
-		<ul>
-		<li>svg</li>
-		</ul>
-	</li>
-	<li>button.mxBtn.mxOnVariationPassBtn
-		<ul>
-		<li>svg</li>
-		</ul>
-	</li>
-	<li>button.mxBtn.mxOnFocusPassBtn
-		<ul>
-		<li>svg</li>
-		</ul>
-	</li>
-	</ul>
-</li>
+<li>button.mxBtn.mxPngBtn (composant <span class="component">Image</span>, <span class="parameter">pngBtnOn</span>=1)</li>
 </ul>
 
 <ul>
-<li>div.mxPngDiv (composant <span class="component">Image</span>, <span class="parameter">pngBtnOn</span>=1)
-	<ul>
-	<li>button.mxBtn.mxPngBtn</li>
-	</ul>
-</li>
+<li>button.mxBtn.mxRemoveBtn (<span class="parameter">removeBtnOn</span>=1)</li>
 </ul>
 
 <ul>
-<li>div.mxScoreDiv (<span class="parameter">scoreBtnOn</span>=1)
-	<ul>
-	<li>button.mxBtn.mxScoreBtn</li>
-	</ul>
-</li>
+<li>button.mxBtn.mxScoreBtn (<span class="parameter">scoreBtnOn</span>=1)</li>
 </ul>
 
 <ul>
-<li>div.mxSgfDiv (<span class="parameter">sgfBtnOn</span>=1)
-	<ul>
-	<li>button.mxBtn.mxSgfBtn</li>
-	</ul>
-</li>
+<li>button.mxBtn.mxSgfBtn (<span class="parameter">sgfBtnOn</span>=1)</li>
 </ul>
 
 <ul>
-<li>div.mxSolveDiv
+<li>div.mxSolveBox
 	<ul>
-	<li>button.mxBtn.mxHint
+	<li>button.mxBtn.mxHintBtn
 		<ul>
 		<li>svg</li>
 		</ul>
@@ -2526,43 +2489,12 @@ dont beaucoup ont aussi des classes ou des ids, mais c'est moins systématique</
 		<li>svg</li>
 		</ul>
 	</li>
-	<li>button.mxBtn.mxRetry
+	<li>button.mxBtn.mxRetryBtn
 		<ul>
 		<li>svg</li>
 		</ul>
 	</li>
-	<li>button.mxBtn.mxUndo
-		<ul>
-		<li>svg</li>
-		</ul>
-	</li>
-	</ul>
-</li>
-</ul>
-
-<ul>
-<li>div.mxSpeedDiv
-	<ul>
-	<li>button.mxSpeedPlusBtn, le "+"</li>
-	<li>div.mxSpeedBarDiv svg, la barre de réglage et le curseur</li>
-	<li>button.mxSpeedMinusBtn, le "-"</li>
-	</ul>
-</li>
-</ul>
-
-<ul>
-<li>div.mxSvgDiv (composant <span class="component">Image</span>, <span class="parameter">svgBtnOn</span>=1)
-	<ul>
-	<li>button.mxBtn.mxSvgBtn</li>
-	</ul>
-</li>
-</ul>
-
-<ul>
-<li>div.mxTreeDiv
-	<ul>
-	<li>div.mxTreeCaptionDiv (<span class="parameter">treeCaptionOn</span>=1)</li>
-	<li>div.mxTreeContentDiv
+	<li>button.mxBtn.mxUndoBtn
 		<ul>
 		<li>svg</li>
 		</ul>
@@ -2572,12 +2504,45 @@ dont beaucoup ont aussi des classes ou des ids, mais c'est moins systématique</
 </ul>
 
 <ul>
-<li>div.mxVersionDiv (<span class="parameter">versionBoxOn</span>=1)</li>
+<li>div.mxSpeedBox input</li>
+</ul>
+
+<ul>
+<li>button.mxBtn.mxSvgBtn (composant <span class="component">Image</span>, <span class="parameter">svgBtnOn</span>=1)</li>
+</ul>
+
+<ul>
+<li>div.mxTreeBox
+	<ul>
+	<li>div.mxTreeContent
+		<ul>
+		<li>svg</li>
+		</ul>
+	</li>
+	</ul>
+</li>
+</ul>
+
+<ul>
+<li>div.mxVariationBox (<span class="parameter">variationBoxOn</span>=1)
+	<ul>
+	<li>span</li>
+	<li>button</li>
+	</ul>
+</li>
+</ul>
+
+<ul>
+<li>div.mxVersionBox (<span class="parameter">versionBoxOn</span>=1)</li>
 </ul>
 
 <p>Attention : certains composants
-(<span class="component">AnimatedStone</span>, <span class="component">File</span>,
-<span class="component">Info</span>, <span class="component">Loop</span>,
+(<span class="component">AnimatedStone</span>,
+<span class="component">Edit</span>,
+<span class="component">File</span>,
+<span class="component">Image</span>,
+<span class="component">Info</span>,
+<span class="component">Loop</span>,
 <span class="component">View</span>, etc.) 
 n'ont pas de boite, et certains peuvent s'afficher dans des dialogues (voir ci-dessous).</p>
 
@@ -2595,6 +2560,7 @@ ShowAbout, ShowHeader, ShowHelp and ShowSgf.</p>
 		<ul>
 		<li>fieldset.mxContentFieldset
 			<ul>
+			<li>h1</li>
 			<li>p</li>
 			<li>span</li>
 			<li>label</li>
@@ -2622,7 +2588,7 @@ ShowAbout, ShowHeader, ShowHelp and ShowSgf.</p>
 		<li>textarea</li>
 		</ul>
 	</li>
-	<li>div.mxResultDiv
+	<li>div.mxResult
 		<ul>
 		<li>label
 			<ul>
@@ -2640,6 +2606,7 @@ ShowAbout, ShowHeader, ShowHelp and ShowSgf.</p>
 <ul>
 <li>dialog.mxEditNumberingDialog form fieldset.mxContentFieldset
 	<ul>
+	<li>h1</li>
 	<li>p.mxFigureOrNotP</li>
 	<li>p.mxTabNumberingP</li>
 	</ul>
@@ -2649,15 +2616,18 @@ ShowAbout, ShowHeader, ShowHelp and ShowSgf.</p>
 <ul>
 <li>dialog.mxEditOptionsDialog form fieldset.mxContentFieldset
 	<ul>
+	<li>h1</li>
 	<li>p
 		<ul>
-		<li>span.mxNumFromTextSpan</li>
-		<li>input.mxNumFromTextInput</li>
-		<li>span.mxNumWithTextSpan</li>
-		<li>input.mxNumWithTextInput</li>
-		<li>input.mxLoopTimeTextInput</li>
-		<li>input.mxAnimatedStoneTimeTextInput</li>
+		<li>span.mxNumFromText</li>
+		<li>span.mxNumWithText</li>
+		<li>label
+			<ul>
+			<li>input</li>
+			</ul>
+		</li>
 		</ul>
+	</li>
 	</ul>
 </li>
 </ul>
@@ -2673,28 +2643,13 @@ ShowAbout, ShowHeader, ShowHelp and ShowSgf.</p>
 <ul>
 <li>dialog.mxShowHeaderDialog form fieldset.mxContentFieldset
 	<ul>
-	<li>h1.mxTitleH1
+	<li>h1</li>
+	<li>p.mxHeaderContent
 		<ul>
-		<li>span.mxEVTitleSpan</li>
-		<li>span.mxROTitleSpan</li>
+		<li>span</li>
 		</ul>
 	</li>
-	<li>p
-		<ul>
-		<li>span.mxHeaderSpan</li>
-		<li>span.mxPBSpan</li>
-		<li>span.mxPWSpan</li>
-		<li>span.mxDTSpan</li>
-		<li>span.mxPCSpan</li>
-		<li>span.mxRUSpan</li>
-		<li>span.mxTMSpan</li>
-		<li>span.mxKMSpan</li>
-		<li>span.mxHASpan</li>
-		<li>span.mxNMSpan</li>
-		<li>span.mxRESpan</li>
-		</ul>
-	</li>
-	<li>p.mxGeneralCommentP</li>
+	<li>p.mxGeneralComment</li>
 	</ul>
 </li>
 </ul>
@@ -2710,6 +2665,7 @@ ShowAbout, ShowHeader, ShowHelp and ShowSgf.</p>
 <ul>
 <li>dialog.mxShowPngDialog form fieldset.mxContentFieldset
 	<ul>
+	<li>h1</li>
 	<li>img</li>
 	</ul>
 </li>
@@ -2718,6 +2674,7 @@ ShowAbout, ShowHeader, ShowHelp and ShowSgf.</p>
 <ul>
 <li>dialog.mxShowSvgDialog form fieldset.mxContentFieldset
 	<ul>
+	<li>h1</li>
 	<li>img</li>
 	</ul>
 </li>
@@ -2730,27 +2687,27 @@ ShowAbout, ShowHeader, ShowHelp and ShowSgf.</p>
 de prendre quelques précautions d'emploi.</p>
 
 <h4>Le composant <span class="component">Edit</span></h4>
-<p>Il est divisé en deux boites : une boite div.mxEditToolBarDiv (boite de la barre d'outils), 
-et une boite div.mxCommentToolDiv (boite de saisie des commentaires).</p>
-<p>La boite div.mxEditToolBarDiv contient des balises button (contenant un svg) ou input.
+<p>Il n'a pas de boite principale.</p>
+<p>Il contient une boite div.mxEditToolbar (boite de la barre d'outils),
+et un textarea (pour la saisie des commentaires).</p>
+<p>La boite div.mxEditToolbar contient des balises button (contenant un svg) ou input.
 Suivant qu'ils sont ou pas sélectionnés par l'utilisateur, 
 maxiGos donne à ces balises la classe .mxUnselectedEditTool, la classe .mxSelectedEditTool
 et éventuellement la classe .mxSuperSelectedEditTool si l'outil permet de changer la valeur
 d'une propriété sgf pouvant avoir trois valeurs.</p>
-<p>La boite div.mxEditCommentToolDiv ne contient qu'un textarea.</p>
-
+        
 <h4>Le composant <span class="component">Goban</span></h4>
-<p>Sa boite principale div.mxGobanDiv contient une boite interne div.mxInnerGobanDiv
+<p>Sa boite principale div.mxGobanBox contient une boite interne div.mxGobanContent
 qui contient un svg dans lequel est dessiné le goban.
-Ce svg doit toujours avoir exactement la taille de la boite div.mxInnerGobanDiv
+Ce svg doit toujours avoir exactement la taille de la boite div.mxGobanContent
 qui le contient.</p>
 <p>Comme une valeur d'attribut modifiée via css sur un élément svg
 a la priorité sur les valeurs des attributs des balises des éléments svg,
 on peut modifier beaucoup de ces valeurs dans le css.</p>
 
 <h4>Le composant <span class="component">Image</span></h4>
-<p>Il est divisé en 2 boites :
-une contenant le bouton "PNG", et une contenant le bouton "SVG".</p>
+<p>Il n'a pas de boite principale.</p>
+<p>Il contient deux sous-composants : "PNG" et "SVG" (tous deux constitués uniquement d'un bouton).</p>
 
 <h4>Le composant <span class="component">Info</span></h4>
 <p>Il affiche un dialogue dialog.mxEditInfoDialog.</p>
@@ -2763,32 +2720,30 @@ Pour la propriété RE (le résultat de la partie), on a trois champs au lieu d'
 classe .mxWN (champ de type select pour choisir le gagnant), 
 .mxHW (champ de type select pour choisir le type de victoire) et .mxSC (input text pour le score). 
 Pour la propriété GC, le champ est un textarea.</p>
-<p>Si maxiGos juge que la saisie dans l'un des champs d'une page div.mxInfoPageDiv est incorrecte, 
+<p>Si maxiGos juge que la saisie dans l'un des champs du dialogue dialog.mxEditInfoDialog est incorrecte, 
 il ajoute à ce champ la classe .mxBadInput (ces vérifications faites par maxiGos sont 
 très rudimentaires).</p>
 
 <h4>Le composant <span class="component">Lesson</span></h4>
-<p>Sa boite principale div.mxLessonDiv contient
+<p>Sa boite principale div.mxLessonBox contient
 une balise <span class="tag">&lt;div&gt;</span> pour la bulle à commentaire,
 et une balise <span class="tag">&lt;img&gt;</span> pour l'assistant.</p>
 <p>MaxiGos modifie la valeur de l'attribut src
 de la balise <span class="tag">&lt;img&gt;</span>
 selon que l'assistant est en train de dire quelque chose ou pas.</p>
 <p>Si le noeud de l'arbre des coups contient une des propriétés
-BM, DO, IT ou TE, maxiGos ajoute à la boite div.mxLessonDiv l'une des
+BM, DO, IT ou TE, maxiGos ajoute à la boite div.mxLessonBox l'une des
 classes mxBM, mxDO, mxIT ou mxTE.</p>
 
 <h4>Le composant <span class="component">Menu</span></h4>
-<p>Sa boite principale div.mxMenuDiv contient une série de couples de boites
-(div.mxOneMenuDiv, div.mxSubMenuDiv) correspondant chacun à un menu.
-La boite div.mxOneMenuDiv contient un seul bouton qui est le titre du menu.
-La boite div.mxSubMenuDiv contient une série de boutons,
+<p>Sa boite principale menu.mxMenuBox contient une liste de menus (li.mxOneMenu).
+Chaque li.mxOneMenu contient un bouton qui contient le nom du menu,
+et une boite menu.mxSubMenu qui contient une liste de boutons,
 chaque bouton correspondant à un choix possible du menu.</p>
-<p>Quand l'utilisateur clique sur le bouton d'un div.mxOneMenuDiv, 
-le div.mxSubMenuDiv correspondant reçoit la classe mxSubMenuOpen.</p>
-<p>La boite div.mxSubMenuDiv perdra la classe mxSubMenuOpen si l'utilisateur clique
-sur le bouton de la boite div.mxOneMenuDiv associée, ou si l'utilisateur clique ailleurs, 
-ou si aucun choix n'est effectué au bout de quelques secondes.</p>
+<p>Quand l'utilisateur clique sur un bouton li.mxOneMenu button, 
+le menu.mxSubMenu correspondant reçoit la classe mxSubMenuOpen.</p>
+<p>La boite menu.mxSubMenu perdra la classe mxSubMenuOpen si l'utilisateur clique
+sur le bouton li.mxOneMenu button associé, ou si l'utilisateur clique ailleurs.</p>
 <p>Dans le css, il suffira de donner aux éléments n'ayant pas la classe mxSubMenuOpen
 la propriété display:none afin de pouvoir cacher ou afficher les sous-menus.</p>
 
@@ -2857,8 +2812,8 @@ l'anglais et le français, voir le début du script "mgosSolve.js".</p>
 dans le dossier "_i18n".</p>
 
 <h4>Le composant <span class="component">Tree</span></h4>
-<p>Il contient les boites div.mxTreeCaptionDiv et div.mxTreeContentDiv.
-La boite div.mxTreeContentDiv contient une liste de svgs,
+<p>Il contient la boite div.mxTreeContent.
+La boite div.mxTreeContent contient une liste de svgs,
 chaque svg représentant une portion de l'arbre.
 Afin de limiter le nombre d'éléments html présents dans la page,
 on n'y laisse que les éléments visibles par l'internaute,
@@ -2875,47 +2830,45 @@ quand l'internaute se déplace dans l'arbre des coups.</p>
 <li>"transition" pour les éléments circle représentant des pierres animées.</li> 
 </ul>
 </li>
-<li>Composant <span class="component">Edit</span>
-<ul>
-<li>"display" de #dnFigureOrNot1P et #dnFigureOrNot2P.</li>
-</ul>
-</li>
 <li>Composant <span class="component">Goban</span>
 <ul>
-<li>"width" de div.mxInnerGobanDiv.</li>
-<li>"visibility" de div.mxInnerGobanDiv (transitoirement,
-pour signaler à l'utilisateur une action impossible).</li>
+<li>"opacity" du svg qu'il contient.</li>
+<li>"--gobanIntrinsicWidth" de la boite globale div.mxGlobal.</li>
+<li>"--gobanIntrinsicHeight" de la boite globale div.mxGlobal.</li>
 </ul>
 </li>
-<li>Composant <span class="component">NotSeen</span>
+<li>Composant <span class="component">MoveInfo</span>
 <ul>
-<li>"width" de div.mxInnerNotSeenDiv.</li>
+<li>"--moveInfoIntrinsicWidth" du svg qu'il contient.</li>
+<li>"--moveInfoIntrinsicHeight" du svg qu'il contient.</li>
 </ul>
 </li>
 <li>Composant <span class="component">Tree</span>
 <ul>
-<li>"width", "height" et "max-width" des svg qu'il contient.</li>
+<li>"max-width" des svgs qu'il contient.</li>
+<li>"--treeIntrinsicWidth" des svgs qu'il contient.</li>
+<li>"--treeIntrinsicHeight" des svgs qu'il contient.</li>
 </ul>
 </li>
 <li>Composant <span class="component">View</span>
 <ul>
-<li>"--gobanScale" de la boite globale div.mxGlobalBoxDiv</li>
+<li>"--gobanScale" de la boite globale div.mxGlobal</li>
 </ul>
 </li>
 </ul>
 
 <h4>Classes particulières modifiées dans le code javascript</h4>
 <ul>
-<li>ajoute .mxIn3d à .mxGlobalBoxDiv si "in3dOn" vaut 1</li>
-<li>ajoute .mxIn2d à .mxGlobalBoxDiv si "in3dOn" vaut 0</li>
-<li>ajoute .mxIndicesOn à .mxGlobalBoxDiv si "indicesOn" vaut 1</li>
-<li>ajoute .mxIndicesOff à .mxGlobalBoxDiv si "indicesOn" vaut 0</li>
-<li>ajoute .mxBM à .mxLessonDiv si le noeud sgf courant a une propriété BM</li>
-<li>ajoute .mxDO à .mxLessonDiv si le noeud sgf courant a une propriété DO</li>
-<li>ajoute .mxIT à .mxLessonDiv si le noeud sgf courant a une propriété IT</li>
-<li>ajoute .mxTE à .mxLessonDiv si le noeud sgf courant a une propriété TE</li>
-<li>ajoute .mxSubMenuOpen à .mxSubMenuDiv si l'utilisateur a cliqué sur le bouton qu'il contient.</li>
-<li>remplace .mxCochable par .mxCoched pour un bouton contenu dans .mxSubMenuDiv
+<li>ajoute .mxIn3d à .mxGlobal si "in3dOn" vaut 1</li>
+<li>ajoute .mxIn2d à .mxGlobal si "in3dOn" vaut 0</li>
+<li>ajoute .mxIndicesOn à .mxGlobal si "indicesOn" vaut 1</li>
+<li>ajoute .mxIndicesOff à .mxGlobal si "indicesOn" vaut 0</li>
+<li>ajoute .mxBM à .mxLessonBox si le noeud sgf courant a une propriété BM</li>
+<li>ajoute .mxDO à .mxLessonBox si le noeud sgf courant a une propriété DO</li>
+<li>ajoute .mxIT à .mxLessonBox si le noeud sgf courant a une propriété IT</li>
+<li>ajoute .mxTE à .mxLessonBox si le noeud sgf courant a une propriété TE</li>
+<li>ajoute .mxSubMenuOpen à .mxSubMenu si l'utilisateur a cliqué sur le bouton qu'il contient.</li>
+<li>remplace .mxCochable par .mxCoched pour un bouton contenu dans .mxSubMenu
 si ce bouton a besoin d'être coché.</li>
 <li>ajoute .mxJustPlayedPassBtn à .mxPassBtn si le coup qui vient d'être placé est un passe</li>
 <li>ajoute .mxOnVariationPassBtn à .mxPassBtn si l'un des coups possibles (suivants ou alternatifs selon le valeur de style) est un passe</li>
@@ -3026,8 +2979,7 @@ lui donner un nom de thème et un nom de configuration.</p>
 mxG.B=["Cute",["Goban"],"Navigation","Variation"];
 mxG.D[mxG.K]=new mxG.G(mxG.K,mxG.B);
 mxG.D[mxG.K].theme="Ephemeral";
-mxG.D[mxG.K].config="Simple";
-</code></pre>
+mxG.D[mxG.K].config="Simple";</code></pre>
 <p>Le nom des boites à utiliser est tout simplement le nom
 du composant auquel elles correspondent. On affecte à mxG.B
 la liste de ces boites sous forme d'un tableau. On peut regrouper
@@ -3126,34 +3078,34 @@ le dossier _css") et qui contient :</p>
 {
 	display:block;
 }
-.mxEphemeralTheme.mxSimpleConfig .mxGobanDiv svg
+.mxEphemeralTheme.mxSimpleConfig .mxGobanBox svg
 {
 	background:#9cf;
 }
-.mxEphemeralTheme.mxSimpleConfig .mxNavigationDiv
+.mxEphemeralTheme.mxSimpleConfig .mxNavigationBox
 {
 	display:flex;
 	justify-content:space-between;
 	margin-top:0.5em;
 }
-.mxEphemeralTheme.mxSimpleConfig .mxNavigationDiv button
+.mxEphemeralTheme.mxSimpleConfig .mxNavigationBox button
 {
 	border:0;
 	background:none;
 	padding:0;
 	margin:0 5%;
 }
-.mxEphemeralTheme.mxSimpleConfig .mxNavigationDiv button svg
+.mxEphemeralTheme.mxSimpleConfig .mxNavigationBox button svg
 {
 	width:100%;
 	height:auto;
 }
-.mxEphemeralTheme.mxSimpleConfig .mxNavigationDiv button[disabled] svg
+.mxEphemeralTheme.mxSimpleConfig .mxNavigationBox button[disabled] svg
 {
 	fill:#0007;
 }
-.mxEphemeralTheme.mxSimpleConfig .mxNavigationDiv button:focus:not([disabled]) svg,
-.mxEphemeralTheme.mxSimpleConfig .mxNavigationDiv button:hover:not([disabled]) svg
+.mxEphemeralTheme.mxSimpleConfig .mxNavigationBox button:focus:not([disabled]) svg,
+.mxEphemeralTheme.mxSimpleConfig .mxNavigationBox button:hover:not([disabled]) svg
 {
 	fill:red;
 }
@@ -3314,7 +3266,7 @@ via la variable css "--gobanMaxWidth".
 On peut donc aussi essayer de modifier la valeur de cette variable css "--gobanMaxWidth".</p>
 <p>Par exemple, si l'on veut que tous les gobans ne fassent pas plus de 20em de large,
 on peut ajouter dans la feuille de style de la page :</p>
-<pre><code>div.mxGlobalBoxDiv
+<pre><code>div.mxGlobal
 {
 	--gobanMaxWidth:20em;
 }</code></pre>
@@ -3325,7 +3277,7 @@ dans votre feuille de style.</p>
 thème Minimalist une couleur bleue clair, on peut
 ajouter dans la feuille de style de la page un background
 au svg qui dessine le goban :</p>
-<pre><code>div.mxMinimalistTheme .mxGobanDiv svg
+<pre><code>div.mxMinimalistTheme .mxGobanBox svg
 {
 	background-color:#9cf;
 }</code></pre>
@@ -3374,8 +3326,9 @@ Par exemple :</p>
 <em>Remerciements à Adachi K., Alfredo Pernin, Chantal Gajdos, Julien Payrat, Lao Lilin, Mickaël Simon, Motoki Noguchi, 
 Olivier Besson, Olivier Dulac, Patrice Fontaine, Tony Yamanaka
 et beaucoup d'autres pour leurs conseils ou contributions à ce projet !</em>
-<nav><?=(file_exists("../../index.php")?"<a href=\"../../index.php?lang=fr\">Accueil</a>":"")?><!--
---><a href="<?=str_replace("/_fr/","/_en/",$_SERVER["SCRIPT_NAME"])?>"><img alt="English" class="flag" src="../../_img/flag/en.svg">English</a><!--
---><a href="<?=str_replace("/_en/","/_fr/",$_SERVER["SCRIPT_NAME"])?>"><img alt="Français" class="flag" src="../../_img/flag/fr.svg">Français</a></nav>
+<nav><?=(file_exists("../../../index.php")?"\n<a href=\"../../../index.php?lang=fr\">Accueil</a>\n":"")?>
+<a href="<?=str_replace("/_fr/","/_en/",$_SERVER["SCRIPT_NAME"])?>"><img alt="English" class="flag" src="../../_img/flag/en.svg">English</a>
+<a href="<?=str_replace("/_en/","/_fr/",$_SERVER["SCRIPT_NAME"])?>"><img alt="Français" class="flag" src="../../_img/flag/fr.svg">Français</a>
+</nav>
 </body>
 </html>

@@ -1,259 +1,348 @@
 .mxClassicTheme
 {
-	--gobanMaxWidth:calc(1em * 495 / 16);
-	max-width:var(--gobanMaxWidth);
+	--gobanScale:1;
+	--gobanMaxWidth:calc(1em * var(--gobanScale) * var(--gobanIntrinsicWidth,445) / 16);
+	--navigationMaxWidth:calc(1em * 445 / 16);
+	--columnMaxWidth:max(var(--gobanMaxWidth),var(--navigationMaxWidth));
+	max-width:var(--columnMaxWidth);
 	margin:0 auto;
 	text-align:left;
-}
-.mxClassicTheme.mxIndicesOff {--gobanMaxWidth:calc(1em * 449 / 16);}
-/* general */
-.mxClassicTheme button {-webkit-appearance:none;-moz-appearance:none;}
-.mxClassicTheme input[type=text] {text-align:center;font-size:1em;}
-.mxClassicTheme button[disabled] {cursor:default;opacity:0.3;}
-.mxClassicTheme fieldset{border:0;margin:0;padding:0;}
-.mxClassicTheme svg {display:block;width:100%;height:100%;}
-.mxClassicTheme,
-.mxClassicTheme button {font-family:sans-serif;}
-/* common */
-.mxClassicTheme .mxGobanDiv
-{
-	/* goban shadow room, should be defined outside GobanDiv */
-	padding-right:4px;
-	padding-bottom:4px;
-}
-.mxClassicTheme .mxInnerGobanDiv
-{
-	margin:0 auto;
-}
-.mxClassicTheme.mxIn3d .mxInnerGobanDiv
-{
-	box-shadow:1px 1px #965400,2px 2px #965400,3px 3px #965400,4px 4px #965400,4px 4px 16px rgba(0,0,0,0.3);
-}
-.mxClassicTheme .mxGobanDiv svg .mxWholeRect
-{
-	fill:#fcba54;
-}
-.mxClassicTheme text
-{
-	stroke-width:0.125px;
-	stroke:#000;
-}
-.mxClassicTheme .mxBlack+text,
-.mxClassicTheme text.mxOnBlack
-{
-	stroke:#fff;
-}
-.mxClassicTheme text.mxOnEmpty.mxOnFocus
-{
-	fill:#f00;
-	stroke:#f00;
-}
-.mxClassicTheme :not(.mxPointBackground).mxMark.mxOnEmpty.mxOnFocus
-{
-	stroke:#f00;
-}
-.mxClassicTheme .mxPointBackground
-{
-	stroke:none;
-}
-.mxClassicTheme .mxMarkOnLast
-{
-	fill:#f00;
-	stroke:#f00;
-}
-.mxClassicTheme .mxFocusMark
-{
-	fill:none;
-	stroke:#f00;
-	stroke-width:1.125px;
-}
-/* comment and tree*/
-.mxClassicTheme:not(.mxProblemConfig) .mxCommentDiv,
-.mxClassicTheme .mxTreeDiv
-{
-	height:7em;
-	border:1px solid #ccc;
-	margin:0 1px 0.5em 1px;
-	padding:0.25em;
-	overflow:auto;
-	resize:vertical;
-}
-.mxClassicTheme .mxTreeDiv svg
-{
-	width:unset;
-	height:unset;
-}
-.mxClassicTheme .mxTreeDiv svg .mxFocus
-{
-	fill:#f00;
-	opacity:1;
-}
-/* diagram */
-.mxClassicTheme .mxInnerNotSeenDiv:not(:empty)
-{
-	margin:0.5em auto 0 auto;
-}
-/* header */
-.mxClassicTheme .mxTitleP {font-weight:bold;}
-/* problem */
-.mxClassicTheme.mxProblemConfig .mxCommentDiv
-{
-	display:flex;
-	justify-content:center;
-	min-height:2.25em;
-}
-.mxClassicTheme.mxProblemConfig .mxCommentContentDiv p
-{
-	margin:0.5em;
-	padding:0;
-	line-height:1.25em;
-}
-/* buttons and inputs */
-.mxClassicTheme .mxSgfParentDiv
-{
-	display:flex;
-	justify-content:center;
-	margin-bottom:0.25em;
-}
-.mxClassicTheme dialog button,
-.mxClassicTheme .mxSgfParentDiv button
-{
-	font-size:1em;
-	border:1px solid #ccc;
-	background:#fff;
-	color:#000;
-	margin:0.5em 0.125em;
-	padding:0 0.5em;
-	height:1.75em;
-	line-height:1.75em;
-	text-decoration:none;
-	white-space:nowrap;
-}
-/* dialog */
-.mxClassicTheme dialog,
-.mxClassicTheme dialog *
-{
-	box-sizing:border-box;
-}
-.mxClassicTheme dialog::backdrop
-{
-  background: rgba(0,0,0,0.5);
-}
-.mxClassicTheme dialog
-{
-	min-width:min(50vw,19em);
-	border:1px solid #ccc;
-	padding:0;
-}
-.mxClassicTheme dialog .mxContentFieldset
-{
-	padding:0.5em;
-}
-.mxClassicTheme dialog .mxMenuFieldset
-{
-	background:#ccc;
-	min-height:3em;
-	line-height:3em;
-	text-align:center;
-}
-.mxClassicTheme dialog label:not([for])
-{
-	display:block;
-}
-.mxClassicTheme dialog a
-{
-	color:#000;
-}
-.mxClassicTheme .mxShowSgfDialog
-{
-	width:calc(var(--gobanMaxWidth) * 3 / 2);
-}
-.mxClassicTheme .mxShowSgfDialog .mxContentFieldset
-{
-	font-family:monospace;
-	white-space:pre-wrap;
-}
-.mxClassicTheme .mxEditOptionsDialog .mxContentFieldset
-{
-	line-height:1.75em;
-}
-.mxClassicTheme .mxNumberingOnCheckbox:not(:checked)~span
-{
-	display:none;
-}
-/* navigation and solve */
-.mxClassicTheme .mxNavigationDiv
-{
-	display:flex;
-	align-items:center;
-	gap:2%;
-}
-.mxClassicTheme .mxNavigationDiv button
-{
-	flex:1;
-	margin:0;
-	padding:0;
-	border:0;
-	background:none;
-}
-.mxClassicTheme .mxNavigationDiv button svg
-{
-	margin:20% auto;
-	max-width:50%;
-}
-.mxClassicTheme .mxAutoBtn[disabled],
-.mxClassicTheme .mxPauseBtn[disabled]
-{
-	display:none;
-}
-.mxClassicTheme .mxGotoInput
-{
-	margin:1px;
-	width:2.4em;
-	height:1.8em;
-	border:1px solid #ccc;
-}
-.mxClassicTheme .mxSolveDiv
-{
-	text-align:center;
-}
-.mxClassicTheme .mxSolveDiv button
-{
-	width:10%;
-	min-width:1cm;
-	margin:1% 2%;
-	padding:0;
-	border:0;
-	background:none;
-}
-/* version */
-.mxClassicTheme .mxVersionDiv
-{
-	font-size:0.75em;
-	text-align:center;
-}
-.mxClassicTheme.mxDiagramConfig .mxVersionDiv
-{
-	margin-top:0.5em;
-}
-/* focus, hover and cursor */
-.mxClassicTheme *:not([type=radio]):not([type=checkbox]):focus {outline:none;}
-.mxClassicTheme .mxGobanSvg:not(:focus-visible) .mxFocus {display:none;}
-.mxClassicTheme .mxCommentDiv:focus,
-.mxClassicTheme .mxTreeDiv:focus,
-.mxClassicTheme input[type=text]:focus,
-.mxClassicTheme dialog button:focus,
-.mxClassicTheme .mxSgfParentDiv button:focus {border:1px solid #000;}
-.mxClassicTheme button:focus svg {fill:#f00;}
-.mxClassicTheme a:focus {color:#f00;}
-.mxClassicTheme button,
-.mxClassicTheme:not(.mxDiagramConfig) .mxGobanDiv svg,
-.mxClassicTheme .mxTreeDiv svg circle,
-.mxClassicTheme .mxTreeDiv svg polygon,
-.mxClassicTheme .mxTreeDiv svg rect,
-.mxClassicTheme .mxTreeDiv svg text {cursor:pointer;}
+	&.mxIn3d
+	{
+		--gobanThickness:4px;
+		--columnMaxWidth:max(calc(var(--gobanMaxWidth) + var(--gobanThickness)),calc(var(--navigationMaxWidth) + var(--gobanThickness)));
+	}
+	/* general */
+	& button {-webkit-appearance:none;-moz-appearance:none;}
+	& button[disabled] {cursor:default;opacity:0.3;}
+	& form,fieldset{border:0;margin:0;padding:0;}
+	& svg {display:block;width:100%;height:100%;}
+	&,
+	& input[type=text],
+	& button {font-family:sans-serif;font-size:1em;}
+	/* common */
+	&.mxIn3d .mxGobanBox
+	{
+		/* goban shadow room */
+		padding-right:var(--gobanThickness);
+		padding-bottom:var(--gobanThickness);
+	}
+	& .mxGobanContent
+	{
+		max-width:var(--gobanMaxWidth);
+		margin:0 auto;
+	}
+	&.mxIn3d .mxGobanContent
+	{
+		position:relative;
+	}
+	&.mxIn3d .mxGobanContent:before,
+	&.mxIn3d .mxGobanContent:after
+	{
+		content:"";
+		position:absolute;
+		background:#fcba54;
+	}
+	&.mxIn3d .mxGobanContent:before
+	{
+		top:100%;
+		left:calc(var(--gobanThickness) / 2);
+		width:100%;
+		height:var(--gobanThickness);
+		transform:skewX(45deg);
+		filter:brightness(0.6);
+	}
+	&.mxIn3d .mxGobanContent:after
+	{
+		top:calc(var(--gobanThickness) / 2);
+		left:100%;
+		width:var(--gobanThickness);
+		height:100%;
+		transform:skewY(45deg);
+		filter:brightness(0.8);
+	}
+	& .mxGobanBox svg .mxWholeRect
+	{
+		fill:#fcba54;
+	}
+	& text
+	{
+		stroke-width:0.125px;
+		stroke:#000;
+	}
+	& .mxBlack+text,
+	& text.mxOnBlack
+	{
+		stroke:#fff;
+	}
+	& text.mxOnEmpty.mxOnFocus
+	{
+		fill:#f00;
+		stroke:#f00;
+	}
+	& :not(.mxPointBackground).mxMark.mxOnEmpty.mxOnFocus
+	{
+		stroke:#f00;
+	}
+	& .mxPointBackground
+	{
+		stroke:none;
+	}
+	& .mxMarkOnLast
+	{
+		fill:#f00;
+		stroke:#f00;
+	}
+	& .mxFocusMark
+	{
+		fill:none;
+		stroke:#f00;
+		stroke-width:1.125px;
+	}
+	& .mxHeaderTitle {font-weight:bold;}
 
-
-
-
+	/* buttons and inputs */
+	& .mxSgfParent
+	{
+		display:flex;
+		flex-wrap:wrap;
+		justify-content:center;
+		margin-bottom:0.25em;
+	}
+	& dialog button,
+	& .mxSgfParent button
+	{
+		border:1px solid #ccc;
+		background:#fff;
+		color:#000;
+		margin:0.5em 0.125em;
+		padding:0 0.5em;
+		min-height:1.75em;
+		line-height:1.75em;
+		text-decoration:none;
+	}
+	& dialog input[type=text]
+	{
+		text-align:center;
+	}
+	/* dialog */
+	& dialog,
+	& dialog *
+	{
+		box-sizing:border-box;
+	}
+	& dialog::backdrop
+	{
+	  background: rgba(0,0,0,0.5);
+	}
+	& dialog
+	{
+		max-width:calc(100% - 5vw);
+		border:0;
+		padding:0;
+	}
+	& dialog .mxContentFieldset
+	{
+		padding:min(5vw,0.5em);
+	}
+	& dialog .mxMenuFieldset
+	{
+		background:#ccc;
+		min-height:3em;
+		line-height:3em;
+		text-align:center;
+	}
+	& dialog label:not([for])
+	{
+		display:block;
+	}
+	& dialog a
+	{
+		color:#000;
+	}
+	& .mxShowSgfDialog .mxContentFieldset
+	{
+		font-family:monospace;
+		white-space:pre-wrap;
+	}
+	& .mxEditOptionsDialog .mxContentFieldset
+	{
+		line-height:1.75em;
+	}
+	& .mxNumberingOnCheckbox:not(:checked)~span
+	{
+		display:none;
+	}
+	/* navigation */
+	& .mxNavigationBox
+	{
+		container:mxClassicNavigationBox/inline-size;
+		max-width:var(--navigationMaxWidth);
+		width:100%;
+		margin:0 auto;
+		display:flex;
+		justify-content:space-around;
+		align-items:center;
+	}
+	& .mxNavigationBox button
+	{
+		flex:1;
+		max-width:3em;
+		margin:0;
+		padding:0;
+		border:0;
+		background:none;
+	}
+	& .mxNavigationBox button svg
+	{
+		margin:20% auto;
+		max-width:60%;
+	}
+	& .mxAutoBtn[disabled],
+	& .mxPauseBtn[disabled]
+	{
+		display:none;
+	}
+	& .mxGotoInput
+	{
+		text-align:center;
+		margin:1px;
+		width:2.4em;
+		height:1.8em;
+		border:1px solid #ccc;
+	}
+	@container mxClassicNavigationBox (max-width:16em)
+	{
+		& .mxGotoInput,
+		& .mxTenPredBtn,
+		& .mxTenNextBtn
+		{
+			display:none;
+		}
+	}
+	/* version */
+	& .mxVersionBox
+	{
+		font-size:0.75em;
+		text-align:center;
+	}
+	/* focus, hover and cursor */
+	& :not([type=radio]):not([type=checkbox]):focus {outline:none;}
+	& .mxGobanSvg:not(:focus-visible) .mxFocus {display:none;}
+	& input[type=text]:focus,
+	& dialog button:focus,
+	& .mxSgfParent button:focus {border:1px solid #000;}
+	& button:focus svg {fill:#f00;}
+	& a:focus {color:#f00;}
+	& button,
+	&:not(.mxDiagramConfig) .mxGobanBox svg {cursor:pointer;}
+}
+/* |comment config| */
+.mxClassicTheme.mxCommentConfig
+{
+	& .mxCommentBox
+	{
+		height:7em;
+		border:1px solid #ccc;
+		margin:0 0 0.5em 0;
+		padding:0.25em;
+		overflow:auto;
+		resize:vertical;
+	}
+	& .mxCommentBox:focus {border:1px solid #000;}
+}
+/* |comment config| */
+/* |diagram config| */
+.mxClassicTheme.mxDiagramConfig
+{
+	& .mxNotSeenBox:not(:empty)
+	{
+		max-width:var(--gobanMaxWidth);
+		margin:0.5em auto 0 auto;
+	}
+	& .mxVersionBox
+	{
+		margin-top:0.5em;
+	}
+}
+/* |diagram config| */
+/* |game config| */
+.mxClassicTheme.mxGameConfig
+{
+	& .mxHeaderBox
+	{
+		border:1px solid #0000;
+		margin-bottom:1px;
+		overflow:auto; /* may overflow when narrow screen and big zoom */
+	}
+	& .mxHeaderBox:focus {border:1px solid #000;}
+}
+/* |game config| */
+/* |problem config| */
+.mxClassicTheme.mxProblemConfig
+{
+	& .mxCommentBox
+	{
+		display:flex;
+		justify-content:center;
+		min-height:2.25em;
+		border:1px solid #0000;
+		margin-bottom:1px;
+	}
+	& .mxCommentContent p
+	{
+		margin:0.5em;
+		padding:0;
+		line-height:1.25em;
+	}
+	& .mxSolveBox
+	{
+		text-align:center;
+	}
+	& .mxSolveBox button
+	{
+		width:min(33%,3.3em);
+		margin:min(6.6%,0.66em);
+		padding:0;
+		border:0;
+		background:none;
+	}
+	& .mxCommentBox:focus {border:1px solid #000;}
+}
+/* |problem config| */
+/* |tree config| */
+.mxClassicTheme.mxTreeConfig
+{
+	& .mxCommentBox,
+	& .mxTreeBox
+	{
+		height:7em;
+		border:1px solid #ccc;
+		margin:0 0 0.5em 0;
+		padding:0.25em;
+		overflow:auto;
+		resize:vertical;
+	}
+	& .mxTreeContent
+	{
+		width:calc(1em * var(--treeIntrinsicWidth) / 16);
+	}
+	& .mxTreeBox svg
+	{
+		width:100%;
+		height:auto;
+	}
+	& .mxTreeBox svg .mxFocus
+	{
+		fill:#f00;
+		opacity:1;
+	}
+	& .mxCommentBox:focus,
+	& .mxTreeBox:focus {border:1px solid #000;}
+	& .mxTreeBox svg circle,
+	& .mxTreeBox svg polygon,
+	& .mxTreeBox svg rect,
+	& .mxTreeBox svg text {cursor:pointer;}
+}
+/* |tree config| */
 

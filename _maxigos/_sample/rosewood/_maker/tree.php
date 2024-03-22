@@ -29,7 +29,6 @@ include "../../_php/insertCss.php";
 // general
 mxG.D[mxG.K].a.in3dOn=1; // (0,1) default 0
 // Goban
-mxG.D[mxG.K].a.pointsNumMax=19; // (positive integer) default 0
 mxG.D[mxG.K].a.gridPadding=5; // (float) default 0
 mxG.D[mxG.K].a.gobanPadding=5; // (float) default 0
 mxG.D[mxG.K].a.gobanMargin=5; // (float) default 0
@@ -39,15 +38,13 @@ mxG.D[mxG.K].a.asInBookOn=0; // (0,1,null) default null
 mxG.D[mxG.K].a.marksAndLabelsOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.markOnLastOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.eraseGridUnder=1; // (0,1) default 0
+mxG.D[mxG.K].a.yaOn=1; // (0,1) default 0
 // Comment
 mxG.D[mxG.K].a.headerInComment=1; // (0,1) default 0
-mxG.D[mxG.K].a.canCommentFocus=1; // (0,1) default 0
 // Header
 mxG.D[mxG.K].a.hideInHeader="NumOfMoves"; // (set) default ""
 // Navigation
 mxG.D[mxG.K].a.navigations="First,TenPred,Pred,Goto,Next,TenNext,Last"; // (set) default "First,TenPred,Pred,Next,TenNext,Last"
-// Tree
-mxG.D[mxG.K].a.canTreeFocus=1; // (0,1) default 0
 // Variation
 mxG.D[mxG.K].a.variationMarksOn=1; // (0,1,null) default 0
 mxG.D[mxG.K].a.hideSingleVariationMarkOn=1; // (0,1) default 0

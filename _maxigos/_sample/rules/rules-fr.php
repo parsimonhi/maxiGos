@@ -31,15 +31,15 @@ figcaption p
 	margin:0;
 	padding:0;
 }
-figure div.mxGlobalBoxDiv
+figure div.mxGlobal
 {
 	max-width:60%;
 }
-figure div.mxGlobalBoxDiv .mxMark.mxOnBlack
+figure div.mxGlobal .mxMark.mxOnBlack
 {
 	stroke-width:1.5px;
 }
-figure div.mxGlobalBoxDiv .mxMark.mxOnWhite
+figure div.mxGlobal .mxMark.mxOnWhite
 {
 	stroke-width:1.25px;
 }
@@ -74,7 +74,6 @@ Des pierres de même couleur sont <span class="definition">connectées</span> si e
 <figure>
 <script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
 		data-maxigos-indices-on="0"
-		data-maxigos-points-num-max="0"
 		data-maxigos-sgf="../_sgf/rules/adjacent.sgf">
 </script>
 <figcaption>
@@ -83,7 +82,7 @@ Des pierres de même couleur sont <span class="definition">connectées</span> si e
 </figure>
 
 <figure>
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0"
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0"
 		data-maxigos-sgf="../_sgf/rules/liberties.sgf">
 </script>
 <figcaption>
@@ -95,7 +94,7 @@ et celle marquée d'une croix deux ('h' et 'i').
 </figure>
 
 <figure>
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0"
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0"
 		data-maxigos-sgf="../_sgf/rules/connection.sgf">
 </script>
 <figcaption>
@@ -115,7 +114,7 @@ sauf s'il capture au moins une pierre adverse.
 </p>
 
 <figure>
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0"
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0"
 		data-maxigos-sgf="../_sgf/rules/captureSimpleBefore.sgf">
 </script>
 <figcaption>
@@ -126,7 +125,7 @@ il supprime la dernière liberté des pierres blanches marquées d'une croix...
 </figure>
 
 <figure>
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0"
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0"
 		data-maxigos-sgf="../_sgf/rules/captureSimpleAfter.sgf">
 </script>
 <figcaption>
@@ -139,7 +138,6 @@ capture ces pierres blanches en les retirant de la grille.
 <figure>
 <script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
 		data-maxigos-indices-on="0"
-		data-maxigos-points-num-max="0"
 		data-maxigos-sgf="../_sgf/rules/captureNoLib1.sgf">
 </script>
 <figcaption>
@@ -152,7 +150,6 @@ d'une croix...</p>
 <figure>
 <script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
 		data-maxigos-indices-on="0"
-		data-maxigos-points-num-max="0"
 		data-maxigos-sgf="../_sgf/rules/captureNoLib2.sgf">
 </script>
 <figcaption>
@@ -164,7 +161,6 @@ ce qui donne deux libertés à la pierre 1 qu'il vient de jouer.</p>
 <figure>
 <script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
 		data-maxigos-indices-on="0"
-		data-maxigos-points-num-max="0"
 		data-maxigos-sgf="../_sgf/rules/suicide.sgf">
 </script>
 <figcaption>
@@ -183,7 +179,6 @@ a lui-même déjà donné.
 <figure>
 <script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
 		data-maxigos-indices-on="0"
-		data-maxigos-points-num-max="0"
 		data-maxigos-sgf="../_sgf/rules/repetition1.sgf">
 </script>
 <figcaption>
@@ -195,7 +190,6 @@ a lui-même déjà donné.
 <figure>
 <script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
 		data-maxigos-indices-on="0"
-		data-maxigos-points-num-max="0"
 		data-maxigos-as-in-book-on="0"
 		data-maxigos-sgf="../_sgf/rules/repetition2.sgf">
 </script>
@@ -249,7 +243,6 @@ et ne donnent de points à personne.</p>
 <figure>
 <script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
 		data-maxigos-indices-on="0"
-		data-maxigos-points-num-max="0"
 		data-maxigos-numbering-on="0"
 		data-maxigos-sgf="../_sgf/rules/countG.sgf">
 </script>
@@ -263,7 +256,6 @@ qu'il est certain de pouvoir capturer.</p>
 <figure>
 <script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
 		data-maxigos-indices-on="0"
-		data-maxigos-points-num-max="0"
 		data-maxigos-sgf="../_sgf/rules/countB.sgf">
 </script>
 <figcaption>
@@ -275,7 +267,6 @@ qu'il est certain de pouvoir capturer.</p>
 <figure>
 <script src="../minimalist/_alone/maxigos-minimalist-diagram.js"
 		data-maxigos-indices-on="0"
-		data-maxigos-points-num-max="0"
 		data-maxigos-sgf="../_sgf/rules/countW.sgf">
 </script>
 <figcaption>

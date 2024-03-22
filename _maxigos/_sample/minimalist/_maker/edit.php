@@ -26,7 +26,7 @@ include "../../../_js/mgosTree.js";
 include "../../../_js/mgosVersion.js";
 ?>
 mxG.K++;
-mxG.B=[["Menu","File","View","Goban","Navigation","Variation"],[["Help","Sgf","Image","Score","Pass"],"Edit","Info","Tree","Version"],"AfterView"];
+mxG.B=[["Menu","File","View","Goban","Navigation","Variation"],[["Help","Sgf","Png","Svg","Score","Pass"],"Edit","Info","Tree","Version"],"AfterView"];
 mxG.D[mxG.K]=new mxG.G(mxG.K,mxG.B);
 mxG.D[mxG.K].theme="<?=$theme?>";
 mxG.D[mxG.K].config="<?=$config?>";
@@ -40,7 +40,6 @@ mxG.D[mxG.K].a.allowFileAsSource=1; // (0,1) default 1
 // mxG.D[mxG.K].a.sourceFilter=""; // (str) default ""
 mxG.D[mxG.K].a.initMethod="first"; // ("first","loop","last") default "first"
 // Goban
-mxG.D[mxG.K].a.pointsNumMax=19; // (positive integer) default 0
 mxG.D[mxG.K].a.stoneShadowOn=0; // (0,1) default 0 (require in3dOn=1)
 mxG.D[mxG.K].a.stretching="0,0,1,1"; // (list) default "0,0,1,1"
 mxG.D[mxG.K].a.gridPadding=2; // (float) default 0
@@ -56,11 +55,6 @@ mxG.D[mxG.K].a.numAsMarkOnLastOn=0; // (0,1) default 0 (require markOnLastOn=1)
 mxG.D[mxG.K].a.japaneseIndicesOn=0; // (0,1) default 0 (require indicesOn=1)
 mxG.D[mxG.K].a.oldJapaneseIndicesOn=0; // (0,1) default 0 (require indicesOn=1)
 mxG.D[mxG.K].a.eraseGridUnder=1; // (0,1) default 0
-// Comment
-mxG.D[mxG.K].a.headerInComment=1; // (0,1) default 0
-mxG.D[mxG.K].a.canCommentFocus=1; // (0,1) default 0
-// Header
-mxG.D[mxG.K].a.hideInHeader="NumOfMoves"; // (set) default ""
 // Help
 mxG.D[mxG.K].a.helpBtnOn=1; // (0,1) default 0
 // Image
@@ -78,8 +72,6 @@ mxG.D[mxG.K].a.scoreBtnOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.toCharset="UTF-8"; // (string) default UTF-8
 mxG.D[mxG.K].a.sgfBtnOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.sgfAction="edit"; // (string) default "show"
-// Tree
-mxG.D[mxG.K].a.canTreeFocus=1; // (0,1) default 0
 // Variation
 mxG.D[mxG.K].a.variationMarksOn=0; // (0,1,null) default 0
 mxG.D[mxG.K].a.siblingsOn=0; // (0,1,null) default 0

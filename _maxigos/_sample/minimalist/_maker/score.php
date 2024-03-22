@@ -13,7 +13,7 @@ include "../../../_js/mgosGoban.js";
 include "../../../_js/mgosNavigation.js";
 include "../../../_js/mgosVariation.js";
 include "../../../_js/mgosOptions.js";
-include "../../../_js/mgosCut.js";
+include "../../../_js/mgosRemove.js";
 include "../../../_js/mgosImage.js";
 include "../../../_js/mgosSgf.js";
 include "../../../_js/mgosScore.js";
@@ -21,7 +21,7 @@ include "../../../_js/mgosComment.js";
 include "../../../_js/mgosVersion.js";
 ?>
 mxG.K++;
-mxG.B=["Goban","Navigation","Variation",["Options","Sgf","Score","Cut","Image"],"Comment","Version"];
+mxG.B=["Goban","Navigation","Variation",["Options","Sgf","Score","Remove","Png","Svg"],"Comment","Version"];
 mxG.D[mxG.K]=new mxG.G(mxG.K,mxG.B);
 mxG.D[mxG.K].theme="<?=$theme?>";
 mxG.D[mxG.K].config="<?=$config?>";
@@ -35,7 +35,6 @@ mxG.D[mxG.K].a.allowFileAsSource=1; // (0,1) default 1
 // mxG.D[mxG.K].a.sourceFilter=""; // (str) default ""
 mxG.D[mxG.K].a.initMethod="last"; // ("first","loop","last") default "first"
 // Goban
-mxG.D[mxG.K].a.pointsNumMax=19; // (positive integer) default 0
 mxG.D[mxG.K].a.stoneShadowOn=0; // (0,1) default 0 (require in3dOn=1)
 mxG.D[mxG.K].a.stretching="0,0,1,1"; // (list) default "0,0,1,1"
 mxG.D[mxG.K].a.gridPadding=2; // (float) default 0
@@ -51,14 +50,14 @@ mxG.D[mxG.K].a.numAsMarkOnLastOn=0; // (0,1) default 0 (require markOnLastOn=1)
 mxG.D[mxG.K].a.japaneseIndicesOn=0; // (0,1) default 0 (require indicesOn=1)
 mxG.D[mxG.K].a.oldJapaneseIndicesOn=0; // (0,1) default 0 (require indicesOn=1)
 mxG.D[mxG.K].a.eraseGridUnder=1; // (0,1) default 0
-// Cut
-mxG.D[mxG.K].a.cutBtnOn=1; // (0,1) default 0
 // Image
 mxG.D[mxG.K].a.pngBtnOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.svgBtnOn=1; // (0,1) default 0
-// options
+// Options
 mxG.D[mxG.K].a.optionsBtnOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.hideInOptions="In3dOn,IndicesOn,MarkOnLastOn,NumberingOn,MarksAndLabelsOn,AsInBookOn,VariationMarksOn,SiblingsOn"; // (set) default ""
+// Remove
+mxG.D[mxG.K].a.removeBtnOn=1; // (0,1) default 0
 // Score
 mxG.D[mxG.K].a.ephemeralScore=1; // (0,1) default 0
 mxG.D[mxG.K].a.scoreBtnOn=1; // (0,1) default 0

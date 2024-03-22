@@ -13,10 +13,9 @@ include "../../../_js/mgosGoban.js";
 include "../../../_js/mgosSolve.js";
 include "../../../_js/mgosPass.js";
 include "../../../_js/mgosComment.js";
-include "../../../_js/mgosVersion.js";
 ?>
 mxG.K++;
-mxG.B=[["Goban",["Solve","Pass"],"Comment"],"Version","EidogoPatch"];
+mxG.B=["Goban",["Solve","Pass"],"Comment","EidogoPatch"];
 mxG.D[mxG.K]=new mxG.G(mxG.K,mxG.B);
 mxG.D[mxG.K].theme="<?=$theme?>";
 mxG.D[mxG.K].config="<?=$config?>";
@@ -30,7 +29,6 @@ mxG.D[mxG.K].a.allowFileAsSource=1; // (0,1) default 1
 // mxG.D[mxG.K].a.sourceFilter=""; // (str) default ""
 mxG.D[mxG.K].a.initMethod="first"; // ("first","loop","last") default "first"
 // Goban
-mxG.D[mxG.K].a.pointsNumMax=19; // (positive integer) default 0
 mxG.D[mxG.K].a.stoneShadowOn=0; // (0,1) default 0 (require in3dOn=1)
 mxG.D[mxG.K].a.stretching="1,1,1,1"; // (list) default "0,0,1,1"
 mxG.D[mxG.K].a.gridPadding=2; // (float) default 0
@@ -48,7 +46,6 @@ mxG.D[mxG.K].a.oldJapaneseIndicesOn=0; // (0,1) default 0 (require indicesOn=1)
 mxG.D[mxG.K].a.eraseGridUnder=1; // (0,1) default 0
 // Comment
 mxG.D[mxG.K].a.headerInComment=0; // (0,1) default 0
-mxG.D[mxG.K].a.canCommentFocus=1; // (0,1) default 0
 // Pass
 mxG.D[mxG.K].a.passBtnOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.canPassOnlyIfPassInSgf=0; // (0,1) default 0
@@ -56,9 +53,5 @@ mxG.D[mxG.K].a.canPassOnlyIfPassInSgf=0; // (0,1) default 0
 mxG.D[mxG.K].a.canPlaceSolve=1; // (0,1) default 0
 mxG.D[mxG.K].a.solves="Retry,Undo"; // (list) default "Retry,Undo"
 mxG.D[mxG.K].a.oldSolveBtnOn=1; // (0,1) default 0
-// Patch
-mxG.D[mxG.K].igGrandParentRef=1;
-mxG.S.prototype.refBox=function(){
-	return this.p.igGrandParentRef?this.p.ig.parentNode.parentNode:this.ig;};
 // Start
 mxG.D[mxG.K].start();

@@ -28,7 +28,6 @@ include "../../_php/insertCss.php";
 mxG.D[mxG.K].a.in3dOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.initMethod="last"; // ("first","loop","last") default "first"
 // Goban
-mxG.D[mxG.K].a.pointsNumMax=19; // (positive integer) default 0
 mxG.D[mxG.K].a.gridPadding=5; // (float) default 0
 mxG.D[mxG.K].a.gobanPadding=5; // (float) default 0
 mxG.D[mxG.K].a.gobanMargin=5; // (float) default 0
@@ -37,6 +36,7 @@ mxG.D[mxG.K].a.numberingOn=0; // (0,1,2,null) default null
 mxG.D[mxG.K].a.asInBookOn=0; // (0,1,null) default null
 mxG.D[mxG.K].a.markOnLastOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.eraseGridUnder=1; // (0,1) default 0
+mxG.D[mxG.K].a.yaOn=1; // (0,1) default 0
 // Header
 mxG.D[mxG.K].a.headerBoxOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.hideInHeader="NumOfMoves"; // (set) default ""

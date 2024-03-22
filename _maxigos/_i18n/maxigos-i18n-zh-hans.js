@@ -2,12 +2,31 @@
 if(typeof mxG=='undefined') mxG={};
 if(!mxG.Z) mxG.Z=[];
 if(!mxG.Z["zh-hans"]) mxG.Z["zh-hans"]=[];
+// mgos_scr.js
+mxG.Z["zh-hans"][" at "]=" ";
+mxG.Z["zh-hans"]["Arrow keys to explore the goban"]="使用箭头键检查棋盘";
+mxG.Z["zh-hans"]["Black"]="黑";
+mxG.Z["zh-hans"]["Black territory mark"]="黑地标记";
+mxG.Z["zh-hans"]["Circle"]="圆形";
+mxG.Z["zh-hans"]["Cursor on"]="光标在";
+mxG.Z["zh-hans"]["Empty goban"]="空棋盘";
+mxG.Z["zh-hans"]["Goban"]="棋盘";
+mxG.Z["zh-hans"]["Last played move"]="最后一手";
+mxG.Z["zh-hans"]["Mark"]="记号";
+mxG.Z["zh-hans"]["No move"]="不手";
+mxG.Z["zh-hans"]["Number of black stones"]="黑色棋子数量";
+mxG.Z["zh-hans"]["Number of marks or labels"]="标记和标签的数量";
+mxG.Z["zh-hans"]["Number of white stones"]="白色棋子数量";
+mxG.Z["zh-hans"]["Partial view"]="局部视图";
+mxG.Z["zh-hans"]["pass"]="虚手";
+mxG.Z["zh-hans"]["Square"]="方块";
+mxG.Z["zh-hans"]["Triangle"]="三角";
+mxG.Z["zh-hans"]["Variation"]="变化";
+mxG.Z["zh-hans"]["Variation on focus"]="焦点变化";
+mxG.Z["zh-hans"]["White"]="白";
+mxG.Z["zh-hans"]["White territory mark"]="白地标记";
 // mgos.js
 mxG.Z["zh-hans"]["_"]=""; // empty string for alias
-mxG.Z["zh-hans"]["→"]="→";
-mxG.Z["zh-hans"][" at "]=" → ";
-mxG.Z["zh-hans"]["Alert"]="警报";
-mxG.Z["zh-hans"]["Goban"]="棋盘";
 // mgosAbout.js
 mxG.Z["zh-hans"]["About"]="关于";
 mxG.Z["zh-hans"][" Close "]="确定";
@@ -27,23 +46,24 @@ mxG.Z["zh-hans"]["Black prisoners"]="黑提子";
 mxG.Z["zh-hans"]["White prisoners"]="白提子";
 // mgosComment.js
 mxG.Z["zh-hans"]["Comments"]="注释";
-mxG.Z["zh-hans"]["buildMove"]=function(k){return k+"手";};
-// mgosCut.js
-mxG.Z["zh-hans"]["Cut"]="剪切";
+mxG.Z["zh-hans"]["No comment!"]="没有评论";
+mxG.Z["zh-hans"]["buildMove"]=k=>"第"+k+"手";
 // mgosEdit.js
 mxG.Z["zh-hans"]["Remove comments"]="删除评论";
 mxG.Z["zh-hans"]["Selection"]="选择";
-mxG.Z["zh-hans"]["Full/partial view"]="全部/部分选中";
+mxG.Z["zh-hans"]["Full/partial view"]="全部或部分选中";
 mxG.Z["zh-hans"]["Place a move"]="黑/白走子";
-mxG.Z["zh-hans"]["Add/remove a stone"]="增加/删除棋子";
+mxG.Z["zh-hans"]["Add/remove a stone"]="增加或删除棋子";
+mxG.Z["zh-hans"]["Add/remove a black stone"]="增加或删除黑色棋子";
+mxG.Z["zh-hans"]["Add/remove a white stone"]="增加或删除白色棋子";
 mxG.Z["zh-hans"]["Cut branch"]="剪切分支";
 mxG.Z["zh-hans"]["Copy branch"]="复制分支";
 mxG.Z["zh-hans"]["Paste branch"]="粘贴分支";
 mxG.Z["zh-hans"]["Label"]="标签";
-mxG.Z["zh-hans"]["Mark"]="记号";
-mxG.Z["zh-hans"]["Circle"]="圆形";
-mxG.Z["zh-hans"]["Square"]="方块";
-mxG.Z["zh-hans"]["Triangle"]="三角";
+// mxG.Z["zh-hans"]["Mark"]="记号";
+// mxG.Z["zh-hans"]["Circle"]="圆形";
+// mxG.Z["zh-hans"]["Square"]="方块";
+// mxG.Z["zh-hans"]["Triangle"]="三角";
 mxG.Z["zh-hans"]["Numbering"]="编号";
 mxG.Z["zh-hans"]["As in book"]="如在书";
 mxG.Z["zh-hans"]["Indices"]="坐标";
@@ -62,6 +82,8 @@ mxG.Z["zh-hans"]["Cancel"]="取消";
 mxG.Z["zh-hans"]["New (from this point):"]="新编号:";
 mxG.Z["zh-hans"]["Modify"]="修改";
 mxG.Z["zh-hans"]["Remove"]="删除";
+mxG.Z["zh-hans"]["Modify (only for this part of the game tree)"]="修改（仅适用于游戏树的这一部分）";
+mxG.Z["zh-hans"]["Remove (only for this part of the game tree)"]="删除（仅适用于游戏树的这一部分）";
 mxG.Z["zh-hans"]["Start numbering with:"]="编号为:";
 mxG.Z["zh-hans"]["No numbering"]="无编号";
 mxG.Z["zh-hans"]["="]="＝";
@@ -87,29 +109,31 @@ mxG.Z["zh-hans"]["Vertical mirror"]="垂直";
 mxG.Z["zh-hans"]["Rotate"]="回转";
 // mxG.Z["zh-hant"]["Comments"]="註釋";
 // mgosFile.js
-mxG.Z["zh-hans"]["New"]="新建";
-mxG.Z["zh-hans"]["Open"]="打开";
+// mxG.Z["zh-hans"][" Close "]="确定";
+mxG.Z["zh-hans"]["Add"]="添加";
+mxG.Z["zh-hans"]["Alert"]="警报";
+// mxG.Z["zh-hans"]["Cancel"]="取消";
+mxG.Z["zh-hans"]["Click here to open a sgf file"]="点击这里打开一个SGF文件";
 mxG.Z["zh-hans"]["Close"]="关闭";
+mxG.Z["zh-hans"]["Create"]="创建";
+mxG.Z["zh-hans"]["Email:"]="电子邮件";
+mxG.Z["zh-hans"]["Error"]="错误";
+mxG.Z["zh-hans"]["File name:"]="文件名:";
+mxG.Z["zh-hans"]["Goban size"]="棋盘大小";
+mxG.Z["zh-hans"]["New"]="新建";
+// mxG.Z["zh-hans"]["OK"]="确定";
+mxG.Z["zh-hans"]["Open"]="打开";
 mxG.Z["zh-hans"]["Save"]="保存";
 mxG.Z["zh-hans"]["Save on your device"]="保存";
 mxG.Z["zh-hans"]["Send"]="发送";
 mxG.Z["zh-hans"]["Send by email"]="寄电子邮件";
-mxG.Z["zh-hans"]["Goban size"]="棋盘大小";
-mxG.Z["zh-hans"]["Email:"]="电子邮件";
-mxG.Z["zh-hans"]["Create"]="创建";
-mxG.Z["zh-hans"]["Add"]="添加";
-// mxG.Z["zh-hans"]["OK"]="确定";
-// mxG.Z["zh-hans"]["Cancel"]="取消";
-mxG.Z["zh-hans"]["Values between 1 and 52:"]="1到52中选";
-mxG.Z["zh-hans"]["Click here to open a sgf file"]="点击这里打开一个SGF文件";
-mxG.Z["zh-hans"]["File name:"]="文件名:";
-mxG.Z["zh-hans"]["Your browser cannot do this!"]="不可能";
-mxG.Z["zh-hans"]["Error"]="错误";
-mxG.Z["zh-hans"]["Untitled"]="无题";
 mxG.Z["zh-hans"]["This is not a sgf file!"]="这不是SGF文件";
+mxG.Z["zh-hans"]["Untitled"]="无题";
+mxG.Z["zh-hans"]["Values between 1 and 52:"]="1到52中选";
+mxG.Z["zh-hans"]["Your browser cannot do this!"]="不可能";
 // mgosGoto.js
-mxG.Z["zh-hans"]["Guess-o-meter"]="猜-O-米";
 mxG.Z["zh-hans"]["Go to ..."]="从～到";
+mxG.Z["zh-hans"]["Guess-o-meter"]="猜-O-米";
 // mgosHeader.js
 // mxG.Z["zh-hans"]["Header"]="信息";
 mxG.Z["zh-hans"][" "]=" ";
@@ -117,8 +141,8 @@ mxG.Z["zh-hans"][": "]="：";
 mxG.Z["zh-hans"][", "]=", ";
 mxG.Z["zh-hans"]["."]=".";
 mxG.Z["zh-hans"]["-"]="〜";
-mxG.Z["zh-hans"]["Black"]="黑";
-mxG.Z["zh-hans"]["White"]="白";
+// mxG.Z["zh-hans"]["Black"]="黑";
+// mxG.Z["zh-hans"]["White"]="白";
 mxG.Z["zh-hans"][" wins"]="胜";
 mxG.Z["zh-hans"]["Date"]="日期";
 mxG.Z["zh-hans"]["Place"]="地点";
@@ -131,7 +155,7 @@ mxG.Z["zh-hans"][" by resign"]="中盘";
 mxG.Z["zh-hans"][" by time"]="超时";
 mxG.Z["zh-hans"][" by forfeit"]="弃权";
 mxG.Z["zh-hans"][" by "]="";
-mxG.Z["zh-hans"]["game with no result"]="无胜负";
+mxG.Z["zh-hans"]["no result"]="无胜负";
 mxG.Z["zh-hans"]["draw"]="持棋";
 mxG.Z["zh-hans"]["unknown result"]="未知结果";
 mxG.Z["zh-hans"]["Komi"]="贴目";
@@ -226,13 +250,15 @@ mxG.Z["zh-hans"]["buildResult"]=function(a)
 };
 // mgosHelp.js
 // mxG.Z["zh-hans"][" Close "]="确定";
+// mxG.Z["zh-hans"]["Error"]="错误";
 mxG.Z["zh-hans"]["Help"]="帮助";
 mxG.Z["zh-hans"]["Help not available!"]="帮助不可用";
-// mxG.Z["zh-hans"]["Error"]="错误";
 // mgosImage.js
 mxG.Z["zh-hans"]["Image"]="图片";
 mxG.Z["zh-hans"]["PNG"]="ＰＮＧ";
 mxG.Z["zh-hans"]["SVG"]="ＳＶＧ";
+mxG.Z["zh-hans"]["PNG image of the goban"]="棋盘的ＰＮＧ图像";
+mxG.Z["zh-hans"]["SVG image of the goban"]="棋盘的ＳＶＧ图像";
 // mgosInfo.js
 mxG.Z["zh-hans"]["Info"]="信息";
 // mxG.Z["zh-hans"]["OK"]="确定";
@@ -283,16 +309,16 @@ mxG.Z["zh-hans"]["Pause"]="暂停";
 // mgosMenu.js
 mxG.Z["zh-hans"]["File"]="文件";
 mxG.Z["zh-hans"]["Edit"]="编辑";
-// mxG.Z["zh-hans"]["Cut"]="剪切";
+mxG.Z["zh-hans"]["Cut"]="剪切";
 mxG.Z["zh-hans"]["Copy"]="复制";
 mxG.Z["zh-hans"]["Paste"]="粘贴";
 mxG.Z["zh-hans"]["View"]="视图";
 mxG.Z["zh-hans"]["Window"]="窗口";
 // mxG.Z["zh-hans"]["Untitled"]="无题";
 // mgosMoveInfo.js
-mxG.Z["zh-hans"]["pass"]="虚手";
 // mxG.Z["zh-hans"][" at "]=" → ";
 mxG.Z["zh-hans"]["Move information"]="手信息";
+mxG.Z["zh-hans"]["pass"]="虚手";
 // mgosNavigation.js
 mxG.Z["zh-hans"]["First"]="最初";
 mxG.Z["zh-hans"]["10 Previous"]="10回上一";
@@ -301,10 +327,10 @@ mxG.Z["zh-hans"]["Next"]="下一";
 mxG.Z["zh-hans"]["10 Next"]="10回下一";
 mxG.Z["zh-hans"]["Last"]="最后";
 // mgosNotSeen.js
-mxG.Z["zh-hans"]["tenuki"]="脱先";
-// mxG.Z["zh-hans"]["pass"]="虚手";
-// mxG.Z["zh-hans"]["→"]="→";
+mxG.Z["zh-hans"]["→"]="→";
 mxG.Z["zh-hans"]["Invisible moves"]="无形的手";
+// mxG.Z["zh-hans"]["pass"]="虚手";
+mxG.Z["zh-hans"]["tenuki"]="脱先";
 // mgosOptions.js
 mxG.Z["zh-hans"]["Options"]="设定"; // 选项?
 mxG.Z["zh-hans"]["OptionsShort"]="设";
@@ -324,12 +350,14 @@ mxG.Z["zh-hans"]["try to guess the next move"]="试图去猜测下一步棋";
 mxG.Z["zh-hans"][" from "]="第";
 mxG.Z["zh-hans"][" with "]="手 为";
 mxG.Z["zh-hans"]["Loop time"]="循环时间";
-mxG.Z["zh-hans"]["Animated stone"]="石动画";
-mxG.Z["zh-hans"]["Animated stone time"]="石动画时间";
+mxG.Z["zh-hans"]["Animated stone"]="棋子动画";
+mxG.Z["zh-hans"]["Animated stone time"]="棋子动画时间";
 // mgosPass.js
 mxG.Z["zh-hans"]["Pass"]="虚手";
 mxG.Z["zh-hans"]["PassShort"]="虚";
-	// mgosScore.js
+// mgosRemove.js
+mxG.Z["zh-hans"]["Remove"]="删除";
+// mgosScore.js
 mxG.Z["zh-hans"]["Score"]="得分";
 mxG.Z["zh-hans"]["Score method"]="得分法";
 mxG.Z["zh-hans"]["trivial"]="不重要的";
@@ -339,8 +367,8 @@ mxG.Z["zh-hans"]["estimate"]="估计";
 mxG.Z["zh-hans"]["ephemeral score"]="短暂的得分";
 // mxG.Z["zh-hans"]["Black"]="黑";
 // mxG.Z["zh-hans"]["White"]="白";
-mxG.Z["zh-hans"]["Unusual komi:"]="罕见罕见";
-mxG.Z["zh-hans"]["Unknown rules:"]="未知规则";
+mxG.Z["zh-hans"]["Unusual komi"]="罕见罕见";
+mxG.Z["zh-hans"]["Unknown rules"]="未知规则";
 mxG.Z["zh-hans"]["Chinese style"]="中国式";
 mxG.Z["zh-hans"]["Japanese style"]="日本式";
 mxG.Z["zh-hans"]["Chinese rules"]="中国规则";
@@ -355,8 +383,9 @@ mxG.Z["zh-hans"]["stones"]="子";
 mxG.Z["zh-hans"]["last move"]="最後一手";
 mxG.Z["zh-hans"]["komi"]="贴目";
 // mgosSgf.js
-mxG.Z["zh-hans"]["SGF"]="ＳＧＦ";
 // mxG.Z["zh-hans"][" Close "]="确定";
+mxG.Z["zh-hans"]["SGF"]="ＳＧＦ";
+mxG.Z["zh-hans"]["SGF_Long"]="下载ＳＧＦ";
 // mgosSolve.js
 mxG.Z["zh-hans"]["Retry"]="重试";
 mxG.Z["zh-hans"]["Undo"]="取消";
@@ -380,15 +409,24 @@ mxG.Z["zh-hans"]["no variation"]="没有变化";
 mxG.Z["zh-hans"]["Version"]="版本";
 // mgosView.js
 mxG.Z["zh-hans"]["2d/3d"]="2D/3D";
-mxG.Z["zh-hans"]["Stretching"]="拉伸";
-mxG.Z["zh-hans"]["Stone shadow"]="石影";
+// mxG.Z["zh-hans"]["Cancel"]="取消";
 mxG.Z["zh-hans"]["Colors"]="颜色";
-mxG.Z["zh-hans"]["Zoom+"]="放大";
-mxG.Z["zh-hans"]["No zoom"]="正常";
-mxG.Z["zh-hans"]["Zoom-"]="缩小";
-mxG.Z["zh-hans"]["Reset"]="重置";
 mxG.Z["zh-hans"]["Goban background color:"]="棋盘背景色（CSS颜色）";
 mxG.Z["zh-hans"]["Goban background image:"]="棋盘背景图片";
-mxG.Z["zh-hans"]["Line color:"]="线颜色（CSS颜色）";
+mxG.Z["zh-hans"]["Line color:"]="线条的颜色（CSS颜色）";
+mxG.Z["zh-hans"]["Line thickness:"]="线条的粗细";
+mxG.Z["zh-hans"]["Mark thickness:"]="标记的粗细";
+mxG.Z["zh-hans"]["No zoom"]="正常";
 mxG.Z["zh-hans"]["None"]="没有";
+// mxG.Z["zh-hans"]["OK"]="确定";
+mxG.Z["zh-hans"]["Reset"]="重置";
+mxG.Z["zh-hans"]["Slate and shell"]="那智与蛤";
+mxG.Z["zh-hans"]["Star radius:"]="星形半径";
+mxG.Z["zh-hans"]["Stone outline thickness:"]="棋子轮廓的粗细";
+mxG.Z["zh-hans"]["Stone shadow"]="棋子影";
+mxG.Z["zh-hans"]["Stretching"]="拉伸";
+mxG.Z["zh-hans"]["Text outline thickness:"]="文字轮廓的粗细";
+mxG.Z["zh-hans"]["Thickness"]="粗细";
+mxG.Z["zh-hans"]["Zoom+"]="放大";
+mxG.Z["zh-hans"]["Zoom-"]="缩小";
 // end of localization

@@ -1,677 +1,651 @@
 .mxTatamiTheme
 {
-	--gobanMaxWidth:calc(1em * 511 / 16);
-	max-width:calc(var(--gobanMaxWidth) * 54.5 / 30);
-	min-width:10em;
+	--gobanMaxWidth:calc(1em * var(--gobanIntrinsicWidth,511) / 16);
+	--bowlMaxWidth:calc(1em * 6 * 23 / 16);
+	max-width:calc(var(--gobanMaxWidth) + 2 * var(--bowlMaxWidth) + 4em);
 	background:#f3f3f3;
 	margin:0 auto;
-	overflow:auto;
 	resize:horizontal;
+	overflow:auto; /* since resize */
 	text-align:left;
-}
-.mxTatamiTheme.mxIn3d {--gobanMaxWidth:calc(1em * 491 / 16);}
-.mxTatamiTheme.mxIndicesOff {--gobanMaxWidth:calc(1em * 463 / 16);}
-.mxTatamiTheme.mxIndicesOff.mxIn3d {--gobanMaxWidth:calc(1em * 445 / 16);}
-/* general */
-.mxTatamiTheme button {-webkit-appearance:none;-moz-appearance:none;}
-.mxTatamiTheme input[type=text][disabled],
-.mxTatamiTheme button[disabled] {cursor:default;}
-.mxTatamiTheme fieldset {border:0;margin:0;padding:0;}
-.mxTatamiTheme svg {display:block;}
-.mxTatamiTheme,
-.mxTatamiTheme button {font-family:sans-serif;}
-/* common */
-.mxTatamiTheme .mxGobanParentDiv
-{
-	box-sizing:border-box;
-	margin:0 auto;
-	background-image:url(data:image/jpg;base64,/9j/4AAQSkZJRgABAQEASABIAAD//gAcQ3JlYXRlZCB3aXRoIEdJTVAgb24gYSBNYWP/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wgARCAA8ABQDAREAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAwUAAQQCB//EABgBAQEBAQEAAAAAAAAAAAAAAAABAgUG/9oADAMBAAIQAxAAAAH2XynVlYTRFDilISGYrzedxTmupKrHR9Jk5pYWcQShQrj/xAAiEAACAQMEAgMAAAAAAAAAAAABAgMAERIEFCEjEyIxMkL/2gAIAQEAAQUCP2VbGaJnFmwlDKkEZvbrdchBMqUQfKmVarMV+lAWpdOXoLw49NKnPwLBjvttWPZGtTqCP//EABQRAQAAAAAAAAAAAAAAAAAAAED/2gAIAQMBAT8BR//EABgRAAMBAQAAAAAAAAAAAAAAAAABERAw/9oACAECAQE/AZkIImLpdYj/xAAuEAABAgIFCgcAAAAAAAAAAAABAAIDERIhYXKiIjFBQlGCkbLBwjNScYOhsdH/2gAIAQEABj8CnaThkmWOYOAUOWhsihd71FsbEOJRb/RbndNOtpjiVEJ1nTTr55FD9YZw1qFLyKlvYZJlhZ8BMlqtkUK9Hen16InMFGytfoFLZ+0kRtJHGtZvEy1vHkTPb+lCuL//xAAlEAACAQEIAgMBAAAAAAAAAAABEQAhMUFhcZGhscGB8FHR4fH/2gAIAQEAAT8hzHNVvBYiDmA7lRy0sWLLlWCakeKNooBYHiiGWYAo0QCoNwBY1hpEH+VPAjs3fJAdQsWF4/UYSI7BTlARqpepjDB6PbKuoHslcwWNGpMufF/XaWb16kRisEL4QWjNZUPjR+kLiRRTyNOooK0oWdAlIySTfOePW4RuZ//aAAwDAQACAAMAAAAQL7skT+bfoDxr/8QAGBEBAAMBAAAAAAAAAAAAAAAAEQABIBD/2gAIAQMBAT8Q0cIYqupHf//EABkRAAMBAQEAAAAAAAAAAAAAAAABESEQMf/aAAgBAgEBPxCaRLwhjeFJaUxvBOL3j9JvZg1ohGBuui48H//EACEQAQACAQQDAQEBAAAAAAAAAAEAETEhUYGhQXGxkcHw/9oACAEBAAE/EAaLQDrsfsH8gStFiYFEnkuoYNbuo0Qi6ObIIAIEHKX3cANQAX293MIFpbumdQcyk/ZP05iLAoZ4poVIUu18GvYlZqjNcq+CB0KCr8hnQRHWBQ+wMjGgRGG1eH3KCVRG37GUs1lt8Z/HMIrbEqngNqvmCJs3VWP8XzFkNJp3T8iRNtBLsovxxKEFhnYB0Zn4Uy4FN4b9wazh2Wqar+s12tFr4s/s/9k=);
-	text-align:center;
-	position:relative;
-	border:2px solid rgba(220,200,150,0.5);
-	padding:0.5em;
-}
-.mxTatamiTheme.mxBasicConfig .mxGobanParentDiv,
-.mxTatamiTheme.mxCommentConfig .mxGobanParentDiv,
-.mxTatamiTheme.mxGameConfig .mxGobanParentDiv,
-.mxTatamiTheme.mxTreeConfig .mxGobanParentDiv
-{
-	/* to center the goban vertically *
-	/* if it is less hight than bowls */
-	/* and to have enough room to display bowls */
-	min-height:calc(var(--gobanMaxWidth) * 3 / 5);
-	display:flex;
-	flex-direction:column;
-}
-.mxTatamiTheme .mxGobanDiv
-{
-	max-width:var(--gobanMaxWidth);
-	/* need width:100% otherwise goban width becomes null */
-	width:100%;
-	margin:auto;
-}
-.mxTatamiTheme.mxIn3d .mxGobanDiv
-{
-	padding:4px 0;
-}
-.mxTatamiTheme .mxInnerGobanDiv
-{
-	margin:0 auto;
-	position:relative; /* required for svg.mxAnimatedGobanSvg */
-}
-.mxTatamiTheme.mxIn3d .mxInnerGobanDiv
-{
-	box-shadow:0 6px 6px #963;
-}
-.mxTatamiTheme.mxIn2d .mxInnerGobanDiv
-{
-	border:1px solid #dfc997;
-	box-shadow:1px 0 8px #dfc997,-1px 0 8px #dfc997,0 1px 8px #dfc997,0 -1px 8px #dfc997;
-}
-.mxTatamiTheme .mxGobanDiv svg
-{
-	width:100%;
-	height:100%;
-}
-.mxTatamiTheme .mxGobanDiv svg .mxWholeRect
-{
-	/* better to set background-color here if mgosImage.js? */
-	fill:#ecbe69;
-}
-.mxTatamiTheme .mxGobanDiv svg.mxAnimatedGobanSvg
-{
-	position:absolute;
-	top:0;
-	left:0;
-	bottom:0;
-	right:0;
-	pointer-events:none;
-}
-.mxTatamiTheme text.mxOnEmpty.mxVariation
-{
-	fill:#000;
-	stroke:#000;
-	stroke-width:0.5px;
-}
-.mxTatamiTheme text.mxOnEmpty.mxVariation.mxOnFocus
-{
-	fill:#f00;
-	stroke:#f00;
-	stroke-width:0.5px;
-}
-.mxTatamiTheme :not(.mxPointBackground).mxMark.mxVariation.mxOnFocus
-{
-	fill:none;
-	stroke:#f00;
-}
-.mxTatamiTheme .mxPointBackground
-{
-	stroke:none;
-}
-.mxTatamiTheme .mxMarkOnLast
-{
-	fill:#f00;
-	stroke:#f00;
-}
-.mxTatamiTheme .mxFocusMark
-{
-	fill:none;
-	stroke:#f00;
-	stroke-width:2px;
-}
-.mxTatamiTheme .mxTitleP
-{
-	font-weight:bold;
-}
-/* comment and tree */
-.mxTatamiTheme.mxCommentConfig .mxCommentDiv,
-.mxTatamiTheme.mxTreeConfig .mxCommentDiv,
-.mxTatamiTheme.mxTreeConfig .mxTreeDiv
-{
-	height:7em;
-	border:1px solid #ccc;
-	padding:0.25em;
-	margin:0 0.5em;
-	background:#fff;
-	overflow:auto;
-	resize:vertical;
-}
-.mxTatamiTheme.mxTreeConfig .mxTreeDiv
-{
-	margin-top:0.25em;
-	max-height:42em;
-}
-.mxTatamiTheme .mxTreeDiv svg
-{
-	width:unset;
-	height:unset;
-}
-.mxTatamiTheme.mxTreeConfig .mxTreeDiv svg .mxFocus
-{
-	fill:#f00;
-	opacity:1;
-}
-.mxTatamiTheme.mxCommentConfig .mxOptionsParentDiv,
-.mxTatamiTheme.mxReplayConfig .mxOptionsParentDiv,
-.mxTatamiTheme.mxTreeConfig .mxOptionsParentDiv
-{
-	text-align:center;
-}
-.mxTatamiTheme.mxCommentConfig .mxOptionsParentDiv>div,
-.mxTatamiTheme.mxReplayConfig .mxOptionsParentDiv>div,
-.mxTatamiTheme.mxTreeConfig .mxOptionsParentDiv>div
-{
-	display:inline-block;
-}
-/* diagram */
-.mxTatamiTheme.mxDiagramConfig .mxNotSeenDiv
-{
-	max-width:var(--gobanMaxWidth);
-	margin:0 auto;
-}
-.mxTatamiTheme .mxInnerNotSeenDiv:not(:empty)
-{
-	margin:0auto;
-	padding:0.5em 0;
-}
-.mxTatamiTheme .mxInnerNotSeenDiv
-{
-	margin:0 auto;
-}
-.mxTatamiTheme .mxNotSeenSvg
-{
-	width:100%;
-	height:100%;
-	display:block;
-}
-/* game */
-.mxTatamiTheme.mxGameConfig .mxHeaderDiv
-{
-	padding:0.5em;
-}
-.mxTatamiTheme.mxGameConfig .mxHeaderDiv:empty
-{
-	display:none;
-}
-/* problem */
-.mxTatamiTheme.mxProblemConfig .mxCartoucheDiv .mxShortHeaderDiv
-{
-	display:none;
-}
-.mxTatamiTheme.mxProblemConfig .mxCommentDiv
-{
-	display:flex;
-	justify-content:center;
-	min-height:3.25em;
-}
-.mxTatamiTheme.mxProblemConfig .mxCommentContentDiv p
-{
-	margin:1em;
-	padding:0;
-	line-height:1.25em;
-}
-/* buttons */
-.mxTatamiTheme button[disabled] {opacity:0.3;}
-.mxTatamiTheme dialog button,
-.mxTatamiTheme.mxCommentConfig .mxOptionsParentDiv button,
-.mxTatamiTheme.mxReplayConfig .mxOptionsParentDiv button,
-.mxTatamiTheme.mxTreeConfig .mxOptionsParentDiv button
-{
-	font-size:1em;
-	border:1px solid #ccc;
-	background:#fff;
-	color:#000;
-	margin:0.5em 0.125em;
-	padding:0 0.75em;
-	height:1.75em;
-	line-height:1.75em;
-	white-space:nowrap;
-	text-decoration:none;
-}
-.mxTatamiTheme input[type=text]
-{
-	text-align:center;
-}
-/* cartouche */
-.mxTatamiTheme .mxGobanParentDiv
-{
-	position:relative;
-}
-.mxTatamiTheme .mxCartoucheDiv .mxShortHeaderDiv
-{
-	display:inline-block;
-	background:#fff;
-	padding:0.5em;
-	min-width:40%;
-}
-.mxTatamiTheme .mxCartoucheDiv:first-of-type .mxShortHeaderDiv
-{
-	margin-bottom:0.5em;
-}
-.mxTatamiTheme .mxCartoucheDiv:last-of-type .mxShortHeaderDiv
-{
-	margin-top:0.5em;
-}
-.mxTatamiTheme.mxIn3d .mxCartoucheDiv .mxShortHeaderDiv
-{
-	box-shadow: 0em 0.1em 0.1em #963;
-}
-.mxTatamiTheme.mxIn2d .mxCartoucheDiv .mxShortHeaderDiv
-{
-	border:1px solid #dfc997;
-	box-shadow:1px 0 0.5em #dfc997;
-	box-shadow:-1px 0 0.5em #dfc997;
-}
-.mxTatamiTheme .mxCartoucheDiv .mxShortHeaderDiv .mxBlack
-{
-	/* force in2d style */
-	fill:#000;
-	stroke:#000;
-}
-.mxTatamiTheme .mxCartoucheDiv .mxShortHeaderDiv .mxWhite
-{
-	/* force in2d style */
-	fill:#fff;
-	stroke:#000;
-}
-.mxTatamiTheme .mxPlayerStoneDiv,
-.mxTatamiTheme .mxPlayerDiv,
-.mxTatamiTheme .mxRankDiv
-{
-	display:inline-block;
-}
-.mxTatamiTheme .mxPlayerStoneDiv
-{
-	width:0.75em;
-}
-.mxTatamiTheme .mxPlayerStoneDiv svg
-{
-	width:100%;
-	height:100%;
-}
-.mxTatamiTheme .mxPlayerDiv
-{
-	margin-left:0.25em;
-	margin-right:0.25em;
-}
-.mxTatamiTheme .mxRankLabelSpan
-{
-	display:none;
-}
-.mxTatamiTheme .mxPrisonersDiv
-{
-	position:absolute;
-	max-width:calc(var(--gobanMaxWidth) / 2);
-	height:100%;
-	overflow:hidden;
-	text-align:center;
-}
-.mxTatamiTheme .mxCartoucheDiv .mxPrisonersDiv
-{
-	/* to click through when these divs overlap goban */
-	pointer-events:none;
-}
-.mxTatamiTheme .mxCartoucheDiv:first-of-type .mxPrisonersDiv
-{
-	text-align:left;
-	top:0;
-	left:0;
-	margin-right:calc(var(--gobanMaxWidth) * 81 / 60);
-}
-.mxTatamiTheme .mxCartoucheDiv:last-of-type .mxPrisonersDiv
-{
-	text-align:right;
-	bottom:0;
-	right:0;
-	margin-left:calc(var(--gobanMaxWidth) * 81 / 60);
-}
-.mxTatamiTheme .mxPrisonersSpan
-{
-	display:none;
-}
-.mxTatamiTheme .mxPrisonersStoneSpan
-{
-	display:inline-block;
-	width:calc(var(--gobanMaxWidth) / 3);
-}
-.mxTatamiTheme .mxCartoucheDiv:first-of-type .mxPrisonersStoneSpan
-{
-	vertical-align:top;
-}
-.mxTatamiTheme .mxCartoucheDiv:last-of-type .mxPrisonersStoneSpan
-{
-	vertical-align:baseline; /* not bottom */
-}
-.mxTatamiTheme .mxPrisonersStoneSpan svg
-{
-	width:100%;
-	height:100%;
-}
-.mxTatamiTheme .mxPrisonersLabelSpan
-{
-	/* used as a trick to hide bowl and cap when narrow width */
-	display:inline-block;
-	width:1px;
-	height:100%;
-	overflow:hidden;
-	opacity:0;
-}
-/* dialog */
-.mxTatamiTheme dialog,
-.mxTatamiTheme dialog *
-{
-	box-sizing:border-box;
-}
-.mxTatamiTheme dialog::backdrop
-{
-  background: rgba(0,0,0,0.5);
-}
-.mxTatamiTheme dialog
-{
-	min-width:min(50vw,19em);
-	border:1px solid #999;
-	background:#fff;
-	text-align:left;
-	padding:0;
-}
-.mxTatamiTheme dialog.mxShowPngDialog,
-.mxTatamiTheme dialog.mxShowSgfDialog,
-.mxTatamiTheme dialog.mxShowSvgDialog
-{
-	width:calc(var(--gobanMaxWidth) * 3 / 2);
-}
-.mxTatamiTheme dialog form
-{
-	margin:0;
-	padding:0;
-}
-.mxTatamiTheme dialog .mxContentFieldset
-{
-	padding:0.5em;
-	min-width:100%;
-}
-.mxTatamiTheme dialog.mxEditOptionsDialog .mxContentFieldset
-{
-	line-height:1.5em;
-}
-.mxTatamiTheme dialog .mxMenuFieldset
-{
-	background:#f3f3f3;
-	min-height:3em;
-	line-height:3em;
-	text-align:center;
-}
-.mxTatamiTheme dialog label:not([for])
-{
-	display:block;
-}
-.mxTatamiTheme dialog input[type=text]
-{
-	max-width:100%;
-}
-.mxTatamiTheme dialog a
-{
-	color:#000;
-}
-.mxTatamiTheme dialog img
-{
-	display:block;
-	margin:0 auto;
-	max-width:100%;
-	height:auto;
-	border:0;
-}
-.mxTatamiTheme dialog.mxShowSgfDialog .mxContentFieldset
-{
-	font-family:monospace; /* for Safari? */
-	white-space:pre-wrap;
-	min-height:var(--gobanMaxWidth);
-}
-.mxTatamiTheme .mxNumberingOnCheckbox:not(:checked)~span
-{
-	display:none;
-}
-/* goto */
-.mxTatamiTheme .mxGotoDiv [type=range]
-{
-	--gotoColor:#000;
-	display:block;
-	font-size:1em;
-	margin:0;
-	padding:0 1em;
-	width:calc(100% - 2em);
-	height:2.5em;
-	border:0;
-	border-radius:0;
-	background:#0000;
-}
-.mxTatamiTheme .mxGotoDiv [type=range],
-.mxTatamiTheme .mxGotoDiv [type=range]::-webkit-slider-thumb
-{
-	-webkit-appearance:none;
-}
-.mxTatamiTheme .mxGotoDiv [type=range]::-webkit-slider-runnable-track
-{
-	box-sizing:border-box;
-	height:1em;
-	border:1px solid #ccc;
-	border-radius:0;
-	background:#fff;
-}
-.mxTatamiTheme .mxGotoDiv [type=range]::-moz-range-track
-{
-	box-sizing:border-box;
-	height:1em;
-	border:1px solid #ccc;
-	border-radius:0;
-	background:#fff;
-}
-.mxTatamiTheme .mxGotoDiv [type=range]::-webkit-slider-thumb
-{
-	margin-top:-1px;
-	box-sizing:border-box;
-	width:1em;
-	height:1em;
-	border:0;
-	border-radius:0;
-	background:var(--gotoColor);
-}
-.mxTatamiTheme .mxGotoDiv [type=range]::-moz-range-thumb
-{
-	box-sizing:border-box;
-	width:1em;
-	height:1em;
-	border:0;
-	border-radius:0;
-	background:var(--gotoColor);
-}
-/* guess */
-.mxTatamiTheme meter
-{
-	display:block;
-	font-size:1em;
-	margin:1em;
-	padding:0;
-	width:calc(100% - 2em);
-	height:0.5em;
-	border:0;
-	border-radius:0.25em;
-	overflow:hidden;
-	background:#f00; /* set "bad" color */
-}
-/* do not reunite ::-selectors below, otherwise error in webkit browsers */
-.mxTatamiTheme ::-moz-meter-bar
-{
-	width:100%;
-    height:0.5em;
-    border:0;
-	background:#0000;
-}
-.mxTatamiTheme ::-webkit-meter-bar
-{
-    width:100%;
-    height:0.5em;
-    border:0;
-    background:#0000;
-}
-/* set "good" color */
-.mxTatamiTheme :-moz-meter-optimum::-moz-meter-bar {background:#7e9e3e;}
-.mxTatamiTheme ::-webkit-meter-optimum-value {background:#7e9e3e;}
-/* navigation */
-.mxTatamiTheme .mxNavigationDiv
-{
-	margin:0 auto;
-	text-align:center;
-	display:flex;
-	justify-content:center;
-	align-items:center;
-	gap:2%;
-}
-.mxTatamiTheme .mxNavigationDiv button
-{
-	flex:1 1;
-	border:0;
-	background:none;
-	padding:0;
-	max-width:4em;
-}
-.mxTatamiTheme .mxNavigationDiv button svg
-{
-	width:60%;
-	height:auto;
-	margin:20%;
-}
-.mxTatamiTheme .mxNavigationDiv button.mxAutoBtn[disabled],
-.mxTatamiTheme .mxNavigationDiv button.mxPauseBtn[disabled]
-{
-	display:none;
-}
-.mxTatamiTheme .mxSolveDiv
-{
-	padding:1px;
-	text-align:center;
-	display:flex;
-	justify-content:center;
-}
-.mxTatamiTheme .mxSolveDiv button
-{
-	flex:1 1 3em;
-	border:0;
-	background:none;
-	margin:1em;
-	padding:0;
-	max-width:40px;
-}
-.mxTatamiTheme .mxSolveDiv button svg
-{
-	width:100%;
-	height:100%;
-}
-.mxTatamiTheme .mxNavigationDiv .mxGotoInput
-{
-	font-size:1em;
-	width:2.4em;
-	height:1.8em;
-	border:1px solid #ccc;
-	text-align:center;
-}
-/* speed */
-.mxTatamiTheme .mxSpeedDiv [type=range]
-{
-	--speedColor:#000;
-	display:block;
-	font-size:1em;
-	margin:0;
-	padding:0 1em;
-	width:calc(100% - 2em);
-	height:2.5em;
-	border:0;
-	border-radius:0;
-	background:#0000;
-}
-.mxTatamiTheme .mxSpeedDiv [type=range],
-.mxTatamiTheme .mxSpeedDiv [type=range]::-webkit-slider-thumb
-{
-	-webkit-appearance:none;
-}
-.mxTatamiTheme .mxSpeedDiv [type=range]::-webkit-slider-runnable-track
-{
-	box-sizing:border-box;
-	height:0.5em;
-	border:0;
-	border-radius:0.25em;
-	background:var(--speedColor);
-}
-.mxTatamiTheme .mxSpeedDiv [type=range]::-moz-range-track
-{
-	box-sizing:border-box;
-	height:0.5em;
-	border:0;
-	border-radius:0.25em;
-	background:var(--speedColor);
-}
-.mxTatamiTheme .mxSpeedDiv [type=range]::-webkit-slider-thumb
-{
-	margin-top:-0.5em;
-	box-sizing:border-box;
-	width:1.5em;
-	height:1.5em;
-	border:0;
-	border-radius:50%;
-	background:var(--speedColor);
-}
-.mxTatamiTheme .mxSpeedDiv [type=range]::-moz-range-thumb
-{
-	box-sizing:border-box;
-	width:1.5em;
-	height:1.5em;
-	border:0;
-	border-radius:50%;
-	background:var(--speedColor);
-}
-/* version */
-.mxTatamiTheme .mxVersionDiv
-{
-	text-align:center;
-	padding:0.5em;
-}
-/* focus, hover and cursor */
-.mxTatamiTheme *:not([type=radio]):not([type=checkbox]):focus {outline:none;}
-.mxTatamiTheme .mxGobanSvg:not(:focus-visible) .mxFocus {display:none;}
-.mxTatamiTheme a:focus {color:#f00;}
-.mxTatamiTheme.mxCommentConfig .mxCommentDiv:focus,
-.mxTatamiTheme.mxTreeConfig .mxCommentDiv:focus,
-.mxTatamiTheme.mxTreeConfig .mxTreeDiv:focus,
-.mxTatamiTheme.mxProblemConfig .mxCommentDiv:focus
-{
-	border:1px solid #000;
-}
-.mxTatamiTheme dialog button:focus,
-.mxTatamiTheme.mxCommentConfig .mxOptionsParentDiv button:focus,
-.mxTatamiTheme.mxReplayConfig .mxOptionsParentDiv button:focus,
-.mxTatamiTheme.mxTreeConfig .mxOptionsParentDiv button:focus,
-.mxTatamiTheme input[type=text]:focus
-{
-	border:1px solid #000;
-}
-.mxTatamiTheme .mxNavigationDiv button:focus rect,
-.mxTatamiTheme .mxNavigationDiv button:focus polygon,
-.mxTatamiTheme .mxSolveDiv button:focus circle,
-.mxTatamiTheme .mxSolveDiv button:focus rect,
-.mxTatamiTheme .mxSolveDiv button:focus path
-{
-	fill:#f00;
-}
-.mxTatamiTheme .mxNavigationDiv .mxGotoInput:focus
-{
-	border:1px solid #000;
-}
-.mxTatamiTheme .mxSpeedDiv [type=range]:focus {--speedColor:#f00;}
-.mxTatamiTheme .mxGotoDiv [type=range]:focus {--gotoColor:#f00;}
-.mxTatamiTheme button,
-.mxTatamiTheme:not(.mxDiagramConfig) .mxGobanDiv svg,
-.mxTatamiTheme [type=range],
-.mxTatamiTheme .mxTreeDiv svg circle,
-.mxTatamiTheme .mxTreeDiv svg polygon,
-.mxTatamiTheme .mxTreeDiv svg rect,
-.mxTatamiTheme .mxTreeDiv svg text {cursor:pointer;}
+	&.mxDiagramConfig
+	{
+		max-width:calc(var(--gobanMaxWidth) + 4em);
+	}
+	/* general */
+	& button {-webkit-appearance:none;-moz-appearance:none;}
+	& [disabled] {cursor:default;opacity:0.3;}
+	& form,fieldset {border:0;margin:0;padding:0;}
+	& svg {display:block;}
+	&,
+	& button {font-family:sans-serif;font-size:1em;}
+	/* common */
+	& .mxGobanParent
+	{
+		box-sizing:border-box;
+		margin:0 auto;
+		background-image:url(data:image/jpg;base64,/9j/4AAQSkZJRgABAQEASABIAAD//gAcQ3JlYXRlZCB3aXRoIEdJTVAgb24gYSBNYWP/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wgARCAA8ABQDAREAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAAAwUAAQQCB//EABgBAQEBAQEAAAAAAAAAAAAAAAABAgUG/9oADAMBAAIQAxAAAAH2XynVlYTRFDilISGYrzedxTmupKrHR9Jk5pYWcQShQrj/xAAiEAACAQMEAgMAAAAAAAAAAAABAgMAERIEFCEjEyIxMkL/2gAIAQEAAQUCP2VbGaJnFmwlDKkEZvbrdchBMqUQfKmVarMV+lAWpdOXoLw49NKnPwLBjvttWPZGtTqCP//EABQRAQAAAAAAAAAAAAAAAAAAAED/2gAIAQMBAT8BR//EABgRAAMBAQAAAAAAAAAAAAAAAAABERAw/9oACAECAQE/AZkIImLpdYj/xAAuEAABAgIFCgcAAAAAAAAAAAABAAIDERIhYXKiIjFBQlGCkbLBwjNScYOhsdH/2gAIAQEABj8CnaThkmWOYOAUOWhsihd71FsbEOJRb/RbndNOtpjiVEJ1nTTr55FD9YZw1qFLyKlvYZJlhZ8BMlqtkUK9Hen16InMFGytfoFLZ+0kRtJHGtZvEy1vHkTPb+lCuL//xAAlEAACAQEIAgMBAAAAAAAAAAABEQAhMUFhcZGhscGB8FHR4fH/2gAIAQEAAT8hzHNVvBYiDmA7lRy0sWLLlWCakeKNooBYHiiGWYAo0QCoNwBY1hpEH+VPAjs3fJAdQsWF4/UYSI7BTlARqpepjDB6PbKuoHslcwWNGpMufF/XaWb16kRisEL4QWjNZUPjR+kLiRRTyNOooK0oWdAlIySTfOePW4RuZ//aAAwDAQACAAMAAAAQL7skT+bfoDxr/8QAGBEBAAMBAAAAAAAAAAAAAAAAEQABIBD/2gAIAQMBAT8Q0cIYqupHf//EABkRAAMBAQEAAAAAAAAAAAAAAAABESEQMf/aAAgBAgEBPxCaRLwhjeFJaUxvBOL3j9JvZg1ohGBuui48H//EACEQAQACAQQDAQEBAAAAAAAAAAEAETEhUYGhQXGxkcHw/9oACAEBAAE/EAaLQDrsfsH8gStFiYFEnkuoYNbuo0Qi6ObIIAIEHKX3cANQAX293MIFpbumdQcyk/ZP05iLAoZ4poVIUu18GvYlZqjNcq+CB0KCr8hnQRHWBQ+wMjGgRGG1eH3KCVRG37GUs1lt8Z/HMIrbEqngNqvmCJs3VWP8XzFkNJp3T8iRNtBLsovxxKEFhnYB0Zn4Uy4FN4b9wazh2Wqar+s12tFr4s/s/9k=);
+		text-align:center;
+		position:relative;
+		border:2px solid rgba(220,200,150,0.5);
+		padding:min(5vw,0.5em);
+	}
+	& .mxGobanBox
+	{
+		max-width:var(--gobanMaxWidth);
+		margin:auto;
+	}
+	&.mxIn3d .mxGobanBox
+	{
+		padding:6px 0;
+	}
+	& .mxGobanContent
+	{
+		margin:0 auto;
+		position:relative; /* required for svg.mxAnimatedGobanSvg */
+	}
+	&.mxIn3d .mxGobanContent
+	{
+		box-shadow:0 6px 6px #963;
+	}
+	&.mxIn2d .mxGobanContent
+	{
+		border:1px solid #dfc99777;
+	}
+	& .mxGobanBox svg
+	{
+		width:100%;
+		height:100%;
+	}
+	& .mxGobanBox svg .mxWholeRect
+	{
+		/* better to set background-color here if mgosImage.js? */
+		fill:#ecbe69;
+	}
+	& .mxGobanBox svg.mxAnimatedGobanSvg
+	{
+		position:absolute;
+		top:0;
+		left:0;
+		bottom:0;
+		right:0;
+		pointer-events:none;
+	}
+	& text.mxOnEmpty.mxVariation
+	{
+		fill:#000;
+		stroke:#000;
+		stroke-width:0.5px;
+	}
+	& text.mxOnEmpty.mxVariation.mxOnFocus
+	{
+		fill:#f00;
+		stroke:#f00;
+		stroke-width:0.5px;
+	}
+	& :not(.mxPointBackground).mxMark.mxVariation.mxOnFocus
+	{
+		fill:none;
+		stroke:#f00;
+	}
+	& .mxPointBackground
+	{
+		stroke:none;
+	}
+	& .mxMarkOnLast
+	{
+		fill:#f00;
+		stroke:#f00;
+	}
+	& .mxFocusMark
+	{
+		fill:none;
+		stroke:#f00;
+		stroke-width:2px;
+	}
+	& .mxHeaderTitle
+	{
+		font-weight:bold;
+	}
+	/* comment and tree */
+	&.mxCommentConfig .mxCommentBox,
+	&.mxTreeConfig .mxCommentBox,
+	&.mxTreeConfig .mxTreeBox
+	{
+		height:7em;
+		border:1px solid #ccc;
+		padding:min(2.5vw,0.25em);
+		margin:0 min(5vw,0.5em);
+		background:#fff;
+		overflow:auto;
+		resize:vertical;
+	}
+	&.mxTreeConfig .mxTreeBox
+	{
+		margin-top:0.25em;
+		max-height:42em;
+	}
+	& .mxTreeContent
+	{
+		width:calc(1em * var(--treeIntrinsicWidth) / 16);
+	}
+	& .mxTreeBox svg
+	{
+		width:100%;
+		height:auto;
+	}
+	&.mxTreeConfig .mxTreeBox svg .mxFocus
+	{
+		fill:#f00;
+		opacity:1;
+	}
+	&.mxCommentConfig .mxOptionsParent,
+	&.mxReplayConfig .mxOptionsParent,
+	&.mxTreeConfig .mxOptionsParent
+	{
+		text-align:center;
+	}
+	/* diagram */
+	& .mxNotSeenBox:not(:empty)
+	{
+		max-width:var(--gobanMaxWidth);
+		padding:0.5em auto;
+	}
+	& .mxNotSeenBox svg
+	{
+		width:100%;
+		height:100%;
+	}
+	/* game */
+	&.mxGameConfig .mxHeaderBox
+	{
+		box-sizing:border-box;
+		padding:min(5vw,0.5em);
+		border:1px solid #f3f3f3;
+		margin-bottom:1px;
+		overflow:auto; /* may overflow when narrow screen and big zoom */
+	}
+	&.mxGameConfig .mxHeaderBox:empty
+	{
+		display:none;
+	}
+	/* problem */
+	&.mxProblemConfig .mxCommentBox
+	{
+		display:flex;
+		justify-content:center;
+		min-height:3.25em;
+		border:1px solid #0000;
+		margin-bottom:1px;
+	}
+	&.mxProblemConfig .mxCommentContent p
+	{
+		margin:1em;
+		padding:0;
+		line-height:1.25em;
+	}
+	/* buttons */
+	& dialog button,
+	&.mxCommentConfig .mxOptionsParent button,
+	&.mxReplayConfig .mxOptionsParent button,
+	&.mxTreeConfig .mxOptionsParent button
+	{
+		border:1px solid #ccc;
+		background:#fff;
+		color:#000;
+		margin:0.5em min(1.25vw,0.125em);
+		padding:0 min(7.5vw,0.75em);
+		min-height:1.75em;
+		line-height:1.75em;
+		text-decoration:none;
+	}
+	& input[type=text]
+	{
+		text-align:center;
+	}
+	/* cartouche */
+	& .mxGobanParent
+	{
+		position:relative;
+	}
+	& .mxCartoucheBox
+	{
+		box-sizing:border-box;
+		max-width:100%;
+	}
+	& .mxCartoucheBox .mxShortHeader
+	{
+		box-sizing:border-box;
+		display:inline-block;
+		background:#fff;
+		padding:min(5vw,0.5em);
+		min-width:40%;
+		max-width:100%;
+		overflow-wrap:anywhere; /* no tabindex on shortHeader thus use overflow-wrap */
+	}
+	& .mxCartoucheBox:first-of-type .mxShortHeader
+	{
+		margin-bottom:0.5em;
+	}
+	& .mxCartoucheBox:last-of-type .mxShortHeader
+	{
+		margin-top:0.5em;
+	}
+	&.mxIn3d .mxCartoucheBox .mxShortHeader
+	{
+		box-shadow: 0em 0.1em 0.1em #963;
+	}
+	&.mxIn2d .mxCartoucheBox .mxShortHeader
+	{
+		border:1px solid #dfc997;
+		box-shadow:1px 0 0.5em #dfc997;
+		box-shadow:-1px 0 0.5em #dfc997;
+	}
+	& .mxCartoucheBox .mxShortHeader .mxBlack
+	{
+		/* force in2d style */
+		fill:#000;
+		stroke:#000;
+	}
+	& .mxCartoucheBox .mxShortHeader .mxWhite
+	{
+		/* force in2d style */
+		fill:#fff;
+		stroke:#000;
+	}
+	& .mxPlayerStone,
+	& .mxPlayerName,
+	& .mxPlayerRank
+	{
+		display:inline-block;
+	}
+	& .mxPlayerStone
+	{
+		width:0.75em;
+	}
+	& .mxPlayerStone svg
+	{
+		width:100%;
+		height:100%;
+	}
+	& .mxPlayerName
+	{
+		margin-left:min(2.5vw,0.25em);
+		margin-right:min(2.5vw,0.25em);
+	}
+	& .mxCartoucheBox .mxBowl
+	{
+		position:absolute;
+		height:100%;
+		display:flex;
+		flex-direction:column;
+		margin:0;
+		padding:0;
+		/* to click through when these elements overlap goban */
+		pointer-events:none;
+	}
+	& .mxCartoucheBox .mxBowl
+	{
+		/* use negative max-width and max-height to hide the bowl if not enough room */
+		max-width:calc((100% - 2 * var(--bowlMaxWidth) - var(--gobanMaxWidth)) * 10000);
+		max-height:calc((100% - 1em * 6 * 23 * 1.8 / 16) * 10000);
+		width:var(--bowlMaxWidth);
+		overflow:hidden;
+	}
+	& .mxCartoucheBox:first-of-type .mxBowl
+	{
+		top:0;
+		left:0;
+		justify-content:flex-start;
+		align-items:start;
+	}
+	& .mxCartoucheBox:last-of-type .mxBowl
+	{
+		bottom:0;
+		right:0;
+		justify-content:flex-end;
+		align-items:end;
+	}
+	& .mxCartoucheBox .mxBowl svg
+	{
+		width:100%;
+		height:auto;
+	}
+	/* dialog */
+	& dialog,
+	& dialog *
+	{
+		box-sizing:border-box;
+	}
+	& dialog::backdrop
+	{
+	  background: rgba(0,0,0,0.5);
+	}
+	& dialog
+	{
+		max-width:calc(100% - 5vw);
+		border:0;
+		padding:0;
+	}
+	& dialog .mxContentFieldset
+	{
+		padding:min(5vw,0.5em);
+	}
+	& dialog.mxEditOptionsDialog .mxContentFieldset
+	{
+		line-height:1.5em;
+	}
+	& dialog .mxMenuFieldset
+	{
+		background:#f3f3f3;
+		min-height:3em;
+		line-height:3em;
+		text-align:center;
+	}
+	& dialog label:not([for])
+	{
+		display:block;
+	}
+	& dialog input[type=text]
+	{
+		max-width:100%;
+	}
+	& dialog a
+	{
+		color:#000;
+	}
+	& dialog img
+	{
+		display:block;
+		margin:0 auto;
+		max-width:100%;
+		height:auto;
+		border:0;
+	}
+	& dialog.mxShowSgfDialog .mxContentFieldset
+	{
+		font-family:monospace;
+		white-space:pre-wrap;
+	}
+	& .mxNumberingOnCheckbox:not(:checked)~span
+	{
+		display:none;
+	}
+	/* navigation */
+	& .mxNavigationBox
+	{
+		container:mxTatamiNavigationBox/inline-size;
+		margin:0 auto;
+		text-align:center;
+		display:flex;
+		justify-content:center;
+		align-items:center;
+		gap:2%;
+	}
+	& .mxNavigationBox button
+	{
+		flex:1 1;
+		border:0;
+		background:none;
+		padding:0;
+		max-width:4em;
+	}
+	& .mxNavigationBox button svg
+	{
+		width:60%;
+		height:auto;
+		margin:20%;
+	}
+	& .mxNavigationBox button.mxAutoBtn[disabled],
+	& .mxNavigationBox button.mxPauseBtn[disabled]
+	{
+		display:none;
+	}
+	& .mxGotoInput
+	{
+		font-size:1em;
+		width:2.4em;
+		height:1.8em;
+		margin:1px;
+		border:1px solid #ccc;
+		text-align:center;
+	}
+	@container mxTatamiNavigationBox (max-width:16em)
+	{
+		& .mxGotoInput,
+		& .mxTenPredBtn,
+		& .mxTenNextBtn
+		{
+			display:none;
+		}
+	}
+	/* version */
+	& .mxVersionBox
+	{
+		text-align:center;
+		padding:0.5em;
+	}
+	/* focus, hover and cursor */
+	& *:not([type=radio]):not([type=checkbox]):focus {outline:none;}
+	& .mxGobanSvg:not(:focus-visible) .mxFocus {display:none;}
+	& a:focus {color:#f00;}
+	&.mxCommentConfig .mxCommentBox:focus,
+	&.mxTreeConfig .mxCommentBox:focus,
+	&.mxTreeConfig .mxTreeBox:focus,
+	&.mxProblemConfig .mxCommentBox:focus,
+	& .mxHeaderBox:focus
+	{
+		border:1px solid #000;
+	}
+	& dialog button:focus,
+	&.mxCommentConfig .mxOptionsParent button:focus,
+	&.mxReplayConfig .mxOptionsParent button:focus,
+	&.mxTreeConfig .mxOptionsParent button:focus,
+	& input[type=text]:focus
+	{
+		border:1px solid #000;
+	}
+	& .mxNavigationBox button:focus rect,
+	& .mxNavigationBox button:focus polygon
+	{
+		fill:#f00;
+	}
+	& .mxNavigationBox .mxGotoInput:focus
+	{
+		border:1px solid #000;
+	}
+	&:not(.mxDiagramConfig) .mxGobanBox svg,
+	& button:not([disabled]),
+	& input[type="range"]:not([disabled]),
+	& .mxTreeBox svg circle,
+	& .mxTreeBox svg polygon,
+	& .mxTreeBox svg rect,
+	& .mxTreeBox svg text {cursor:pointer;}
+}
+/* |problem config| */
+.mxTatamiTheme.mxProblemConfig
+{
+	& .mxSolveBox
+	{
+		text-align:center;
+	}
+	& .mxSolveBox button
+	{
+		width:min(33%,3.3em);
+		margin:min(6.6%,0.66em);
+		padding:0;
+		border:0;
+		background:none;
+	}
+	& .mxSolveBox button svg
+	{
+		width:100%;
+		height:100%;
+	}
+	/* focus, hover and cursor */
+	& .mxSolveBox button:focus circle,
+	& .mxSolveBox button:focus rect,
+	& .mxSolveBox button:focus path
+	{
+		fill:#f00;
+	}
+}
+/* |problem config| */
+/* |replay config| */
+.mxTatamiTheme.mxReplayConfig
+{
+	/* goto */
+	& .mxGotoBox [type=range]
+	{
+		--gotoColor:#000;
+		display:block;
+		font-size:1em;
+		margin:0;
+		padding:0 1em;
+		width:calc(100% - 2em);
+		height:2.5em;
+		border:0;
+		border-radius:0;
+		background:#0000;
+	}
+	& .mxGotoBox [type=range],
+	& .mxGotoBox [type=range]::-webkit-slider-thumb
+	{
+		-webkit-appearance:none;
+	}
+	& .mxGotoBox [type=range]::-webkit-slider-runnable-track
+	{
+		box-sizing:border-box;
+		height:1em;
+		border:1px solid #ccc;
+		border-radius:0;
+		background:#fff;
+	}
+	& .mxGotoBox [type=range]::-webkit-slider-thumb
+	{
+		margin-top:-1px;
+		box-sizing:border-box;
+		width:1em;
+		height:1em;
+		border:0;
+		border-radius:0;
+		background:var(--gotoColor);
+	}
+	@supports selector(::-moz-range-track) and selector(::-moz-range-thumb)
+	{
+		& .mxGotoBox [type=range]::-moz-range-track
+		{
+			box-sizing:border-box;
+			height:1em;
+			border:1px solid #ccc;
+			border-radius:0;
+			background:#fff;
+		}
+		& .mxGotoBox [type=range]::-moz-range-thumb
+		{
+			box-sizing:border-box;
+			width:1em;
+			height:1em;
+			border:0;
+			border-radius:0;
+			background:var(--gotoColor);
+		}
+	}
+	/* guess */
+	& meter
+	{
+		/* bug somewhere 2024/02/06 */
+		/* with no css variables, the 2nd meter displays as the default safari meter (!?!) */
+		/* if one uses some css variables, safari displays well all the meters */
+		/* instead of the css variables trick, on can use appearance:none */
+		/* but chrome does not support it */
+		--meterGoodColor:#7e9e3e;
+		--meterBadColor:#f00;
+		display:block;
+		font-size:1em;
+		margin:1em;
+		padding:0;
+		width:calc(100% - 2em);
+		height:0.5em;
+		border:0;
+		border-radius:0.25em;
+		overflow:hidden;
+		background:var(--meterBadColor);
+	}
+	/* 2024-01-26: @supports selector(::-webkit-meter-bar) not working on Safari */
+	& ::-webkit-meter-bar
+	{
+		width:100%;
+		height:0.5em;
+		border:0;
+		border-radius:0;
+		background:#0000;
+	}
+	& ::-webkit-meter-optimum-value {background:var(--meterGoodColor);}
+	@supports selector(::-moz-meter-bar)
+	{
+		& :-moz-meter-optimum::-moz-meter-bar {background:var(--meterGoodColor);}
+	}
+	/* speed */
+	& .mxSpeedBox [type=range]
+	{
+		--speedColor:#000;
+		display:block;
+		font-size:1em;
+		margin:0;
+		padding:0 1em;
+		width:calc(100% - 2em);
+		height:2.5em;
+		border:0;
+		border-radius:0;
+		background:#0000;
+	}
+	& .mxSpeedBox [type=range],
+	& .mxSpeedBox [type=range]::-webkit-slider-thumb
+	{
+		-webkit-appearance:none;
+	}
+	& .mxSpeedBox [type=range]::-webkit-slider-runnable-track
+	{
+		box-sizing:border-box;
+		height:0.5em;
+		border:0;
+		border-radius:0.25em;
+		background:var(--speedColor);
+	}
+	& .mxSpeedBox [type=range]::-webkit-slider-thumb
+	{
+		margin-top:-0.5em;
+		box-sizing:border-box;
+		width:1.5em;
+		height:1.5em;
+		border:0;
+		border-radius:50%;
+		background:var(--speedColor);
+	}
+	@supports selector(::-moz-range-track) and selector(::-moz-range-thumb)
+	{
+		& .mxSpeedBox [type=range]::-moz-range-track
+		{
+			box-sizing:border-box;
+			height:0.5em;
+			border:0;
+			border-radius:0.25em;
+			background:var(--speedColor);
+		}
+		& .mxSpeedBox [type=range]::-moz-range-thumb
+		{
+			box-sizing:border-box;
+			width:1.5em;
+			height:1.5em;
+			border:0;
+			border-radius:50%;
+			background:var(--speedColor);
+		}
+	}
+	/* focus, hover and cursor */
+	& .mxSpeedBox [type=range]:focus {--speedColor:#f00;}
+	& .mxGotoBox [type=range]:focus {--gotoColor:#f00;}
+	& [type=range] {cursor:pointer;}
+}
+/* |replay config| */

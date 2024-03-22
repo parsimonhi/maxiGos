@@ -15,10 +15,6 @@ mxG.fr("Cut branch","Couper une branche");
 mxG.fr("Copy branch","Copier une branche");
 mxG.fr("Paste branch","Coller une branche");
 mxG.fr("Label","Étiquette");
-// mxG.fr("Mark","Marque");
-// mxG.fr("Circle","Cercle");
-// mxG.fr("Square","Carré");
-// mxG.fr("Triangle","Triangle");
 mxG.fr("Numbering","Numérotation");
 mxG.fr("As in book","Comme dans les livres");
 mxG.fr("Indices","Indices");
@@ -34,8 +30,8 @@ mxG.fr("S","S");
 mxG.fr("OK","OK");
 mxG.fr("Cancel","Annuler");
 mxG.fr("New (from this point):","Nouvelle (à partir de cette position) :");
-mxG.fr("Modify","Modifier (seulement pour cette partie de l'arbre des coups)");
-mxG.fr("Remove","Supprimer (seulement pour cette partie de l'arbre des coups)");
+mxG.fr("Modify (only for this part of the game tree)","Modifier (seulement pour cette partie de l'arbre des coups)");
+mxG.fr("Remove (only for this part of the game tree)","Supprimer (seulement pour cette partie de l'arbre des coups)");
 mxG.fr("Start numbering with:","Numéroter en commençant par :");
 mxG.fr("No numbering","Ne pas numéroter");
 mxG.fr("Good move","Bon coup");
@@ -51,25 +47,17 @@ mxG.fr("Horizontal mirror","Miroir horizontal");
 mxG.fr("Vertical mirror","Miroir vertical");
 mxG.fr("Rotate","Rotation");
 mxG.fr("Comments","Commentaire");
-
 // mxG.S section
 mxG.S.prototype.makeFromPath=function(p)
 {
-	let s="<svg "+this.xmlns;
-	s+=" viewBox=\"0 0 1024 1024\"";
-	s+=" width=\"40\" height=\"40\"";
-	s+=" aria-hidden=\"true\"";
-	s+=">"; // acceptable size if no css
-	return s+"<path class=\"mxFillable\" d=\""+p+"\"/></svg>";
-};
+	return `<svg viewBox="0 0 1024 1024" width="40" height="40"` // acceptable size if no css
+	+` role="presentation" aria-hidden="true"><path class="mxFillable" d="${p}"/></svg>`;
+}
 mxG.S.prototype.makeAloneMark=function(m)
 {
 	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,c="#000",o={cls:"mxStrokable"};
-	s="<svg "+this.xmlns;
-	s+=" viewBox=\"0 0 "+dd+" "+dd+"\"";
-	s+=" width=\"40\" height=\"40\""; // acceptable size if no css
-	s+=" aria-hidden=\"true\"";
-	s+=">";
+	s=`<svg viewBox="0 0 ${dd} ${dd}" width="40" height="40"` // acceptable size if no css
+	+` role="presentation" aria-hidden="true">`;
 	switch(m)
 	{
 		case "Circle":s+=this.makeCircle(c,x,y,o);break;
@@ -77,110 +65,71 @@ mxG.S.prototype.makeAloneMark=function(m)
 		case "Square":s+=this.makeSquare(c,x,y,o);break;
 		case "Triangle":s+=this.makeTriangle(c,x,y,o);break;
 	}
-	s+="</svg>";
-	return s;
-};
+	return s+`</svg>`;
+}
 mxG.S.prototype.makeAloneToolText=function(txt)
 {
 	// for edit tool only
 	// assume text width is smaller than dd
-	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,c="#000";
-	s="<svg "+this.xmlns;
-	s+=" viewBox=\"0 0 "+dd+" "+dd+"\"";
-	s+=" width=\"40\" height=\"40\""; // acceptable size if no css
-	s+=" font-family=\""+this.ff+"\"";
-	s+=" font-size=\""+this.fs+"\"";
-	s+=" font-weight=\""+this.fw+"\"";
-	s+=" aria-hidden=\"true\"";
-	s+=">";
-	s+="<text";
-	s+=" text-anchor=\"middle\"";
-	s+=" fill=\""+c+"\"";
-	s+=" class=\"mxFillable\""; // stroke="none"
-	s+=" x=\""+x+"\" y=\""+(y+5)+"\">";
-	s+=txt;
-	s+="</text>";
-	s+="</svg>";
-	return s;
-};
+	let d=this.d,dd=d+2,x=dd/2,y=dd/2,c="#000";
+	return `<svg viewBox="0 0 ${dd} ${dd}" width="40" height="40"` // acceptable size if no css
+	+` font-family="${this.ff}" font-size="${this.fs}" font-weight="${this.fw}"`
+	+` role="presentation" aria-hidden="true">`
+	+`<text text-anchor="middle" fill="${c}" class="mxFillable"` // stroke="none"
+	+` x="${x}" y="${y+5}">${txt}</text></svg>`;
+}
 mxG.S.prototype.makeSelectTool=function()
 {
-	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c="#000";
-	z=d*3/4;
-	s="<svg "+this.xmlns;
-	s+=" width=\"40\" height=\"40\""; // acceptable size if no css
-	s+=" viewBox=\"0 0 "+dd+" "+dd+"\"";
-	s+=" aria-hidden=\"true\"";
-	s+=">";
-	s+="<rect stroke-dasharray=\"2\"";
-	s+=" class=\"mxStrokable\"";
-	s+=" fill=\"none\" stroke=\""+c+"\" stroke-width=\""+this.sw4grid+"\"";
-	s+=" x=\""+(x-z/2)+"\" y=\""+(y-z/2)+"\"";
-	s+=" width=\""+z+"\" height=\""+z+"\"/></g>";
-	s+="</svg>";
-	return s;
-};
+	let d=this.d,dd=d+2,x=dd/2,y=dd/2,z=d*3/4,c="#000";
+	return `<svg viewBox="0 0 ${dd} ${dd}" width="40" height="40"` // acceptable size if no css
+	+` role="presentation" aria-hidden="true">`
+	+`<rect stroke-dasharray="2" class="mxStrokable"`
+	+` fill="none" stroke="${c}" stroke-width="${this.sw4grid}"`
+	+` x="${x-z/2}" y="${y-z/2}" width="${z}" height="${z}"/>`
+	+`</svg>`;
+}
 mxG.S.prototype.makeViewTool=function()
 {
 	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,z,c="#000";
 	z=d*3/4;
-	s="<svg "+this.xmlns;
-	s+=" width=\"40\" height=\"40\""; // acceptable size if no css
-	s+=" viewBox=\"0 0 "+dd+" "+dd+"\"";
-	s+=" aria-hidden=\"true\"";
-	s+=">";
-	s+="<g fill=\"none\" class=\"mxStrokable\" stroke=\""+c+"\" stroke-width=\""+this.sw4grid+"\">"
-	s+="<rect";
-	s+=" x=\""+(x-z/2)+"\" y=\""+(y-z/2)+"\"";
-	s+=" width=\""+z+"\" height=\""+z+"\"/>";
-	s+="<rect";
-	s+=" x=\""+x+"\" y=\""+(y-z/2)+"\"";
-	s+=" width=\""+z/2+"\" height=\""+z/2+"\"/>";
-	s+="</g>";
-	s+="</svg>";
-	return s;
-};
+	return `<svg viewBox="0 0 ${dd} ${dd}" width="40" height="40"` // acceptable size if no css
+	+` role="presentation" aria-hidden="true">`
+	+`<g fill="none" class="mxStrokable" stroke="${c}" stroke-width="${this.sw4grid}">`
+	+`<rect x="${x-z/2}" y="${y-z/2}" width="${z}" height="${z}"/>`
+	+`<rect x="${x}" y="${y-z/2}" width="${z/2}" height="${z/2}"/>`
+	+`</g></svg>`;
+}
 mxG.S.prototype.makeSemiCircle=function(n,x,y,r,c,o)
 {
-	let s="<circle";
-	s+=" clip-path=\"url(#"+this.p.n+"Setup"+n+"Clip)\"";
-	if(o.in3dOn) s+=" fill=\"url(#"+this.p.n+c+"RG)\"";
-	else
-	{
-		s+=" class=\""+((c=="W")?"":"mxFillable ")+"mxStrokable\"";
-		s+=" fill=\"#fff\" stroke=\"#000\" stroke-width=\""+this.sw4stone+"\"";
-	}
-	s+=" cx=\""+x+"\" cy=\""+y+"\" r=\""+r+"\"";
-	return s+"/>";
+	let s=`<circle clip-path="url(#${this.p.n}Setup${n}Clip)"`;
+	if(o.in3dOn)s+=` fill="url(#${this.p.n+c}RG)"`;
+	else s+=` class="${(c=="W")?"":"mxFillable "}mxStrokable"`
+		+` fill="${(c=="W")?"#fff":"#000"}" stroke="#000" stroke-width="${this.sw4stone}"`;
+	return s+` cx="${x}" cy="${y}" r="${r}"/>`;
 }
 mxG.S.prototype.makeAloneBiStone=function(nat,o)
 {
 	let s,d=this.d,dd=d+2,x=dd/2,y=dd/2,c1,c2,r,z;
 	z=(this.in3dOn&&this.stoneShadowOn)?this.stoneShadowWidth:0;
-	if(nat[1]=="B") {c1="B";c2="W";} else {c1="W";c2="B";}
-	s="<svg "+this.xmlns+" "+this.xlink;
-	s+=" width=\"40\" height=\"40\""; // acceptable size if no css
-	s+=" viewBox=\""+(-z)+" "+(-z)+" "+(dd+2*z)+" "+(dd+2*z)+"\"";
-	s+=" aria-hidden=\"true\"";
-	s+=">";
-	s+="<defs>";
-	s+="<clipPath id=\""+this.p.n+"Setup1Clip\">";
-	s+="<path d=\"M0 0H"+x+"V"+dd+"H0Z\"/></clipPath>";
-	s+="<clipPath id=\""+this.p.n+"Setup2Clip\">";
-	s+="<path d=\"M"+dd+" 0H"+x+"V"+dd+"H"+dd+"Z\"/></clipPath>";
-	s+="</defs>";
+	if(nat[1]=="B"){c1="B";c2="W";}else{c1="W";c2="B";}
+	s=`<svg width="40" height="40"` // acceptable size if no css
+	+` viewBox="${-z} ${-z} ${dd+2*z} ${dd+2*z}"`
+	+` role="presentation" aria-hidden="true">`
+	+`<defs>`
+	+`<clipPath id="${this.p.n}Setup1Clip"><path d="M0 0H${x}V${dd}H0Z"/></clipPath>`
+	+`<clipPath id="${this.p.n}Setup2Clip"><path d="M${dd} 0H${x}V${dd}H${dd}Z"/></clipPath>`
+	+`</defs>`;
 	r=o.in3dOn?d/2:(d-this.sw4stone+1)/2;
 	if(o.in3dOn&&this.stoneShadowOn)
 	{
 		let e=this.stoneShadowWidth;
-		s+="<circle fill=\"#000\" opacity=\"0.2\"";
-		s+=" cx=\""+(x+e)+"\" cy=\""+(y+e)+"\" r=\""+r+"\"/>";
+		s+=`<circle fill="#000" opacity="0.2" cx="${x+e}" cy="${y+e}" r="${r}"/>`;
 	}
 	s+=this.makeSemiCircle(1,x,y,r,c1,o);
 	s+=this.makeSemiCircle(2,x,y,r,c2,o);
-	s+="</svg>";
+	s+=`</svg>`;
 	return s;
-};
+}
 mxG.S.prototype.addSelect=function(xl,yt,xr,yb)
 {
 	let dx=this.grim+this.gripx+this.gobp+this.gobm,
@@ -198,13 +147,13 @@ mxG.S.prototype.addSelect=function(xl,yt,xr,yb)
 	b.setAttributeNS(null,"width",w);
 	b.setAttributeNS(null,"height",h);
 	b.classList.add("mxSelect");
-	this.ig.firstChild.appendChild(b);
+	this.gc.firstChild.appendChild(b);
 }
 mxG.S.prototype.removeSelect=function()
 {
-	let a=this.ig.firstChild,b=a.querySelector('.mxSelect');
-	if(b) a.removeChild(b);
-};
+	let a=this.gc.firstChild,b=a.querySelector('.mxSelect');
+	if(b)b.remove();
+}
 // mxG.G section
 mxG.G.prototype.setViewFromSelection=function()
 {
@@ -215,10 +164,10 @@ mxG.G.prototype.setViewFromSelection=function()
 		yt=((this.editYbs>this.editYts)?this.editYts:this.editYbs);
 		xr=((this.editXrs>this.editXls)?this.editXrs:this.editXls);
 		yb=((this.editYbs>this.editYts)?this.editYbs:this.editYts);
-		if(xl<1) xl=1;
-		if(yt<1) yt=1;
-		if(xr>this.DX) xr=this.DX;
-		if(yb>this.DY) yb=this.DY;
+		if(xl<1)xl=1;
+		if(yt<1)yt=1;
+		if(xr>this.DX)xr=this.DX;
+		if(yb>this.DY)yb=this.DY;
 		this.inSelect=0;
 		this.unselectView();
 	}
@@ -229,68 +178,68 @@ mxG.G.prototype.setViewFromSelection=function()
 		xr=this.DX;
 		yb=this.DY;
 	}
-	if((xl==1)&&(yt==1)&&(xr==this.DX)&&(yb==this.DY)) s="";
+	if((xl==1)&&(yt==1)&&(xr==this.DX)&&(yb==this.DY))s="";
 	else s=this.xy2s(xl,yt)+":"+this.xy2s(xr,yb);
 	aN=this.cN;
 	if(aN.P.VW)
 	{
 		aN.takeOff("VW",-1);
-		if(s) aN.P.VW=[s];
+		if(s)aN.P.VW=[s];
 	}
 	else aN.P.VW=[s];
 	this.updateAll();
-};
+}
 mxG.G.prototype.unselectTool=function(tool)
 {
-	if(!tool||!this.hasEditTool(tool)) return;
+	if(!tool||!this.hasEditTool(tool))return;
 	this.getE(tool+"Tool").className="mxUnselectedEditTool";
-};
+}
 mxG.G.prototype.selectTool=function(tool)
 {
-	if(!tool||!this.hasEditTool(tool)) return;
+	if(!tool||!this.hasEditTool(tool))return;
 	this.getE(tool+"Tool").className="mxSelectedEditTool";
-};
+}
 mxG.G.prototype.superSelectTool=function(tool)
 {
-	if(!tool||!this.hasEditTool(tool)) return;
+	if(!tool||!this.hasEditTool(tool))return;
 	this.getE(tool+"Tool").className="mxSuperSelectedEditTool";
-};
+}
 mxG.G.prototype.disableTool=function(tool)
 {
-	if(!tool||!this.hasEditTool(tool)) return;
-	if(tool=="Comment") this.getE("CommentToolText").disabled=true;
+	if(!tool||!this.hasEditTool(tool))return;
+	if(tool=="Comment")this.getE("EditCommentTool").disabled=true;
 	else this.getE(tool+"Tool").disabled=true;
-};
+}
 mxG.G.prototype.enableTool=function(tool)
 {
-	if(!tool||!this.hasEditTool(tool)) return;
-	if(tool=="Comment") this.getE("CommentToolText").disabled=false;
+	if(!tool||!this.hasEditTool(tool))return;
+	if(tool=="Comment")this.getE("EditCommentTool").disabled=false;
 	else this.getE(tool+"Tool").disabled=false;
-};
+}
 mxG.G.prototype.disableTools=function()
 {
 	let k,km=this.tools.length;
-	for(k=0;k<km;k++) this.disableTool(this.tools[k]);
+	for(k=0;k<km;k++)this.disableTool(this.tools[k]);
 	this.disableTool("Comment");
-};
+}
 mxG.G.prototype.enableTools=function()
 {
 	let k,km=this.tools.length;
-	for(k=0;k<km;k++) this.enableTool(this.tools[k]);
+	for(k=0;k<km;k++)this.enableTool(this.tools[k]);
 	this.enableTool("Comment");
-};
+}
 mxG.G.prototype.changeSelectedTool=function(newTool)
 {
-	if(this.selection) this.unselectView();
+	if(this.selection)this.unselectView();
 	if(this.editTool&&(this.editTool!="ShowInfo")&&(this.editTool!="Numbering"))
 		this.unselectTool(this.editTool);
 	this.editTool=newTool;
-	if((newTool!="ShowInfo")&&(newTool!="Numbering")) this.selectTool(newTool);
-};
+	if((newTool!="ShowInfo")&&(newTool!="Numbering"))this.selectTool(newTool);
+}
 mxG.G.prototype.doCut=function()
 {
 	let aN,SZ,ST,z=this.k;
-	if(this.hasC("Menu")) this.toggleMenu("Edit",0);
+	if(this.hasC("Menu"))this.toggleMenu("Edit",0);
 	this.selectTool("Cut");
 	this.zN=this.cN;
 	aN=this.zN.Dad;
@@ -304,7 +253,7 @@ mxG.G.prototype.doCut=function()
 	aN.Focus=aN.Kid.length?1:0;
 	if(aN==this.rN)
 	{
-		if(aN.Focus) aN=aN.Kid[0];
+		if(aN.Focus)aN=aN.Kid[0];
 		else
 		{
 			aN=new mxG.N(aN,"FF",4);
@@ -315,57 +264,57 @@ mxG.G.prototype.doCut=function()
 		}
 	}
 	this.backNode(aN);
-	if(this.hasC("Tree")) this.hasToSetTree=1;
+	if(this.hasC("Tree"))this.hasToSetTree=1;
 	this.updateAll();
 	setTimeout(function(){mxG.D[z].unselectTool("Cut");},200);
-};
+}
 mxG.G.prototype.doCopy=function()
 {
 	let z=this.k;
-	if(this.hasC("Menu")) this.toggleMenu("Edit",0);
+	if(this.hasC("Menu"))this.toggleMenu("Edit",0);
 	this.selectTool("Copy");
 	this.zN=this.cN.clone(null);
 	this.zN.Dad=null;
 	setTimeout(function(){mxG.D[z].unselectTool("Copy");},200);
-};
+}
 mxG.G.prototype.doPaste=function()
 {
 	let z=this.k;
-	if(this.hasC("Menu")) this.toggleMenu("Edit",0);
+	if(this.hasC("Menu"))this.toggleMenu("Edit",0);
 	this.selectTool("Paste");
 	if(this.zN)
 	{
-		if(this.zN.P.SZ) this.cN=this.rN;
+		if(this.zN.P.SZ)this.cN=this.rN;
 		this.zN.Dad=this.cN;
 		this.cN.Kid[this.cN.Kid.length]=this.zN;
 		this.zN=this.zN.clone(null);
 		this.cN.Focus=this.cN.Kid.length;
 		this.backNode((this.cN==this.rN)?this.kidOnFocus(this.cN):this.cN);
-		if(this.hasC("Tree")) this.hasToSetTree=1;
+		if(this.hasC("Tree"))this.hasToSetTree=1;
 		this.updateAll();
 	}
 	setTimeout(function(){mxG.D[z].unselectTool("Paste");},200);
-};
+}
 mxG.G.prototype.doRemoveComments=function()
 {
 	let sgf,sgf1,sgf2,k;
-	if(this.hasC("Menu")) this.toggleMenu("Edit",0);
-	if(!this.hasC("Sgf")) return;
+	if(this.hasC("Menu"))this.toggleMenu("Edit",0);
+	if(!this.hasC("Sgf"))return;
 	sgf1=this.buildSgf();
 	sgf2=sgf1.replace(/(\n|;|\])C\[([^\[\]]+|(\[[^\[\]]+\])?)*\]/g,'$1');
 	if(sgf2!=sgf1)
 	{
 		k=this.rNs.indexOf(this.rN);
 		sgf=this.rN.sgf?this.rN.sgf:"";
-		if(this.getE("WindowMenuDiv"))
+		if(this.getE("WindowMenu"))
 		{
 			this.rN.cN=this.cN;
 		}
 		this.rN=new mxG.P(sgf2,this.sgfLoadCoreOnly,this.sgfLoadMainOnly);
 		this.rN.sgf=sgf;
-		if(this.getE("WindowMenuDiv")) this.rNs[k]=this.rN;
+		if(this.getE("WindowMenu"))this.rNs[k]=this.rN;
 		this.backNode(this.kidOnFocus(this.rN));
-		if(this.hasC("Tree")) this.hasToSetTree=1;
+		if(this.hasC("Tree"))this.hasToSetTree=1;
 		this.updateAll();
 	}
 }
@@ -374,93 +323,91 @@ mxG.G.prototype.doAsInBook=function()
 	let aN=this.cN,sN=this.kidOnFocus(this.rN),exFig=0,newFig,newAsInBookOn=(this.asInBookOn?0:1);
 	while(aN!=this.rN)
 	{
-		if(aN.P.FG) {exFig=parseInt(aN.P.FG[0]);break;}
+		if(aN.P.FG){exFig=parseInt(aN.P.FG[0]);break;}
 		aN=aN.Dad;
 	}
-	if(aN==this.rN) aN=sN;
+	if(aN==this.rN)aN=sN;
 	newFig=(newAsInBookOn?(exFig|256):(exFig&~256));
-	if((aN==sN)&&!newFig) aN.takeOff("FG",0);
+	if((aN==sN)&&!newFig)aN.takeOff("FG",0);
 	else aN.put("FG",newFig);
 	this.updateAll();
-};
+}
 mxG.G.prototype.doIndices=function()
 {
 	let aN=this.cN,sN=this.kidOnFocus(this.rN),exFig=0,newFig,newIndicesOn;
 	newIndicesOn=(this.indicesOn?0:1);
 	while(aN!=this.rN)
 	{
-		if(aN.P.FG) {exFig=parseInt(aN.P.FG[0]);break;}
+		if(aN.P.FG){exFig=parseInt(aN.P.FG[0]);break;}
 		aN=aN.Dad;
 	}
-	if(aN==this.rN) aN=sN;
+	if(aN==this.rN)aN=sN;
 	newFig=newIndicesOn?(exFig&~1):(exFig|1);
-	if((aN==sN)&&!newFig) aN.takeOff("FG",0);
+	if((aN==sN)&&!newFig)aN.takeOff("FG",0);
 	else aN.put("FG",newFig);
 	this.updateAll();
-};
+}
 mxG.G.prototype.switchFigureOrNot=function()
 {
 	let e;
 	if(this.getE("NewFigureBox").checked)
 	{
-		if(e=this.getE("FigureOrNot1P")) e.style.display="none";
-		else if(e=this.getE("FigureOrNot2P")) e.style.display="none";
+		if(e=this.getE("FigureOrNot1P"))e.setAttribute("hidden",true);
+		else if(e=this.getE("FigureOrNot2P"))e.setAttribute("hidden",true);
 	}
 	else
 	{
-		if(e=this.getE("FigureOrNot1P")) e.style.display="block";
-		else if(e=this.getE("FigureOrNot2P")) e.style.display="block";
+		if(e=this.getE("FigureOrNot1P"))e.removeAttribute("hidden");
+		else if(e=this.getE("FigureOrNot2P"))e.removeAttribute("hidden");
 	}
-};
+}
 mxG.G.prototype.buildNumbering=function()
 {
-	let aN=this.cN,s="";
-	while((aN.Dad!=this.rN)&&!aN.P.FG) aN=aN.Dad;
-	s+="<h1 tabindex=\"0\">"+this.local("Numbering")+"</h1>";
+	let aN=this.cN,s;
+	while((aN.Dad!=this.rN)&&!aN.P.FG)aN=aN.Dad;
+	s=`<h1 tabindex="0">${this.local("Numbering")}</h1>`;
 	if(aN!=this.cN)
 	{
-		s+="<p>";
-		s+="<label for=\""+this.n+"NewFigureBox\">"+this.local("New (from this point):")+" </label>";
-		s+="<input type=\"checkbox\" "+"id=\""+this.n+"NewFigureBox\" onclick=\""+this.g+".switchFigureOrNot()\">";
-		s+="</p>";
+		s+=`<p>`
+		+`<label for="${this.n}NewFigureBox">${this.local("New (from this point):")} </label>`
+		+`<input type="checkbox" id="${this.n}NewFigureBox" onclick="${this.g}.switchFigureOrNot()">`
+		+`</p>`;
 	}
-	if((aN.Dad!=this.rN)&&aN.P.FG) 
-	{
-		s+="<p class=\"mxFigureOrNotP\" id=\""+this.n+"FigureOrNot1P\">";
-		s+="<input type=\"radio\" id=\""+this.n+"FigureOrNot1Input\" name=\"figureOrNot\" checked value=\"1\">";
-		s+="<label for=\""+this.n+"FigureOrNot1Input\">"+this.local("Modify")+"</label>";
-		s+="</p>";
-	}
-	s+="<p class=\"mxTabNumberingP\">";
-	s+="<input type=\"radio\" id=\""+this.n+"NumberingOrNot1Input\" name=\"numberingOrNot\"";
-	s+=(this.numberingOn?" checked":"");
-	s+=" value=\"1\">";
-	s+="<label for=\""+this.n+"NumberingOrNot1Input\">"+this.local("Start numbering with:")+" </label>";
-	s+="<input type=\"text\" id=\""+this.n+"NumWithTextInput\" size=\"3\" maxlength=\"3\" value=\""+1+"\"><br>";
-	s+="<input type=\"radio\" id=\""+this.n+"NumberingOrNot2Input\" name=\"numberingOrNot\"";
-	s+=(!this.numberingOn?" checked":"");
-	s+=" value=\"2\">";
-	s+="<label for=\""+this.n+"NumberingOrNot2Input\">"+this.local("No numbering")+"</label><br><br>";
-	s+="<input type=\"checkbox\""+(this.asInBookOn?" checked":"")+" id=\""+this.n+"AsInBookInput\"> "+this.local("As in book")+"<br>";
-	s+="<input type=\"checkbox\""+(this.indicesOn?" checked":"")+" id=\""+this.n+"IndicesInput\"> "+this.local("Indices")+"<br>";
-	s+="</p>";
 	if((aN.Dad!=this.rN)&&aN.P.FG)
 	{
-		s+="<p class=\"mxFigureOrNotP\" id=\""+this.n+"FigureOrNot2P\">";
-		s+="<input type=\"radio\" id=\""+this.n+"FigureOrNot2Input\" name=\"figureOrNot\" value=\"2\">";
-		s+="<label for=\""+this.n+"FigureOrNot2Input\">"+this.local("Remove")+"</label>";
-		s+="</p>";
+		s+=`<p class="mxFigureOrNotP" id="${this.n}FigureOrNot1P">`
+		+`<input type="radio" id="${this.n}FigureOrNot1Input" name="figureOrNot" checked value="1">`
+		+`<label for="${this.n}FigureOrNot1Input">${this.local("Modify (only for this part of the game tree)")}</label>`
+		+`</p>`;
 	}
+	s+=`<p class="mxTabNumberingP">`
+	+`<input type="radio" id="${this.n}NumberingOrNot1Input" name="numberingOrNot"`
+	+(this.numberingOn?" checked":"")
+	+` value="1">`
+	+`<label for="${this.n}NumberingOrNot1Input">${this.local("Start numbering with:")} </label>`
+	+`<input type="text" id="${this.n}NumWithTextInput" size="3" maxlength="3" value="1"><br>`
+	+`<input type="radio" id="${this.n}NumberingOrNot2Input" name="numberingOrNot"`
+	+(!this.numberingOn?" checked":"")
+	+` value="2">`
+	+`<label for="${this.n}NumberingOrNot2Input">${this.local("No numbering")}</label><br><br>`
+	+`<input type="checkbox"${this.asInBookOn?" checked":""} id="${this.n}AsInBookInput"> ${this.local("As in book")}<br>`
+	+`<input type="checkbox"${this.indicesOn?" checked":""} id="${this.n}IndicesInput"> ${this.local("Indices")}<br>`
+	+`</p>`;
+	if((aN.Dad!=this.rN)&&aN.P.FG)
+		s+=`<p class="mxFigureOrNotP" id="${this.n}FigureOrNot2P">`
+		+`<input type="radio" id="${this.n}FigureOrNot2Input" name="figureOrNot" value="2">`
+		+`<label for="${this.n}FigureOrNot2Input">${this.local("Remove (only for this part of the game tree)")}</label>`
+		+`</p>`;
 	return s;
 }
 mxG.G.prototype.doNumberingOK=function()
 {
 	let aN;
-	if(this.getE("NewFigureBox")&&this.getE("NewFigureBox").checked) aN=this.cN;
+	if(this.getE("NewFigureBox")&&this.getE("NewFigureBox").checked)aN=this.cN;
 	else
 	{
 		aN=this.cN;
-		while((aN.Dad!=this.rN)&&!(aN.P.FG)) aN=aN.Dad;
+		while((aN.Dad!=this.rN)&&!(aN.P.FG))aN=aN.Dad;
 	}
 	if(this.getE("FigureOrNot2Input")&&this.getE("FigureOrNot2Input").checked)
 	{
@@ -477,76 +424,76 @@ mxG.G.prototype.doNumberingOK=function()
 		let newFigure=((newAsInBookOn?256:0)|(newIndicesOn?0:1));
 		if(aN==this.kidOnFocus(this.rN))
 		{
-			if(newFigure) aN.put("FG",newFigure);
+			if(newFigure)aN.put("FG",newFigure);
 			else aN.takeOff("FG",0);
-			if((newNumWith>1)&&newNumberingOn) aN.put("MN",newNumWith);
+			if((newNumWith>1)&&newNumberingOn)aN.put("MN",newNumWith);
 			else aN.takeOff("MN",0);
-			if(newNumberingOn!=1) aN.put("PM",newNumberingOn);
+			if(newNumberingOn!=1)aN.put("PM",newNumberingOn);
 			else aN.takeOff("PM",0);
 		}
 		else
 		{
 			aN.put("FG",newFigure);
 			aN.put("PM",newNumberingOn);
-			if(newNumberingOn) aN.put("MN",newNumWith);
+			if(newNumberingOn)aN.put("MN",newNumWith);
 			else aN.takeOff("MN",0);
 		}
 	}
-	if(this.hasC("Tree")) this.hasToSetTree=1;
+	if(this.hasC("Tree"))this.hasToSetTree=1;
 	this.updateAll();
-};
+}
 mxG.G.prototype.doNumbering=function()
 {
 	let btns=[{n:"OK",a:"Numbering"},{n:"Cancel"}];
 	this.doDialog("EditNumbering",this.buildNumbering(),btns);
-};
+}
 mxG.G.prototype.doVariation=function()
 {
-	if(this.styleMode&2) this.styleMode-=2;else this.styleMode+=2;
+	if(this.styleMode&2)this.styleMode-=2;else this.styleMode+=2;
 	this.kidOnFocus(this.rN).put("ST",this.styleMode&~4);
 	this.updateAll();
-};
+}
 mxG.G.prototype.doStyle=function()
 {
-	if(this.styleMode&1) this.styleMode-=1;else this.styleMode+=1;
+	if(this.styleMode&1)this.styleMode-=1;else this.styleMode+=1;
 	this.kidOnFocus(this.rN).put("ST",this.styleMode&~4);
 	this.updateAll();
-};
+}
 mxG.G.prototype.doPropertySwitch=function(tool)
 {
 	let z;
-	if((tool!="DO")&&(tool!="IT")) z=2;else z=1;
+	if((tool!="DO")&&(tool!="IT"))z=2;else z=1;
 	if(this.cN.P&&this.cN.P[tool])
 	{
-		if(((this.cN.P[tool][0]+"")=="1")&&(z>1)) this.cN.P[tool][0]="2";
+		if(((this.cN.P[tool][0]+"")=="1")&&(z>1))this.cN.P[tool][0]="2";
 		else this.cN.takeOff(tool,0);
 	}
 	else
 	{
 		if((tool=="GB")||(tool=="GW")||(tool=="DM")||(tool=="UC"))
 		{
-			if((tool!="GB")&&this.cN.P&&this.cN.P.GB) this.cN.takeOff("GB",0);
-			if((tool!="GW")&&this.cN.P&&this.cN.P.GW) this.cN.takeOff("GW",0);
-			if((tool!="DM")&&this.cN.P&&this.cN.P.DM) this.cN.takeOff("DM",0);
-			if((tool!="UC")&&this.cN.P&&this.cN.P.UC) this.cN.takeOff("UC",0);
+			if((tool!="GB")&&this.cN.P&&this.cN.P.GB)this.cN.takeOff("GB",0);
+			if((tool!="GW")&&this.cN.P&&this.cN.P.GW)this.cN.takeOff("GW",0);
+			if((tool!="DM")&&this.cN.P&&this.cN.P.DM)this.cN.takeOff("DM",0);
+			if((tool!="UC")&&this.cN.P&&this.cN.P.UC)this.cN.takeOff("UC",0);
 		}
 		if((tool=="TE")||(tool=="BM")||(tool=="DO")||(tool=="IT"))
 		{
-			if((tool!="TE")&&this.cN.P&&this.cN.P.TE) this.cN.takeOff("TE",0);
-			if((tool!="BM")&&this.cN.P&&this.cN.P.BM) this.cN.takeOff("BM",0);
-			if((tool!="DO")&&this.cN.P&&this.cN.P.DO) this.cN.takeOff("DO",0);
-			if((tool!="IT")&&this.cN.P&&this.cN.P.IT) this.cN.takeOff("IT",0);
+			if((tool!="TE")&&this.cN.P&&this.cN.P.TE)this.cN.takeOff("TE",0);
+			if((tool!="BM")&&this.cN.P&&this.cN.P.BM)this.cN.takeOff("BM",0);
+			if((tool!="DO")&&this.cN.P&&this.cN.P.DO)this.cN.takeOff("DO",0);
+			if((tool!="IT")&&this.cN.P&&this.cN.P.IT)this.cN.takeOff("IT",0);
 		}
 		this.cN.put(tool,(z>1)?"1":"");
 	}
 	this.updateAll();
-};
+}
 mxG.G.prototype.doPL=function()
 {
-	if(this.cN.P&&this.cN.P.PL) this.cN.takeOff("PL",0);
+	if(this.cN.P&&this.cN.P.PL)this.cN.takeOff("PL",0);
 	else this.cN.put("PL",this.editNextNat);
 	this.updateAll();
-};
+}
 mxG.G.prototype.doTransform=function(transform)
 {
 	let s,z,a=[],aN,n,k,sgf;
@@ -568,22 +515,22 @@ mxG.G.prototype.doTransform=function(transform)
 		this.rN.sgf=sgf;
 		this.rNs[k]=this.rN;
 		this.backNode(this.kidOnFocus(this.rN));
-		if(this.hasC("Tree")) this.hasToSetTree=1;
-		while(a.length) {this.cN.Focus=a.pop();if(a.length) this.placeNode();}
+		if(this.hasC("Tree"))this.hasToSetTree=1;
+		while(a.length){this.cN.Focus=a.pop();if(a.length)this.placeNode();}
 		this.updateAll();
 	}
-};
+}
 mxG.G.prototype.doEditTool=function(newTool)
 {
-	if(newTool=="ShowInfo") {this.doInfo();return;}
-	if(newTool=="Numbering") {this.doNumbering();return;}
-	if(newTool=="Cut") {this.doCut();return;}
-	if(newTool=="Copy") {this.doCopy();return;}
-	if(newTool=="Paste") {this.doPaste();return;}
-	if(newTool=="AsInBook") {this.doAsInBook();return;}
-	if(newTool=="Indices") {this.doIndices();return;}
-	if(newTool=="Variation") {this.doVariation();return;}
-	if(newTool=="Style") {this.doStyle();return;}
+	if(newTool=="ShowInfo"){this.doInfo();return;}
+	if(newTool=="Numbering"){this.doNumbering();return;}
+	if(newTool=="Cut"){this.doCut();return;}
+	if(newTool=="Copy"){this.doCopy();return;}
+	if(newTool=="Paste"){this.doPaste();return;}
+	if(newTool=="AsInBook"){this.doAsInBook();return;}
+	if(newTool=="Indices"){this.doIndices();return;}
+	if(newTool=="Variation"){this.doVariation();return;}
+	if(newTool=="Style"){this.doStyle();return;}
 	if((newTool=="GB")
 	  ||(newTool=="GW")
 	  ||(newTool=="DM")
@@ -591,28 +538,28 @@ mxG.G.prototype.doEditTool=function(newTool)
 	  ||(newTool=="TE")
 	  ||(newTool=="BM")
 	  ||(newTool=="DO")
-	  ||(newTool=="IT")) {this.doPropertySwitch(newTool);return;}
-	if(newTool=="PL") {this.doPL();return;}
+	  ||(newTool=="IT")){this.doPropertySwitch(newTool);return;}
+	if(newTool=="PL"){this.doPL();return;}
 	if(newTool=="View")
 	{
 		let z=this.k;
 		this.selectTool(newTool);
 		this.setViewFromSelection();
 		setTimeout(function(){mxG.D[z].unselectTool(newTool);},200);
-		if(this.editTool=="Select") this.changeSelectedTool("Play");
+		if(this.editTool=="Select")this.changeSelectedTool("Play");
 		return;
 	}
-	if(this.selection) {this.inSelect=0;this.unselectView();}
+	if(this.selection){this.inSelect=0;this.unselectView();}
 	if((newTool=="Play")&&(this.editTool=="Play"))
 	{
-		if(this.editNextNat=="B") {this.editNextNat="W";this.drawSvgTool("Play");}
-		else if(this.editNextNat=="W") {this.editNextNat="B";this.drawSvgTool("Play");}
+		if(this.editNextNat=="B"){this.editNextNat="W";this.drawSvgTool("Play");}
+		else if(this.editNextNat=="W"){this.editNextNat="B";this.drawSvgTool("Play");}
 		return;
 	}
 	if((newTool=="Setup")&&(this.editTool=="Setup"))
 	{
-		if(this.editAX=="AB") {this.editAX="AW";this.drawSvgTool("Setup");}
-		else if(this.editAX=="AW") {this.editAX="AB";this.drawSvgTool("Setup");}
+		if(this.editAX=="AB"){this.editAX="AW";this.drawSvgTool("Setup");}
+		else if(this.editAX=="AW"){this.editAX="AB";this.drawSvgTool("Setup");}
 		return;
 	}
 	if((newTool=="SetupBlack")&&(this.editTool!="SetupBlack"))
@@ -627,69 +574,67 @@ mxG.G.prototype.doEditTool=function(newTool)
 		this.changeSelectedTool("SetupWhite");
 		return;
 	}
-	if(newTool=="VM") {this.doTransform(1);return;}
-	if(newTool=="HM") {this.doTransform(2);return;}
-	if(newTool=="R") {this.doTransform(3);return;}
+	if(newTool=="VM"){this.doTransform(1);return;}
+	if(newTool=="HM"){this.doTransform(2);return;}
+	if(newTool=="R"){this.doTransform(3);return;}
 	this.changeSelectedTool(newTool);
-};
+}
 mxG.G.prototype.doEditCommentTool=function()
 {
-	let s=this.getE("CommentToolText").value;
-	if(s) this.cN.put("C",s);
+	let s=this.getE("EditCommentTool").value;
+	if(s)this.cN.put("C",s);
 	else this.cN.takeOff("C",0);
-};
+}
 mxG.G.prototype.getNextEditNat=function()
 {
-	var aN=this.cN;
+	let aN=this.cN;
 	// get color from PL
-	if(aN.P.PL) return aN.P.PL[0];
+	if(aN.P.PL)return aN.P.PL[0];
 	// get color of this.kidOnFocus(this.cN)
 	aN=this.kidOnFocus(this.cN);
 	if(aN)
 	{
-		if(aN.P.B) return "B";
-		if(aN.P.W) return "W";
+		if(aN.P.B)return "B";
+		if(aN.P.W)return "W";
 	}
 	// get opposite color of cN
 	aN=this.cN;
-	if(aN.P.B) return "W";
-	if(aN.P.W) return "B";
+	if(aN.P.B)return "W";
+	if(aN.P.W)return "B";
 	// get opposite color if cN has AB and no AW (handicap game?) or AW and no AB, 
-	if(aN.P.AB&&!aN.P.AW) return "W";
-	else if(aN.P.AW&&!aN.P.AB) return "B";
+	if(aN.P.AB&&!aN.P.AW)return "W";
+	else if(aN.P.AW&&!aN.P.AB)return "B";
 	// get color of cN children
-	for(let k=0;k<this.cN.Kid.length;k++)
+	for(aN of this.cN.Kid)
 	{
-		aN=this.cN.Kid[k];
-		if(aN.P.B) return "B";
-		if(aN.P.W) return "W";
+		if(aN.P.B)return "B";
+		if(aN.P.W)return "W";
 	}
 	// get opposite color of cN brothers
-	for(let k=0;k<this.cN.Dad.Kid.length;k++)
+	for(aN of this.cN.Dad.Kid)
 	{
-		aN=this.cN.Dad.Kid[k];
-		if(aN.P.B) return "W";
-		if(aN.P.W) return "B";
+		if(aN.P.B)return "W";
+		if(aN.P.W)return "B";
 	}
 	// unable to decide who will play
 	return "B";
-};
+}
 mxG.G.prototype.checkEditPlay=function(a,b)
 {
 	let nextNat=this.editNextNat,k,km;
-	if(!nextNat) {this.plonk();return;}
-	if((a||b)&&this.gor.isOccupied(a,b)) {this.plonk();return;}
+	if(!nextNat){this.plonk();return;}
+	if((a||b)&&this.gor.isOccupied(a,b)){this.plonk();return;}
 	k=0;
 	km=this.cN.Kid.length;
 	while(k<km)
 	{
 		let aN=this.cN.Kid[k],x,y,s,nat;
-		if(aN.P.B) {s=aN.P.B[0];nat="B";}
-		else if(aN.P.W) {s=aN.P.W[0];nat="W";}
-		else {s="";nat="O";}
-		if(s.length==2) {x=s.c2n(0);y=s.c2n(1);}
-		else if(s.length==0) {x=0;y=0;}
-		else {x=-1;y=-1;}
+		if(aN.P.B){s=aN.P.B[0];nat="B";}
+		else if(aN.P.W){s=aN.P.W[0];nat="W";}
+		else{s="";nat="O";}
+		if(s.match(/^[a-zA-Z]{2}$/)){x=s.c2n(0);y=s.c2n(1);}
+		else if(!s)x=y=0;
+		else x=y=-1;
 		// if there is already a nextNat move on (a,b), place it
 		if((x==a)&&(y==b)&&(nat==nextNat))
 		{
@@ -704,24 +649,24 @@ mxG.G.prototype.checkEditPlay=function(a,b)
 	// (a,b) was not found in the sgf thus add it
 	this.addPlay(nextNat,a,b);
 	this.placeNode();
-	if(this.hasC("Tree")) this.hasToSetTree=1;
+	if(this.hasC("Tree"))this.hasToSetTree=1;
 	this.updateAll();
-};
+}
 mxG.G.prototype.checkEditSetup=function(x,y,setupTool="Setup")
 {
 	// if a B or W is in cN, add AX values on a new cN kids
 	// else add/remove AX values on cN
 	let aN,p,v,k,km,kp;
 	let AX=["AB","AW","AE"];
-	if(!this.inView(x,y)) return;
-	if(this.gor.getBanNat(x,y)!="E") p="AE";else p=this.editAX;
+	if(!this.inView(x,y))return;
+	if(this.gor.getBanNat(x,y)!="E")p="AE";else p=this.editAX;
 	v=this.xy2s(x,y);
 	if(this.cN.P.B||this.cN.P.W)
 	{
 		aN=new mxG.N(this.cN,p,v);
 		this.cN.Focus=this.cN.Kid.length;
 		this.placeNode();
-		if(this.hasC("Tree")) this.hasToSetTree=1;
+		if(this.hasC("Tree"))this.hasToSetTree=1;
 		this.updateAll();
 		this.changeSelectedTool(setupTool);
 	}
@@ -734,8 +679,8 @@ mxG.G.prototype.checkEditSetup=function(x,y,setupTool="Setup")
 			if(aN.P[AX[kp]])
 			{
 				km=aN.P[AX[kp]].length;
-				for(k=0;k<km;k++) if(aN.P[AX[kp]][k]==v) break;
-				if(k<km) aN.takeOff(AX[kp],k);
+				for(k=0;k<km;k++)if(aN.P[AX[kp]][k]==v)break;
+				if(k<km)aN.takeOff(AX[kp],k);
 			}
 		}
 		// add p[x y] only if something is changed
@@ -743,13 +688,13 @@ mxG.G.prototype.checkEditSetup=function(x,y,setupTool="Setup")
 		aExNat=this.gor.getBanNat(x,y);
 		if(aExNat!=p.substring(1,2))
 		{
-			if(aN.P[p]) aN.P[p].push(v);
+			if(aN.P[p])aN.P[p].push(v);
 			else aN.P[p]=[v];
 		}
 		this.placeNode(aN);
 		this.updateAll();
 	}
-};
+}
 mxG.G.prototype.selectGobanArea=function(x,y)
 {
 	if((this.editTool=="Select")&&this.inSelect&&((x!=this.editXrs)||(y!=this.editYbs)))
@@ -772,13 +717,13 @@ mxG.G.prototype.selectGobanArea=function(x,y)
 		this.scr.removeSelect();
 		this.scr.addSelect(xl,yt,xr,yb);
 	}
-};
+}
 mxG.G.prototype.unselectView=function()
 {
 	let i,j;
 	this.selection=0;
 	this.scr.removeSelect();
-};
+}
 mxG.G.prototype.selectView=function()
 {
 	let i,j,xl,yt,xr,yb;
@@ -788,22 +733,22 @@ mxG.G.prototype.selectView=function()
 	xr=Math.max(this.editXls,this.editXrs);
 	yb=Math.max(this.editYts,this.editYbs);
 	this.scr.addSelect(xl,yt,xr,yb);
-};
+}
 mxG.G.prototype.getNextLabel=function(aLB)
 {
 	let bLB="";
 	if(aLB.match(/^[A-Za-z]$/))
 	{
-		if(aLB=="Z") bLB="A";
-		else if(aLB=="z") bLB="a";
+		if(aLB=="Z")bLB="A";
+		else if(aLB=="z")bLB="a";
 		else bLB=String.fromCharCode(aLB.charCodeAt(0)+1);
 	}
 	return bLB;
-};
+}
 mxG.G.prototype.checkEditMarkOrLabel=function(x,y,m)
 {
 	let v,k,km,kp,aLB,bLB="",MX=["MA","TR","SQ","CR","LB"];
-	if(!this.inView(x,y)) return;
+	if(!this.inView(x,y))return;
 	v=this.xy2s(x,y);
 	if(m=="LB")
 	{
@@ -816,28 +761,28 @@ mxG.G.prototype.checkEditMarkOrLabel=function(x,y,m)
 		{
 			km=this.cN.P[MX[kp]].length;
 			for(k=0;k<km;k++)
-				if(this.cN.P[MX[kp]][k].substring(0,2)==v.substring(0,2)) break;
+				if(this.cN.P[MX[kp]][k].substring(0,2)==v.substring(0,2))break;
 			if((k==km)&&(MX[kp]==m))
 			{
-				if(m=="LB") bLB=this.getNextLabel(aLB);
+				if(m=="LB")bLB=this.getNextLabel(aLB);
 				this.cN.P[m][km]=v;
 			}
 			else if(k<km)
 			{
-				if(MX[kp]=="LB") bLB=this.cN.P[MX[kp]][k].substring(3);
+				if(MX[kp]=="LB")bLB=this.cN.P[MX[kp]][k].substring(3);
 				this.cN.takeOff(MX[kp],k);
 			}
 		}
 		else if(MX[kp]==m)
 		{
-			if(m=="LB") bLB=this.getNextLabel(aLB);
+			if(m=="LB")bLB=this.getNextLabel(aLB);
 			this.cN.P[m]=[v];
 		}
 	}
-	if((m=="LB")&&bLB) this.getE("LabelTool").value=bLB;
+	if((m=="LB")&&bLB)this.getE("LabelTool").value=bLB;
 	this.backNode(this.cN);
 	this.updateAll();
-};
+}
 mxG.G.prototype.doMouseMoveEdit=function(ev)
 {
 	if((this.editTool=="Select")&&(this.inSelect==1))
@@ -846,21 +791,21 @@ mxG.G.prototype.doMouseMoveEdit=function(ev)
 		let c=this.scr.getGxy(ev);
 		this.selectGobanArea(c.x,c.y);
 	}
-};
+}
 mxG.G.prototype.doMouseDownEditSelect=function(x,y)
 {
-	if(this.inSelect==1) this.inSelect=0;
+	if(this.inSelect==1)this.inSelect=0;
 	else
 	{
 		this.inSelect=1;
-		if(this.selection) this.unselectView();
+		if(this.selection)this.unselectView();
 		this.editXls=x;
 		this.editYts=y;
 		this.editXrs=x;
 		this.editYbs=y;
 		this.selectView();
 	}
-};
+}
 mxG.G.prototype.doMouseDownEdit=function(ev)
 {
 	if(this.editTool=="Select")
@@ -868,11 +813,11 @@ mxG.G.prototype.doMouseDownEdit=function(ev)
 		let c=this.scr.getGxy(ev);
 		this.doMouseDownEditSelect(c.x,c.y);
 	}
-};
+}
 mxG.G.prototype.doMouseUpEditSelect=function(x,y)
 {
-	if((x!=this.editXls)&&(y!=this.editYts)) this.inSelect=0;
-};
+	if((x!=this.editXls)&&(y!=this.editYts))this.inSelect=0;
+}
 mxG.G.prototype.doMouseUpEdit=function(ev)
 {
 	if(this.editTool=="Select")
@@ -880,11 +825,11 @@ mxG.G.prototype.doMouseUpEdit=function(ev)
 		let c=this.scr.getGxy(ev);
 		this.doMouseUpEditSelect(c.x,c.y);
 	}
-};
+}
 mxG.G.prototype.doMouseOutEdit=function(ev)
 {
-	// mouseOut events may be generated even if the mouse is still on ig
-	// because the svg could hide ig, thus discard such mouseOut events
+	// mouseOut events may be generated even if the mouse is still on the goban
+	// thus verify if the mouse is outside the goban before setting this.inSelect
 	if(this.editTool=="Select")
 	{
 		if(this.inSelect)
@@ -894,21 +839,21 @@ mxG.G.prototype.doMouseOutEdit=function(ev)
 				this.inSelect=0;
 		}
 	}
-};
+}
 mxG.G.prototype.doKeydownSelect=function(x,y)
 {
-	if(this.inSelect==2) this.inSelect=0;
+	if(this.inSelect==2)this.inSelect=0;
 	else
 	{
 		this.inSelect=2;
-		if(this.selection) this.unselectView();
+		if(this.selection)this.unselectView();
 		this.editXls=x;
 		this.editYts=y;
 		this.editXrs=x;
 		this.editYbs=y;
 		this.selectView();
 	}
-};
+}
 mxG.G.prototype.checkEdit=function(x,y)
 {
 	switch(this.editTool)
@@ -923,123 +868,90 @@ mxG.G.prototype.checkEdit=function(x,y)
 		case "Square": this.checkEditMarkOrLabel(x,y,"SQ");break;
 		case "Label": this.checkEditMarkOrLabel(x,y,"LB");break;
 	}
-};
+}
 mxG.G.prototype.drawSvgTool=function(tool)
 {
 	let e=this.getE(tool+"Tool"),nat,txt,o;
-	o={in3dOn:this.in3dOn,stoneShadowOn:this.stoneShadowOn,type:"tool",ariaHidden:1};
+	o={in3dOn:this.in3dOn,stoneShadowOn:this.stoneShadowOn,type:"tool",role:"presentation"};
 	switch(tool)
 	{
-		case "Select":
-			e.innerHTML=this.scr.makeSelectTool();
-			break;
-		case "View":
-			e.innerHTML=this.scr.makeViewTool();
-			break;
+		case "Select":e.innerHTML=this.scr.makeSelectTool();break;
+		case "View":e.innerHTML=this.scr.makeViewTool();break;
 		case "Play":
 			nat=this.editNextNat;
-			if(this.hasEditTool("Setup")) s=this.scr.makeAloneStone(nat,"",o);
+			if(this.hasEditTool("Setup"))s=this.scr.makeAloneStone(nat,"",o);
 			else s=this.scr.makeAloneBiStone(nat,o);
-			e.innerHTML=s;
-			break;
-		case "Setup":
-			nat=this.editAX;
-			e.innerHTML=this.scr.makeAloneBiStone(nat,o);
-			break;
-		case "SetupBlack":
-			e.innerHTML=this.scr.makeAloneStone("B","",o);
-			break;
-		case "SetupWhite":
-			e.innerHTML=this.scr.makeAloneStone("W","",o);
-			break;
+			e.innerHTML=s;break;
+		case "Setup":nat=this.editAX;e.innerHTML=this.scr.makeAloneBiStone(nat,o);break;
+		case "SetupBlack":e.innerHTML=this.scr.makeAloneStone("B","",o);break;
+		case "SetupWhite":e.innerHTML=this.scr.makeAloneStone("W","",o);break;
 		case "Cut":
 		case "Copy":
 		case "Paste":
-			e.innerHTML=this.scr.makeFromPath(this[tool.toLowerCase()+"SvgPath"]);
-			break;
+			e.innerHTML=this.scr.makeFromPath(this[tool.toLowerCase()+"SvgPath"]);break;
 		case "Circle":
 		case "Mark":
 		case "Square":
-		case "Triangle":
-			e.innerHTML=this.scr.makeAloneMark(tool);
-			break;
-		case "Numbering":
-			e.innerHTML=this.scr.makeAloneStone("W",5,o);break;
-		case "ShowInfo":
-			e.innerHTML=this.scr.makeAloneToolText(this.local("H"));break;
-		case "AsInBook":
-			e.innerHTML=this.scr.makeAloneToolText(this.local("K"));break;
-		case "Indices":
-			e.innerHTML=this.scr.makeAloneToolText(this.local("I"));break;
-		case "Variation":
-			e.innerHTML=this.scr.makeAloneToolText(this.local("V"));break;
-		case "Style":
-			e.innerHTML=this.scr.makeAloneToolText(this.local("S"));break;
-		case "GB":
-			e.innerHTML=this.scr.makeAloneToolText(this.local("●+"));break;
-		case "GW":
-			e.innerHTML=this.scr.makeAloneToolText(this.local("○+"));break;
-		case "DM":
-			e.innerHTML=this.scr.makeAloneToolText(this.local("="));break;
-		case "UC":
-			e.innerHTML=this.scr.makeAloneToolText(this.local("~"));break;
-		case "TE":
-			e.innerHTML=this.scr.makeAloneToolText(this.local("!"));break;
-		case "BM":
-			e.innerHTML=this.scr.makeAloneToolText(this.local("?"));break;
-		case "DO":
-			e.innerHTML=this.scr.makeAloneToolText(this.local("?!"));break;
-		case "IT":
-			e.innerHTML=this.scr.makeAloneToolText(this.local("!?"));break;
-		case "PL":
-			e.innerHTML=this.scr.makeAloneToolText(this.local("T"));break;
-		case "R":
-			e.innerHTML=this.scr.makeAloneToolText(this.local("↺"));break;
-		case "VM":
-			e.innerHTML=this.scr.makeAloneToolText(this.local("↕"));break;
-		case "HM":
-			e.innerHTML=this.scr.makeAloneToolText(this.local("↔"));break;
+		case "Triangle":e.innerHTML=this.scr.makeAloneMark(tool);break;
+		case "Numbering":e.innerHTML=this.scr.makeAloneStone("W",5,o);break;
+		case "ShowInfo":e.innerHTML=this.scr.makeAloneToolText(this.local("H"));break;
+		case "AsInBook":e.innerHTML=this.scr.makeAloneToolText(this.local("K"));break;
+		case "Indices":e.innerHTML=this.scr.makeAloneToolText(this.local("I"));break;
+		case "Variation":e.innerHTML=this.scr.makeAloneToolText(this.local("V"));break;
+		case "Style":e.innerHTML=this.scr.makeAloneToolText(this.local("S"));break;
+		case "GB":e.innerHTML=this.scr.makeAloneToolText(this.local("●+"));break;
+		case "GW":e.innerHTML=this.scr.makeAloneToolText(this.local("○+"));break;
+		case "DM":e.innerHTML=this.scr.makeAloneToolText(this.local("="));break;
+		case "UC":e.innerHTML=this.scr.makeAloneToolText(this.local("~"));break;
+		case "TE":e.innerHTML=this.scr.makeAloneToolText(this.local("!"));break;
+		case "BM":e.innerHTML=this.scr.makeAloneToolText(this.local("?"));break;
+		case "DO":e.innerHTML=this.scr.makeAloneToolText(this.local("?!"));break;
+		case "IT":e.innerHTML=this.scr.makeAloneToolText(this.local("!?"));break;
+		case "PL":e.innerHTML=this.scr.makeAloneToolText(this.local("T"));break;
+		case "R":e.innerHTML=this.scr.makeAloneToolText(this.local("↺"));break;
+		case "VM":e.innerHTML=this.scr.makeAloneToolText(this.local("↕"));break;
+		case "HM":e.innerHTML=this.scr.makeAloneToolText(this.local("↔"));break;
 	}
-};
+}
 mxG.G.prototype.drawEditTools=function()
 {
 	let k,km=this.tools.length,tool;
 	for(k=0;k<km;k++)
 	{
 		tool=this.tools[k];
-		if(tool&&(tool!="Label")) this.drawSvgTool(tool);
+		if(tool&&(tool!="Label"))this.drawSvgTool(tool);
 	}
 	this.hasToSetEditTools=0;
-};
+}
 mxG.G.prototype.selectDouble=function(tool)
 {
 	if(this.cN.P&&this.cN.P[tool])
 	{
-		if((this.cN.P[tool][0]+"")=="2") this.superSelectTool(tool);
+		if((this.cN.P[tool][0]+"")=="2")this.superSelectTool(tool);
 		else this.selectTool(tool);
 	}
 	else this.unselectTool(tool);
-};
+}
 mxG.G.prototype.selectSingle=function(tool)
 {
-	if(this.cN.P&&this.cN.P[tool]) this.selectTool(tool);else this.unselectTool(tool);
-};
+	if(this.cN.P&&this.cN.P[tool])this.selectTool(tool);else this.unselectTool(tool);
+}
 mxG.G.prototype.getCommentWhenEdit=function()
 {
 	if(this.hasC("Score")&&this.scoreInComment&&this.canPlaceScore)
 		return this.buildScore();
 	return this.cN.P.C?this.cN.P.C[0]:"";
-};
+}
 mxG.G.prototype.getInitialMark=function(a)
 {
 	return a.match(/^([a-z])$/)?"a":"A";
-};
+}
 mxG.G.prototype.updateEdit=function()
 {
-	if(this.hasC("Score")&&this.canPlaceScore) return;
+	if(this.hasC("Score")&&this.canPlaceScore)return;
 	this.enableTools();
 	this.editNextNat=this.getNextEditNat();
-	if(this.hasToSetEditTools) this.drawEditTools();
+	if(this.hasToSetEditTools)this.drawEditTools();
 	else this.drawSvgTool("Play");
 	if(this.pN!=this.cN)
 	{
@@ -1047,10 +959,10 @@ mxG.G.prototype.updateEdit=function()
 		this.changeSelectedTool("Play");
 		this.pN=this.cN;
 	}
-	if(this.indicesOn) this.selectTool("Indices");else this.unselectTool("Indices");
-	if(this.styleMode&2) this.unselectTool("Variation");else this.selectTool("Variation");
-	if(this.styleMode&1) this.unselectTool("Style");else this.selectTool("Style");
-	if(this.asInBookOn) this.selectTool("AsInBook");else this.unselectTool("AsInBook");
+	if(this.indicesOn)this.selectTool("Indices");else this.unselectTool("Indices");
+	if(this.styleMode&2)this.unselectTool("Variation");else this.selectTool("Variation");
+	if(this.styleMode&1)this.unselectTool("Style");else this.selectTool("Style");
+	if(this.asInBookOn)this.selectTool("AsInBook");else this.unselectTool("AsInBook");
 	if(this.extraEditToolsOn)
 	{
 		this.selectDouble("GB");
@@ -1064,12 +976,17 @@ mxG.G.prototype.updateEdit=function()
 		this.selectSingle("PL");
 	}
 	if(this.hasEditTool("Comment"))
-		this.getE("CommentToolText").value=this.getCommentWhenEdit();
-};
+		this.getE("EditCommentTool").value=this.getCommentWhenEdit();
+}
 mxG.G.prototype.doKeydownLabel=function(ev)
 {
-	if(ev.key=="Enter") this.changeSelectedTool("Label");
-};
+	if(ev.key=="Enter")this.changeSelectedTool("Label");
+}
+mxG.G.prototype.doKeydownTool=function(ev)
+{
+	if(ev.metaKey||ev.ctrlKey||ev.altKey)return;
+	if(ev.key.match(/^[bcmtv]$/i))this.doAlphaKeydown(ev);
+}
 mxG.G.prototype.getToolLabel=function(tool)
 {
 	switch(tool)
@@ -1108,18 +1025,13 @@ mxG.G.prototype.getToolLabel=function(tool)
 		case "HM":return "Horizontal mirror";
 	}
 	return "";
-};
+}
 mxG.G.prototype.makeTool=function(tool)
 {
-	let s,id;
-	s=" title=\""+this.local(this.getToolLabel(tool))+"\"";
-	id=this.n+tool+"Tool";
-	s+=" class=\"mxUnselectedEditTool\"";
-	s+=" id=\""+id+"\"";
-	if(tool=="Label") s="<input"+s+" type=\"text\" value=\"A\">";
-	else s="<button"+s+"></button>";
-	return s;
-};
+	let s,id=this.n+tool+"Tool";
+	s=` title="${this.local(this.getToolLabel(tool))}" class="mxUnselectedEditTool" id="${id}"`;
+	return (tool=="Label")?`<input${s} type="text" value="A">`:`<button${s}></button>`;
+}
 mxG.G.prototype.initEditTools=function()
 {
 	let k,km=this.tools.length,tool,e;
@@ -1127,46 +1039,43 @@ mxG.G.prototype.initEditTools=function()
 	{
 		tool=this.tools[k];
 		e=this.getE(tool+"Tool");
-		if(tool)
+		if(e)
 		{
 			let z=this.k,t=tool;
 			e.addEventListener("click",function(){mxG.D[z].doEditTool(t);});
 			if(tool=="Label")
-			{
-				e.addEventListener("keydown",function(ev){
-					mxG.D[z].doKeydownLabel(ev);});
-			}
+				e.addEventListener("keydown",function(ev){mxG.D[z].doKeydownLabel(ev);});
+			else e.addEventListener("keydown",function(ev){mxG.D[z].doKeydownTool(ev);});
 		}
 	}
-};
+}
 mxG.G.prototype.initEdit=function()
 {
 	let k=this.k;
-	if(this.editXls===undefined) this.editXls=this.xl;
-	if(this.editYts===undefined) this.editYts=this.yt;
-	if(this.editXrs===undefined) this.editXrs=this.xr;
-	if(this.editYbs===undefined) this.editYbs=this.yb;
+	if(this.editXls===undefined)this.editXls=this.xl;
+	if(this.editYts===undefined)this.editYts=this.yt;
+	if(this.editXrs===undefined)this.editXrs=this.xr;
+	if(this.editYbs===undefined)this.editYbs=this.yb;
 	this.editAX="AB";
 	this.editNextNat="B";
 	this.initEditTools();
 	this.drawEditTools();
-	if(!this.editTool) this.changeSelectedTool("Play");
+	if(!this.editTool)this.changeSelectedTool("Play");
 	this.pN=this.cN; // pN: previous node
 	if(this.hasEditTool("Comment"))
 	{
-		this.getE("CommentToolDiv").addEventListener("click",function(){mxG.D[k].doEditCommentTool();});
-		this.getE("CommentToolText").addEventListener("change",function(){mxG.D[k].doEditCommentTool();});
-		this.getE("CommentToolText").value="";
+		this.getE("EditCommentTool").addEventListener("change",function(){mxG.D[k].doEditCommentTool();});
+		this.getE("EditCommentTool").value="";
 	}
-};
+}
 mxG.G.prototype.hasEditTool=function(tool)
 {
-	if(tool=="Comment") return 1;
+	if(tool=="Comment")return 1;
 	return this.tools.indexOf(tool)>=0;
-};
+}
 mxG.G.prototype.createEdit=function()
 {
-	let s="",k=0,km,m,mm;
+	let s,k=0,m,mm;
 	this.tools=[
 		"Select","View","Play","Setup","Cut","Copy","Paste",
 		"Numbering","ShowInfo","Label","Mark","Circle","Square","Triangle",
@@ -1182,13 +1091,11 @@ mxG.G.prototype.createEdit=function()
 	this.inSelect=0;
 	this.selection=0;
 	this.editTool=0;
-	s+="<div class=\"mxEditToolBarDiv\" id=\""+this.n+"EditToolBarDiv\">";
-	km=this.tools.length;
-	for(k=0;k<km;k++) s+=this.makeTool(this.tools[k]);
-	s+="</div>";
-	s+="<div class=\"mxEditCommentToolDiv\" id=\""+this.n+"CommentToolDiv\">";
-	s+="<textarea title=\""+this.local("Comments")+"\" id=\""+this.n+"CommentToolText\"></textarea>";
-	s+="</div>";
+	s=`<div class="mxEditToolbar" id="${this.n}EditToolbar">`;
+	for(let t of this.tools)s+=this.makeTool(t);
+	s+=`</div>`;
+	s+=`<textarea class="mxEditCommentTool" id="${this.n}EditCommentTool" title="${this.local("Comments")}"></textarea>`;
+	// menuEditItems is used by the "Menu" component
 	this.menuEditItems=
 	[
 		{n:"Cut",v:this.local("Cut")},
@@ -1197,5 +1104,5 @@ mxG.G.prototype.createEdit=function()
 		{n:"RemoveComments",v:this.local("Remove comments")}
 	];
 	return s;
-};
+}
 }

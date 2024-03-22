@@ -1,9 +1,10 @@
 // maxiGos v8 > mgosSolve.js
 if(!mxG.G.prototype.createSolve)
 {
+mxG.fr("Hint","Montrer la suite");
+mxG.fr("Pass","Passe");
 mxG.fr("Retry","Recommencer tout");
 mxG.fr("Undo","Reprendre un coup");
-mxG.fr("Hint","Montrer la suite");
 mxG.fr("_initialMessage_","À Noir de jouer !");
 mxG.fr("_nowhereMessage_","Hum !");
 mxG.fr("_successMessage_","Bravo !");
@@ -18,93 +19,99 @@ mxG.en("_failMessage_","Fail!");
 mxG.en("_forbiddenMessage_","Forbidden!");
 mxG.en("_offpathMessage_","Off path!");
 mxG.en("_endMessage_","End!");
-
 // mxG.S section
-mxG.S.prototype.makeRetryBtn=function()
+mxG.S.prototype.makeBRP=function()
 {
-	let s="<path d=\"M0 64L64 64L32 92L0 64ZM24 65A50 50 0 1 1 49 107L57 94A34 34 0 1 0 40 65Z\"/>";
-	return this.makeBtnIcon(s,"Retry");
-};
-mxG.S.prototype.makeUndoBtn=function()
+	return `<path d="M0 64H56L28 92ZM20 65A50 50 0 1 1 45 107L53 94A34 34 0 1 0 36 65Z"/>`;
+}
+mxG.S.prototype.makeBUP=function()
 {
-	let s="<path d=\"M20,105H108C114.6,105 120,99 120,93V44C120,37 114,32 108,32H40V8L8,40 40,72V48H96C100,48 104,51 104,56V81C104,85 100,89 96,89H20 Z\"/>";
-	return this.makeBtnIcon(s,"Undo");
-};
-mxG.S.prototype.makeHintBtn=function()
+	return `<path d="M20,105H108C114.6,105 120,99 120,93V40C120,33 114,28 108,28H40V8L8,36L40,64V44H96C100,44 104,47 104,52V81C104,85 100,89 96,89H20 Z"/>`;
+}
+mxG.S.prototype.makeBHP=function()
 {
-	let s="<rect x=\"54\" y=\"10\" width=\"20\" height=\"64\" rx=\"5\" ry=\"5\"/>";
-	s+="<circle cx=\"64\" cy=\"104\" r=\"14\"/>";
-	return this.makeBtnIcon(s,"Hint");
-};
-mxG.S.prototype.makePassBtn=function()
+	return `<rect x="54" y="10" width="20" height="64" rx="5" ry="5"/><circle cx="64" cy="104" r="14"/>`;
+}
+mxG.S.prototype.makeBPP=function()
 {
-	let s="<path fill-rule=\"evenodd\" d=\"M64,10L118,64L64,118L10,64ZM64,35L93,64L64,93L35,64Z\"/>";
-	return this.makeBtnIcon(s,"Pass");
-};
-
+	return `<path fill-rule="evenodd" d="M64,10L118,64L64,118L10,64ZM64,35L93,64L64,93L35,64Z"/>`;
+}
 // mxG.G section
 mxG.G.prototype.setSFocus=function(b)
 {
 	let a,e,g;
 	a=document.activeElement;
-	if(this.getE("GobanSvg")==a) return;
+	if(this.getE("GobanSvg")==a)return;
 	e=this.getE(b+"Btn");
-	if(e&&!e.disabled) {if(a!=e) e.focus();return;}
-	this.getE("SolveDiv").focus();
-};
+	if(e&&!e.disabled){if(a!=e)e.focus();return;}
+	this.getE("SolveBox").focus();
+}
+mxG.G.prototype.getFirstEnableSolveBtn=function()
+{
+	let list=this.getE("SolveBox").querySelectorAll(':enabled');
+	return (list&&list.length)?list[0]:this.getE("SolveBox");
+}
 mxG.G.prototype.hasMessage=function(s)
 {
 	if(mxG.Z[this.lang])
 		return mxG.Z[this.lang]["_"+s+"Message_"];
 	return "";
-};
+}
+mxG.G.prototype.clearVirtualFlag=function()
+{
+	this.nowhereWhenSolve=0;
+	this.forbiddenWhenSolve=0;
+	this.endWhenSolve=0;
+}
 mxG.G.prototype.doUndo=function()
 {
 	let aN=this.cN;
 	// if something is strange (case of aN with no move)
 	// simplify and go back to the beginning
-	if((aN.Dad==this.rN)||(!aN.P["B"]&&!aN.P["W"])) {this.doRetry();return;}
+	if((aN.Dad==this.rN)||(!aN.P["B"]&&!aN.P["W"])){this.doRetry();return;}
 	// aN has "B" or "W" and his parent is not this.rN
 	// undo the last move whatever its color
+	this.clearVirtualFlag();
 	aN=aN.Dad;
 	if(this.cN.P[this.oC]&&!this.cN.Add)
 	{
-		if(aN.P[this.uC]) {aN=aN.Dad;} // else extra virtual move
+		if(aN.P[this.uC]){aN=aN.Dad;} // else extra virtual move
 	}
 	// else the user placed the last move
 	this.backNode(aN);
 	this.updateAll();
 	this.setSFocus("Undo");
-};
+}
 mxG.G.prototype.doRetry=function()
 {
+	this.clearVirtualFlag();
 	this.backNode(this.kidOnFocus(this.rN));
 	this.updateAll();
 	this.setSFocus("Retry");
-};
+}
 mxG.G.prototype.doHint=function()
 {
 	if(this.cN.Kid.length)
 	{
-		if(!this.uC) this.setPl();
+		if(!this.uC)this.setPl();
 		if(this.cN.Kid[0].P[this.uC])
 		{
 			let s=this.cN.Kid[0].P[this.uC][0];
-			if(s.length==2)
+			if(s.match(/^[a-zA-Z]{2}$/))
 			{
 				x=s.c2n(0);
 				y=s.c2n(1);
 				// replace B[tt] by B[] and W[tt] by W[]
 				// excepted if goban is larger than 19x19
-				if((this.DX<=19)&&(this.DY<=19)&&(x==20)&&(y==20)) {x=0;y=0;}
+				if((this.DX<=19)&&(this.DY<=19)&&(x==20)&&(y==20)){x=0;y=0;}
 			}
-			else {x=0;y=0;}
+			else x=y=0;
 		}
-		else {x=0;y=0;} // Tenuki
+		else x=y=0; // Tenuki
 		this.checkSolve(x,y);
 		this.setSFocus("Hint");
 	}
-};
+}
 mxG.G.prototype.addExtraPlay=function(nat,x,y,tenuki)
 {
 	let aN,v=this.xy2s(x,y),bN=this.kidOnFocus(this.cN),cN;
@@ -116,7 +123,7 @@ mxG.G.prototype.addExtraPlay=function(nat,x,y,tenuki)
 	{
 		aN=new mxG.N(this.cN,nat,v);
 		this.cN.Focus=this.cN.Kid.length;
-		if(!bN) aN.Add=1;
+		if(!bN)aN.Add=1;
 	}
 	else
 	{
@@ -130,42 +137,41 @@ mxG.G.prototype.addExtraPlay=function(nat,x,y,tenuki)
 		aN.Focus=aN.Kid.length;
 	}
 	this.placeNode();
-	if(this.hasC("Tree")) this.hasToSetTree=1;
-};
-mxG.G.prototype.updateVirtualComment=function(s)
+	if(this.hasC("Tree"))this.hasToSetTree=1;
+}
+mxG.G.prototype.getSolveCoreComment=function()
 {
-	let c,span=s.ucF()+"Span";
-	c="<p><span class=\"mx"+span+"\" id=\""+this.n+span+"\">"+this.local("_"+s+"Message_")+"</span></p>";
-	if(this.hasC("Comment")) this.getE("CommentContentDiv").innerHTML=c;
-};
+	let c=this.getCoreComment(this.cN),s="";
+	if(c)return c;
+	if(this.endWhenSolve&&this.hasMessage("end")) s="end";
+	else if(this.nowhereWhenSolve&&this.hasMessage("nowhere")) s="nowhere";
+	else if(this.forbiddenWhenSolve&&this.hasMessage("forbidden")) s="forbidden";
+	else if((this.cN.Dad==this.rN)&&this.hasMessage("initial")) s="initial";
+	else if(this.cN.Add&&this.hasMessage("offpath")) s="offpath";
+	else if(!this.cN.Focus)
+	{
+		if(this.cN.P[this.uC]&&this.hasMessage("success"))s="success";
+		else if(this.cN.P[this.oC]&&this.hasMessage("fail"))s="fail";
+	}
+	if(s)c=this.local("_"+s+"Message_");
+	return c;
+}
+mxG.G.prototype.getSolveComment=function()
+{
+	let c=this.getSolveCoreComment();
+	return c?"<p>"+c.replace(/\n/g,"<br>")+"</p>":"";
+}
 mxG.G.prototype.updateSolveComment=function()
 {
-	let c,s,e;
-	if(!this.hasC("Comment")) return;
-	e=this.getE("CommentDiv");
-	if(this.cN.P.BM) e.className="mxCommentDiv mxBM";
-	else if(this.cN.P.DO) e.className="mxCommentDiv mxDO";
-	else if(this.cN.P.IT) e.className="mxCommentDiv mxIT";
-	else if(this.cN.P.TE) e.className="mxCommentDiv mxTE";
-	else e.className="mxCommentDiv";
-	c=this.getOneComment(this.cN);
-	if(c) this.getE("CommentContentDiv").innerHTML=c;
-	else
-	{
-		this.getE("CommentContentDiv").innerHTML="";
-		if((this.cN.Dad==this.rN)&&this.hasMessage("initial"))
-			this.updateVirtualComment("initial");
-		else if(this.cN.Add&&this.hasMessage("offpath"))
-			this.updateVirtualComment("offpath");
-		else if(!this.cN.Focus)
-		{
-			s="";
-			if(this.cN.P[this.uC]&&this.hasMessage("success")) s="success";
-			else if(this.cN.P[this.oC]&&this.hasMessage("fail")) s="fail";
-			if(s) this.updateVirtualComment(s);
-		}
-	} 
-};
+	if(!this.hasC("Comment"))return;
+	let e=this.getE("CommentBox");
+	if(this.cN.P.BM)e.className="mxCommentBox mxBM";
+	else if(this.cN.P.DO)e.className="mxCommentBox mxDO";
+	else if(this.cN.P.IT)e.className="mxCommentBox mxIT";
+	else if(this.cN.P.TE)e.className="mxCommentBox mxTE";
+	else e.className="mxCommentBox";
+	this.getE("CommentContent").innerHTML=this.getSolveComment();
+}
 mxG.G.prototype.doVirtualNext=function()
 {
 	if(this.cN.Kid.length&&!this.kidOnFocus(this.cN).P[this.uC])
@@ -175,11 +181,11 @@ mxG.G.prototype.doVirtualNext=function()
 		this.moveFocusMarkOnLast();
 		this.whenVirtualNext=null;
 	}
-};
+}
 mxG.G.prototype.doSolve=function(a,b)
 {
-	let x,y,s,aN=this.cN,bN,k=0,km=aN.Kid.length,kz=-1,nat,tenuki=0;
-	if(km) do
+	let x,y,c,s,aN=this.cN,bN,k=0,km=aN.Kid.length,kz=-1,nat,tenuki=0;
+	if(km)do
 	{
 		bN=aN.Kid[k];
 		x=-9;
@@ -189,15 +195,15 @@ mxG.G.prototype.doSolve=function(a,b)
 			if(bN.P[this.uC]||(bN.P[this.oC]&&aN.Add))
 			{
 				s=bN.P[bN.P[this.uC]?this.uC:this.oC][0];
-				if(s.length==2)
+				if(s.match(/^[a-zA-Z]{2}$/))
 				{
 					x=s.c2n(0);
 					y=s.c2n(1);
 					// replace B[tt] by B[] and W[tt] by W[]
 					// excepted if goban is larger than 19x19
-					if((this.DX<=19)&&(this.DY<=19)&&(x==20)&&(y==20)) {x=0;y=0;}
+					if((this.DX<=19)&&(this.DY<=19)&&(x==20)&&(y==20))x=y=0;
 				}
-				else {x=0;y=0;}
+				else x=y=0;
 			}
 			else if((bN.P[this.oC]&&!aN.Add)&&(kz<0))
 			{
@@ -215,7 +221,7 @@ mxG.G.prototype.doSolve=function(a,b)
 				this.updateAll();
 				this.noLabelledBy=0;
 				this.whenVirtualNext={x:a,y:b};
-				if(this.animatedStoneOn) this.doVirtualNext();
+				if(this.animatedStoneOn)this.doVirtualNext();
 				else
 				{
 					let z=this.k;
@@ -229,11 +235,11 @@ mxG.G.prototype.doSolve=function(a,b)
 		{
 			switch(this.specialMoveMatch)
 			{
-				case 1: if(x&&y&&!this.gor.inGoban(x,y)) kz=k;
+				case 1: if(x&&y&&!this.gor.inGoban(x,y))kz=k;
 						break; // match because outside move found in sgf
-				case 2: if(x&&y&&!this.inView(x,y)) kz=k;
+				case 2: if(x&&y&&!this.inView(x,y))kz=k;
 						break; // match because outside or hidden move found in sgf
-				case 3: if(!this.inView(x,y)) kz=k;
+				case 3: if(!this.inView(x,y))kz=k;
 						break; // match because outside or hidden or pass move found in sgf
 			}
 		}
@@ -258,7 +264,7 @@ mxG.G.prototype.doSolve=function(a,b)
 				this.updateAll();
 				this.noLabelledBy=0;
 				this.whenVirtualNext={x:a,y:b};
-				if(this.animatedStoneOn) this.doVirtualNext();
+				if(this.animatedStoneOn)this.doVirtualNext();
 				else
 				{
 					let z=this.k;
@@ -268,21 +274,23 @@ mxG.G.prototype.doSolve=function(a,b)
 			else this.updateAll();
 			return;
 		}
-		else if(this.hasMessage("nowhere")) this.updateVirtualComment("nowhere");
+		else this.nowhereWhenSolve=1;
 	}
-	else if(this.hasMessage("forbidden")) this.updateVirtualComment("forbidden");
+	else this.forbiddenWhenSolve=1;
+	this.updateSolveComment();
 	this.plonk();
-};
+}
 mxG.G.prototype.checkSolve=function(x,y)
 {
 	let aN=this.cN,bN,k,km=aN.Kid.length;
-	if(!this.uC) this.setPl();
+	this.clearVirtualFlag();
+	if(!this.uC)this.setPl();
 	if(km)
 	{
 		for(k=0;k<km;k++)
 		{
 			bN=aN.Kid[k];
-			if(bN.P[this.uC]||bN.P[this.oC]) {this.doSolve(x,y);return;}
+			if(bN.P[this.uC]||bN.P[this.oC]){this.doSolve(x,y);return;}
 		}
 		// no "B" or "W" properties in continuation nodes
 		// don't happen if the sgf is "normal"
@@ -292,30 +300,36 @@ mxG.G.prototype.checkSolve=function(x,y)
 	}
 	else
 	{
-		if(this.canPlaceExtra) this.doSolve(x,y);
+		if(this.canPlaceExtra)this.doSolve(x,y);
 		else
 		{
-			if(this.hasMessage("end")) this.updateVirtualComment("end");
+			this.endWhenSolve=1;
+			this.updateSolveComment();
 			this.plonk(); // sgf end
 		}
 	}
-};
+}
 mxG.G.prototype.doKeydownSolve=function(ev)
 {
+	if(ev.metaKey||ev.ctrlKey||ev.altKey)return;
 	let r=0;
-	if(ev.shiftKey) switch(ev.key)
-	{
-		case "Home":case "F":case "G":
-			if(this.cN.Dad!=this.rN) {this.doRetry();r=1;} break;
-		case "ArrowLeft":case "H":
-			if(this.cN.Dad!=this.rN) {this.doUndo();r=1;} break;
-	}
+	if(ev.key.match(/^[bc]$/i)){if(this.doAlphaKeydown(ev))return;}
+	else if(ev.shiftKey||ev.key.match(/^[fhpy]$/i))
+		switch(ev.key)
+		{
+			case "Home":case "f":case "F":
+				if(this.cN.Dad!=this.rN){this.doRetry();r=1;}break;
+			case "ArrowLeft":case "h":case "H":
+				if(this.cN.Dad!=this.rN){this.doUndo();r=1;}break;
+			case "p":case "P":this.doPass();r=1;break;
+			case "y":case "Y":if(this.solves.has("Hint")){this.doHint();r=1;}break;
+		}
 	if(r)
 	{
 		this.moveFocusMarkOnLast();
 		ev.preventDefault();
 	}
-};
+}
 mxG.G.prototype.updateSolve=function()
 {
 	if(this.cN.Dad==this.rN)
@@ -328,55 +342,49 @@ mxG.G.prototype.updateSolve=function()
 		this.enableBtn("Retry");
 		this.enableBtn("Undo");
 	}
-	if(this.cN.Kid.length) this.enableBtn("Hint");
+	if(this.cN.Kid.length)this.enableBtn("Hint");
 	else this.disableBtn("Hint");
 	this.updateSolveComment();
-};
+}
 mxG.G.prototype.initSolve=function()
 {
-	let e,k=this.k,b,bm,bk;
-	e=this.getE("SolveDiv");
+	let e=this.getE("SolveBox"),k=this.k;
 	e.addEventListener("keydown",function(ev){mxG.D[k].doKeydownSolve(ev);});
-	b=this.solves;
-	bm=b.length;
-	for(bk=0;bk<bm;bk++)
+	for(let b of this.solves)
 	{
-		if(b[bk]=="Retry")
+		if(b=="Retry")
 		{
 			if(this.oldSolveBtnOn)
-				this.addBtn(e,{n:"Retry",v:this.scr.makeFirstBtn(),t:this.local("Retry")});
+				this.addBtn(e,{n:"Retry",v:this.scr.makeBI(this.scr.makeBR(26)+this.scr.makeBT(50,1)),t:this.local("Retry")});
 			else
-				this.addBtn(e,{n:"Retry",v:this.scr.makeRetryBtn(),t:this.local("Retry")});
+				this.addBtn(e,{n:"Retry",v:this.scr.makeBI(this.scr.makeBRP()),t:this.local("Retry")});
 		}
-		else if(b[bk]=="Undo")
+		else if(b=="Undo")
 		{
 			if(this.oldSolveBtnOn)
-				this.addBtn(e,{n:"Undo",v:this.scr.makePredBtn(),t:this.local("Undo")});
+				this.addBtn(e,{n:"Undo",v:this.scr.makeBI(this.scr.makeBT(30,1)),t:this.local("Undo")});
 			else
-				this.addBtn(e,{n:"Undo",v:this.scr.makeUndoBtn(),t:this.local("Undo")});
+				this.addBtn(e,{n:"Undo",v:this.scr.makeBI(this.scr.makeBUP()),t:this.local("Undo")});
 		}
-		else if(b[bk]=="Hint")
+		else if(b=="Hint")
 		{
 			if(this.oldSolveBtnOn)
-				this.addBtn(e,{n:"Hint",v:this.scr.makeNextBtn(),t:this.local("Hint")});
+				this.addBtn(e,{n:"Hint",v:this.scr.makeBI(this.scr.makeBT(98,-1)),t:this.local("Hint")});
 			else
-				this.addBtn(e,{n:"Hint",v:this.scr.makeHintBtn(),t:this.local("Hint")});
+				this.addBtn(e,{n:"Hint",v:this.scr.makeBI(this.scr.makeBHP()),t:this.local("Hint")});
 		}
-		else if((b[bk]=="Pass")&&this.hasC("Pass"))
-			this.addBtn(e,{n:"Pass",v:this.scr.makePassBtn(),t:this.local("Pass")});
+		else if((b=="Pass")&&this.hasC("Pass"))
+			this.addBtn(e,{n:"Pass",v:this.scr.makeBI(this.scr.makeBPP()),t:this.local("Pass")});
 	}
-};
+}
 mxG.G.prototype.createSolve=function()
 {
-	let s="",a=["Retry","Undo"];
 	this.canPlaceSolve=this.setA("canPlaceSolve",0,"bool");
 	this.oldSolveBtnOn=this.setA("oldSolveBtnOn",0,"bool");
-	this.solves=this.setA("solves",a,"list");
+	this.solves=this.setA("solves",["Retry","Undo"],"set");
 	// set specialMoveMatch parameter to manage tenuki
 	this.specialMoveMatch=this.setA("specialMoveMatch",0,"int");
-	s+="<div class=\"mxSolveDiv\" id=\""+this.n+"SolveDiv\"";
-	s+=" tabindex=\"-1\"";
-	s+="></div>";
-	return s;
-};
+	// buttons are inserted in this.initSolve()
+	return `<div class="mxSolveBox" id="${this.n}SolveBox" tabindex="-1"></div>`;
+}
 }

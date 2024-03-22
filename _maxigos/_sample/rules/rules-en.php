@@ -90,7 +90,7 @@ direction and 22mm across. The goban is thus not quite square. In the case of th
 stones, they are biconvex and have a diameter of about 22mm.</p>
 
 <table class="diagramCard"><tr>
-<td class="diagram"><script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0" data-maxigos-sgf="../_sgf/rules/grid.sgf"></script></td>
+<td class="diagram"><script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-sgf="../_sgf/rules/grid.sgf"></script></td>
 <td><p class="diagramText">
 	Here is a goban of 19x19 lines. Note that some points are emphasised. These are
 	called <b>hoshi</b>.
@@ -101,7 +101,7 @@ stones, they are biconvex and have a diameter of about 22mm.</p>
 is no other intersection between them.</p>
 
 <table class="diagramCard"><tr>
-<td class="diagram"><script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0" data-maxigos-sgf="../_sgf/rules/adjacent.sgf"></script></td>
+<td class="diagram"><script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-sgf="../_sgf/rules/adjacent.sgf"></script></td>
 <td><p class="diagramText">
 	Diag. 1: 'a' and 'b' are adjacent intersections, but 'b' and 'c' are not.
 </p></td></tr></table>
@@ -115,7 +115,7 @@ colour.</p>
 chain.</p>
 
 <table class="diagramCard"><tr>
-<td class="diagram"><script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0" data-maxigos-sgf="../_sgf/rules/connection.sgf"></script></td>
+<td class="diagram"><script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-sgf="../_sgf/rules/connection.sgf"></script></td>
 <td><p class="diagramText">
 	Diag. 2: The four white stones marked X are adjacent one to another.
 	They form a chain that has five liberties: the intersections marked by the
@@ -127,7 +127,7 @@ chain.</p>
 proximity and bordered by stones of the same colour.</p>
 
 <table class="diagramCard"><tr>
-<td class="diagram"><script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0" data-maxigos-sgf="../_sgf/rules/territory.sgf"></script></td>
+<td class="diagram"><script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-sgf="../_sgf/rules/territory.sgf"></script></td>
 <td><p class="diagramText">
 	Diag. 3: The black stones border a territory of 7 intersections. Note that
 	the edge of the grid forms a natural border to the territory, but it is
@@ -160,21 +160,21 @@ an enemy chain.
 <p>When a chain has only one liberty, it is said to be in <b>atari</b>.</p>
 
 <table class="diagramCard"><tr>
-<td class="diagram"><script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0" data-maxigos-sgf="../_sgf/rules/captureSimpleBefore.sgf"></script></td>
+<td class="diagram"><script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-sgf="../_sgf/rules/captureSimpleBefore.sgf"></script></td>
 <td><p class="diagramText">
 Diag. 4: The three white stones X form a chain which is in atari (because it has only
 one liberty, at 'a').
 </p></td></tr></table>
 
 <table class="diagramCard"><tr>
-<td class="diagram"><script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0" data-maxigos-sgf="../_sgf/rules/captureSimpleDuring.sgf"></script></td>
+<td class="diagram"><script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-sgf="../_sgf/rules/captureSimpleDuring.sgf"></script></td>
 <td><p class="diagramText">
 Diag. 5: If Black plays at 1, he fills in the last liberty of the white
 stones...</p></td>
 </tr></table>
 
 <table class="diagramCard"><tr>
-<td class="diagram"><script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0" data-maxigos-sgf="../_sgf/rules/captureSimpleAfter.sgf"></script></td>
+<td class="diagram"><script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-sgf="../_sgf/rules/captureSimpleAfter.sgf"></script></td>
 <td><p class="diagramText">
 Diag. 6: ... and so Black captures the white stones and removes them from the
 goban.</p></td>
@@ -187,7 +187,7 @@ whereas live stones are stones that a player no longer has any hope of capturing
 
 <table class="diagramCard"><tr>
 <td class="diagram">
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0" data-maxigos-sgf="../_sgf/rules/death.sgf"></script></td>
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-sgf="../_sgf/rules/death.sgf"></script></td>
 <td><p class="diagramText">
 Diag. 7: According to the capture rule, White can play at 'a' and take Black. In this
 case it is said that Black has only one eye (the intersection 'a') and that he is
@@ -196,7 +196,7 @@ dead.
 
 <table class="diagramCard"><tr>
 <td class="diagram">
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0" data-maxigos-sgf="../_sgf/rules/life.sgf"></script></td>
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-sgf="../_sgf/rules/life.sgf"></script></td>
 <td><p class="diagramText">
 Diag. 8: White is unable to play at either 'b' or 'c' and so he can never capture
 Black. Black is said to have two eyes (the intersections 'b' and 'c') and to be
@@ -204,7 +204,7 @@ alive.
 </p></td></tr></table>
 
 <table class="diagramCard"><tr>
-<td class="diagram"><script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0" data-maxigos-sgf="../_sgf/rules/seki.sgf"></script></td>
+<td class="diagram"><script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-sgf="../_sgf/rules/seki.sgf"></script></td>
 <td><p class="diagramText">
 Diag. 9: If Black plays at 'd' (or 'e'), White will play at 'e' ( or 'd') and capture
 him. Likewise, if White plays at 'd' (or 'e') Black will capture him. In other words,
@@ -222,13 +222,13 @@ intersections.
 happens to be called <b>ko</b>.</p>
 
 <table class="diagramCard"><tr>
-<td class="diagram"><script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0" data-maxigos-sgf="../_sgf/rules/repetition1.sgf"></script></td>
+<td class="diagram"><script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-sgf="../_sgf/rules/repetition1.sgf"></script></td>
 <td><p class="diagramText">
 Diag. 10: If Black plays at 'a', he captures the white stone X which is in atari.
 </p></td></tr></table>
 
 <table class="diagramCard"><tr>
-<td class="diagram"><script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0" data-maxigos-as-in-book-on="0" data-maxigos-sgf="../_sgf/rules/repetition2.sgf"></script></td>
+<td class="diagram"><script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-as-in-book-on="0" data-maxigos-sgf="../_sgf/rules/repetition2.sgf"></script></td>
 <td><p class="diagramText">
 Diag. 11: White cannot play back at 'b' immediately and take the black stone 1,
 	even though it is in atari, because otherwise he would be reproducing the
@@ -261,7 +261,7 @@ The winner is the one with more points.
 </table>
 
 <table class="diagramCard"><tr>
-<td class="diagram"><script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0" data-maxigos-sgf="../_sgf/rules/count1.sgf"></script></td>
+<td class="diagram"><script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-sgf="../_sgf/rules/count1.sgf"></script></td>
 <td><p class="diagramText">
 	Diag. 12: At this stage, all the territories have been closed off, and none of
 	the borders can be captured by the opponent. This is the time to pass and to
@@ -283,7 +283,7 @@ disagreement (which is almost always exceptional), it is sufficient to continue 
 game until all the possible disputes are settled.</p>
 
 <table class="diagramCard"><tr>
-<td class="diagram"><script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0" data-maxigos-sgf="../_sgf/rules/count2.sgf"></script></td>
+<td class="diagram"><script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-sgf="../_sgf/rules/count2.sgf"></script></td>
 <td><p class="diagramText">
 Diag. 13: If Black plays at 'a', he captures the white stones X. If White tries
 	to save them by playing at 'a' himself, Black plays at 'b' and captures them
@@ -304,7 +304,7 @@ to the number of moves that he was unable to play at the start of the game.</p>
 
 <table class="diagramCard"><tr>
 <td class="diagram">
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0" data-maxigos-sgf="../_sgf/rules/handicap.sgf"></script></td>
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-sgf="../_sgf/rules/handicap.sgf"></script></td>
 <td><p class="diagramText">
 Here is the start of a 9-stone handicap game. Black begins by placing 9 stones on the
 board. Only then does White place his first stone (move 1 in this example). By
@@ -337,7 +337,7 @@ likewise to add a half point to the White total.</p>
 
 <table class="diagramCard"><tr>
 <td class="diagram">
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0" data-maxigos-sgf="../_sgf/rules/countQuick1.sgf"></script></td>
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-sgf="../_sgf/rules/countQuick1.sgf"></script></td>
 <td><p class="diagramText">
 Diag. 14: This even game has just finished, and it is Black who has made the
 	last move. During the game, Black captured 5 white stones, and White captured
@@ -347,7 +347,7 @@ Diag. 14: This even game has just finished, and it is Black who has made the
 
 <table class="diagramCard"><tr>
 <td class="diagram">
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0" data-maxigos-sgf="../_sgf/rules/countQuick2.sgf"></script></td>
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-sgf="../_sgf/rules/countQuick2.sgf"></script></td>
 <td><p class="diagramText">
 Diag. 15: First method of counting up in an even game<br/>
 
@@ -362,7 +362,7 @@ Diag. 15: First method of counting up in an even game<br/>
 
 <table class="diagramCard"><tr>
 <td class="diagram">
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0" data-maxigos-sgf="../_sgf/rules/countQuick3.sgf"></script></td>
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-sgf="../_sgf/rules/countQuick3.sgf"></script></td>
 <td><p class="diagramText">
 Diag. 16: Second method of counting up in an even game<p>
 
@@ -385,7 +385,7 @@ Diag. 16: Second method of counting up in an even game<p>
 
 <table class="diagramCard"><tr>
 <td class="diagram">
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0" data-maxigos-sgf="../_sgf/rules/countQuick4.sgf"></script></td>
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-sgf="../_sgf/rules/countQuick4.sgf"></script></td>
 <td><p class="diagramText">
 Diag. 17: This game, which was at three stones handicap, has just finished.
 	White played the last move. During the game, White captured 5 stones. Black
@@ -396,7 +396,7 @@ Diag. 17: This game, which was at three stones handicap, has just finished.
 
 <table class="diagramCard"><tr>
 <td class="diagram">
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0" data-maxigos-sgf="../_sgf/rules/countQuick5.sgf"></script></td>
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-sgf="../_sgf/rules/countQuick5.sgf"></script></td>
 <td><p class="diagramText">
 Diag. 18: First method of counting up in a handicap game<p>
 
@@ -413,7 +413,7 @@ Diag. 18: First method of counting up in a handicap game<p>
 
 <table class="diagramCard"><tr>
 <td class="diagram">
-<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-points-num-max="0" data-maxigos-sgf="../_sgf/rules/countQuick6.sgf"></script></td>
+<script src="../minimalist/_alone/maxigos-minimalist-diagram.js" data-maxigos-indices-on="0" data-maxigos-sgf="../_sgf/rules/countQuick6.sgf"></script></td>
 <td><p class="diagramText">
 	Diag. 19: Second method of counting up in a handicap game<p>
 

@@ -48,7 +48,6 @@ mxG.D[mxG.K].a.allowFileAsSource=1; // (0,1) default 1
 // mxG.D[mxG.K].a.sourceFilter=""; // (str) default ""
 mxG.D[mxG.K].a.initMethod="last"; // ("first","loop","last") default "first"
 // Goban
-mxG.D[mxG.K].a.pointsNumMax=19; // (positive integer) default 0
 mxG.D[mxG.K].a.stoneShadowOn=0; // (0,1) default 0 (require in3dOn=1)
 mxG.D[mxG.K].a.stretching="0,0,1,1"; // (list) default "0,0,1,1"
 mxG.D[mxG.K].a.gridPadding=2; // (float) default 0
@@ -78,7 +77,7 @@ mxG.D[mxG.K].a.hideInHeader="NumOfMoves"; // (set) default ""
 mxG.D[mxG.K].a.onlyMoveNumber=1; // (0,1) default 0
 // Navigation
 mxG.D[mxG.K].a.navigations="First,TenPred,Pred,Loop,Next,TenNext,Last"; // (set) default "First,TenPred,Pred,Next,TenNext,Last"
-// options
+// Options
 mxG.D[mxG.K].a.optionsBtnOn=1; // (0,1) default 0
 // Sgf
 mxG.D[mxG.K].a.sgfBtnOn=1; // (0,1) default 0

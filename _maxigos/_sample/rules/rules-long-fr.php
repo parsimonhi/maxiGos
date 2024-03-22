@@ -31,20 +31,20 @@ figcaption p
 	margin:0;
 	padding:0;
 }
-figure div.mxGlobalBoxDiv
+figure div.mxGlobal
 {
 	max-width:60%;
 }
-figure:nth-of-type(1) div.mxGlobalBoxDiv,
-figure:nth-of-type(15) div.mxGlobalBoxDiv
+figure:nth-of-type(1) div.mxGlobal,
+figure:nth-of-type(15) div.mxGlobal
 {
 	max-width:100%;
 }
-figure div.mxGlobalBoxDiv .mxMark.mxOnBlack
+figure div.mxGlobal .mxMark.mxOnBlack
 {
 	stroke-width:1.5px;
 }
-figure div.mxGlobalBoxDiv .mxMark.mxOnWhite
+figure div.mxGlobal .mxMark.mxOnWhite
 {
 	stroke-width:1.25px;
 }

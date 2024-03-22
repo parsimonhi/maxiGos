@@ -1,24 +1,28 @@
 // maxiGos v8 > mgosNotSeen.js
 if(!mxG.G.prototype.createNotSeen)
 {
-mxG.fr("pass","passe");
-mxG.fr("tenuki","ailleurs");
+mxG.fr("→","→");
+// mxG.fr("Black","Noir");
+// mxG.fr("Circle","Cercle");
 mxG.fr("Invisible moves","Coups invisibles");
-
+// mxG.fr("Mark","Marque");
+// mxG.fr("pass","passe");
+// mxG.fr("Square","Carré");
+mxG.fr("tenuki","ailleurs");
+// mxG.fr("Triangle","Triangle");
+// mxG.fr("White","Blanc");
 // mxG.S section
 mxG.S.prototype.makeTextSomewhere=function(txt,x,y,c,o)
 {
 	// x: center of the text if centered, beginning of the text otherwise
 	// y: center of the text
-	let s;
-	s="<text aria-hidden=\"true\" class=\"mxTextSomewhere\" fill=\""+c+"\"";
-	if(o.centered) s+=" text-anchor=\"middle\"";
+	let s=`<text class="mxTextSomewhere" fill="${c}"`;
+	if(o.centered)s+=` text-anchor="middle"`;
 	// font-family and font-size are set in svg tag
 	// bug, cannot use dominant-baseline:central everywhere
 	// then just add 5 to y to center text vertically
-	s+=" x=\""+x+"\" y=\""+(y+5)+"\">"+txt+"</text>";
-	return s;
-};
+	return s+` x="${x}" y="${y+5}">${txt}</text>`;
+}
 mxG.S.prototype.makeMarkOnAloneStone=function(a,x,y,c,o)
 {
 	switch(a)
@@ -28,7 +32,7 @@ mxG.S.prototype.makeMarkOnAloneStone=function(a,x,y,c,o)
 		case "_SQ_":return this.makeSquare(c,x,y,o);
 		case "_CR_":return this.makeCircle(c,x,y,o);
 	}
-};
+}
 mxG.S.prototype.makeNotSeen=function(a,o)
 {
 	let k,km,s="",nw,h4ns,desc="",i,j,c,oc,x,y,xo,d,dd,ddd,z;
@@ -39,7 +43,7 @@ mxG.S.prototype.makeNotSeen=function(a,o)
 	km=a.length;
 	for(k=0;k<km;k++)
 	{
-		if(desc) desc+=", ";
+		if(desc)desc+=", ";
 		desc+=this.p.local(a[k].nat=="B"?"Black":"White")+" "+a[k].n+" "+a[k].t;
 		if(a[k].nato)
 		{
@@ -59,29 +63,25 @@ mxG.S.prototype.makeNotSeen=function(a,o)
 	}
 	// compute h4ns
 	nw=Math.floor(this.w/(4*ddd));
-	if(nw<1) nw=1;
+	if(nw<1)nw=1;
 	nl=Math.ceil(km/nw);
 	h4ns=nl*ddd;
 	xo=(this.w-nw*4*ddd+ddd)/2;
-	s="<svg "+this.xmlns+" "+this.xlink;
-	s+=" aria-labelledby=\""+this.p.n+"NotSeenTitle"+" "+this.p.n+"NotSeenDesc"+"\"";
-	s+=" id=\""+this.p.n+"NotSeenSvg\" class=\"mxNotSeenSvg\"";
-	s+=" viewBox=\"0 0 "+this.w+" "+h4ns+"\"";
-	s+=" width=\""+this.w+"\" height=\""+h4ns+"\"";
-	s+=" stroke-linecap=\"square\"";
-	s+=" font-family=\""+this.ff+"\"";
-	s+=" font-size=\""+this.fs+"\"";
-	s+=" font-weight=\""+this.fw+"\"";
-	s+=">";
-	s+="<title id=\""+this.p.n+"NotSeenTitle\">"+this.p.local("Invisible moves")+"</title>";
-	s+="<desc id=\""+this.p.n+"NotSeenDesc\">"+desc+"</desc>"; // accessible?
-	if(this.in3dOn)
-	{
-		s+="<defs>";
-		s+=this.makeGradient("Black");
-		s+=this.makeGradient("White");
-		s+="</defs>";
-	}
+	// always same width as the goban
+	s=`<svg`
+	+` viewBox="0 0 ${this.w} ${h4ns}"`
+	+` width="${this.w}" height="${h4ns}"`
+	+` stroke-linecap="square"`
+	+` font-family="${this.ff}"`
+	+` font-size="${this.fs}"`
+	+` font-weight="${this.fw}"`
+	+` aria-labelledby="${this.p.n}NotSeenTitle ${this.p.n}NotSeenDesc"`
+	+` role="img"`
+	+`>`
+	+`<title id="${this.p.n}NotSeenTitle">${this.p.local("Invisible moves")}</title>`
+	+`<desc id="${this.p.n}NotSeenDesc">${desc}</desc>`; // accessible?
+	if(this.in3dOn) s+=`<defs>${this.makeGradient("Black")+this.makeGradient("White")}</defs>`;
+	s+=`<g aria-hidden="true">`;
 	for(k=0;k<km;k++)
 	{
 		i=k%nw;
@@ -134,10 +134,9 @@ mxG.S.prototype.makeNotSeen=function(a,o)
 			}
 		}
 	}
-	s+="</svg>";
+	s+=`</g></svg>`;
 	return s;
-};
-
+}
 // mxG.G section
 mxG.G.prototype.buildNotSeen=function()
 {
@@ -174,12 +173,12 @@ mxG.G.prototype.buildNotSeen=function()
 					{
 						let no2=this.vStr[this.xy(x,y)];
 						// ignore variations style
-						// rare since "Variation" component not used in "Diagram"
+						// possible since "Variation" component not used in "Diagram"
 						no2=this.scr.removeVariationDelimiters(no2);
 						// display coordinates if _TB_, _TW_ or _ML
 						// _TB_ and _TW_ are numerous when present, better to ignore them
 						// _ML_ not present in "Diagram" since numberingOn=1
-						if((no2=="_TB_")||(no2=="_TW_")||(no2=="_ML_")) no2="";
+						if((no2=="_TB_")||(no2=="_TW_")||(no2=="_ML_"))no2="";
 						// no2 is a stone number, or a label, or a mark, or ""
 						if(no2)
 						{
@@ -210,30 +209,19 @@ mxG.G.prototype.buildNotSeen=function()
 		for(k=0;k<km;k++)
 		{
 			a[k].n=this.scr.k2okanji(a[k].n);
-			if(a[k].no) a[k].no=this.scr.k2okanji(a[k].no);
+			if(a[k].no)a[k].no=this.scr.k2okanji(a[k].no);
 		}
 	}
-	if(a.length) return this.scr.makeNotSeen(a,o);
+	if(a.length)return this.scr.makeNotSeen(a,o);
 	return "";
-};
-mxG.G.prototype.adjustNotSeen=function()
-{
-	this.getE("InnerNotSeenDiv").style.width=(this.scr.wr<100)?this.scr.wr+"%":"";
-};
+}
 mxG.G.prototype.updateNotSeen=function()
 {
-	let s=(this.numberingOn?this.buildNotSeen():""),e=this.getE("InnerNotSeenDiv");
-	e.innerHTML=s;
-	this.adjustNotSeen();
-};
+	this.getE("NotSeenBox").innerHTML=this.numberingOn?this.buildNotSeen():"";
+}
 mxG.G.prototype.createNotSeen=function()
 {
-	let s="";
 	this.notSeenTwinStonesOn=this.setA("notSeenTwinStonesOn",1,"bool");
-	s+="<div class=\"mxNotSeenDiv\" id=\""+this.n+"NotSeenDiv\">";
-	s+="<div class=\"mxInnerNotSeenDiv\" id=\""+this.n+"InnerNotSeenDiv\">";
-	s+="</div>";
-	s+="</div>";
-	return s;
-};
+	return `<div class="mxNotSeenBox" id="${this.n}NotSeenBox"></div>`;
+}
 }

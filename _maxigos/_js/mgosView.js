@@ -2,22 +2,26 @@
 if(!mxG.G.prototype.createView)
 {
 mxG.fr("2d/3d","2d/3d");
-mxG.fr("Stone shadow","Ombre des pierres");
-mxG.fr("Stretching","Étirement");
+mxG.fr("Cancel","Annuler");
 mxG.fr("Colors","Couleurs");
-mxG.fr("Thickness","Épaisseurs");
-mxG.fr("Zoom+","Agrandir");
-mxG.fr("No zoom","Normal");
-mxG.fr("Zoom-","Réduire");
-mxG.fr("Reset","Réinitialiser");
 mxG.fr("Goban background color:","Couleur de fond du goban :");
 mxG.fr("Goban background image:","Image de fond du goban :");
 mxG.fr("Line color:","Couleur des lignes :");
 mxG.fr("Line thickness:","Épaisseur des lignes :");
 mxG.fr("Mark thickness:","Épaisseur des marques :");
+mxG.fr("No zoom","Normal");
+mxG.fr("None","Aucune");
+mxG.fr("OK","OK");
+mxG.fr("Reset","Réinitialiser");
+mxG.fr("Slate and shell","Ardoise et coquillage");
 mxG.fr("Star radius:","Rayon des hoshis :");
 mxG.fr("Stone outline thickness:","Épaisseur des contours des pierres :");
+mxG.fr("Stone shadow","Ombre des pierres");
+mxG.fr("Stretching","Étirement");
 mxG.fr("Text outline thickness:","Épaisseur des contours des lettres :");
+mxG.fr("Thickness","Épaisseurs");
+mxG.fr("Zoom+","Agrandir");
+mxG.fr("Zoom-","Réduire");
 mxG.G.prototype.setViewItemCoche=function(b,v)
 {
 	let e=this.getE(b+"Btn");
@@ -29,13 +33,11 @@ mxG.G.prototype.setViewCoche=function()
 	this.setViewItemCoche("In3d",this.in3dOn);
 	this.setViewItemCoche("Stretching",this.stretching=="0,0,1,1"?0:1);
 	this.setViewItemCoche("StoneShadow",this.stoneShadowOn);
-	this.setViewItemCoche("Colors",0);
-	this.setViewItemCoche("Thickness",0);
+	this.setViewItemCoche("SpecialStone",this.specialStoneOn);
 	this.setViewItemCoche("ZoomPlus",this.gscale>1?1:0);
 	this.setViewItemCoche("NoZoom",this.gscale==1?1:0);
 	this.setViewItemCoche("ZoomMinus",this.gscale<1?1:0);
-	this.setViewItemCoche("Reset",0);
-};
+}
 mxG.G.prototype.setIndicesView=function()
 {
 	let g=this.getE("GobanSvg").querySelector(".mxIndices");
@@ -57,11 +59,10 @@ mxG.G.prototype.setIndicesView=function()
 mxG.G.prototype.setGobanBk=function()
 {
 	let g,svg,im,bk,c;
-	g=this.getE("GobanDiv");
-	if(!g) return;
-	svg=g.querySelector("svg");
-	im=g.querySelector("svg>image");
-	if(im) svg.removeChild(im);
+	g=this.getE("GobanBox");
+	if(!g)return;
+	im=g.querySelector("svg image");
+	if(im)im.remove();
 	if(this.gbki)
 	{
 		if(this.gbki!="none")
@@ -75,13 +76,14 @@ mxG.G.prototype.setGobanBk=function()
 			im+=' preserveAspectRatio="none"';
 			im+=' href="'+this.gbki+'"';
 			im+='/>';
+			svg=g.querySelector("svg");
 			svg.innerHTML=svg.innerHTML.replace(/(<rect[^>]+Outer)/,im+"$1");
 		}
 	}
 	bk=g.querySelector(".mxWholeRect");
 	c=this.gbkc?((this.gbkc=="transparent")?"none":this.gbkc):"none";
-	if(bk) bk.setAttributeNS(null,"fill",c);
-};
+	if(bk)bk.setAttributeNS(null,"fill",c);
+}
 mxG.G.prototype.setInputColors=function()
 {
 	let e,c,list,k,km,bkk;
@@ -90,7 +92,7 @@ mxG.G.prototype.setInputColors=function()
 		c="";
 		bkk=Object.keys(this.bk);
 		km=bkk.length;
-		for(k=0;k<km;k++) if(this.bk[bkk[k]]==this.gbki) break;
+		for(k=0;k<km;k++)if(this.bk[bkk[k]]==this.gbki)break;
 		if(k<km)
 		{
 			e=document.querySelector("[name="+this.n+"GobanBkRadio][value="+bkk[k]+"]");
@@ -110,85 +112,77 @@ mxG.G.prototype.setInputColors=function()
 	}
 	this.getE("GobanBkTextInput").value=c;
 	this.getE("LineColorTextInput").value=this.scr.glc;
-};
+}
 mxG.G.prototype.doTextInputGobanBk=function()
 {
 	e=document.querySelector("[name="+this.n+"GobanBkRadio][value=none]");
 	e.checked=true;
-};
+}
 mxG.G.prototype.buildColors=function()
 {
-	let s="";
-	s+="<h1 tabindex=\"0\">"+this.local("Colors")+"</h1>";
-	s+="<p>";
-	s+="<label class=\"mxGobanBkTextInput\" for=\""+this.n+"GobanBkTextInput\">"+this.local("Goban background color:");
-	s+=" <input type=\"text\" oninput=\""+this.g+".doTextInputGobanBk()\" id=\""+this.n+"GobanBkTextInput\">";
-	s+="</label>";
-	s+="</p>";
-	s+="<p>";
-	s+=this.local("Goban background image:");
-	s+="</p>";
-	s+="<p>";
-	s+="<label class=\"mxGobanBkRadio\">";
-	s+="<input name=\""+this.n+"GobanBkRadio\" checked value=\"none\" type=\"radio\">";
-	s+=" "+this.local("None")+"</label>";
-	s+="<label class=\"mxGobanBkRadio\">";
-	s+="<input name=\""+this.n+"GobanBkRadio\" value=\"Bamboo\" type=\"radio\">";
-	s+=" "+this.local("Bamboo")+"</label>";
-	s+="<label class=\"mxGobanBkRadio\">";
-	s+="<input name=\""+this.n+"GobanBkRadio\" value=\"Beech\" type=\"radio\">";
-	s+=" "+this.local("Beech")+"</label>";
-	s+="<label class=\"mxGobanBkRadio\">";
-	s+="<input name=\""+this.n+"GobanBkRadio\" value=\"Cherry\" type=\"radio\">";
-	s+=" "+this.local("Cherry")+"</label>";
-	s+="<label class=\"mxGobanBkRadio\">";
-	s+="<input name=\""+this.n+"GobanBkRadio\" value=\"Kaya\" type=\"radio\">";
-	s+=" "+this.local("Kaya")+"</label>";
-	s+="<label class=\"mxGobanBkRadio\">";
-	s+="<input name=\""+this.n+"GobanBkRadio\" value=\"Pine\" type=\"radio\">";
-	s+=" "+this.local("Pine")+"</label>";
-	s+="<label class=\"mxGobanBkRadio\">";
-	s+="<input name=\""+this.n+"GobanBkRadio\" value=\"Rosewood\" type=\"radio\">";
-	s+=" "+this.local("Rosewood")+"</label>";
-	s+="<label class=\"mxGobanBkRadio\">";
-	s+="<input name=\""+this.n+"GobanBkRadio\" value=\"Troyes\" type=\"radio\">";
-	s+=" "+this.local("Troyes")+"</label>";
-	s+="</p>";
-	s+="<p>";
-	s+="<label class=\"mxLineTextInput\">"+this.local("Line color:");
-	s+=" <input type=\"text\" id=\""+this.n+"LineColorTextInput\">";
-	s+="</label>";
-	s+="</p>";
-	return s;
-};
+	return `<h1 tabindex="0">${this.local("Colors")}</h1><p>`
+	+`<label class="mxGobanBkTextInput" for="${this.n}GobanBkTextInput">${this.local("Goban background color:")}`
+	+` <input type="text" oninput="${this.g}.doTextInputGobanBk()" id="${this.n}GobanBkTextInput">`
+	+`</label>`
+	+`</p><p>${this.local("Goban background image:")}</p><p>`
+	+`<label class="mxGobanBkRadio">`
+	+`<input name="${this.n}GobanBkRadio" checked value="none" type="radio">`
+	+` ${this.local("None")}</label>`
+	+`<label class="mxGobanBkRadio">`
+	+`<input name="${this.n}GobanBkRadio" value="Bamboo" type="radio">`
+	+` ${this.local("Bamboo")}</label>`
+	+`<label class="mxGobanBkRadio">`
+	+`<input name="${this.n}GobanBkRadio" value="Beech" type="radio">`
+	+` ${this.local("Beech")}</label>`
+	+`<label class="mxGobanBkRadio">`
+	+`<input name="${this.n}GobanBkRadio" value="Cherry" type="radio">`
+	+` ${this.local("Cherry")}</label>`
+	+`<label class="mxGobanBkRadio">`
+	+`<input name="${this.n}GobanBkRadio" value="Kaya" type="radio">`
+	+` ${this.local("Kaya")}</label>`
+	+`<label class="mxGobanBkRadio">`
+	+`<input name="${this.n}GobanBkRadio" value="Pine" type="radio">`
+	+` ${this.local("Pine")}</label>`
+	+`<label class="mxGobanBkRadio">`
+	+`<input name="${this.n}GobanBkRadio" value="Rosewood" type="radio">`
+	+` ${this.local("Rosewood")}</label>`
+	+`<label class="mxGobanBkRadio">`
+	+`<input name="${this.n}GobanBkRadio" value="Troyes" type="radio">`
+	+` ${this.local("Troyes")}</label>`
+	+`</p><p>`
+	+`<label class="mxLineTextInput">`+this.local("Line color:")
+	+` <input type="text" id="${this.n}LineColorTextInput">`
+	+`</label>`
+	+`</p>`;
+}
 mxG.G.prototype.doColorsOK=function()
 {
 	let e,a,b,c;
 	e=document.querySelector("[name="+this.n+"GobanBkRadio]:checked");
-	if(!e||(e.value=="none")) c="none";
+	if(!e||(e.value=="none"))c="none";
 	else c=this.bk[e.value];
 	this.gbki=c;
 	if(c=="none")
 	{
 		a=this.getE("GobanBkTextInput").value;
-		if(!CSS.supports('color',a)) a="transparent";
+		if(!CSS.supports('color',a))a="transparent";
 	}
 	else a="";
 	this.gbkc=a;
 	b=this.getE("LineColorTextInput").value;
-	if(!CSS.supports('color',b)) b="#000";
+	if(!CSS.supports('color',b))b="#000";
 	this.scr.glc=b;
 	window.localStorage.setItem("gbki",this.gbki);
 	window.localStorage.setItem("gbkc",this.gbkc);
 	window.localStorage.setItem("glc",this.scr.glc);
 	this.updateAll();
-};
+}
 mxG.G.prototype.doColors=function()
 {
 	let btns=[{n:"OK",a:"Colors"},{n:"Cancel"}];
 	this.doDialog("EditColors",this.buildColors(),btns);
 	this.setInputColors();
-};
+}
 mxG.G.prototype.setInputThickness=function()
 {
 	this.getE("R4starInput").value=this.scr.r4star;
@@ -196,44 +190,28 @@ mxG.G.prototype.setInputThickness=function()
 	this.getE("Sw4markInput").value=this.scr.sw4mark;
 	this.getE("Sw4stoneInput").value=this.scr.sw4stone;
 	this.getE("Sw4textInput").value=this.scr.sw4text;
-};
+}
 mxG.G.prototype.buildThickness=function()
 {
-	let s="";
-	s+="<h1 tabindex=\"0\">"+this.local("Thickness")+"</h1>";
-	s+="<p>";
-	s+="<label class=\"mxR4starInput\">"+this.local("Star radius:");
-	s+=" <input type=\"text\" id=\""+this.n+"R4starInput\">";
-	s+="</label>";
-	s+="</p>";
-	s+="<p>";
-	s+="<label class=\"mxSw4gridInput\">"+this.local("Line thickness:");
-	s+=" <input type=\"text\" id=\""+this.n+"Sw4gridInput\">";
-	s+="</label>";
-	s+="</p>";
-	s+="<p>";
-	s+="<label class=\"mxSw4markInput\">"+this.local("Mark thickness:");
-	s+=" <input type=\"text\" id=\""+this.n+"Sw4markInput\">";
-	s+="</label>";
-	s+="</p>";
-	s+="<p>";
-	s+="<label class=\"mxSw4stoneInput\">"+this.local("Stone outline thickness:");
-	s+=" <input type=\"text\" id=\""+this.n+"Sw4stoneInput\">";
-	s+="</label>";
-	s+="</p>";
-	s+="<p>";
-	s+="<label class=\"mxSw4textInput\">"+this.local("Text outline thickness:");
-	s+=" <input type=\"text\" id=\""+this.n+"Sw4textInput\">";
-	s+="</label>";
-	s+="</p>";
-	return s;
-};
+	return `<h1 tabindex="0">${this.local("Thickness")}</h1>`
+	+`<p><label class="mxR4starInput">`+this.local("Star radius:")
+	+` <input type="text" id="${this.n}R4starInput">`
+	+`</label></p><p><label class="mxSw4gridInput">`+this.local("Line thickness:")
+	+` <input type="text" id="${this.n}Sw4gridInput">`
+	+`</label></p><p><label class="mxSw4markInput">`+this.local("Mark thickness:")
+	+` <input type="text" id="${this.n}Sw4markInput">`
+	+`</label></p><p><label class="mxSw4stoneInput">`+this.local("Stone outline thickness:")
+	+` <input type="text" id="${this.n}Sw4stoneInput">`
+	+`</label></p><p><label class="mxSw4textInput">`+this.local("Text outline thickness:")
+	+` <input type="text" id="${this.n}Sw4textInput">`
+	+`</label></p>`;
+}
 mxG.G.prototype.numberize=function(s)
 {
 	let n=parseFloat(s);
-	if(!n||(n<0)||(n>this.scr.d)) return "0";
+	if(!n||(n<0)||(n>this.scr.d))return "0";
 	return n+"";
-};
+}
 mxG.G.prototype.doThicknessOK=function()
 {
 	this.scr.r4star=this.numberize(this.getE("R4starInput").value);
@@ -247,78 +225,89 @@ mxG.G.prototype.doThicknessOK=function()
 	this.scr.sw4text=this.numberize(this.getE("Sw4textInput").value);
 	window.localStorage.setItem("sw4text",this.scr.sw4text);
 	this.hasToSetGoban=1;
-	if(this.hasC("Edit")) this.hasToSetEditTools=1;
-	if(this.hasC("Tree")) this.hasToSetTree=1;
+	if(this.hasC("Edit"))this.hasToSetEditTools=1;
+	if(this.hasC("Tree"))this.hasToSetTree=1;
 	this.updateAll();
-};
+}
 mxG.G.prototype.doThickness=function()
 {
 	let btns=[{n:"OK",a:"Thickness"},{n:"Cancel"}];
 	this.doDialog("EditThickness",this.buildThickness(),btns);
 	this.setInputThickness();
-};
+}
 mxG.G.prototype.doZoom=function(s)
 {
-	if(this.hasC("Menu")) this.toggleMenu("View",0);
-	if(s=="+") this.gscale*=1.1;
-	else if(s=="-") this.gscale/=1.1;
+	if(this.hasC("Menu"))this.toggleMenu("View",0);
+	if(s=="+")this.gscale*=1.1;
+	else if(s=="-")this.gscale/=1.1;
 	else this.gscale=1;
 	this.gscale=Number(this.gscale.toFixed(1));
 	window.localStorage.setItem("gscale",this.gscale);
 	if(this.gscale!=1)
-		this.getE("GlobalBoxDiv").style.setProperty('--gobanScale',this.gscale);
+		this.getE("Global").style.setProperty('--gobanScale',this.gscale);
 	else
-		this.getE("GlobalBoxDiv").style.removeProperty('--gobanScale');
+		this.getE("Global").style.removeProperty('--gobanScale');
 	this.updateAll();
-};
-mxG.G.prototype.doZoomPlus=function(){this.doZoom("+");};
-mxG.G.prototype.doNoZoom=function(){this.doZoom("=");};
-mxG.G.prototype.doZoomMinus=function(){this.doZoom("-");};
+}
+mxG.G.prototype.doZoomPlus=function(){this.doZoom("+");}
+mxG.G.prototype.doNoZoom=function(){this.doZoom("=");}
+mxG.G.prototype.doZoomMinus=function(){this.doZoom("-");}
 mxG.G.prototype.doIn3d=function()
 {
-	if(this.hasC("Menu")) this.toggleMenu("View",0);
+	if(this.hasC("Menu"))this.toggleMenu("View",0);
 	this.in3dOn=this.in3dOn?0:1;
 	this.setIn3d();
 	this.hasToSetGoban=1;
-	if(this.hasC("Tree")) this.hasToSetTree=1;
-	if(this.hasC("Edit")) this.hasToSetEditTools=1;
+	if(this.hasC("Tree"))this.hasToSetTree=1;
+	if(this.hasC("Edit"))this.hasToSetEditTools=1;
 	window.localStorage.setItem("in3dOn",this.in3dOn+"");
 	this.updateAll();
-};
+}
 mxG.G.prototype.doStretching=function()
 {
-	if(this.hasC("Menu")) this.toggleMenu("View",0);
-	if(this.stretching=="0,0,1,1") this.stretching="0,1,1,2";
+	if(this.hasC("Menu"))this.toggleMenu("View",0);
+	if(this.stretching=="0,0,1,1")this.stretching="0,1,1,2";
 	else this.stretching="0,0,1,1";
 	this.hasToSetGoban=1;
-	if(this.hasC("Tree")) this.hasToSetTree=1;
-	if(this.hasC("Edit")) this.hasToSetEditTools=1;
+	if(this.hasC("Tree"))this.hasToSetTree=1;
+	if(this.hasC("Edit"))this.hasToSetEditTools=1;
 	window.localStorage.setItem("stretching",this.stretching);
 	this.updateAll();
-};
+}
 mxG.G.prototype.doStoneShadow=function()
 {
-	if(this.hasC("Menu")) this.toggleMenu("View",0);
+	if(this.hasC("Menu"))this.toggleMenu("View",0);
 	this.stoneShadowOn=this.stoneShadowOn?0:1;
 	this.hasToSetGoban=1;
-	if(this.hasC("Tree")) this.hasToSetTree=1;
-	if(this.hasC("Edit")) this.hasToSetEditTools=1;
+	if(this.hasC("Tree"))this.hasToSetTree=1;
+	if(this.hasC("Edit"))this.hasToSetEditTools=1;
 	window.localStorage.setItem("stoneShadowOn",this.stoneShadowOn+"");
 	this.updateAll();
-};
+}
+mxG.G.prototype.doSpecialStone=function()
+{
+	if(this.hasC("Menu"))this.toggleMenu("View",0);
+	this.specialStoneOn=this.specialStoneOn?0:1;
+	this.hasToSetGoban=1;
+	if(this.hasC("Tree"))this.hasToSetTree=1;
+	if(this.hasC("Edit"))this.hasToSetEditTools=1;
+	window.localStorage.setItem("specialStoneOn",this.specialStoneOn+"");
+	this.updateAll();
+}
 mxG.G.prototype.doReset=function()
 {
-	if(this.hasC("Menu")) this.toggleMenu("View",0);
+	if(this.hasC("Menu"))this.toggleMenu("View",0);
 	this.doNoZoom(); // otherwise cannot reset zoom properly
 	window.localStorage.clear();
 	this.in3dOn=this.setA("in3dOn",0,"bool");
 	this.setIn3d();
 	this.stoneShadowOn=this.setA("stoneShadowOn",0,"bool");
+	this.specialStoneOn=this.setA("specialStoneOn",0,"bool");
 	this.stretching=this.setA("stretching","0,0,1,1","string");
 	this.initView();
 	this.hasToSetGoban=1;
-	if(this.hasC("Tree")) this.hasToSetTree=1;
-	if(this.hasC("Edit")) this.hasToSetEditTools=1;
+	if(this.hasC("Tree"))this.hasToSetTree=1;
+	if(this.hasC("Edit"))this.hasToSetEditTools=1;
 	this.updateAll();
 }
 mxG.G.prototype.updateAfterView=function()
@@ -327,10 +316,10 @@ mxG.G.prototype.updateAfterView=function()
 	// so call it updateAfterView and add AfterView as a component
 	this.setGobanBk();
 	this.setIndicesView();
-};
+}
 mxG.G.prototype.initView=function()
 {
-	let e=this.getE("GlobalBoxDiv"),dir,v,s,indicesOff;
+	let e=this.getE("Global"),dir,v,s,indicesOff;
 	dir="../_img/bk/";
 	this.bk={};
 	this.bk["Bamboo"]="data:image/jpeg;base64,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";
@@ -348,27 +337,29 @@ mxG.G.prototype.initView=function()
 		this.in3dOn=parseInt(v);
 		this.setIn3d();
 	}
-	if(v=window.localStorage.getItem("gbki")) this.gbki=v; else this.gbki="none";
-	if(v=window.localStorage.getItem("gbkc")) this.gbkc=v; else this.gbkc="transparent";
-	if(v=window.localStorage.getItem("glc")) this.scr.glc=v; else this.scr.glc="#000";
-	if(v=window.localStorage.getItem("r4star")) this.scr.r4star=v; else this.scr.r4star="2.5";
-	if(v=window.localStorage.getItem("sw4grid")) this.scr.sw4grid=v; else this.scr.sw4grid="1";
-	if(v=window.localStorage.getItem("sw4mark")) this.scr.sw4mark=v; else this.scr.sw4mark="1";
-	if(v=window.localStorage.getItem("sw4stone")) this.scr.sw4stone=v; else this.scr.sw4stone="1";
-	if(v=window.localStorage.getItem("sw4text")) this.scr.sw4text=v; else this.scr.sw4text="0";
-	if(v=window.localStorage.getItem("stretching")) this.stretching=v;
-	if(v=window.localStorage.getItem("stoneShadowOn")) this.stoneShadowOn=parseInt(v);
-	if(v=window.localStorage.getItem("gscale")) this.gscale=parseFloat(v); else this.gscale=1;
-	if(this.gscale!=1) this.getE("GlobalBoxDiv").style.setProperty('--gobanScale',this.gscale);
-};
+	if(v=window.localStorage.getItem("gbki"))this.gbki=v;else this.gbki="none";
+	if(v=window.localStorage.getItem("gbkc"))this.gbkc=v;else this.gbkc="transparent";
+	if(v=window.localStorage.getItem("glc"))this.scr.glc=v;else this.scr.glc="#000";
+	if(v=window.localStorage.getItem("r4star"))this.scr.r4star=v;else this.scr.r4star="2.5";
+	if(v=window.localStorage.getItem("sw4grid"))this.scr.sw4grid=v;else this.scr.sw4grid="1";
+	if(v=window.localStorage.getItem("sw4mark"))this.scr.sw4mark=v;else this.scr.sw4mark="1";
+	if(v=window.localStorage.getItem("sw4stone"))this.scr.sw4stone=v;else this.scr.sw4stone="1";
+	if(v=window.localStorage.getItem("sw4text"))this.scr.sw4text=v;else this.scr.sw4text="0";
+	if(v=window.localStorage.getItem("stretching"))this.stretching=v;
+	if(v=window.localStorage.getItem("stoneShadowOn"))this.stoneShadowOn=parseInt(v);
+	if(v=window.localStorage.getItem("specialStoneOn"))this.specialStoneOn=parseInt(v);
+	if(v=window.localStorage.getItem("gscale"))this.gscale=parseFloat(v);else this.gscale=1;
+	if(this.gscale!=1)this.getE("Global").style.setProperty('--gobanScale',this.gscale);
+}
 mxG.G.prototype.createView=function()
 {
-	// menuViewItems is used by "Menu" component
+	// menuViewItems is used by the "Menu" component
 	this.menuViewItems=
 	[
 		{n:"In3d",v:this.local("2d/3d")},
 		{n:"Stretching",v:this.local("Stretching")},
 		{n:"StoneShadow",v:this.local("Stone shadow")},
+		{n:"SpecialStone",v:this.local("Slate and shell")},
 		{n:"Colors",v:this.local("Colors")},
 		{n:"Thickness",v:this.local("Thickness")},
 		{n:"ZoomPlus",v:this.local("Zoom+")},
@@ -377,5 +368,5 @@ mxG.G.prototype.createView=function()
 		{n:"Reset",v:this.local("Reset")}
 	];
 	return "";
-};
+}
 }

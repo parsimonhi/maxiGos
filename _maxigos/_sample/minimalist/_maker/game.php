@@ -30,7 +30,6 @@ mxG.D[mxG.K].a.allowFileAsSource=1; // (0,1) default 1
 // mxG.D[mxG.K].a.sourceFilter=""; // (str) default ""
 mxG.D[mxG.K].a.initMethod="last"; // ("first","loop","last") default "first"
 // Goban
-mxG.D[mxG.K].a.pointsNumMax=19; // (positive integer) default 0
 mxG.D[mxG.K].a.stoneShadowOn=0; // (0,1) default 0 (require in3dOn=1)
 mxG.D[mxG.K].a.stretching="0,0,1,1"; // (list) default "0,0,1,1"
 mxG.D[mxG.K].a.gridPadding=2; // (float) default 0
@@ -46,14 +45,14 @@ mxG.D[mxG.K].a.numAsMarkOnLastOn=0; // (0,1) default 0 (require markOnLastOn=1)
 mxG.D[mxG.K].a.japaneseIndicesOn=0; // (0,1) default 0 (require indicesOn=1)
 mxG.D[mxG.K].a.oldJapaneseIndicesOn=0; // (0,1) default 0 (require indicesOn=1)
 mxG.D[mxG.K].a.eraseGridUnder=1; // (0,1) default 0
+// Header
+mxG.D[mxG.K].a.headerBoxOn=1; // (0,1) default 0
+mxG.D[mxG.K].a.hideInHeader="NumOfMoves"; // (set) default ""
 // Variation
 mxG.D[mxG.K].a.variationMarksOn=1; // (0,1,null) default 0
 mxG.D[mxG.K].a.siblingsOn=0; // (0,1,null) default 0
 mxG.D[mxG.K].a.hideSingleVariationMarkOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.variationBoxOn=0; // (0,1) default 0
 mxG.D[mxG.K].a.canPlaceVariation=1; // (0,1) default 0
-// Header
-mxG.D[mxG.K].a.headerBoxOn=1; // (0,1) default 0
-mxG.D[mxG.K].a.hideInHeader="NumOfMoves"; // (set) default ""
 // Start
 mxG.D[mxG.K].start();

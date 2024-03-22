@@ -32,11 +32,9 @@ mxG.D[mxG.K].a.allowFileAsSource=1; // (0,1) default 1
 // mxG.D[mxG.K].a.sourceFilter=""; // (str) default ""
 mxG.D[mxG.K].a.initMethod="last"; // ("first","loop","last") default "first"
 // guessing variations is not very interesting in general
-// so one chooses to ignore them here
-// since canPlaceGuess=1, canPlaceVariation=0 and no Options component
+// so one chooses to ignore them
 mxG.D[mxG.K].a.sgfLoadMainOnly=1; // (0,1) default 0
 // Goban
-mxG.D[mxG.K].a.pointsNumMax=19; // (positive integer) default 0
 mxG.D[mxG.K].a.stoneShadowOn=0; // (0,1) default 0 (require in3dOn=1)
 mxG.D[mxG.K].a.stretching="0,0,1,1"; // (list) default "0,0,1,1"
 mxG.D[mxG.K].a.gridPadding=2; // (float) default 0
@@ -57,7 +55,6 @@ mxG.D[mxG.K].a.guessBoxOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.canPlaceGuess=1; // (0,1) default 0
 // Header
 mxG.D[mxG.K].a.headerBoxOn=1; // (0,1) default 0
-mxG.D[mxG.K].a.hideInHeader="NumOfMovesLabel"; // (set) default ""
 mxG.D[mxG.K].a.concatInHeader="NumOfMovesToResult"; // (set) default ""
 // Navigation
 mxG.D[mxG.K].a.navigations="First,TenPred,Pred,Loop,Next,TenNext,Last"; // (set) default "First,TenPred,Pred,Next,TenNext,Last"

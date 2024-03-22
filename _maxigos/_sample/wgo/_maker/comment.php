@@ -33,7 +33,6 @@ mxG.D[mxG.K].a.allowFileAsSource=1; // (0,1) default 1
 // mxG.D[mxG.K].a.sourceFilter=""; // (str) default ""
 mxG.D[mxG.K].a.initMethod="first"; // ("first","loop","last") default "first"
 // Goban
-mxG.D[mxG.K].a.pointsNumMax=19; // (positive integer) default 0
 mxG.D[mxG.K].a.stoneShadowOn=1; // (0,1) default 0 (require in3dOn=1)
 mxG.D[mxG.K].a.specialStoneOn=1; // (0,1) default 0 (require in3dOn=1)
 mxG.D[mxG.K].a.stretching="0,0,1,1"; // (list) default "0,0,1,1"
@@ -55,14 +54,12 @@ mxG.D[mxG.K].a.aboutBtnOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.aboutAlias="About_wgo"; // (string) default null
 mxG.en("About_wgo","<span aria-hidden='true'>?</span>");
 mxG.D[mxG.K].a.aboutThemeAlias="Theme_WGo"; // (string) default null
-mxG.en("Theme_WGo","WGo (<a href=\"http://wgo.waltheri.net/\">WGo.js</a> copyright Jan Prokop)"); 
+mxG.en("Theme_WGo","<a href=\"http://wgo.waltheri.net/\">WGo</a> (copyright Jan Prokop)"); 
 // Cartouche
 mxG.D[mxG.K].a.cartoucheBoxOn=1; // (0,1) default 0
 // Comment
 mxG.D[mxG.K].a.headerInComment=1; // (0,1) default 0
-mxG.D[mxG.K].a.canCommentFocus=1; // (0,1) default 0
-mxG.D[mxG.K].a.commentCaptionOn=1; // (0,1) default 0
-mxG.D[mxG.K].a.allInComment=0; // (0,1) default 0
+mxG.D[mxG.K].a.allInComment=1; // (0,1) default 0
 // Goto
 mxG.D[mxG.K].a.gotoBoxOn=0; // (0,1) default 0
 // Header

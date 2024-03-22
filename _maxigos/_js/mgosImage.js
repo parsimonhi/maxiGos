@@ -10,7 +10,7 @@ mxG.G.prototype.b64EncodeUnicode=function(str)
 {
 	return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
 		function toSolidBytes(match,p1){return String.fromCharCode('0x'+p1);}));
-};
+}
 mxG.G.prototype.svgToDataURL=function(b)
 {
 	let e1,e2,a,r=2,z,e,s,v,rect1,rect2,mark1,mark2,list;
@@ -50,44 +50,40 @@ mxG.G.prototype.svgToDataURL=function(b)
 	// clean svg
 	e2.removeAttribute("id");
 	e2.removeAttribute("aria-labelledby");
+	e2.removeAttribute("aria-label");
+	e2.removeAttribute("aria-live");
+	e2.removeAttribute("role");
 	e2.removeAttribute("tabindex");
 	a=e2.querySelectorAll("g[id]");
-	for(let k=0;k<a.length;k++) a[k].removeAttribute("id");
-	a=e2.querySelector(".mxFocus");
-	if(a) a.parentNode.removeChild(a);
-	a=e2.querySelector("title");
-	if(a) a.parentNode.removeChild(a);
-	a=e2.querySelector("desc");
-	if(a) a.parentNode.removeChild(a);
-	a=e2.querySelector("my-title");
-	if(a) a.parentNode.removeChild(a);
-	a=e2.querySelector("my-desc");
-	if(a) a.parentNode.removeChild(a);
-	list=e2.querySelectorAll('[aria-hidden]');
-	for(let k=0;k<list.length;k++) list[k].removeAttribute("aria-hidden");
+	if(a)for(e of a)e.removeAttribute("id");
+	a=e2.querySelectorAll(".mxFocus,title,desc");
+	if(a)for(e of a)e.remove();
+	a=e2.querySelectorAll("[aria-hidden]");
+	if(a)for(e of a)e.removeAttribute("aria-hidden");
 	z=e2.outerHTML;
 	z=z.replace(/ class="[^"]*"/g,"");
-	// some applications such as OpenOffice still need to use xlink:href (in 2021)
-	if(this.xlink4hrefOn) z=z.replace(/ href=/g," xlink:href=");
+	// some applications (such as OpenOffice in 2024) still need to use xlink:href
+	// instead of href for the svg <image> tag to specify a goban background
+	z=z.replace(/ href=/g," xlink:href=");
 	z=z.replace(/><\/(rect|circle|path|image|stop)>/g,"/>");
 	z=z.replace(/<rect fill="none" stroke="none"[^>]*>/g,"");
 	return "data:image/svg+xml;base64,"+this.b64EncodeUnicode(z);
-};
+}
 mxG.G.prototype.doSvg=function()
 {
-	let s="<h1 tabindex=\"0\">"+this.local("SVG image of the goban")+"</h1>";
-	s+="<img alt=\""+this.local("SVG image of the goban")+"\" id=\""+this.n+"SvgImg\"";
-	let b=this.getE("GobanSvg").getBoundingClientRect();
-	s+=" width=\""+b.width+"\" height=\""+b.height+"\"";
-	s+=" src=\""+this.svgToDataURL(null)+"\">";
+	let b=this.getE("GobanSvg").getBoundingClientRect(),
+		s=`<h1 tabindex="0">${this.local("SVG image of the goban")}</h1>`
+		+`<img alt="${this.local("SVG image of the goban")}" id="${this.n}SvgImg"`
+		+` width="${b.width}" height="${b.height}"`
+		+` src="${this.svgToDataURL(null)}">`;
 	this.doDialog("ShowSvg",s,[{n:" Close "}]);
-};
+}
 mxG.G.prototype.doPng=function()
 {
 	let img,png,r=2,k=this.k,s,src;
-	src="data:image/svg+xml,<svg xmlns='"+this.scr.xmlnsUrl+"'/>"; // require ' and not "
-	s="<h1 tabindex=\"0\">"+this.local("SVG image of the goban")+"</h1>";
-	s+="<img alt=\""+this.local("PNG image of the goban")+"\" id=\""+this.n+"PngImg\" src=\""+src+"\">";
+	src=`data:image/svg+xml,<svg xmlns='${this.scr.xmlnsUrl}'/>`; // require ' and not "
+	s=`<h1 tabindex="0">${this.local("PNG image of the goban")}</h1>`
+	+`<img alt="${this.local("PNG image of the goban")}" id="${this.n}PngImg" src="${src}">`;
 	this.doDialog("ShowPng",s,[{n:" Close "}]);
 	png=this.getE("PngImg");
 	img=new Image();
@@ -108,32 +104,31 @@ mxG.G.prototype.doPng=function()
 			},1);
 	}
 	img.src=this.svgToDataURL(this.getE("GobanSvg").getBoundingClientRect());
-};
-mxG.G.prototype.initImage=function()
+}
+mxG.G.prototype.initPng=function()
 {
-	if(this.pngBtnOn)
-	{
-		let o={n:"Png",v:this.alias("PNG","pngAlias")},
-			s=this.local("PNG");
-		if(o.v!=s) o.t=s;
-		this.addBtn(this.getE("PngDiv"),o);
-	}
-	if(this.svgBtnOn)
-	{
-		let o={n:"Svg",v:this.alias("SVG","svgAlias")},
-			s=this.local("SVG");
-		if(o.v!=s) o.t=s;
-		this.addBtn(this.getE("SvgDiv"),o);
-	}
-};
+	if(this.pngBtnOn)this.addBtnClickListener("Png");
+}
+mxG.G.prototype.initSvg=function()
+{
+	if(this.svgBtnOn)this.addBtnClickListener("Svg");
+}
+mxG.G.prototype.createPng=function()
+{
+	this.pngBtnOn=this.setA("pngBtnOn",0,"bool");
+	this.pngAlias=this.setA("pngAlias",null,"string");
+	return this.pngBtnOn?this.createBtn("Png","PNG"):"";
+}
+mxG.G.prototype.createSvg=function()
+{
+	this.svgBtnOn=this.setA("svgBtnOn",0,"bool");
+	this.svgAlias=this.setA("svgAlias",null,"string");
+	return this.svgBtnOn?this.createBtn("Svg","SVG"):"";
+}
 mxG.G.prototype.createImage=function()
 {
-	this.xlink4hrefOn=this.setA("xlink4hrefOn",1,"bool"); // replace href by xlink:href
-	this.pngBtnOn=this.setA("pngBtnOn",0,"bool");
-	this.svgBtnOn=this.setA("svgBtnOn",0,"bool");
-	this.pngAlias=this.setA("pngAlias",null,"string");
-	this.svgAlias=this.setA("svgAlias",null,"string");
-	return (this.pngBtnOn?this.createBtnBox("Png"):"")
-		+(this.svgBtnOn?this.createBtnBox("Svg"):"");
-};
+	// no need to add the "Image" component in the makers since it does nothing
+	// just here because there are some code common to "Png" and "Svg" components
+	return ``;
+}
 }

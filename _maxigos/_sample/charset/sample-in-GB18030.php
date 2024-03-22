@@ -26,7 +26,7 @@ h2
 	color:#000;
 }
 p {padding:0.25em;}
-.mxGlobalBoxDiv
+.mxGlobal
 {
 	margin:1em auto;
 }

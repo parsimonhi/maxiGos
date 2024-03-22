@@ -14,14 +14,14 @@ include "../../../_js/mgosNavigation.js";
 include "../../../_js/mgosVariation.js";
 include "../../../_js/mgosGoto.js";
 include "../../../_js/mgosOptions.js";
-include "../../../_js/mgosCut.js";
+include "../../../_js/mgosRemove.js";
 include "../../../_js/mgosPass.js";
 include "../../../_js/mgosSgf.js";
 include "../../../_js/mgosComment.js";
 include "../../../_js/mgosHeader.js";
 ?>
 mxG.K++;
-mxG.B=["Goban","Navigation","Variation","Goto",["Options","Cut","Pass","Sgf"],"Comment","Header"];
+mxG.B=["Goban","Navigation","Variation","Goto",["Options","Remove","Pass","Sgf"],"Comment","Header"];
 mxG.D[mxG.K]=new mxG.G(mxG.K,mxG.B);
 mxG.D[mxG.K].theme="<?=$theme?>";
 mxG.D[mxG.K].config="<?=$config?>";
@@ -36,7 +36,6 @@ mxG.D[mxG.K].a.allowFileAsSource=1; // (0,1) default 1
 mxG.D[mxG.K].a.initMethod="first"; // ("first","loop","last") default "first"
 mxG.D[mxG.K].a.sgfSaveCoreOnly=1; // (0,1) default 0
 // Goban
-mxG.D[mxG.K].a.pointsNumMax=19; // (positive integer) default 0
 mxG.D[mxG.K].a.stoneShadowOn=0; // (0,1) default 0 (require in3dOn=1)
 mxG.D[mxG.K].a.stretching="0,1,1,2"; // (list) default "0,0,1,1"
 mxG.D[mxG.K].a.gridPadding=2; // (float) default 0
@@ -54,21 +53,20 @@ mxG.D[mxG.K].a.oldJapaneseIndicesOn=0; // (0,1) default 0 (require indicesOn=1)
 mxG.D[mxG.K].a.eraseGridUnder=1; // (0,1) default 0
 // Comment
 mxG.D[mxG.K].a.headerInComment=1; // (0,1) default 0
-mxG.D[mxG.K].a.canCommentFocus=1; // (0,1) default 0
-// Cut
-mxG.D[mxG.K].a.cutBtnOn=1; // (0,1) default 0
 // Goto
 mxG.D[mxG.K].a.gotoBoxOn=0; // (0,1) default 0
 // Header
 mxG.D[mxG.K].a.hideInHeader="NumOfMoves"; // (set) default ""
 // Navigation
 mxG.D[mxG.K].a.navigations="First,TenPred,Pred,Goto,Next,TenNext,Last"; // (set) default "First,TenPred,Pred,Next,TenNext,Last"
-// options
+// Options
 mxG.D[mxG.K].a.optionsBoxOn=0; // (0,1) default 0
 mxG.D[mxG.K].a.optionsBtnOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.hideInOptions="In3dOn"; // (set) default ""
 // Pass
 mxG.D[mxG.K].a.passBtnOn=1; // (0,1) default 0
+// Remove
+mxG.D[mxG.K].a.removeBtnOn=1; // (0,1) default 0
 // Sgf
 mxG.D[mxG.K].a.sgfBtnOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.sgfAction="download"; // (string) default "show"

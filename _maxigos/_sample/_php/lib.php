@@ -102,17 +102,17 @@ function isConvenientServer($myServer="127.0.0.1")
 }
 function kogo()
 {
+	if(isset($_GET["nokogo"])&&$_GET["nokogo"]) return 0;
 	$a=explode("/",$_SERVER['SCRIPT_NAME']);
 	$k=1;
 	$km=count($a);
 	$f='Kogo.sgf';
 	while($k<$km)
+	{
 		if(is_file($f)) return $f;
-		else
-		{
-			$f='../'.$f;
-			$k++;
-		}
+		$f='../'.$f;
+		$k++;
+	}
 	return 0;
 }
 ?>

@@ -39,7 +39,6 @@ mxG.D[mxG.K].a.allowFileAsSource=1; // (0,1) default 1
 // mxG.D[mxG.K].a.sourceFilter=""; // (str) default ""
 mxG.D[mxG.K].a.initMethod="first"; // ("first","loop","last") default "first"
 // Goban
-mxG.D[mxG.K].a.pointsNumMax=19; // (positive integer) default 0
 mxG.D[mxG.K].a.stoneShadowOn=1; // (0,1) default 0 (require in3dOn=1)
 mxG.D[mxG.K].a.stretching="0,0,1,1"; // (list) default "0,0,1,1"
 mxG.D[mxG.K].a.gridPadding=2; // (float) default 0
@@ -59,14 +58,13 @@ mxG.D[mxG.K].a.eraseGridUnder=1; // (0,1) default 0
 mxG.D[mxG.K].a.cartoucheBoxOn=1; // (0,1) default 0
 // Comment
 mxG.D[mxG.K].a.headerInComment=1; // (0,1) default 0
-mxG.D[mxG.K].a.canCommentFocus=1; // (0,1) default 0
 // Goto
 mxG.D[mxG.K].a.gotoBoxOn=0; // (0,1) default 0
 // Header
 mxG.D[mxG.K].a.hideInHeader="NumOfMoves"; // (set) default ""
 // Navigation
 mxG.D[mxG.K].a.navigations="First,TenPred,Pred,Goto,Next,TenNext,Last"; // (set) default "First,TenPred,Pred,Next,TenNext,Last"
-// options
+// Options
 mxG.D[mxG.K].a.optionsAlias="Options_forum"; // (string) default null
 mxG.ja("Options_forum","<span aria-hidden='true'>オ</span>");
 mxG.en("Options_forum","<span aria-hidden='true'>O</span>");
@@ -78,8 +76,6 @@ mxG.D[mxG.K].a.canPassOnlyIfPassInSgf=0; // (0,1) default 0
 mxG.D[mxG.K].a.passAlias="Pass_forum"; // (string) default null
 mxG.ja("Pass_forum","<span aria-hidden='true'>パ</span>");
 mxG.en("Pass_forum","<span aria-hidden='true'>P</span>");
-// Tree
-mxG.D[mxG.K].a.canTreeFocus=1; // (0,1) default 0
 // Variation
 mxG.D[mxG.K].a.variationMarksOn=1; // (0,1,null) default 0
 mxG.D[mxG.K].a.siblingsOn=0; // (0,1,null) default 0

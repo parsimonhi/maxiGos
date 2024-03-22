@@ -1,533 +1,500 @@
-/* this theme is similar to eidogo sgf player */
-/* (with the permission of Justin Kramer) */
+/* the look of this theme is similar to the eidogo sgf player */
+/* but the code is completely different */
+/* (with the permission of Justin Kramer, author of eidogo) */
 .mxEidogoTheme
 {
-	--gobanMaxWidth:calc(1em * 527 / 16);
+	--gobanScale:1;
+	--gobanMaxWidth:calc(1em * var(--gobanScale) * var(--gobanIntrinsicWidth,459) / 16);
+	--columnMaxWidth:max(var(--gobanMaxWidth),calc(1em * 459 / 16));
 	text-align:left;
+	/* general */
+	& button {-webkit-appearance:none;-moz-appearance:none;}
+	& text {cursor:default;}
+	& input[type=text][disabled],
+	& button[disabled] {cursor:default;}
+	& svg {display:block;width:100%;height:100%;}
+	&,
+	& button {font-family:sans-serif;font-size:1em;}
+	/* layout */
+	&
+	{
+		max-width:var(--columnMaxWidth);
+		margin:0 auto;
+	}
+	&.mxCommentConfig,
+	&.mxGameConfig,
+	&.mxTreeConfig
+	{
+		max-width:calc(var(--columnMaxWidth) * 2);
+	}
+	&.mxBasicConfig,
+	&.mxProblemConfig
+	{
+		background:#466;
+	}
+	&.mxCommentConfig,
+	&.mxGameConfig,
+	&.mxTreeConfig
+	{
+		display:flex;
+		flex-wrap:wrap;
+		justify-content:center;
+		max-width:calc(var(--columnMaxWidth) * 2);
+	}
+	&.mxCommentConfig>div,
+	&.mxGameConfig>div,
+	&.mxTreeConfig>div
+	{
+		/* flexible columns */
+		/* whether one or two columns are shown */
+		/* their width will be the same in both cases */
+		/* if the available width is at least 2*var(--columnMaxWidth) */
+		/* then 2 columns are displayed */
+		/* else 1 column is displayed */
+		/* flex-basis should be the same as max-width */
+		max-width:var(--columnMaxWidth);
+		flex:1 1 var(--columnMaxWidth);
+		width:100%;
+	}
+	&.mxCommentConfig .mxGobanBox,
+	&.mxGameConfig .mxGobanBox,
+	&.mxTreeConfig .mxGobanBox
+	{
+		display:flex;
+		background:#aa9;
+		height:100%;
+	}
+	& .mxNavigationParent,
+	& .mxSolveParent
+	{
+		padding:0.5em;
+	}
+	&.mxCommentConfig .mxNavigationGrandParent,
+	&.mxGameConfig .mxNavigationGrandParent,
+	&.mxTreeConfig .mxNavigationGrandParent
+	{
+		background:#466;
+		display:flex;
+		flex-direction:column;
+		justify-content:space-between;
+	}
+	&.mxCommentConfig .mxNavigationParent,
+	&.mxGameConfig .mxNavigationParent,
+	&.mxTreeConfig .mxNavigationParent,
+	&.mxCommentConfig>div,
+	&.mxTreeConfig>div
+	{
+		flex:0 0 auto;
+	}
+	&.mxGameConfig .mxHeaderBox,
+	&.mxCommentConfig .mxCommentBox,
+	&.mxTreeConfig .mxCommentBox,
+	&.mxTreeConfig .mxTreeBox
+	{
+		box-sizing:border-box;
+		height:8em;
+		min-height:2em;
+		margin:0 auto;
+		padding:0.25em;
+		resize:vertical;
+		overflow:auto;
+		width:100%;
+	}
+	
+	&.mxGameConfig .mxHeaderBox,
+	&.mxCommentConfig .mxCommentBox,
+	&.mxTreeConfig .mxTreeBox
+	{
+		/* do not flex:auto on .mxTreeConfig .mxCommentBox */
+		/* otherwise side effect when the user resizes .mxCommentBox or .mxTreeBox */
+		flex:auto;
+	}
+	/* common */
+	& .mxGobanContent
+	{
+		max-width:var(--gobanMaxWidth);
+		margin:auto;
+	}
+	& .mxOuterRect
+	{
+		fill:#654;
+	}
+	& .mxInnerRect
+	{
+		fill:#ddbc6b;
+	}
+	& .mxIndices
+	{
+		fill:#a89470;
+		stroke:#a89470;
+		stroke-width:0.5px;
+	}
+	& .mxGobanLines
+	{
+		stroke:#b19655;
+	}
+	& .mxStars
+	{
+		fill:#705f36;
+		stroke:none;
+	}
+	&.mxIn3d circle.mxBlack
+	{
+		stroke:#000;
+	}
+	&.mxIn3d circle.mxWhite
+	{
+		stroke:#999;
+	}
+	& .mxMarkOnLast
+	{
+		fill:#ec1d24;
+	}
+	& .mxMark
+	{
+		stroke:#ec2025;
+		stroke-width:2px;
+	}
+	& text.mxLabel
+	{
+		fill:#ec2025;
+		stroke:#ec2025;
+		stroke-width:0.5px;
+	}
+	& text.mxVariation,
+	& text.mxVariation.mxLabel
+	{
+		fill:#831;
+		stroke:#831;
+	}
+	& .mxMark.mxVariation
+	{
+		fill:none;
+		stroke:#831;
+	}
+	& .mxPointBackground.mxVariation
+	{
+		fill:#ee974b;
+		stroke:#ee974b;
+	}
+	& .mxPointBackground.mxVariation.mxOnFocus
+	{
+		fill:#fea75b;
+		stroke:#fea75b;
+	}
+	& .mxPointBackground
+	{
+		stroke:none;
+	}
+	& .mxFocusMark
+	{
+		stroke:#ec1d24;
+	}
+	& .mxHeaderTitle
+	{
+		font-weight:bold
+	}
+	& .mxWhiteRadialGradient stop:nth-of-type(1)
+	{
+		stop-color:#fff;
+	}
+	& .mxWhiteRadialGradient stop:nth-of-type(2)
+	{
+		stop-color:#ccc;
+	}
+	& .mxWhiteRadialGradient stop:nth-of-type(3)
+	{
+		stop-color:#999;
+	}
+	/* basic, comment, game and tree*/
+	&.mxBasicConfig .mxGobanBox,
+	&.mxProblemConfig .mxGobanBox
+	{
+		background:#aa9;
+	}
+	&.mxCommentConfig .mxCommentBox,
+	&.mxGameConfig .mxHeaderBox,
+	&.mxTreeConfig .mxCommentBox
+	{
+		background:#bba;
+		font-size:0.875em;
+	}
+	&.mxTreeConfig .mxTreeBox
+	{
+		background:#333;
+	}
+	& .mxTreeContent
+	{
+		width:calc(1em * var(--treeIntrinsicWidth) / 16);
+	}
+	& .mxTreeBox svg
+	{
+		width:100%;
+		height:auto;
+	}
+	&.mxTreeConfig .mxTreeBox svg .mxFocus
+	{
+		fill:#872222;
+		opacity:1;
+	}
+	&.mxTreeConfig .mxTreeBox svg .mxTreeLine
+	{
+		stroke:#666;
+	}
+	&.mxTreeConfig .mxTreeBox svg .mxMark
+	{
+		stroke:#ccc;
+	}
+	&.mxCommentConfig .mxVariationBox,
+	&.mxTreeConfig .mxVariationBox
+	{
+		font-size:1em;
+		min-height:2em;
+		line-height:2em;
+		margin:0;
+		padding:0 0.5em;
+		color:#aac8c2;
+	}
+	&.mxCommentConfig .mxVariationBox button,
+	&.mxTreeConfig .mxVariationBox button
+	{
+		font-weight:bold;
+		border:1px solid #466;
+		border-radius:0;
+		background:#799;
+		color:#b00;
+		margin:1px;
+		padding:0 0.125em;
+		min-width:1.75em;
+		height:1.75em;
+		line-height:1.75;
+	}
+	/* goto */
+	& .mxGotoBox
+	{
+		display:flex;
+		justify-content:center;
+		align-items:center;
+		margin:0 0.375em;
+	}
+	& .mxGotoBox [type=range]
+	{
+		flex:1;
+		padding:0;
+		width:100%;
+		height:1.5em;
+		border:0;
+		border-radius:0;
+		background:transparent;
+	}
+	& .mxGotoBox [type=range], [type=range]::-webkit-slider-thumb
+	{
+		-webkit-appearance:none;
+	}
+	& .mxGotoBox [type=range]::-webkit-slider-runnable-track
+	{
+		box-sizing:border-box;
+		height:1em;
+		border:1px solid #122;
+		border-radius:0;
+		background:#244;
+	}
+	& .mxGotoBox [type=range]::-webkit-slider-thumb
+	{
+		margin:0;
+		box-sizing:border-box;
+		width:calc(1em - 2px);
+		height:calc(1em - 2px);
+		outline:1px solid #ec1d24;
+		border:0;
+		border-radius:0;
+		background:#ec1d24;
+	}
+	@supports selector(::-moz-range-track) and selector(::-moz-range-thumb)
+	{
+		& .mxGotoBox [type=range]::-moz-range-track
+		{
+			box-sizing:border-box;
+			height:1em;
+			border:1px solid #122;
+			border-radius:0;
+			background:#244;
+		}
+		& .mxGotoBox [type=range]::-moz-range-thumb
+		{
+			box-sizing:border-box;
+			width:1em;
+			height:1em;
+			border:0;
+			border-radius:0;
+			background:#ec1d24;
+		}
+	}
+	& .mxNavigationParent,
+	& .mxSolveParent
+	{
+		display:flex;
+		flex-wrap:wrap;
+		justify-content:space-between;
+		align-items:center;
+		gap:0.125em;
+	}
+	&
+	{
+		container:mxEidogoGlobal/inline-size;
+	}
+	@container mxEidogoGlobal (max-width:16em)
+	{
+		& .mxNavigationParent
+		{
+			flex-direction:column;
+			justify-content:start;
+			align-items:start;
+		}
+	}
+	& .mxMoveInfoBox
+	{
+		width:calc(1em * var(--moveInfoIntrinsicWidth) / 16);
+	}
+	& .mxMoveInfoBox:empty
+	{
+		display:none;
+	}
+	& .mxMoveInfoBox svg
+	{
+		width:100%;
+		height:auto;
+	}
+	& .mxMoveInfoBox text:not(:first-of-type)
+	{
+		fill:#aac8c2;
+		stroke:#aac8c2;
+	}
+	/* diagram */
+	& .mxNotSeenBox:not(:empty)
+	{
+		max-width:var(--gobanMaxWidth);
+		margin:0 auto;
+		padding:0.25em 0;
+		background:#bba;
+	}
+	/* problem */
+	&.mxProblemConfig .mxCommentBox
+	{
+		margin:0 auto;
+		background:#bba;
+		min-height:3em;
+	}
+	&.mxProblemConfig .mxCommentContent p
+	{
+		margin:0;
+		padding:0.25em;
+		line-height:1.25em;
+	}
+	/* navigation and solve */
+	& .mxNavigationBox:not(:empty),
+	& .mxSolveBox
+	{
+		margin:0;
+		display:flex;
+		flex-wrap:wrap;
+		justify-content:start;
+	}
+	& .mxNavigationParent button,
+	& .mxSolveParent button
+	{
+		font-size:0.75em;
+		margin:0.125em;
+		vertical-align:middle;
+		border-top:1px solid #fcfafc;
+		border-left:1px solid #fcfafc;
+		border-right:1px solid #fcfafc;
+		border-bottom:1px solid #c4c6c4;
+		outline:1px solid #000;
+		background-color:#ddd;
+		background:linear-gradient(to top,#fcfafc,#ddd,#999);
+	}
+	& .mxNavigationBox button,
+	& .mxSolveBox button
+	{
+		height:2em;
+		width:3em;
+		padding:0;
+	}
+	& .mxNavigationBox button svg,
+	& .mxSolveBox button svg
+	{
+		width:1.125em;
+		height:auto;
+		margin:0 auto;
+	}
+	& .mxNavigationBox button svg polygon,
+	& .mxNavigationBox button svg rect,
+	& .mxSolveBox button svg polygon,
+	& .mxSolveBox button svg rect
+	{
+		fill:#ec1e24;
+	}
+	& .mxPassBtn
+	{
+		height:2em;
+		white-space:nowrap;
+		color:#000;
+	}
+	& .mxPassBtn.mxOnVariationPassBtn
+	{
+		color:#ec1e24;
+	}
+	& .mxNavigationBox button[disabled] svg polygon,
+	& .mxNavigationBox button[disabled] svg rect,
+	& .mxSolveBox button[disabled] svg polygon,
+	& .mxSolveBox button[disabled] svg rect
+	{
+		fill:#999;
+	}
+	& .mxPassBtn[disabled]
+	{
+		color:#999;
+	}
+	/* focus, hover and cursor */
+	& *:focus {outline:none;}
+	& .mxGobanSvg:not(:focus-visible) .mxFocus {display:none;}
+	&.mxCommentConfig .mxCommentBox:focus-visible,
+	&.mxGameConfig .mxHeaderBox:focus-visible,
+	&.mxTreeConfig .mxCommentBox:focus-visible,
+	&.mxProblemConfig .mxCommentBox:focus-visible
+	{
+		background:#ddc;
+	}
+	&.mxTreeConfig .mxTreeBox:focus-visible
+	{
+		background:#444;
+	}
+	& .mxVariationBox button:focus-visible
+	{
+		outline:1px solid #fff7;
+	}
+	& .mxNavigationParent button:focus-visible,
+	& .mxSolveParent button:focus-visible
+	{
+		outline:1px solid #fff;
+		outline-offset:1px;
+	}
+	& .mxGotoBox [type=range]:focus-visible::-webkit-slider-runnable-track
+	{
+		outline:1px solid #122;
+		outline-offset:1px;
+	}
+	& .mxGotoBox [type=range]:focus-visible::-moz-range-track
+	{
+		outline:1px solid #fff7;
+		outline-offset:1px;
+	}
+	& button,
+	& [type=range],
+	&:not(.mxDiagramConfig) .mxGobanBox svg,
+	& .mxTreeBox svg circle,
+	& .mxTreeBox svg polygon,
+	& .mxTreeBox svg rect,
+	& .mxTreeBox svg text {cursor:pointer;}
 }
-.mxEidogoTheme.mxIndicesOff {--gobanMaxWidth:calc(1em * 459 / 16);}
-/* general */
-.mxEidogoTheme button {-webkit-appearance:none;-moz-appearance:none;}
-.mxEidogoTheme text {cursor:default;}
-.mxEidogoTheme input[type=text][disabled],
-.mxEidogoTheme button[disabled] {cursor:default;}
-.mxEidogoTheme svg {display:block;width:100%;height:100%;}
-.mxEidogoTheme,
-.mxEidogoTheme button {font-family:sans-serif;}
-/* layout */
-.mxEidogoTheme
-{
-	box-sizing:border-box;
-	max-width:var(--gobanMaxWidth);
-	margin:0 auto;
-}
-.mxEidogoTheme.mxCommentConfig,
-.mxEidogoTheme.mxGameConfig,
-.mxEidogoTheme.mxTreeConfig
-{
-	max-width:calc(var(--gobanMaxWidth) * 2);
-}
-.mxEidogoTheme.mxBasicConfig>div:first-of-type,
-.mxEidogoTheme.mxProblemConfig>div:first-of-type
-{
-	box-sizing:border-box;
-	margin:0 auto;
-	background:#466;
-}
-.mxEidogoTheme.mxCommentConfig>div:first-of-type,
-.mxEidogoTheme.mxGameConfig>div:first-of-type,
-.mxEidogoTheme.mxTreeConfig>div:first-of-type
-{
-	box-sizing:border-box;
-	display:flex;
-	flex-wrap:wrap;
-	justify-content:center;
-	max-width:calc(var(--gobanMaxWidth) * 2);
-}
-.mxEidogoTheme.mxCommentConfig>div:first-of-type>div,
-.mxEidogoTheme.mxGameConfig>div:first-of-type>div,
-.mxEidogoTheme.mxTreeConfig>div:first-of-type>div
-{
-	/* flexible columns */
-	/* whether one or two columns are shown */
-	/* their width will be the same in both cases */
-	/* if the available width is at least 2*var(--gobanMaxWidth)+1 */
-	/* then 2 columns are displayed */
-	/* else 1 column is displayed */
-	/* flex-basis should be the same as max-width */
-	box-sizing:border-box;
-	max-width:var(--gobanMaxWidth);
-	flex:1 1 var(--gobanMaxWidth);
-}
-.mxEidogoTheme.mxCommentConfig .mxGobanParentDiv,
-.mxEidogoTheme.mxGameConfig .mxGobanParentDiv,
-.mxEidogoTheme.mxTreeConfig .mxGobanParentDiv
-{
-	/* just to center the goban vertically */
-	display:flex;
-	flex-direction:column;
-	background:#aa9;
-}
-.mxEidogoTheme.mxCommentConfig .mxGobanDiv,
-.mxEidogoTheme.mxGameConfig .mxGobanDiv,
-.mxEidogoTheme.mxTreeConfig .mxGobanDiv
-{
-	margin:auto;
-	width:100%;
-}
-.mxEidogoTheme.mxBasicConfig .mxNavigationParentDiv,
-.mxEidogoTheme.mxCommentConfig .mxNavigationParentDiv,
-.mxEidogoTheme.mxGameConfig .mxNavigationParentDiv,
-.mxEidogoTheme.mxProblemConfig .mxSolveParentDiv,
-.mxEidogoTheme.mxTreeConfig .mxNavigationParentDiv
-{
-	padding:0.5em;
-}
-.mxEidogoTheme.mxCommentConfig .mxNavigationGrandParentDiv,
-.mxEidogoTheme.mxGameConfig .mxNavigationGrandParentDiv,
-.mxEidogoTheme.mxTreeConfig .mxNavigationGrandParentDiv
-{
-	background:#466;
-	display:flex;
-	flex-direction:column;
-	justify-content:space-between;
-}
-.mxEidogoTheme.mxCommentConfig .mxNavigationParentDiv,
-.mxEidogoTheme.mxGameConfig .mxNavigationParentDiv,
-.mxEidogoTheme.mxTreeConfig .mxNavigationParentDiv,
-.mxEidogoTheme.mxCommentConfig>div,
-.mxEidogoTheme.mxTreeConfig>div
-{
-	flex:0 0 auto;
-}
-.mxEidogoTheme.mxGameConfig .mxHeaderDiv,
-.mxEidogoTheme.mxCommentConfig .mxCommentDiv,
-.mxEidogoTheme.mxTreeConfig .mxCommentDiv,
-.mxEidogoTheme.mxTreeConfig .mxTreeDiv
-{
-	box-sizing:border-box;
-	height:8em;
-	min-height:2em;
-	margin:0 auto;
-	padding:0.25em;
-	resize:vertical;
-	overflow:auto;
-	min-width:min(100%,99vw); /* has priority to max-width */
-	max-width:1px; /* minimize as much as possible (try narrow viewport and big zoom) */
-}
-
-.mxEidogoTheme.mxGameConfig .mxHeaderDiv,
-.mxEidogoTheme.mxCommentConfig .mxCommentDiv,
-.mxEidogoTheme.mxTreeConfig .mxTreeDiv
-{
-	/* do not flex:auto on .mxTreeConfig .mxCommentDiv */
-	/* otherwise side effect when the user resizes .mxCommentDiv or .mxTreeDiv */
-	flex:auto;
-}
-/* common */
-.mxEidogoTheme .mxGobanDiv,
-.mxEidogoTheme .mxInnerGobanDiv
-{
-	margin:0 auto;
-}
-.mxEidogoTheme .mxOuterRect
-{
-	fill:#654;
-}
-.mxEidogoTheme .mxInnerRect
-{
-	fill:#ddbc6b;
-}
-.mxEidogoTheme .mxIndices
-{
-	fill:#a89470;
-	stroke:#a89470;
-	stroke-width:0.5px;
-}
-.mxEidogoTheme .mxGobanLines
-{
-	stroke:#b19655;
-}
-.mxEidogoTheme .mxStars
-{
-	fill:#705f36;
-	stroke:none;
-}
-.mxEidogoTheme.mxIn3d circle.mxBlack
-{
-	stroke:#000;
-}
-.mxEidogoTheme.mxIn3d circle.mxWhite
-{
-	stroke:#999;
-}
-.mxEidogoTheme .mxMarkOnLast
-{
-	fill:#ec1d24;
-}
-.mxEidogoTheme .mxMark
-{
-	stroke:#ec2025;
-	stroke-width:2px;
-}
-.mxEidogoTheme text.mxLabel
-{
-	fill:#ec2025;
-	stroke:#ec2025;
-	stroke-width:0.5px;
-}
-.mxEidogoTheme text.mxVariation,
-.mxEidogoTheme text.mxVariation.mxLabel
-{
-	fill:#831;
-	stroke:#831;
-}
-.mxEidogoTheme .mxMark.mxVariation
-{
-	fill:none;
-	stroke:#831;
-}
-.mxEidogoTheme .mxPointBackground.mxVariation
-{
-	fill:#ee974b;
-	stroke:#ee974b;
-}
-.mxEidogoTheme .mxPointBackground.mxVariation.mxOnFocus
-{
-	fill:#fea75b;
-	stroke:#fea75b;
-}
-.mxEidogoTheme .mxPointBackground
-{
-	stroke:none;
-}
-.mxEidogoTheme .mxFocusMark
-{
-	stroke:#ec1d24;
-}
-.mxEidogoTheme .mxTitleP
-{
-	font-weight:bold
-}
-.mxEidogoTheme .mxWhiteRadialGradient stop:nth-of-type(1)
-{
-	stop-color:#fff;
-}
-.mxEidogoTheme .mxWhiteRadialGradient stop:nth-of-type(2)
-{
-	stop-color:#ccc;
-}
-.mxEidogoTheme .mxWhiteRadialGradient stop:nth-of-type(3)
-{
-	stop-color:#999;
-}
-/* basic, comment, game and tree*/
-.mxEidogoTheme.mxBasicConfig .mxGobanDiv,
-.mxEidogoTheme.mxProblemConfig .mxGobanDiv
-{
-	background:#aa9;
-}
-.mxEidogoTheme.mxCommentConfig .mxCommentDiv,
-.mxEidogoTheme.mxGameConfig .mxHeaderDiv,
-.mxEidogoTheme.mxTreeConfig .mxCommentDiv
-{
-	background:#bba;
-	font-size:0.875em;
-}
-.mxEidogoTheme.mxTreeConfig .mxTreeDiv
-{
-	background:#333;
-}
-.mxEidogoTheme .mxTreeDiv svg
-{
-	width:unset;
-	height:unset;
-}
-.mxEidogoTheme.mxTreeConfig .mxTreeDiv svg .mxFocus
-{
-	fill:#872222;
-	opacity:1;
-}
-.mxEidogoTheme.mxTreeConfig .mxTreeDiv svg .mxTreeLine
-{
-	stroke:#666;
-}
-.mxEidogoTheme.mxTreeConfig .mxTreeDiv svg .mxMark
-{
-	stroke:#ccc;
-}
-.mxEidogoTheme.mxCommentConfig .mxVariationDiv,
-.mxEidogoTheme.mxTreeConfig .mxVariationDiv
-{
-	font-size:1em;
-	min-height:2em;
-	line-height:2em;
-	margin:0;
-	padding:0 0.5em;
-	color:#aac8c2;
-}
-.mxEidogoTheme.mxCommentConfig .mxVariationDiv button,
-.mxEidogoTheme.mxTreeConfig .mxVariationDiv button
-{
-	font-size:1em;
-	font-weight:bold;
-	border:1px solid #466;
-	border-radius:0;
-	background:#799;
-	color:#b00;
-	margin:1px;
-	padding:0 0.125em;
-	min-width:1.75em;
-	height:1.75em;
-	line-height:1.75;
-}
-/* goto */
-.mxEidogoTheme .mxGotoDiv
-{
-	display:flex;
-	justify-content:center;
-	align-items:center;
-	margin:0 0.375em;
-}
-.mxEidogoTheme .mxGotoDiv [type=range]
-{
-	flex:1;
-	padding:0;
-	width:100%;
-	height:1.5em;
-	border:0;
-	border-radius:0;
-	background:transparent;
-}
-.mxEidogoTheme .mxGotoDiv [type=range], [type=range]::-webkit-slider-thumb
-{
-	-webkit-appearance:none;
-}
-.mxEidogoTheme .mxGotoDiv [type=range]::-webkit-slider-runnable-track
-{
-	box-sizing:border-box;
-	height:1em;
-	border:1px solid #122;
-	border-radius:0;
-	background:#244;
-}
-.mxEidogoTheme .mxGotoDiv [type=range]::-moz-range-track
-{
-	box-sizing:border-box;
-	height:1em;
-	border:1px solid #122;
-	border-radius:0;
-	background:#244;
-}
-.mxEidogoTheme .mxGotoDiv [type=range]::-webkit-slider-thumb
-{
-	margin:0;
-	box-sizing:border-box;
-	width:calc(1em - 2px);
-	height:calc(1em - 2px);
-	outline:1px solid #ec1d24;
-	border:0;
-	border-radius:0;
-	background:#ec1d24;
-}
-.mxEidogoTheme .mxGotoDiv [type=range]::-moz-range-thumb
-{
-	box-sizing:border-box;
-	width:1em;
-	height:1em;
-	border:0;
-	border-radius:0;
-	background:#ec1d24;
-}
-.mxEidogoTheme.mxBasicConfig .mxNavigationParentDiv,
-.mxEidogoTheme.mxCommentConfig .mxNavigationParentDiv,
-.mxEidogoTheme.mxGameConfig .mxNavigationParentDiv,
-.mxEidogoTheme.mxProblemConfig .mxSolveParentDiv,
-.mxEidogoTheme.mxTreeConfig .mxNavigationParentDiv
-{
-	display:flex;
-	flex-wrap:wrap;
-	justify-content:space-between;
-	align-items:center;
-	gap:0.125em;
-}
-.mxEidogoTheme.mxBasicConfig .mxNavigationDiv,
-.mxEidogoTheme.mxCommentConfig .mxNavigationDiv,
-.mxEidogoTheme.mxGameConfig .mxNavigationDiv,
-.mxEidogoTheme.mxProblemConfig .mxSolveDiv,
-.mxEidogoTheme.mxTreeConfig .mxNavigationDiv
-{
-	flex:auto;
-	text-align:left;
-}
-.mxEidogoTheme.mxCommentConfig .mxMoveInfoDiv,
-.mxEidogoTheme.mxTreeConfig .mxMoveInfoDiv
-{
-	flex:auto;
-	text-align:center;
-}
-.mxEidogoTheme .mxPassDiv
-{
-	flex:auto;
-	text-align:right;
-}
-.mxEidogoTheme .mxMoveInfoDiv svg
-{
-	width:unset;
-	height:unset;
-}
-.mxEidogoTheme.mxBasicConfig .mxMoveInfoDiv text:not(:first-of-type),
-.mxEidogoTheme.mxCommentConfig .mxMoveInfoDiv text:not(:first-of-type),
-.mxEidogoTheme.mxGameConfig .mxMoveInfoDiv text:not(:first-of-type),
-.mxEidogoTheme.mxTreeConfig .mxMoveInfoDiv text:not(:first-of-type)
-{
-	fill:#aac8c2;
-	stroke:#aac8c2;
-}
-/* diagram */
-.mxEidogoTheme.mxDiagramConfig .mxNotSeenDiv
-{
-	max-width:var(--gobanMaxWidth);
-	margin:0 auto;
-}
-.mxEidogoTheme .mxInnerNotSeenDiv:not(:empty)
-{
-	margin:0auto;
-	padding:0.25em 0;
-	background:#bba;
-}
-.mxEidogoTheme .mxInnerNotSeenDiv
-{
-	margin:0 auto;
-}
-/* problem */
-.mxEidogoTheme.mxProblemConfig .mxCommentDiv
-{
-	margin:0 auto;
-    background:#bba;
-	min-height:3em;
-}
-.mxEidogoTheme.mxProblemConfig .mxCommentContentDiv p
-{
-	margin:0;
-	padding:0.25em;
-	line-height:1.25em;
-}
-/* navigation and solve */
-.mxEidogoTheme .mxNavigationDiv,
-.mxEidogoTheme .mxSolveDiv
-{
-	margin:0;
-	display:flex;
-	flex-wrap:wrap;
-}
-.mxEidogoTheme .mxNavigationDiv:empty,
-.mxEidogoTheme .mxSolveDiv:empty
-{
-	margin:0;
-	display:block;
-}
-.mxEidogoTheme .mxNavigationDiv button,
-.mxEidogoTheme .mxPassDiv button,
-.mxEidogoTheme .mxSolveDiv button
-{
-	font-size:0.75em;
-	margin:0.125em;
-	vertical-align:middle;
-	border-top:1px solid #fcfafc;
-	border-left:1px solid #fcfafc;
-	border-right:1px solid #fcfafc;
-	border-bottom:1px solid #c4c6c4;
-	outline:1px solid #000;
-	background-color:#ddd;
-	background:linear-gradient(to top,#fcfafc,#ddd,#999);
-}
-.mxEidogoTheme .mxNavigationDiv button,
-.mxEidogoTheme .mxSolveDiv button
-{
-	height:2em;
-	width:3em;
-	padding:0;
-}
-.mxEidogoTheme .mxNavigationDiv button svg,
-.mxEidogoTheme .mxSolveDiv button svg
-{
-	width:1.125em;
-	height:auto;
-	margin:0 auto;
-}
-.mxEidogoTheme .mxNavigationDiv button svg polygon,
-.mxEidogoTheme .mxNavigationDiv button svg rect,
-.mxEidogoTheme .mxSolveDiv button svg polygon,
-.mxEidogoTheme .mxSolveDiv button svg rect
-{
-	fill:#ec1e24;
-}
-.mxEidogoTheme .mxPassDiv button
-{
-	height:2em;
-	white-space:nowrap;
-}
-.mxEidogoTheme .mxPassDiv button span
-{
-	margin:0 auto;
-	white-space:no-break;
-	color:#444;
-}
-.mxEidogoTheme .mxPassDiv button.mxOnVariationPassBtn span
-{
-	color:#ec1e24;
-}
-.mxEidogoTheme .mxNavigationDiv button[disabled] svg polygon,
-.mxEidogoTheme .mxNavigationDiv button[disabled] svg rect,
-.mxEidogoTheme .mxSolveDiv button[disabled] svg polygon,
-.mxEidogoTheme .mxSolveDiv button[disabled] svg rect
-{
-	fill:#999;
-}
-.mxEidogoTheme .mxPassDiv button[disabled] span
-{
-	color:#999;
-}
-/* focus, hover and cursor */
-.mxEidogoTheme *:focus {outline:none;}
-.mxEidogoTheme .mxGobanSvg:not(:focus-visible) .mxFocus {display:none;}
-.mxEidogoTheme.mxCommentConfig .mxCommentDiv:focus-visible,
-.mxEidogoTheme.mxGameConfig .mxHeaderDiv:focus-visible,
-.mxEidogoTheme.mxTreeConfig .mxCommentDiv:focus-visible,
-.mxEidogoTheme.mxProblemConfig .mxCommentDiv:focus-visible
-{
-	background:#ddc;
-}
-.mxEidogoTheme.mxTreeConfig .mxTreeDiv:focus-visible
-{
-	background:#444;
-}
-.mxEidogoTheme .mxVariationDiv button:focus-visible
-{
-	outline:1px solid #fff7;
-}
-.mxEidogoTheme .mxNavigationDiv button:focus-visible,
-.mxEidogoTheme .mxSolveDiv button:focus-visible,
-.mxEidogoTheme .mxPassDiv button:focus-visible
-{
-	outline:1px solid #fff;
-	outline-offset:1px;
-}
-.mxEidogoTheme .mxGotoDiv [type=range]:focus-visible::-webkit-slider-runnable-track
-{
-	outline:1px solid #122;
-	outline-offset:1px;
-}
-.mxEidogoTheme .mxGotoDiv [type=range]:focus-visible::-moz-range-track
-{
-	outline:1px solid #fff7;
-	outline-offset:1px;
-}
-.mxEidogoTheme button,
-.mxEidogoTheme [type=range],
-.mxEidogoTheme:not(.mxDiagramConfig) .mxGobanDiv svg,
-.mxEidogoTheme .mxTreeDiv svg circle,
-.mxEidogoTheme .mxTreeDiv svg polygon,
-.mxEidogoTheme .mxTreeDiv svg rect,
-.mxEidogoTheme .mxTreeDiv svg text {cursor:pointer;}

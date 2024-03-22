@@ -26,7 +26,6 @@ include "../../_php/insertCss.php";
 mxG.D[mxG.K].a.in3dOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.initMethod="last"; // ("first","loop","last") default "first"
 // Goban
-mxG.D[mxG.K].a.pointsNumMax=19; // (positive integer) default 0
 mxG.D[mxG.K].a.stretching="0,1,1,2"; // (list) default "0,0,1,1"
 mxG.D[mxG.K].a.gridPadding=2; // (float) default 0
 mxG.D[mxG.K].a.gobanMargin=2; // (float) default 0

@@ -24,7 +24,7 @@ body
 	padding:1px;
 	font-family:sans-serif;
 }
-div.mxGlobalBoxDiv
+div.mxGlobal
 {
 	margin:1em auto;
 	padding:0 1em;

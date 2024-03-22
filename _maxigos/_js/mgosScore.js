@@ -1,7 +1,7 @@
 // maxiGos v8 > mgosScore.js
 if(!mxG.G.prototype.createScore)
 {
-// mxG.fr(": "," : ");
+mxG.fr(": "," : ");
 mxG.fr("Score","Score");
 mxG.fr("Score method","Méthode de score");
 mxG.fr("trivial","triviale");
@@ -15,26 +15,25 @@ mxG.fr("Chinese style","chinois");
 mxG.fr("Japanese style","japonais");
 mxG.fr("Unusual komi","Komi inhabituel");
 mxG.fr("Unknown rules","Règle inconnue");
-
 mxG.G.prototype.buildScore=function()
 {
 	let s="",i,j,cb=0,cw=0,ib=0,iw=0,pb=0,pw=0,handicap,komi,rules,r,
 		hasC=this.hasC("C"),expectedKomi;
 	rules=this.getInfo("RU");
-	if(!rules) rules=this.scoreDefaultRules;
-	if(rules) rules=rules.toLowerCase();
-	if((rules=="chinese")||(rules=="ing")||(rules=="goe")||(rules=="nz")) r="C";
-	else if((rules=="aga")||(rules=="french")||(rules=="british")) r="C";
-	else if((rules=="japanese")||(rules=="korean")) r="J";
+	if(!rules)rules=this.scoreDefaultRules;
+	if(rules)rules=rules.toLowerCase();
+	if((rules=="chinese")||(rules=="ing")||(rules=="goe")||(rules=="nz"))r="C";
+	else if((rules=="aga")||(rules=="french")||(rules=="british"))r="C";
+	else if((rules=="japanese")||(rules=="korean"))r="J";
 	else r=null;
 	komi=this.getInfo("KM");
 	if(komi)
 	{
 		komi=parseFloat(komi);
-		if(!komi) komi=0; // when komi is a string such as BBW, BBBW ...?
+		if(!komi)komi=0; // when komi is a string such as BBW, BBBW ...?
 	}
-	else if(r=="J") komi=6.5;
-	else if(r=="C") komi=7.5;
+	else if(r=="J")komi=6.5;
+	else if(r=="C")komi=7.5;
 	else komi=5.5; // default sgf value
 	// assume komi when handicap is 0.5+handicap-1 if Chinese style rules in the SGF
 	// todo:
@@ -42,8 +41,8 @@ mxG.G.prototype.buildScore=function()
 	//	but some handicap-like AB are at the beginning
 	//	try to guess the handicap?
 	handicap=this.getInfo("HA");
-	if(handicap) {handicap=parseInt(handicap);if(!handicap) handicap=0;}
-	else if(komi==0.5) handicap=1;
+	if(handicap){handicap=parseInt(handicap);if(!handicap)handicap=0;}
+	else if(komi==0.5)handicap=1;
 	else handicap=0;
 	for(i=1;i<=this.DX;i++)
 		for(j=1;j<=this.DY;j++)
@@ -51,9 +50,9 @@ mxG.G.prototype.buildScore=function()
 			switch(this.scoreBan.computed[i][j])
 			{
 				case "B":cb++;
-					if(this.scoreBan.initial[i][j]=="W") pb++;break;
+					if(this.scoreBan.initial[i][j]=="W")pb++;break;
 				case "W":cw++;
-					if(this.scoreBan.initial[i][j]=="B") pw++;break;
+					if(this.scoreBan.initial[i][j]=="B")pw++;break;
 				default:
 					switch(this.scoreBan.initial[i][j])
 					{
@@ -67,56 +66,55 @@ mxG.G.prototype.buildScore=function()
 	// when !r, do not display score to avoid inconsistency
 	if(r=="C")
 	{
-		if(handicap) expectedKomi=0.5+handicap-1;
+		if(handicap)expectedKomi=0.5+handicap-1;
 		else expectedKomi=7.5;
-		if(hasC) s+="<h1 tabindex=\"0\">";
+		if(hasC)s+=`<h1 tabindex="0">`;
 		s+=this.local("Score")+" ("+this.local("Chinese style")+")";
-		if(hasC) s+="</h1>"; else s+="\n";
-		if(hasC) s+="<p>";
+		if(hasC)s+="</h1>";else s+="\n";
+		if(hasC)s+="<p>";
 		s+=this.local("Black")+this.local(": ")+cb+" + "+ib+" = "+(cb+ib);
-		if(hasC) s+="</p>"; else s+="\n";
-		if(hasC) s+="<p>";
+		if(hasC)s+="</p>";else s+="\n";
+		if(hasC)s+="<p>";
 		s+=this.local("White")+this.local(": ")+cw+" + "+iw+" + "+komi+" = "+(cw+iw+komi);
-		if(hasC) s+="</p>"; else s+="\n";
+		if(hasC)s+="</p>";else s+="\n";
 		if(expectedKomi!=komi)
 		{
-			if(hasC) s+="<p>";
+			if(hasC)s+="<p>";
 			s+=this.local("Unusual komi");
-			if(hasC) s+="</p>"; else s+="\n";
+			if(hasC)s+="</p>";else s+="\n";
 		}
 	}
 	else if(r=="J")
 	{
-		if(handicap) expectedKomi=0.5;
+		if(handicap)expectedKomi=0.5;
 		else expectedKomi=6.5;
-		if(hasC) s+="<h1 tabindex=\"0\">";
+		if(hasC)s+=`<h1 tabindex="0">`;
 		s+=this.local("Score")+" ("+this.local("Japanese style")+")";
-		if(hasC) s+="</h1>"; else s+="\n";
-		if(hasC) s+="<p>";
+		if(hasC)s+="</h1>";else s+="\n";
+		if(hasC)s+="<p>";
 		s+=this.local("Black")+this.local(": ")+cb+" + "+pb+" = "+(cb+pb);
-		if(hasC) s+="</p>"; else s+="\n";
-		if(hasC) s+="<p>";
+		if(hasC)s+="</p>";else s+="\n";
+		if(hasC)s+="<p>";
 		s+=this.local("White")+this.local(": ")+cw+" + "+pw+" + "+komi+" = "+(cw+pw+komi);
-		if(hasC) s+="</p>"; else s+="\n";
+		if(hasC)s+="</p>";else s+="\n";
 		if(expectedKomi!=komi)
 		{
-			if(hasC) s+="<p>";
+			if(hasC)s+="<p>";
 			s+=this.local("Unusual komi");
-			if(hasC) s+="</p>"; else s+="\n";
+			if(hasC)s+="</p>";else s+="\n";
 		}
 	}
 	else
 	{
-		if(hasC) s+="<h1 tabindex=\"0\">";
+		if(hasC)s+=`<h1 tabindex="0">`;
 		s+=this.local("Score");
-		if(hasC) s+="</h1>"; else s+="\n";
-		if(hasC) s+="<p>";
+		if(hasC)s+="</h1><p>";else s+="\n";
 		s+=this.local("Unknown rules");
-		if(hasC) s+="</p>"; else s+="\n";
+		if(hasC)s+="</p>";else s+="\n";
 	}
-	if(hasC) s="<div class=\"mxScoreContentDiv\">"+s+"</div>";
+	if(hasC)s=`<div class="mxScoreContentDiv">${s}</div>`;
 	return s;
-};
+}
 mxG.G.prototype.getTX=function()
 {
 	let TX=["TB","TW"];
@@ -124,11 +122,11 @@ mxG.G.prototype.getTX=function()
 	aN=this.cN4Score;
 	for(z=0;z<7;z++)
 	{
-		if(aN.P[TX[z]]) aLen=aN.P[TX[z]].length;else aLen=0;
+		if(aN.P[TX[z]])aLen=aN.P[TX[z]].length;else aLen=0;
 		for(k=0;k<aLen;k++)
 		{
 			s=aN.P[TX[z]][k];
-			if(s.length==2)
+			if(s.match(/^[a-zA-Z]{2}$/))
 			{
 				x=s.c2n(0);
 				y=s.c2n(1);
@@ -136,7 +134,7 @@ mxG.G.prototype.getTX=function()
 				if(!this.ephemeralScore)
 					this.scoreBan.modified[x][y]=this.scoreBan.marked[x][y];
 			}
-			else if(s.length==5)
+			else if(s.match(/^[a-zA-Z]{2}:[a-zA-Z]{2}$/))
 			{
 				x1=s.c2n(0);
 				y1=s.c2n(1);
@@ -152,7 +150,7 @@ mxG.G.prototype.getTX=function()
 			}
 		}
 	}
-};
+}
 mxG.G.prototype.removeTX=function(a,b)
 {
 	// remove TM[ab] or TW[ab] if any
@@ -164,11 +162,11 @@ mxG.G.prototype.removeTX=function(a,b)
 		if(aN.P[TX[kp]])
 		{
 			km=aN.P[TX[kp]].length;
-			for(k=0;k<km;k++) if(aN.P[TX[kp]][k]==v) break;
-			if(k<km) aN.takeOff(TX[kp],k);
+			for(k=0;k<km;k++)if(aN.P[TX[kp]][k]==v)break;
+			if(k<km)aN.takeOff(TX[kp],k);
 		}
 	}
-};
+}
 mxG.G.prototype.addTX=function(tx,a,b)
 {
 	// tx is "TB" or "TW"
@@ -176,9 +174,9 @@ mxG.G.prototype.addTX=function(tx,a,b)
 	aN=this.cN4Score;
 	v=this.xy2s(a,b);
 	this.removeTX(a,b);
-	if(aN.P[tx]) aN.P[tx].push(v);
+	if(aN.P[tx])aN.P[tx].push(v);
 	else aN.P[tx]=[v];
-};
+}
 mxG.G.prototype.setTX=function(from)
 {
 	let i,j;
@@ -192,7 +190,7 @@ mxG.G.prototype.setTX=function(from)
 				default:this.removeTX(i,j);
 			}
 		}
-};
+}
 mxG.G.prototype.z_estimate=function(x,y)
 {
 	let nat,z=0;
@@ -201,11 +199,11 @@ mxG.G.prototype.z_estimate=function(x,y)
 		nat=this.scoreBan.computed[x][y]?
 				this.scoreBan.computed[x][y]:
 					this.scoreBan.initial[x][y];
-		if((nat=="B")||(nat=="W")) z=(nat=="B"?1:2);
+		if((nat=="B")||(nat=="W"))z=(nat=="B"?1:2);
 		else z=4;
 	}
 	return z;
-};
+}
 mxG.G.prototype.checkNeighbour=function(x,y)
 {
 	let z=0;
@@ -213,36 +211,36 @@ mxG.G.prototype.checkNeighbour=function(x,y)
 		|this.z_estimate(x+1,y)
 		|this.z_estimate(x,y-1)
 		|this.z_estimate(x,y+1);
-};
+}
 mxG.G.prototype.currentOwner_estimate=function(x,y)
 {
 	let nat;
 	nat=this.scoreBan.modified[x][y];
-	if((nat=="B")||(nat=="W")) return nat;
+	if((nat=="B")||(nat=="W"))return nat;
 	nat=this.scoreBan.initial[x][y];
-	if((nat=="B")||(nat=="W")) return nat;
+	if((nat=="B")||(nat=="W"))return nat;
 	return "E";
-};
+}
 mxG.G.prototype.currentOwner=function(x,y)
 {
 	let nat;
-	if(this.scoreMethod=="estimate") return this.currentOwner_estimate(x,y);
+	if(this.scoreMethod=="estimate")return this.currentOwner_estimate(x,y);
 	nat=this.scoreBan.computed[x][y];
-	if((nat=="B")||(nat=="W")) return nat;
+	if((nat=="B")||(nat=="W"))return nat;
 	nat=this.scoreBan.initial[x][y];
-	if((nat=="B")||(nat=="W")) return nat;
+	if((nat=="B")||(nat=="W"))return nat;
 	return "E";
-};
+}
 mxG.G.prototype.w4po=function(s,x,y,a)
 {
 	if(this.gor.inGoban(x,y))
 	{
 		let z;
 		z=this.currentOwner(x,y);
-		if(z=="B") s.b+=a; else if(z=="W") s.w+=a;
+		if(z=="B")s.b+=a;else if(z=="W")s.w+=a;
 	}
 	return s;
-};
+}
 mxG.G.prototype.possibleOwner=function(x,y)
 {
 	let s={b:0,w:0},z,i,j,k,n;
@@ -256,45 +254,45 @@ mxG.G.prototype.possibleOwner=function(x,y)
 					n=Math.pow(3,k-Math.abs(x-i)+k-Math.abs(y-j));
 					s=this.w4po(s,i,j,n);
 				}
-	if(s.b>s.w) return "B";
-	if(s.w>s.b) return "W";
+	if(s.b>s.w)return "B";
+	if(s.w>s.b)return "W";
 	return null;
 	// todo: better choice? scan more distant points?
-};
+}
 mxG.G.prototype.getNatWhenScore_trivial=function(x,y)
 {
 	return this.scoreBan.initial[x][y];
-};
+}
 mxG.G.prototype.getNatWhenScore_counting=function(x,y)
 {
-	if(this.scoreBan.initial[x][y]=="E") return "E";
-	if(this.scoreBan.taken[x][y]) return "E";
+	if(this.scoreBan.initial[x][y]=="E")return "E";
+	if(this.scoreBan.taken[x][y])return "E";
 	return this.scoreBan.initial[x][y];
-};
+}
 mxG.G.prototype.getNatWhenScore_propagate=function(x,y)
 {
 	let natm;
 	if(this.scoreBan.initial[x][y]=="E")
 	{
-		if(this.scoreBan.modified[x][y]) natm=this.scoreBan.modified[x][y];
+		if(this.scoreBan.modified[x][y])natm=this.scoreBan.modified[x][y];
 		else natm="E";
 	}
 	else
 	{
-		if(this.scoreBan.taken[x][y]) natm="E";
+		if(this.scoreBan.taken[x][y])natm="E";
 		else natm=this.scoreBan.initial[x][y];
 	}
 	return natm;
-};
+}
 mxG.G.prototype.getNatWhenScore_estimate=function(x,y)
 {
 	return this.getNatWhenScore_propagate(x,y);
-};
+}
 mxG.G.prototype.getNatWhenScore=function(x,y)
 {
 	// do not use this.scoreBan.computed in getNatWhenScore()
 	return this["getNatWhenScore_"+this.scoreMethod](x,y);
-};
+}
 mxG.G.prototype.guessNextWhenScore=function(x,y)
 {
 	let a,b,c,po;
@@ -302,12 +300,12 @@ mxG.G.prototype.guessNextWhenScore=function(x,y)
 	if((this.lastScoreAct.x==x)&&(this.lastScoreAct.y==y))
 	{
 		b=this.lastScoreAct.a;
-		if((b=="B")&&(c=="W")) a="E";
-		else if((b=="B")&&(c==null)) a="W";
-		else if((b=="W")&&(c=="B")) a="E";
-		else if((b=="W")&&(c==null)) a="B";
-		else if((b=="E")&&(c=="B")) a="W";
-		else if((b=="E")&&(c=="W")) a="B";
+		if((b=="B")&&(c=="W"))a="E";
+		else if((b=="B")&&(c==null))a="W";
+		else if((b=="W")&&(c=="B"))a="E";
+		else if((b=="W")&&(c==null))a="B";
+		else if((b=="E")&&(c=="B"))a="W";
+		else if((b=="E")&&(c=="W"))a="B";
 	}
 	else
 	{
@@ -328,9 +326,9 @@ mxG.G.prototype.hasPrisonerWhenScore=function(nat,x,y)
 		let xy=this.xy(x,y);
 		let natm=this.getNatWhenScore(x,y);
 		let onat=(nat=="B"?"W":"B");
-		if(this.visitedWhenHasPrisoner[xy]) return 0;
+		if(this.visitedWhenHasPrisoner[xy])return 0;
 		this.visitedWhenHasPrisoner[xy]=1;
-		if(this.scoreBan.taken[x][y]==onat) return 1;
+		if(this.scoreBan.taken[x][y]==onat)return 1;
 		// no taken onat stone found, continue with other nat stones or empty points
 		if(natm!=onat)
 			return this.hasPrisonerWhenScore(nat,x-1,y)
@@ -339,7 +337,7 @@ mxG.G.prototype.hasPrisonerWhenScore=function(nat,x,y)
 				|this.hasPrisonerWhenScore(nat,x,y+1);
 	}
 	return 0;
-};
+}
 mxG.G.prototype.checkSurrounding=function(x,y)
 {
 	// verify is (x,y) is in an area surrounded by B or W
@@ -351,24 +349,24 @@ mxG.G.prototype.checkSurrounding=function(x,y)
 	{
 		let xy=this.xy(x,y);
 		let natm=this.getNatWhenScore(x,y);
-		if(this.visitedWhenCheckSurrounding[xy]) return 0;
+		if(this.visitedWhenCheckSurrounding[xy])return 0;
 		this.visitedWhenCheckSurrounding[xy]=1;
 		if(natm=="E")
 			return this.checkSurrounding(x-1,y)
 				|this.checkSurrounding(x+1,y)
 				|this.checkSurrounding(x,y-1)
 				|this.checkSurrounding(x,y+1);
-		if(natm=="B") return 1;
-		if(natm=="W") return 2;
+		if(natm=="B")return 1;
+		if(natm=="W")return 2;
 	}
 	return 0;
-};
+}
 mxG.G.prototype.canSwapWhenScore=function(nat,x,y)
 {
-	if(this.scoreBan.computed[x][y]) return 1;
+	if(this.scoreBan.computed[x][y])return 1;
 	this.visitedWhenHasPrisoner=[];
 	return !this.hasPrisonerWhenScore(nat,x,y);
-};
+}
 mxG.G.prototype.swapWhenScore=function(nat,x,y,d)
 {
 	// if d,
@@ -383,19 +381,19 @@ mxG.G.prototype.swapWhenScore=function(nat,x,y,d)
 	{
 		let xy=this.xy(x,y);
 		let natm=this.getNatWhenScore(x,y);
-		if(this.visitedWhenSwap[xy]) return 0;
+		if(this.visitedWhenSwap[xy])return 0;
 		this.visitedWhenSwap[xy]=1;
 		if((natm==nat)||(natm=="E"))
 		{
 			if(d)
 			{
 				this.scoreBan.computed[x][y]=onat;
-				if(this.scoreBan.initial[x][y]==nat) this.scoreBan.taken[x][y]=nat;
+				if(this.scoreBan.initial[x][y]==nat)this.scoreBan.taken[x][y]=nat;
 			}
 			else
 			{
 				this.scoreBan.computed[x][y]=null;
-				if(this.scoreBan.initial[x][y]==nat) this.scoreBan.taken[x][y]=null;
+				if(this.scoreBan.initial[x][y]==nat)this.scoreBan.taken[x][y]=null;
 			}
 			this.swapWhenScore(nat,x-1,y,d);
 			this.swapWhenScore(nat,x+1,y,d);
@@ -403,7 +401,7 @@ mxG.G.prototype.swapWhenScore=function(nat,x,y,d)
 			this.swapWhenScore(nat,x,y+1,d);
 		}
 	}
-};
+}
 mxG.G.prototype.computeScoreMarks_trivial=function(v)
 {
 	let i,j;
@@ -423,7 +421,7 @@ mxG.G.prototype.computeScoreMarks_trivial=function(v)
 				}
 			}
 		}
-};
+}
 mxG.G.prototype.computeScoreMarks_counting=function(v)
 {
 	let i,j;
@@ -437,17 +435,17 @@ mxG.G.prototype.computeScoreMarks_counting=function(v)
 					let z;
 					this.visitedWhenCheckSurrounding=[];
 					z=this.checkSurrounding(i,j);
-					if(z==1) this.scoreBan.computed[i][j]="B";
-					else if(z==2) this.scoreBan.computed[i][j]="W";
+					if(z==1)this.scoreBan.computed[i][j]="B";
+					else if(z==2)this.scoreBan.computed[i][j]="W";
 					else this.scoreBan.computed[i][j]=null;
 				}
 			}
 		}
-};
+}
 mxG.G.prototype.computeScoreMarks_propagate=function(v)
 {
 	this.computeScoreMarks_counting(v);
-};
+}
 mxG.G.prototype.computeScoreMarks_estimate=function(v)
 {
 	let i,j;
@@ -485,8 +483,8 @@ mxG.G.prototype.computeScoreMarks_estimate=function(v)
 				if(this.scoreBan.initial[i][j]=="E")
 				{
 					let z=this.checkNeighbour(i,j);
-					if(z==1) this.scoreBan.computed[i][j]="B";
-					else if(z==2) this.scoreBan.computed[i][j]="W";
+					if(z==1)this.scoreBan.computed[i][j]="B";
+					else if(z==2)this.scoreBan.computed[i][j]="W";
 				}
 			}
 		}
@@ -500,7 +498,7 @@ mxG.G.prototype.computeScoreMarks_estimate=function(v)
 				if(this.scoreBan.initial[i][j]=="E")
 				{
 					let z=this.checkNeighbour(i,j);
-					if((z!=1)&&(z!=2)) this.scoreBan.buffer[i][j]=null;
+					if((z!=1)&&(z!=2))this.scoreBan.buffer[i][j]=null;
 				}
 			}
 		}
@@ -512,14 +510,14 @@ mxG.G.prototype.computeScoreMarks_estimate=function(v)
 				this.scoreBan.computed[i][j]=this.scoreBan.buffer[i][j];
 			}
 		}
-};
+}
 mxG.G.prototype.computeScoreMarks=function(v)
 {
-	if(this.scoreMethod=="estimate") this.computeScoreMarks_estimate(v);
-	else if(this.scoreMethod=="propagate") this.computeScoreMarks_propagate(v);
-	else if(this.scoreMethod=="counting") this.computeScoreMarks_counting(v);
+	if(this.scoreMethod=="estimate")this.computeScoreMarks_estimate(v);
+	else if(this.scoreMethod=="propagate")this.computeScoreMarks_propagate(v);
+	else if(this.scoreMethod=="counting")this.computeScoreMarks_counting(v);
 	else this.computeScoreMarks_trivial(v);
-};
+}
 mxG.G.prototype.checkScore_trivial=function(a,b)
 {
 	let po,opo;
@@ -544,7 +542,7 @@ mxG.G.prototype.checkScore_trivial=function(a,b)
 			}
 	}
 	this.computeScoreMarks(null);
-};
+}
 mxG.G.prototype.checkScore_counting=function(x,y)
 {
 	let nat=this.scoreBan.initial[x][y],d=this.scoreBan.computed[x][y]?0:1,z;
@@ -560,10 +558,10 @@ mxG.G.prototype.checkScore_counting=function(x,y)
 		this.visitedWhenCheckSurrounding=[];
 		z=this.checkSurrounding(x,y);
 		this.visitedWhenSwap=[];
-		if(z==1) this.swapWhenScore("W",x,y,d);
-		else if(z==2) this.swapWhenScore("B",x,y,d);
+		if(z==1)this.swapWhenScore("W",x,y,d);
+		else if(z==2)this.swapWhenScore("B",x,y,d);
 	}
-};
+}
 mxG.G.prototype.clearMarkWhenScore=function(c,o,x,y)
 {
 	if(this.gor.inGoban(x,y)&&!this.scoreBan.modified[x][y]
@@ -572,7 +570,7 @@ mxG.G.prototype.clearMarkWhenScore=function(c,o,x,y)
 		this.visitedWhenSwap=[];
 		this.swapWhenScore(o,x,y,0);
 	}
-};
+}
 mxG.G.prototype.checkScore_propagate=function(x,y)
 {
 	let nat=this.scoreBan.initial[x][y],a,b,c=this.scoreBan.computed[x][y],d=c?0:1,z;
@@ -590,8 +588,8 @@ mxG.G.prototype.checkScore_propagate=function(x,y)
 			this.visitedWhenCheckSurrounding=[];
 			z=this.checkSurrounding(x,y);
 			// if (x,y) in a surrounded area, swap the whole area then exit 
-			if(z==1) {this.visitedWhenSwap=[];this.swapWhenScore("W",x,y,d);return;}
-			if(z==2) {this.visitedWhenSwap=[];this.swapWhenScore("B",x,y,d);return;}
+			if(z==1){this.visitedWhenSwap=[];this.swapWhenScore("W",x,y,d);return;}
+			if(z==2){this.visitedWhenSwap=[];this.swapWhenScore("B",x,y,d);return;}
 		}
 		else
 		{
@@ -607,7 +605,7 @@ mxG.G.prototype.checkScore_propagate=function(x,y)
 		this.scoreBan.modified[x][y]=a;
 		this.scoreBan.computed[x][y]=((a=="E")?null:a);
 	}
-};
+}
 mxG.G.prototype.checkScore_estimate=function(x,y)
 {
 	// change stone status
@@ -615,11 +613,11 @@ mxG.G.prototype.checkScore_estimate=function(x,y)
 	if((nat=="B")||(nat=="W"))
 	{
 		let onat=(nat=="B"?"W":"B");
-		if(this.scoreBan.modified[x][y]==onat) this.scoreBan.modified[x][y]="E";
+		if(this.scoreBan.modified[x][y]==onat)this.scoreBan.modified[x][y]="E";
 		else this.scoreBan.modified[x][y]=onat;
 		this.computeScoreMarks(null);
 	}
-};
+}
 mxG.G.prototype.initScoreBan=function()
 {
 	// initial: goban state
@@ -652,39 +650,36 @@ mxG.G.prototype.initScoreBan=function()
 	this.lastScoreAct={a:"E",x:-1,y:-1};
 	this.computeScoreMarks(null);
 	this.setTX("computed");
-};
+}
 mxG.G.prototype.checkScore=function(x,y)
 {
-	if(this.scoreMethod=="estimate") this.checkScore_estimate(x,y);
-	else if(this.scoreMethod=="propagate") this.checkScore_propagate(x,y);
-	else if(this.scoreMethod=="counting") this.checkScore_counting(x,y);
+	if(this.scoreMethod=="estimate")this.checkScore_estimate(x,y);
+	else if(this.scoreMethod=="propagate")this.checkScore_propagate(x,y);
+	else if(this.scoreMethod=="counting")this.checkScore_counting(x,y);
 	else this.checkScore_trivial(x,y);
 	this.setTX("computed");
 	this.updateAll();
-};
+}
 mxG.G.prototype.enableAllWhenQuitScore=function()
 {
-	if(this.hasC("Tree")) this.enableTree();
-	if(this.disabledWhenEnterScore)
-	{
-		for(let k=0;k<this.disabledWhenEnterScore.length;k++)
-			this.disabledWhenEnterScore[k].disabled=false;
-	}
-	this.disabledWhenEnterScore=[];
+	if(this.hasC("Tree"))this.enableTree();
+	if(this.disabledElementsWhenScore)
+		for(let e of this.disabledElementsWhenScore)
+			e.disabled=false;
+	this.disabledElementsWhenScore=[];
 }
 mxG.G.prototype.disableAllWhenEnterScore=function()
 {
-	let list,scoreBtn=this.getE("ScoreBtn");
-	list=this.getE("GlobalBoxDiv").querySelectorAll("button,input");
-	for(let k=0;k<list.length;k++)
+	let scoreBtn=this.getE("ScoreBtn"),list=this.getE("Global").querySelectorAll("button,input");
+	for(let e of list)
 	{
-		if(!list[k].disabled&&(list[k]!=scoreBtn))
+		if(!e.disabled&&(e!=scoreBtn))
 		{
-			this.disabledWhenEnterScore.push(list[k]);
-			list[k].disabled=true;
+			this.disabledElementsWhenScore.push(e);
+			e.disabled=true;
 		}
 	}
-	if(this.hasC("Tree")) this.disableTree();
+	if(this.hasC("Tree"))this.disableTree();
 }
 mxG.G.prototype.toggleScore=function()
 {
@@ -695,7 +690,7 @@ mxG.G.prototype.toggleScore=function()
 		{
 			this.setTX("marked");
 			if(this.hasC("Edit"))
-				this.getE("CommentToolText").value=this.formerCommentWhenScore;
+				this.getE("EditCommentTool").value=this.formerCommentWhenScore;
 		}
 		this.canPlaceScore=0;
 		this.enableAllWhenQuitScore();
@@ -708,11 +703,8 @@ mxG.G.prototype.toggleScore=function()
 	}
 	else
 	{
-		if(this.ephemeralScore)
-		{
-			if(this.hasC("Edit"))
-				this.formerCommentWhenScore=this.getCommentWhenEdit();
-		}
+		if(this.ephemeralScore&&this.hasC("Edit"))
+			this.formerCommentWhenScore=this.getCommentWhenEdit();
 		this.disableAllWhenEnterScore();
 		this.canPlaceScore=1;
 		this.initialCanPlaceVariationForScore=(this.canPlaceVariation?1:0);
@@ -728,31 +720,24 @@ mxG.G.prototype.toggleScore=function()
 		this.cN4Score=this.cN;
 		this.initScoreBan();
 	}
-};
+}
 mxG.G.prototype.doScore=function()
 {
 	this.toggleScore();
 	this.updateAll();
-};
+}
 mxG.G.prototype.updateScore=function()
 {
 	if(this.getE("ScoreBtn"))
 	{
-		if(this.canPlaceScore) this.selectBtn("Score");
+		if(this.canPlaceScore)this.selectBtn("Score");
 		else this.unselectBtn("Score");
 	}
-};
+}
 mxG.G.prototype.initScore=function()
 {
-	let k=this.k;
-	if(this.scoreBtnOn)
-	{
-		let o={n:"Score",v:this.alias("Score","scoreAlias")},
-			s=this.local("Score");
-		if(o.v!=s) o.t=s;
-		this.addBtn(this.getE("ScoreDiv"),o);
-	}
-};
+	if(this.scoreBtnOn)this.addBtnClickListener("Score");
+}
 mxG.G.prototype.createScore=function()
 {
 	this.canPlaceScore=0;
@@ -762,7 +747,7 @@ mxG.G.prototype.createScore=function()
 	this.scoreDefaultRules=this.setA("scoreDefaultRules",null,"string");
 	this.scoreInComment=this.setA("scoreInComment",0,"bool");
 	this.scoreMethod=this.setA("scoreMethod","trivial","string");
-	this.disabledWhenEnterScore=[];
-	return this.scoreBtnOn?this.createBtnBox("Score"):"";
-};
+	this.disabledElementsWhenScore=[];
+	return this.scoreBtnOn?this.createBtn("Score"):"";
+}
 }

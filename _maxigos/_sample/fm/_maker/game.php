@@ -23,7 +23,7 @@ include "../../../_js/mgosGuess.js";
 include "../../../_js/mgosVersion.js";
 ?>
 mxG.K++;
-mxG.B=[["Goban","Navigation","Loop","Variation","Guess"],["Header","Options","Speed",["Image","Pass","Sgf"],"Version"]];
+mxG.B=[["Goban","Navigation","Loop","Variation","Guess"],["Header","Options","Speed",["Png","Svg","Pass","Sgf"],"Version"]];
 mxG.D[mxG.K]=new mxG.G(mxG.K,mxG.B);
 mxG.D[mxG.K].theme="<?=$theme?>";
 mxG.D[mxG.K].config="<?=$config?>";
@@ -37,7 +37,6 @@ mxG.D[mxG.K].a.allowFileAsSource=1; // (0,1) default 1
 // mxG.D[mxG.K].a.sourceFilter=""; // (str) default ""
 mxG.D[mxG.K].a.initMethod="last"; // ("first","loop","last") default "first"
 // Goban
-mxG.D[mxG.K].a.pointsNumMax=0; // (positive integer) default 0
 mxG.D[mxG.K].a.stoneShadowOn=0; // (0,1) default 0 (require in3dOn=1)
 mxG.D[mxG.K].a.stretching="0,0,1,1"; // (list) default "0,0,1,1"
 mxG.D[mxG.K].a.gridPadding=2; // (float) default 0
@@ -59,14 +58,14 @@ mxG.D[mxG.K].a.canPlaceGuess=1; // (0,1) default 0
 // Header
 mxG.D[mxG.K].a.headerBoxOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.hideInHeader="NumOfMoves"; // (set) default ""
-mxG.D[mxG.K].a.concatInHeader="DateToTitle,TeamToPlayer,KomiToResult,HandicapToResult"; // (set) default ""
+mxG.D[mxG.K].a.concatInHeader="DateToTitle,KomiToResult,HandicapToResult"; // (set) default ""
 // Image
 mxG.D[mxG.K].a.svgBtnOn=1; // (0,1) default 0
 // Loop
 mxG.D[mxG.K].a.loopTime=1000; // (positive integer) default 1000
 // Navigation
 mxG.D[mxG.K].a.navigations="First,TenPred,Pred,Loop,Next,TenNext,Last"; // (set) default "First,TenPred,Pred,Next,TenNext,Last"
-// options
+// Options
 mxG.D[mxG.K].a.optionsBoxOn=1; // (0,1,null) default 0
 mxG.D[mxG.K].a.optionsBtnOn=0; // (0,1) default 0
 mxG.D[mxG.K].a.hideInOptions="CanScore,SiblingsOn,AnimatedStoneOn,AnimatedStoneTime"; // (set) default ""

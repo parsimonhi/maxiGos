@@ -1,289 +1,304 @@
 .mxTigerTheme
 {
-	--gobanMaxWidth:calc(1em * 511 / 16);
+	--gobanMaxWidth:calc(1em * var(--gobanIntrinsicWidth,511) / 16);
+	--navigationMaxWidth:calc(1em * 511 / 16);
 	text-align:left;
-}
-/* general */
-.mxTigerTheme button {-webkit-appearance:none;-moz-appearance:none;}
-.mxTigerTheme text {cursor:default;}
-.mxTigerTheme input[type=text][disabled],
-.mxTigerTheme button[disabled] {cursor:default;}
-.mxTigerTheme input[type=file] {visibility:hidden;position:fixed;}
-.mxTigerTheme svg {display:block;}
-/* font */
-.mxTigerTheme
-{
 	font-family:sans-serif;
-}
-/* don't style svg font-family since */
-/* since minimalist is the default maxigos style set with js */
-.mxTigerTheme button
-{
-	font-family:sans-serif;
-}
-/* layout */
-.mxTigerTheme
-{
-	box-sizing:border-box;
-	max-width:calc(var(--gobanMaxWidth) + 2px);
-	margin:0 auto;
-}
-.mxTigerTheme.mxCommentConfig,
-.mxTigerTheme.mxTreeConfig
-{
-	display:flex;
-	flex-wrap:wrap;
-	justify-content:center;
-	align-items:stretch;
-	gap:0.25em;
-	max-width:calc(var(--gobanMaxWidth) * 2 + 0.25em + 4px);
-}
-.mxTigerTheme.mxCommentConfig>div,
-.mxTigerTheme.mxTreeConfig>div
-{
-	box-sizing:border-box;
-	max-width:calc(var(--gobanMaxWidth) + 2px);
-	flex:1 1 calc(var(--gobanMaxWidth) + 2px);
-	display:flex;
-	flex-direction:column;
-}
-.mxTigerTheme .mxGobanDiv
-{
-	box-sizing:border-box;
-	flex:auto;
-	display:flex;
-	flex-direction:column;
-	width:100%;
-}
-.mxTigerTheme .mxTigerCommentDiv,
-.mxTigerTheme .mxTreeDiv
-{
-	box-sizing:border-box;
-	height:8em;
-	max-height:40em;
-	padding:0.25em;
-	resize:vertical;
-	overflow:auto;
-	min-width:min(100%,100vw);
-	max-width:min(100%,100vw);
-}
-.mxTigerTheme.mxCommentConfig .mxTigerCommentDiv,
-.mxTigerTheme .mxTreeDiv
-{
-	flex:auto;
-}
-.mxTigerTheme .mxTigerCommentDiv
-{
-	margin:0 auto;
-	position:relative; /* to be able to scroll programmatically */
-}
-.mxTigerTheme .mxTreeDiv
-{
-	margin:0.25em auto 0 auto;
-	padding:0;
-}
-.mxTigerTheme .mxVersionDiv
-{
-	box-sizing:border-box;
-	text-align:center;
-	height:2em;
-	line-height:2em;
-}
-/* common */
-.mxTigerTheme .mxGobanDiv
-{
-	border:1px solid #e0e0e0;
-}
-.mxTigerTheme .mxInnerGobanDiv
-{
-	margin:auto;
-}
-.mxTigerTheme .mxGobanDiv svg
-{
-	width:100%;
-	height:100%;
-}
-.mxTigerTheme text
-{
-	stroke-width:0.25px;
-	stroke:#000;
-}
-.mxTigerTheme text.mxOnBlack,
-.mxTigerTheme .mxBlack+text
-{
-	stroke:#fff;
-}
-.mxTigerTheme text.mxOnEmpty.mxOnFocus
-{
-	fill:#f03426;
-	stroke:#f03426;
-}
-.mxTigerTheme .mxMark.mxOnEmpty.mxOnFocus:not(.mxPointBackground)
-{
-	stroke:#f03426;
-}
-.mxTigerTheme .mxPointBackground
-{
-	stroke:none;
-}
-.mxTigerTheme .mxTitleP
-{
-	font-weight:bold;
-}
-.mxTigerTheme .mxMarkOnLast
-{
-	fill:#f03426;
-	stroke:#f03426;
-}
-.mxTigerTheme .mxOuterRect
-{
-	fill:#b2e064;
-}
-.mxTigerTheme .mxInnerRect
-{
-	/* set goban background below */
-	fill:#fcff99;
-}
-/* comment and tree*/
-.mxTigerTheme.mxCommentConfig .mxTigerCommentDiv,
-.mxTigerTheme.mxTreeConfig .mxTigerCommentDiv,
-.mxTigerTheme .mxTreeDiv
-{
-	border:1px solid #e0e0e0;
-}
-.mxTigerTheme .mxHeaderContentDiv {color:#000;font-weight:bold;}
-.mxTigerTheme .mxTigerCommentDiv .mxTigerCommentMainDiv
-{
-	color:#000;
-	display:inline-block;
-}
-.mxTigerTheme .mxTigerCommentDiv .mxTigerCommentVariationDiv
-{
-	color:#d31fbe;
-	display:inline-block;
-}
-.mxTigerTheme .mxTigerCommentDiv .mxTigerCommentVariationDiv span.mxTigerCommentCircleSpan.mxBlack
-{
-	border:1px solid #d31fbe;
-	background:#d31fbe;
-}
-.mxTigerTheme .mxTigerCommentDiv .mxTigerCommentVariationDiv span.mxTigerCommentCircleSpan.mxWhite
-{
-	border:1px solid #d31fbe;
-}
-.mxTigerTheme span.mxTigerCommentMoveSpan
-{
-	display:flex;
-	width:7em;
-	align-items:center;
-}
-.mxTigerTheme span.mxTigerCommentNoMoveSpan
-{
-	display:flex;
-	width:7em;
-	justify-content:center;
-	align-items:center;
-}
-.mxTigerTheme span.mxTigerCommentFocusSpan
-{
-	background:#fcbc90;
-}
-.mxTigerTheme span.mxTigerCommentFocusSpan,
-.mxTigerTheme span.mxTigerCommentNoFocusSpan
-{
-	display:inline-flex;
-	align-items:center;
-}
-.mxTigerTheme span.mxTigerCommentNumberSpan
-{
-	display:inline-block;
-	min-width:2.5em;
-	text-align:right;
-}
-.mxTigerTheme span.mxTigerCommentCircleSpan
-{
-	display:inline-block;
-	box-sizing:border-box;
-	font-size:0.75em;
-	width:1em;
-	height:1em;
-	margin:0 0.25em;
-	color:transparent;
-	border-radius:50%;
-	border:1px solid #000;
-}
-.mxTigerTheme span.mxTigerCommentCircleSpan.mxBlack
-{
-	background:#000;
-}
-.mxTigerTheme span.mxTigerCommentCoordinatesSpan
-{
-}
-.mxTigerTheme .mxTigerCommentDiv .mxTigerCommentMainTextDiv {color:#126e21;text-align:justify;display:inline-block;}
-.mxTigerTheme .mxTigerCommentDiv .mxTigerCommentVariationTextDiv {color:#126e21;text-align:justify;display:inline-block;}
-.mxTigerTheme .mxTreeDiv svg .mxFocus
-{
-	fill:#f03426;
-	opacity:1;
-}
-/* buttons and inputs */
-.mxTigerTheme input[type=text][disabled],
-.mxTigerTheme button[disabled] {opacity:0.5;}
-.mxTigerTheme input[type=text]
-{
-	text-align:center;
-}
-/* navigation */
-.mxTigerTheme .mxNavigationDiv
-{
-	box-sizing:border-box;
-	display:flex;
-	justify-content:space-around;
-	align-items:center;
-	height:1.5em;
-	margin:0.25em 0;
-}
-.mxTigerTheme .mxNavigationDiv button
-{
-	flex:1;
 	font-size:1em;
-	border:0;
-	background:#f0f0f0;
-	margin:0 1%;
-	padding:0;
-	height:1.5em;
+	/* general */
+	& button {-webkit-appearance:none;-moz-appearance:none;}
+	& text {cursor:default;}
+	& input[type=text][disabled],
+	& button[disabled] {cursor:default;}
+	& input[type=file] {visibility:hidden;position:fixed;}
+	& svg {display:block;}
+	& button
+	{
+		font-family:sans-serif;
+	}
+	/* layout */
+	&
+	{
+		box-sizing:border-box;
+		max-width:calc(var(--navigationMaxWidth) + 2px);
+		margin:0 auto;
+	}
+	&.mxCommentConfig,
+	&.mxTreeConfig
+	{
+		display:flex;
+		flex-wrap:wrap;
+		justify-content:center;
+		align-items:stretch;
+		gap:0.25em;
+		max-width:calc(var(--navigationMaxWidth) * 2 + 0.25em + 4px);
+	}
+	&.mxCommentConfig>div,
+	&.mxTreeConfig>div
+	{
+		max-width:min(100%,calc(var(--navigationMaxWidth) + 2px));
+		flex:1 1 calc(var(--navigationMaxWidth) + 2px);
+		display:flex;
+		flex-direction:column;
+	}
+	& .mxGobanBox
+	{
+		box-sizing:border-box;
+		flex:auto;
+		display:flex;
+		flex-direction:column;
+		width:100%;
+	}
+	& .mxTigerCommentBox,
+	& .mxTreeBox
+	{
+		box-sizing:border-box;
+		height:8em;
+		max-height:40em;
+		padding:0.25em;
+		resize:vertical;
+		overflow:auto;
+		min-width:min(100%,100vw);
+		max-width:min(100%,100vw);
+	}
+	&.mxCommentConfig .mxTigerCommentBox,
+	& .mxTreeBox
+	{
+		flex:auto;
+	}
+	& .mxTigerCommentBox
+	{
+		margin:0 auto;
+		position:relative; /* to be able to scroll programmatically */
+	}
+	& .mxTreeBox
+	{
+		margin:0.25em auto 0 auto;
+		padding:0;
+	}
+	& .mxVersionBox
+	{
+		box-sizing:border-box;
+		text-align:center;
+		min-height:2em;
+		line-height:2em;
+	}
+	/* common */
+	& .mxGobanBox
+	{
+		border:1px solid #e0e0e0;
+	}
+	& .mxGobanContent
+	{
+		max-width:var(--gobanMaxWidth);
+		width:100%;
+		margin:auto;
+	}
+	& .mxGobanBox svg
+	{
+		width:100%;
+		height:100%;
+	}
+	& text
+	{
+		stroke-width:0.25px;
+		stroke:#000;
+	}
+	& text.mxOnBlack,
+	& .mxBlack+text
+	{
+		stroke:#fff;
+	}
+	& text.mxOnEmpty.mxOnFocus
+	{
+		fill:#f03426;
+		stroke:#f03426;
+	}
+	& .mxMark.mxOnEmpty.mxOnFocus:not(.mxPointBackground)
+	{
+		stroke:#f03426;
+	}
+	& .mxPointBackground
+	{
+		stroke:none;
+	}
+	& .mxHeaderTitle
+	{
+		font-weight:bold;
+	}
+	& .mxMarkOnLast
+	{
+		fill:#f03426;
+		stroke:#f03426;
+	}
+	& .mxOuterRect
+	{
+		fill:#b2e064;
+	}
+	& .mxInnerRect
+	{
+		/* set goban background below */
+		fill:#fcff99;
+	}
+	/* comment and tree*/
+	&.mxCommentConfig .mxTigerCommentBox,
+	&.mxTreeConfig .mxTigerCommentBox,
+	& .mxTreeBox
+	{
+		border:1px solid #e0e0e0;
+	}
+	& .mxHeaderContent {color:#000;font-weight:bold;}
+	& .mxTigerCommentBox .mxTigerCommentMain
+	{
+		color:#000;
+		display:inline-block;
+	}
+	& .mxTigerCommentBox .mxTigerCommentVariation
+	{
+		color:#d31fbe;
+		display:inline-block;
+	}
+	& .mxTigerCommentBox .mxTigerCommentVariation .mxTigerCommentCircle.mxBlack
+	{
+		border:1px solid #d31fbe;
+		background:#d31fbe;
+	}
+	& .mxTigerCommentBox .mxTigerCommentVariation .mxTigerCommentCircle.mxWhite
+	{
+		border:1px solid #d31fbe;
+	}
+	& .mxTigerCommentMove
+	{
+		display:flex;
+		width:7em;
+		align-items:center;
+	}
+	& .mxTigerCommentNoMove
+	{
+		display:flex;
+		width:7em;
+		justify-content:center;
+		align-items:center;
+	}
+	& .mxTigerCommentFocus,
+	& .mxTigerCommentNoFocus
+	{
+		font-size:1em;
+		display:inline-flex;
+		align-items:center;
+		border:0;
+		padding:0;
+		margin:0;
+	}
+	& .mxTigerCommentNoFocus
+	{
+		background:#0000;
+	}
+	& .mxTigerCommentFocus
+	{
+		background:#fcbc90;
+	}
+	& .mxTigerCommentNumber
+	{
+		display:inline-block;
+		min-width:2.5em;
+		text-align:right;
+	}
+	& .mxTigerCommentCircle
+	{
+		display:inline-block;
+		box-sizing:border-box;
+		font-size:0.75em;
+		width:1em;
+		height:1em;
+		margin:0 0.25em;
+		color:transparent;
+		border-radius:50%;
+		border:1px solid #000;
+	}
+	& .mxTigerCommentCircle.mxBlack
+	{
+		background:#000;
+	}
+	& .mxTigerCommentCoordinates
+	{
+	}
+	& .mxTigerCommentBox .mxTigerCommentMainText {color:#126e21;text-align:justify;display:inline-block;}
+	& .mxTigerCommentBox .mxTigerCommentVariationText {color:#126e21;text-align:justify;display:inline-block;}
+	& .mxTreeBox svg .mxFocus
+	{
+		fill:#f03426;
+		opacity:1;
+	}
+	/* buttons and inputs */
+	& input[type=text][disabled],
+	& button[disabled] {opacity:0.5;}
+	& input[type=text]
+	{
+		text-align:center;
+	}
+	/* navigation */
+	& .mxNavigationBox
+	{
+		container:mxTigerNavigationBox/inline-size;
+		box-sizing:border-box;
+		display:flex;
+		justify-content:space-around;
+		align-items:center;
+		height:1.5em;
+		margin:0.25em 0;
+	}
+	& .mxNavigationBox button
+	{
+		flex:1;
+		font-size:1em;
+		border:0;
+		background:#f0f0f0;
+		margin:0 1%;
+		padding:0;
+		height:1.5em;
+	}
+	& .mxNavigationBox button svg
+	{
+		margin:0 auto;
+		width:100%;
+		max-width:100%;
+		height:1em;
+	}
+	& .mxNavigationBox button.mxAutoBtn[disabled],
+	& .mxNavigationBox button.mxPauseBtn[disabled]
+	{
+		display:none;
+	}
+	@container mxTigerNavigationBox (max-width:16em)
+	{
+		& .mxTenPredBtn,
+		& .mxTenNextBtn
+		{
+			display:none;
+		}
+	}
+	/* focus and hover */
+	& *:not([type=radio]):not([type=checkbox]):focus {outline:none;}
+	& .mxGobanSvg:not(:focus-visible) .mxFocus {display:none;}
+	&.mxCommentConfig .mxTigerCommentBox:focus,
+	&.mxTreeConfig .mxTigerCommentBox:focus,
+	& .mxTreeBox:focus
+	{
+		border:1px solid #000;
+	}
+	& .mxNavigationBox button:focus
+	{
+		background:rgba(0,0,0,0.1);
+	}
+	& button,
+	&:not(.mxDiagramConfig) .mxGobanBox svg,
+	& .mxTreeBox svg circle,
+	& .mxTreeBox svg polygon,
+	& .mxTreeBox svg rect,
+	& .mxTreeBox svg text
+	& .mxTigerCommentFocus:hover,
+	& .mxTigerCommentNoFocus:hover {cursor:pointer;}
+	& .mxTigerCommentFocus:focus-visible,
+	& .mxTigerCommentNoFocus:focus-visible {background:rgba(0,0,0,0.1);}
 }
-.mxTigerTheme .mxNavigationDiv button svg
-{
-	margin:0 auto;
-	width:100%;
-	max-width:100%;
-	height:1em;
-}
-.mxTigerTheme .mxNavigationDiv button.mxAutoBtn[disabled],
-.mxTigerTheme .mxNavigationDiv button.mxPauseBtn[disabled]
-{
-	display:none;
-}
-/* focus and hover */
-.mxTigerTheme *:not([type=radio]):not([type=checkbox]):focus {outline:none;}
-.mxTigerTheme .mxGobanSvg:not(:focus-visible) .mxFocus {display:none;}
-.mxTigerTheme.mxCommentConfig .mxTigerCommentDiv:focus,
-.mxTigerTheme.mxTreeConfig .mxTigerCommentDiv:focus,
-.mxTigerTheme .mxTreeDiv:focus
-{
-	border:1px solid #000;
-}
-.mxTigerTheme .mxNavigationDiv button:focus
-{
-	background:rgba(0,0,0,0.1);
-}
-.mxTigerTheme button,
-.mxTigerTheme:not(.mxDiagramConfig) .mxGobanDiv svg,
-.mxTigerTheme .mxTreeDiv svg circle,
-.mxTigerTheme .mxTreeDiv svg polygon,
-.mxTigerTheme .mxTreeDiv svg rect,
-.mxTigerTheme .mxTreeDiv svg text
-.mxTigerTheme span.mxTigerCommentFocusSpan:hover,
-.mxTigerTheme span.mxTigerCommentNoFocusSpan:hover {cursor:pointer;}
-

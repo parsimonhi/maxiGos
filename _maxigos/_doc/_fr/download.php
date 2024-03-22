@@ -7,39 +7,80 @@
 <?php include_once "../../_php/version.php";?>
 <title>Page de téléchargement de maxiGos v<?=$v?></title>
 <style>
+body
+{
+	hyphens:auto;
+	overflow-wrap:anywhere;
+}
+nav a {display:inline-block;margin:0.25em;}
+nav a img {padding-right:0.25em}
 .flag
 {
-	margin-left:1em;
-	margin-right:0.5em;
 	vertical-align:middle;
 	width:1.8em;
 	height:auto;
 }
 .menu a {padding-right:1em;vertical-align:middle;}
-code
+pre
 {
-	display:block;
-	padding:0.5rem;
-	margin:0.5rem 0;
-	color:#e3e3e3;
+	font-family:monaco;
+	font-size:1em;
 	background:#3e3e3e;
+	color:#e3e3e3;
+	padding:1em;
+	white-space:pre-wrap;
+	text-align:left;
 }
 .themeTable
 {
 	border-collapse:collapse;
 }
+.themeTable th,
 .themeTable td
 {
 	border: 1px solid #000;
 	padding:0.5rem;
 }
+@media (max-width:38em)
+{
+	table,tr,th,td
+	{
+		display:block;
+	}
+	.themeTable th,
+	.themeTable td:not(:last-of-type)
+	{
+		border-bottom:0;
+	}
+	.themeTable td:last-of-type
+	{
+		margin-bottom:0.5em;
+	}
+	ul,li
+	{
+		margin:0;
+		padding:0;
+	}
+	:not(li)>ul,li
+	{
+		padding-left:min(10vw,0.5em);
+	}
+}
+@media (max-width:19em)
+{
+	nav a
+	{
+		display:block;
+	}
+}
 </style>
 </head>
 <body>
-<nav class="menu"><?=(file_exists("../../../index.php")?"<a href=\"../../../index.php?lang=fr\">Accueil</a>":"")?><!--
---><a href="documentation.php">Documentation</a><!--
---><a href="<?=str_replace("/_fr/","/_en/",$_SERVER["SCRIPT_NAME"])?>"><img class="flag" src="../../_img/flag/en.svg"> English</a><!--
---><a href="<?=str_replace("/_en/","/_fr/",$_SERVER["SCRIPT_NAME"])?>"><img class="flag" src="../../_img/flag/fr.svg"> Fran&ccedil;ais</a></nav>
+<nav class="menu"><?=(file_exists("../../../index.php")?"\n<a href=\"../../../index.php?lang=fr\">Accueil</a>\n":"")?>
+<a href="documentation.php">Documentation</a>
+<a href="<?=str_replace("/_fr/","/_en/",$_SERVER["SCRIPT_NAME"])?>"><img class="flag" src="../../_img/flag/en.svg">English</a>
+<a href="<?=str_replace("/_en/","/_fr/",$_SERVER["SCRIPT_NAME"])?>"><img class="flag" src="../../_img/flag/fr.svg">Français</a>
+</nav>
 <h1>MaxiGos v<?=$v.".".$r?> - Page de téléchargement</h1>
 <p><em>Copyright 1998-<?=date("Y")?> - FM&SH</em></p>
 <p>MaxiGos est un ensemble de lecteurs sgf permettant d'afficher
@@ -73,28 +114,22 @@ il est nécessaire d'utiliser en plus un script d'internationalisation.</p>
 <ul>
 <li>Pour utiliser maxiGos en français, téléchargez "maxigos-neo-classic-game.js",
 et utilisez le code suivant dans vos pages :<br>
-<code><pre>
-&lt;script lang="fr" src="path-to-a-maxigos-script/maxigos-neo-classic-game.js"&gt;
+<pre><code>&lt;script lang="fr" src="path-to-a-maxigos-script/maxigos-neo-classic-game.js"&gt;
 path-to-a-sgf-file/a-sgf-file.sgf
-&lt;/script&gt;
-</pre></code>
+&lt;/script&gt;</code></pre>
 </li>
 <li>Pour utiliser maxiGos en anglais, téléchargez simplement "maxigos-neo-classic-game.js",
 et utilisez le code suivant dans vos pages :<br>
-<code><pre>
-&lt;script lang="en" src="path/maxigos-neo-classic-game.js"&gt;
+<pre><code>&lt;script lang="en" src="path/maxigos-neo-classic-game.js"&gt;
 path-to-a-sgf-file/a-sgf-file.sgf
-&lt;/script&gt;
-</pre></code>
+&lt;/script&gt;</code></pre>
 </li>
 <li>Pour utiliser maxiGos en japonais, téléchargez "maxigos-i18n-ja.js" et "maxigos-neo-classic-game.js",
 et utilisez le code suivant dans vos pages :<br>
-<code><pre>
-&lt;script src="path/maxigos-i18n-ja.js"&gt;&lt;/script&gt;
+<pre><code>&lt;script src="path/maxigos-i18n-ja.js"&gt;&lt;/script&gt;
 &lt;script lang="ja" src="path/maxigos-neo-classic-game.js"&gt;
 path-to-a-sgf-file/a-sgf-file.sgf
-&lt;/script&gt;
-</pre></code>
+&lt;/script&gt;</code></pre>
 </li>
 </ul>
 
@@ -128,9 +163,36 @@ include("../../_php/lib.php");
 <?=printOneInternationalizationScriptLine('zh-hans')?>
 <?=printOneInternationalizationScriptLine('zh-hant')?>
 </ul>
+<h2>Quoi de neuf dans la version 8.03 ?</h2>
+<ul>
+<li>Suppression du suffixe "BoxDiv" dans le nom des classes et ids de la boite globale.</li>
+<li>Suppression du suffixe "Div" dans le nom des classes et ids des boites de regroupement parentes.</li>
+<li>Suppression la balise "div" autour des composants qui ne contiennent qu’un bouton.
+La boite du composant devient le bouton lui-même.</li>
+<li>Suppression des balise "div.innerNotSeenDiv" et "div.EditCommentDiv".</li>
+<li>Remplacement du suffixe dans le nom des classes et ids des composants qui ne sont pas des éléments de formulaire par "Box".</li>
+<li>Remplacement de "CommentContentDiv" par "CommentContent", "EditToolBarDiv" par "EditToolbar", "InnerGobanDiv" par "GobanContent", "TreeContentDiv" par "TreeContent".</li>
+<li>Amélioration des informations lues par les lecteurs d’écran.</li>
+<li>Ajout des coordonnées Audouard pour les lecteurs d'écran (activation/désactivation via la touche "A" quand le goban a le focus).</li>
+<li>Ajout des variables css --gobanIntrinsicWidth et --gobanIntrinsicHeight à la boite globale,
+suppression du paramètre "pointsNumMax" et modification des feuilles de styles en conséquence.</li>
+<li>Ajout des variables css --moveInfoIntrinsicWidth, --moveInfoIntrinsicHeight,
+--treeIntrinsicWidth et --treeIntrinsicHeight à la boite globale.</li>
+<li>Modification des balises et classes du composant "Cartouche".</li>
+<li>Ajout du paramètre "yaOn".</li>
+<li>Suppression des paramètres "canCommentFocus", canHeaderFocus, "canTreeFocus" et "menuTimeout".</li>
+<li>Amélioration de l'affichage de l'arbre des coups.</li>
+<li>Réécriture du composant "Menu".</li>
+<li>Changement du nom du composant "Cut" en "Remove".</li>
+<li>Correction d'un bug qui empêchait maxigos-eidogo-problem.js de démarrer.</li>
+<li>Émission d'un son en plus de faire flasher le goban en cas d'erreur de l'utilisateur.</li>
+<li>Nombreuses modifications dans les feuilles de style, en particulier
+pour améliorer l'affichage pour les fenêtres étroites.</li>
+<li>Diverses modifications mineures.</li>
+</ul>
 <h2>Quoi de neuf dans la version 8.02 ?</h2>
 <ul>
-<li>Amélioration du fonctionnement des infobulles et des textes lus par les lecteurs d'écran.</li>
+<li>Amélioration du fonctionnement des infobulles et des informations lues par les lecteurs d’écran.</li>
 <li>Modification des combinaisons de touche pour naviguer dans l'arbre des coups
 (on doit désormais appuyer sur la touche "Majuscule" au lieu de la touche "Option"
 ou "Alt" tout en appuyant sur l'une des flèches du clavier pour naviguer dans l'arbre des coups).</li>
@@ -247,10 +309,10 @@ de s'afficher en entier avec firefox.</li>
 <li>Nouveaux exemples.</li>
 <li>Nombreuses autres optimisations et corrections.</li>
 </ul>
-
-<nav class="menu"><?=(file_exists("../../index.php")?"<a href=\"../../index.php?lang=fr\">Accueil</a>":"")?><!--
---><a href="documentation.php">Documentation</a><!--
---><a href="<?=str_replace("/fr/","/en/",$_SERVER["SCRIPT_NAME"])?>"><img class="flag" src="../../_img/flag/en.svg"> English</a><!--
---><a href="<?=str_replace("/en/","/fr/",$_SERVER["SCRIPT_NAME"])?>"><img class="flag" src="../../_img/flag/fr.svg"> Fran&ccedil;ais</a></nav>
+<nav class="menu"><?=(file_exists("../../../index.php")?"\n<a href=\"../../../index.php?lang=fr\">Accueil</a>\n":"")?>
+<a href="documentation.php">Documentation</a>
+<a href="<?=str_replace("/_fr/","/_en/",$_SERVER["SCRIPT_NAME"])?>"><img class="flag" src="../../_img/flag/en.svg">English</a>
+<a href="<?=str_replace("/_en/","/_fr/",$_SERVER["SCRIPT_NAME"])?>"><img class="flag" src="../../_img/flag/fr.svg">Français</a>
+</nav>
 </body>
 </html>

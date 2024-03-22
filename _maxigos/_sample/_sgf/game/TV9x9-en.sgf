@@ -2,10 +2,11 @@
 ST[2]RU[AGA]SZ[9]KM[7.5]RE[W+10.5]
 PB[Kissy Suzuki]BR[4d]PW[Mariko Ichiban]WR[4d]DT[1993-03]AN[FM]
 US[FM, illustration of AGA rules counting, played during a japanese TV program, Mars 1993, rules were japanese (not AGA), komi was 5.5pts (not 7.5pts).]
-GC[This is a game on a "9x9" board. \
-Most often, "9x9" boards are used for teaching, \
+GC[This is a game on a "9x9" board.\
+Most often, "9x9" boards are used for teaching,\
 but in this case, it's a TV game between two 4d amateurs (their names are fictional).]
 ;B[fd]C[First moves are usually placed on 3rd and 4th lines. Here Black chooses the 4th line.
+
 A move closer to the edge doen't make enough influence, while a move in the center doesn't secure enough territory.]
 ;W[de]C[White should avoid to play contact moves here. It is too soon to start a fight.]
 ;B[ef]C[Black tries to make territory on the bottom right corner.]
@@ -13,24 +14,25 @@ A move closer to the edge doen't make enough influence, while a move in the cent
 ;B[df]C[Despite being in contact with the opponent stone, this move is correct because it relies on an existing black stone, attacks a white stone and increases the influence of Black on the bottom of the board.]
 ;W[ce]C[White strengthens his stone, increasing its liberties.]
 ;B[ee]C[Black connects his two groups. This move weakens at the same time both White groups.
+
 This is a beautiful example of the application of two well-known strategic principles, "unity is strength" and "divide and conquer".]
 ;W[hd]C[White consolidates his position on the right side of the board.]
-;B[dc]MA[ce][de]C[Black extends towards the top edge. This reduces the strength of the two white stones 'X'.]
-;W[cf]MA[ce][de]C[White strengthens his two stones 'X' and takes a serious option on the left side of the board.]
+;B[dc]MA[ce][de]C[Black extends towards the top edge. This reduces the strength of the two white 'X' stones.]
+;W[cf]MA[ce][de]C[White strengthens his two 'X' stones and takes a serious option on the left side of the board.]
 ;B[gg]C[Black aggressively challenges the supremacy of White on the bottom right corner.]
 (
 ;W[hg]LB[fg:a]C[White responds calmly on the second line. Playing 'a' would be a little dangerous for White.]
 ;B[fg]C[Black strengthens his stone while securing points on the bottom edge.]
 ;W[gc]C[White "takes" the territory on the upper right corner.]
-;B[bd]MA[ce][de][cf]C[Black "takes" the territory on the upper left while attacking the group of three white stones 'X'.]
-;W[be]MA[bd]C[White strengthens his stones while endangering the black stone 'X'.]
+;B[bd]MA[ce][de][cf]C[Black "takes" the territory on the upper left while attacking the group of three white 'X' stones.]
+;W[be]MA[bd]C[White strengthens his stones while endangering the black 'X' stone.]
 ;B[cd]
 ;W[ch]C[White "takes" the bottom left corner.]
 ;B[bg]C[This black move is not reasonable, because there are too many white stones in the region.]
 ;W[cg]C[White prevents Black to connect with his other groups.]
 ;B[hh]C[Black is now interesting by the last open corner. If he didn't, there would have been White points here.]
 ;W[eh]C[White crawls under the black stones to nullify a few points on the bottom edge.]
-;B[ae]MA[bg]C[Black closes the upper left corner while decreasing the size of the white territory and threatening to connect with the stone 'X'.]
+;B[ae]MA[bg]C[Black closes the upper left corner while decreasing the size of the white territory and threatening to connect with the 'X' stone.]
 ;W[af]C[White closes his territory by putting Black in atari.]
 ;B[ad]
 ;W[bh]LB[bf:a]C[White protects his territory. Why? Put a white stone elsewhere and see what happens if Black plays 'a'.]
@@ -38,31 +40,33 @@ This is a beautiful example of the application of two well-known strategic princ
 ;W[gb]C[White protects his corner against possible reductions.]
 (
 ;B[hf]LB[he:a]BM[1]C[Black puts a white stone in atari.
+
 Note for strong players: Black could have played 'a' and take all the white corner.]
 ;W[he]C[After the last black move, White cannot save his stone. Also, he prefers to leave it.]
-;B[ig]MA[hf]C[Black captures the white stone. If he doesn't do so, it is White who could capture the stone 'X' with his next move.]
-;W[fc]MA[fb]C[White reduces black territory on the top edge, threatening to take the black stone 'X'.]
-;B[ec]MA[fb]C[Black leaves his stone 'X' and prefers to block the advance of White.]
-;W[eb]MA[fb]C[White puts the black stone 'X' in atari. Verify that Black cannot save it.]
-;B[db]MA[fb]C[Black uses his stone 'X' to prevent White to advance in his territory on the top left, while keeping the initiative.]
+;B[ig]MA[hf]C[Black captures the white stone. If he doesn't do so, it is White who could capture the 'X' stone with his next move.]
+;W[fc]MA[fb]C[White reduces black territory on the top edge, threatening to take the black 'X' stone.]
+;B[ec]MA[fb]C[Black leaves his 'X' stone and prefers to block the advance of White.]
+;W[eb]MA[fb]C[White puts the black 'X' stone in atari. Verify that Black cannot save it.]
+;B[db]MA[fb]C[Black uses his 'X' stone to prevent White to advance in his territory on the top left, while keeping the initiative.]
 ;W[fa]C[White actually takes the black stone.]
 ;B[fh]C[Black blocks the advance of White on the bottom edge.]
 ;W[da]C[It only remains to close the territories. White begins with the top edge.]
 ;B[ca]C[Black blocks White and puts his stone in atari.]
 ;W[ea]
 (
-;B[bb]MA[ca]LB[cb:a][ge:b]C[Black adds a move of protection. This is necessary, otherwise, if Black plays elsewhere (e.g. 'b'), White can play at 'a' and start a sequence that leads to the capture of the black stone 'X'.
+;B[bb]MA[ca]LB[cb:a][ge:b]C[Black adds a move of protection. This is necessary, otherwise, if Black plays elsewhere (e.g. 'b'), White can play at 'a' and start a sequence that leads to the capture of the black 'X' stone.
+
 Black could also have played his stone at 'a'.]
 ;W[ge]C[White connects his stone with the rest of his group. If he did not, Black could have played at the same place, and ensure the capture of the stone.]
 ;B[eg]
-;W[ei]MA[eh]C[White protects his stone 'X', while continuing the closure of his territory.]
+;W[ei]MA[eh]C[White protects his 'X' stone, while continuing the closure of his territory.]
 ;B[fi]C[Black completely closes his territory at the bottom right.]
 ;W[dg]MA[eh][ei]C[White also completely closes his territory, while protecting his stones X, who were in danger.]
 ;B[ie]C[Black reduces the white territory on the top left.]
 ;W[id]C[White closes his territory, and puts a black stone in atari.]
-;B[gd]MA[ie]LB[if:a]C[Instead of playing 'a', thus connecting his stone 'X' to the rest of his group, Black tries to complicate the game by playing elsewhere.]
+;B[gd]MA[ie]LB[if:a]C[Instead of playing 'a', thus connecting his 'X' stone to the rest of his group, Black tries to complicate the game by playing elsewhere.]
 ;W[if]C[White takes the black stone, which initiates a ko fight.]
-;B[dh]MA[if]LB[ie:a]C[The stone 'X' that White just played is in atari. But according to the rules, which prohibit repetition, Black does not have the right to immediately replay at 'a' and take the stone. He therefore plays elsewhere a move threatening to take two white stones.]
+;B[dh]MA[if]LB[ie:a]C[The 'X' stone that White just played is in atari. But according to the rules, which prohibit repetition, Black does not have the right to immediately replay at 'a' and take the stone. He therefore plays elsewhere a move threatening to take two white stones.]
 ;W[di]LB[ie:a]C[White would like to connect 'a' for ending the ko fight. But the threat of Black is too big, and White must respond.]
 ;B[ie]C[Now, Black has the right to take the white stone.]
 ;W[hc]LB[if:a]C[White, again because of the prohibition of repetition is not allowed to play at 'a'. He could have also to make a threat elsewhere, such as Black earlier. But then Black will again make a threat, and so on until one of the players has no more threats. But White has less threats than Black (this is a little difficult to verify it, but you can try to do so). In addition, White is ahead. So he prefers to connect safely.]
@@ -74,7 +78,7 @@ Black could also have played his stone at 'a'.]
 ;W[]C[So White passes and gives a stone to Black.]
 ;B[]MA[bg]C[And Black passes too and gives a stone to White. As Black put the last stone on the board, White gives him an extra stone. Thus, since Black played the first move of the game, both players have consumed the same number of stone.
 
-White then removes the black stone 'X' from the board, that would be in any way caught sooner or later, if Black had forced him to do so.]
+White then removes the black 'X' stone from the board, that would be in any way caught sooner or later, if Black had forced him to do so.]
 ;AE[bg]
 TB[aa][ab][ac][gh][gi][hi][ih][ii][ba][bc][cb][cc][hg]
 TW[ga][ha][hb][ia][ib][ic][ag][ah][ai][bg][bi][fb][bf][ci][dh]
@@ -133,5 +137,5 @@ And exploit the weakness at Black 'a' does not work for White!]
 ;W[hg]
 ;B[gh]
 ;W[hh]
-;B[fh]MA[fg]C[Black will take soon or later the stone 'X'!]
+;B[fh]MA[fg]C[Black will take soon or later the 'X' stone!]
 ))

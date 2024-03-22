@@ -33,7 +33,6 @@ mxG.D[mxG.K].a.allowFileAsSource=1; // (0,1) default 1
 mxG.D[mxG.K].a.initMethod="last"; // ("first","loop","last") default "first"
 mxG.D[mxG.K].a.sgfSaveCoreOnly=1; // (0,1) default 0
 // Goban
-mxG.D[mxG.K].a.pointsNumMax=19; // (positive integer) default 0
 mxG.D[mxG.K].a.stoneShadowOn=0; // (0,1) default 0 (require in3dOn=1)
 mxG.D[mxG.K].a.stretching="0,1,1,2"; // (list) default "0,0,1,1"
 mxG.D[mxG.K].a.gridPadding=2; // (float) default 0
@@ -54,7 +53,7 @@ mxG.D[mxG.K].a.backToGameBtnOn=1; // (0,1) default 0
 // Header
 mxG.D[mxG.K].a.headerBoxOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.hideInHeader="NumOfMoves"; // (set) default ""
-mxG.D[mxG.K].a.concatInHeader="DateToTitle,TeamToPlayer,KomiToResult,HandicapToResult"; // (set) default ""
+mxG.D[mxG.K].a.concatInHeader="DateToTitle,KomiToResult,HandicapToResult"; // (set) default ""
 // Loop
 mxG.D[mxG.K].a.loopTime=1000; // (positive integer) default 1000
 // Navigation

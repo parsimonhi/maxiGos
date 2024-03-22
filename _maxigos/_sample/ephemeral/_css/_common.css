@@ -6,34 +6,34 @@
 {
 	display:block;
 }
-.mxEphemeralTheme.mxSimpleConfig .mxGobanDiv svg
+.mxEphemeralTheme.mxSimpleConfig .mxGobanBox svg
 {
 	background:#9cf;
 }
-.mxEphemeralTheme.mxSimpleConfig .mxNavigationDiv
+.mxEphemeralTheme.mxSimpleConfig .mxNavigationBox
 {
 	display:flex;
 	justify-content:space-between;
 	margin-top:0.5em;
 }
-.mxEphemeralTheme.mxSimpleConfig .mxNavigationDiv button
+.mxEphemeralTheme.mxSimpleConfig .mxNavigationBox button
 {
 	border:0;
 	background:none;
 	padding:0;
 	margin:0 5%;
 }
-.mxEphemeralTheme.mxSimpleConfig .mxNavigationDiv button svg
+.mxEphemeralTheme.mxSimpleConfig .mxNavigationBox button svg
 {
 	width:100%;
 	height:auto;
 }
-.mxEphemeralTheme.mxSimpleConfig .mxNavigationDiv button[disabled] svg
+.mxEphemeralTheme.mxSimpleConfig .mxNavigationBox button[disabled] svg
 {
 	fill:#0007;
 }
-.mxEphemeralTheme.mxSimpleConfig .mxNavigationDiv button:focus:not([disabled]) svg,
-.mxEphemeralTheme.mxSimpleConfig .mxNavigationDiv button:hover:not([disabled]) svg
+.mxEphemeralTheme.mxSimpleConfig .mxNavigationBox button:focus:not([disabled]) svg,
+.mxEphemeralTheme.mxSimpleConfig .mxNavigationBox button:hover:not([disabled]) svg
 {
 	fill:red;
 }

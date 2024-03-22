@@ -55,7 +55,7 @@ $bottomLabel="Bottom";
 $ExecutionTimeLabel="Execution time: ";
 $maxigosNumLabel=" Maxigos";
 $pageWidthLabel="page width: ";
-$aloneScriptSample="Alone script sample";
+$standaloneScriptSample="Standalone script sample";
 if ($lang=="fr")
 {
 	$title="Maxigos";
@@ -67,7 +67,7 @@ if ($lang=="fr")
 	$ExecutionTimeLabel="Temps d'exécution : ";
 	$maxigosNumLabel=" Maxigos";
 	$pageWidthLabel="largeur de la page : ";
-	$aloneScriptSample="Exemple de script autonome";
+	$standaloneScriptSample="Exemple de script autonome";
 }
 else if ($lang=="ja")
 {
@@ -80,7 +80,7 @@ else if ($lang=="ja")
 	$ExecutionTimeLabel="実行時間 ";
 	$maxigosNumLabel="個のマキシゴス";
 	$pageWidthLabel="ページ幅 ";
-	$aloneScriptSample="単独スクリプト例";
+	$standaloneScriptSample="単独スクリプト例";
 }
 else if ($lang=="zh-hans")
 {
@@ -93,7 +93,7 @@ else if ($lang=="zh-hans")
 	$ExecutionTimeLabel="执行时间 ";
 	$maxigosNumLabel="个Maxigos";
 	$pageWidthLabel="页面宽度 ";
-	$aloneScriptSample="Alone script sample";
+	$standaloneScriptSample="独立脚本示例";
 }
 else if ($lang=="zh-hant")
 {
@@ -106,9 +106,16 @@ else if ($lang=="zh-hant")
 	$ExecutionTimeLabel="執行時間 ";
 	$maxigosNumLabel="個Maxigos";
 	$pageWidthLabel="頁面寬度 ";
-	$aloneScriptSample="Alone script sample";
+	$standaloneScriptSample="獨立腳本示例";
 }
-$subtitle=$sample;
+if($sample=="Bordeaux") $subtitle="Bordeaux";
+else if($sample=="Manuscript") $subtitle="Manuscript";
+else if($sample=="Minimalist") $subtitle="Minimalist";
+else if($sample=="Multilang") $subtitle="Multilang";
+else if($sample=="NeoClassic") $subtitle="NeoClassic";
+else if($sample=="Rosewood") $subtitle="Rosewood";
+else if($sample=="Tsumego") $subtitle="Tsumego";
+else $subtitle=$sample;
 ?>
 <html lang="<?=$lang?>">
 <?php
@@ -204,7 +211,7 @@ if (!mxG.ExecutionTime) mxG.ExecutionTime=function()
 };
 function magicCountMaxigos()
 {
-	let list,s=mxG.D?mxG.D.length-1:"0";
+	let list,s=mxG.D?mxG.D.length-1:""; // no Maxigos found when loader?
 	list=document.querySelectorAll(".maxigosNum");
 	if(list) for(let k=0;k<list.length;k++) list[k].innerHTML=s;
 }
@@ -221,6 +228,25 @@ function magicResizeOberver()
 		new ResizeObserver(magicGetPageWidth).observe(document.body);
 }
 window.addEventListener("load",magicResizeOberver);
+function doKeydownNav(ev)
+{
+	if(ev.metaKey||ev.ctrlKey||ev.altKey) return;
+	let r=0,e=ev.target.parentNode;
+	if(ev.key.match(/^[acz]$/i))
+	{
+		if(ev.key.match(/^a$/i)) {e.querySelector('a:first-of-type').focus();r=1;}
+		else if(ev.key.match(/^z$/i)) {e.querySelector('a:last-of-type').focus();r=1;}
+		else if(ev.key.match(/^c$/i)) location.href="#h1Content";
+		if(r) ev.preventDefault();
+	}
+}
+function initNav()
+{
+	let list=document.querySelectorAll('nav a');
+	for(let k=0;k<list.length;k++)
+		list[k].addEventListener('keydown',function(ev){doKeydownNav(ev);});
+}
+window.addEventListener("load",initNav);
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -231,7 +257,7 @@ body
 	font-family:sans-serif;
 	margin:0;
 	padding:0;
-	min-width:10em;
+	min-width:6.25em; /* or 100px, min-width of Chrome when max zoom */
 }
 header, footer, section.sample>nav
 {
@@ -248,7 +274,6 @@ header nav, footer nav, section.sample>nav
 }
 header nav a, footer nav a, section.sample>nav a
 {
-	display:flex;
 	color:#000;
 	margin:0.5em;
 }
@@ -258,16 +283,23 @@ header nav img, footer nav img
 	height:auto;
 	margin:auto;
 }
+/* hyphens:auto does not work well enough everywhere (2024/03/01) */
+/* use overflow-wrap:anywhere as a general workaround */
+/* options and header components in Fm config use also overflow-wrap (see in maxiGos) */
+/* shortHeader (in cartouche component) uses also overflow-wrap (see in maxiGos) */
+/* comment and header in other components are not concerned since they can be scrolled */
+h1,h2,h3,button,a,dialog,p,span {overflow-wrap:anywhere;}
+nav a:has(img) {display:flex;}
+.sample>ul {margin:0;padding:1em;}
 h1.z
 {
-	font-size:2em;
+	font-size:1.5em;
 	margin:0.25em;
 	padding:0;
 }
-div.computedData {margin:0.5em;}
 h2.z
 {
-	font-size:1.5em;
+	font-size:1.25em;
 	margin:0;
 	padding:0.33em;
 	background:#000;
@@ -275,6 +307,7 @@ h2.z
 }
 h3.z
 {
+	font-size:1em;
 	text-align:center;
 	margin:1em 0 0.5em 0;
 }
@@ -288,18 +321,21 @@ p.z a
 }
 .aloneLink
 {
+	display:inline-block;
 	color:#000;
 	padding:1em 0.5em;
 }
-div.mxGlobalBoxDiv
+div.mxGlobal
 {
-	margin:0.5em auto;
+	margin:1em auto;
+	/*
+	resize:horizontal;
+	overflow:auto;
+	--gobanScale:1;
+	background-color:#fff;
+	filter:invert(100%);
+	*/
 }
-<?php if ($sample=="Eidogo") {?>
-body.EidogoSample
-{
-}
-<?php }?>
 <?php if ($sample=="Rosewood") {?>
 /* Rosewood */
 body.RosewoodSample
@@ -350,11 +386,11 @@ section.sample section.BambooSample>div:last-of-type
 {
 	--btnBk:#beb;
 }
-.BambooSample .mxMinimalistTheme:not(.mxEditConfig) div.mxGobanDiv
+.BambooSample .mxMinimalistTheme:not(.mxEditConfig) div.mxGobanBox
 {
 	border:0;
 }
-.BambooSample .mxMinimalistTheme:not(.mxEditConfig) .mxGobanDiv svg
+.BambooSample .mxMinimalistTheme:not(.mxEditConfig) .mxGobanBox svg
 {
 	background-image:url(../_img/bk/bamboo-mini.jpg);
 	background-size:100% 100%;
@@ -387,11 +423,12 @@ section.sample section.BordeauxSample>div:last-of-type
 {
 	margin-bottom:0;
 }
-.BordeauxSample .mxMinimalistTheme:not(.mxEditConfig) div.mxGobanDiv
+.BordeauxSample .mxMinimalistTheme:not(.mxEditConfig) div.mxGobanBox
 {
-	border:0;
+	border-color:#0000;
+	background:#0007;
 }
-.BordeauxSample .mxMinimalistTheme:not(.mxEditConfig) .mxInnerGobanDiv svg
+.BordeauxSample .mxMinimalistTheme:not(.mxEditConfig) .mxGobanContent svg
 {
 	background:#a72926;
 }
@@ -417,6 +454,57 @@ section.sample section.BordeauxSample>div:last-of-type
 	fill:none;
 	stroke:#fff;
 }
+<?php } ?>
+<?php if (($sample=="Dark")||($sample=="Mixed")) {?>
+.DarkSample
+{
+	background:#666;
+	padding-bottom:1em;
+}
+.DarkSample div.mxGlobal
+{
+	background:#0007;
+	resize:horizontal;
+	overflow:auto;
+}
+.DarkSample div.mxGlobal .mxNavigationBox
+{
+	background:#0007;
+}
+.DarkSample div.mxGlobal .mxNavigationBox svg
+{
+	filter:invert(100%);
+}
+.DarkSample .mxGlobal .mxGobanLines
+{
+	stroke:#fff;
+}
+.DarkSample .mxGlobal .mxStars
+{
+	stroke:#fff;
+	fill:#fff;
+}
+.DarkSample .mxGlobal .mxIndices text,
+.DarkSample .mxGlobal text.mxOnEmpty
+{
+	fill:#fff;
+	stroke:none;
+}
+.DarkSample .mxGlobal .mxMark.mxOnEmpty:not(.mxPointBackground)
+{
+	fill:none;
+	stroke:#fff;
+}
+.DarkSample .mxGlobal rect.mxPointBackground.mxVariation.mxOnFocus
+{
+	fill:#000;
+	stroke:#fff;
+}
+.DarkSample .mxGlobal rect.mxPointBackground
+{
+	fill:#000;
+	stroke:#000;
+}
 <?php }?>
 <?php if ($sample=="Charset") { ?>
 .computedData {display:none;}
@@ -424,6 +512,7 @@ section.sample section.BordeauxSample>div:last-of-type
 <?php if ($sample=="Fm") { ?>
 .FmSample
 {
+	--FmThemeWidth:60rem; /* rem, not em, since it is used for a h1 later */
 	background:url(../_img/other/tatami-green.gif);
 }
 .FmSample>header
@@ -457,20 +546,19 @@ section.sample section.BordeauxSample>div:last-of-type
 .FmSample>footer
 {
 	box-sizing:border-box;
-	max-width:60em;
-	min-width:15em;
+	max-width:var(--FmThemeWidth);
 	margin:0 auto;
 }
 .FmSample>main
 {
 	background:#eeb;
 	margin-top:0;
-	padding:1em;
+	padding:1vw;
 }
 .FmSample .banner
 {
 	list-style-type:none;
-	max-width:60em;
+	max-width:var(--FmThemeWidth);
 	margin:0 auto;
 	padding:0;
 	display:flex;
@@ -478,40 +566,44 @@ section.sample section.BordeauxSample>div:last-of-type
 .FmSample .banner img
 {
 	display:block;
-	max-width:100%;
+	width:100%;
+	height:auto;
+	width:100%;
+	height:auto;
 }
 .FmSample>h1
 {
 	box-sizing:border-box;
 	position:relative;
-	font-size:2em;
-	max-width:calc(60em / 2);
+	z-index:1;
+	min-width:0;
+	max-width:var(--FmThemeWidth);
 	text-align:center;
 	margin:0 auto;
 	color:#090;
 	background:#eeb;
-	padding-left:calc(1em / 2);
-	padding-right:calc(1em / 2);
+	padding:0.5em;
 }
 .FmSample>h1:after
 {
 	content:url(../_img/other/go.svg);
-	display:block;
 	position:absolute;
-	box-sizing:border-box;
-	top:0.25em;
-	right:0.25em;
+	z-index:-1;
+	display:block;
+	font-size:min(5vw,1em);
 	width:1.5em;
 	height:1.5em;
+	line-height:1.5em;
 	padding:0.125em;
-	margin:0;
-	border:1px solid #000;
-	border-radius:75em;
+	top:0.25em;
+	right:0.25em;
+	border:0.03125em solid #000;
+	border-radius:50%;
 	background:#fff;
 }
 .FmSample footer nav
 {
-	background:#777;
+	background:#666;
 	color:#fff;
 }
 .FmSample header a,
@@ -633,9 +725,17 @@ iframe
 <?php } ?>
 <?php if ($sample=="Jdg") { ?>
 /* Jdg */
-body
+.JdgSample
 {
 	font-family:"Avenir Next","Segoe UI",sans-serif;
+}
+.JdgSample #diagram h3
+{
+	text-align:left;
+}
+.JdgSample #diagram .sampleBody
+{
+	padding:0.5em;
 }
 <?php } ?>
 <?php if ($sample=="Manuscript") { ?>
@@ -663,7 +763,7 @@ body
 	color:#696;
 	padding:1em 1em 0 1em;
 }
-.ManuscriptSample .mxMinimalistTheme.mxKifuConfig .mxHeaderDiv
+.ManuscriptSample .mxMinimalistTheme.mxKifuConfig .mxHeaderBox
 {
 	border:1px solid #696;
 	margin-bottom:1em;
@@ -672,22 +772,19 @@ body
 	font-family:var(--manuscriptFontFamily);
 	font-weight:bold;
 }
-.ManuscriptSample .mxMinimalistTheme.mxKifuConfig .mxHeaderDiv .mxTitleP
+.ManuscriptSample .mxMinimalistTheme.mxKifuConfig .mxHeaderBox .mxHeaderTitle
 {
 	text-align:center;
 }
-.ManuscriptSample .mxMinimalistTheme.mxKifuConfig .mxHeaderDiv p
+.ManuscriptSample .mxMinimalistTheme.mxKifuConfig .mxHeaderBox p
 {
 	margin:0;
 }
-.ManuscriptSample .mxMinimalistTheme.mxKifuConfig .mxHeaderDiv .mxHeaderSpan
+.ManuscriptSample .mxMinimalistTheme.mxKifuConfig .mxHeaderBox .mxHeaderContent span
 {
 	color:#696;
 	font-family:Arial,sans-serif;
 	font-weight:normal;
-}
-.ManuscriptSample .mxMinimalistTheme .mxGobanDiv svg
-{
 }
 .ManuscriptSample .mxMinimalistTheme .mxIndices
 {
@@ -744,12 +841,12 @@ body
 	fill:#fff;
 	stroke:#696;
 }
-.ManuscriptSample .mxMinimalistTheme .mxNavigationDiv polygon,
-.ManuscriptSample .mxMinimalistTheme .mxNavigationDiv rect
+.ManuscriptSample .mxMinimalistTheme .mxNavigationBox polygon,
+.ManuscriptSample .mxMinimalistTheme .mxNavigationBox rect
 {
 	fill:#696;
 }
-.ManuscriptSample .mxMinimalistTheme .mxNavigationDiv button:focus
+.ManuscriptSample .mxMinimalistTheme .mxNavigationBox button:focus
 {
 	background:none;
 	outline:1px solid #696;
@@ -785,7 +882,7 @@ body
 <?php } ?>
 <?php if ($sample=="Rfg") { ?>
 /* Rfg */
-#rfg div.mxGlobalBoxDiv
+#rfg div.mxGlobal
 {
 	margin-top:1em;
 	margin-bottom:1em;
@@ -847,29 +944,28 @@ body.RulesSample iframe
 	color:#fff;
 	text-decoration:none;
 }
-.TactigoSample div.mxGlobalBoxDiv.mxMinimalistTheme
+.TactigoSample div.mxGlobal.mxMinimalistTheme
 {
-	--gobanMaxWidth:calc(1em * 449 / 16);
 	display:flex;
 	flex-direction:column;
 }
-.TactigoSample div.mxGlobalBoxDiv .mxCommentDiv
+.TactigoSample div.mxGlobal .mxCommentDiv
 {
 	order:3;
 }
-.TactigoSample div.mxGlobalBoxDiv .mxGobanSvg
+.TactigoSample div.mxGlobal .mxGobanSvg
 {
 	box-shadow:2px 2px 16px rgba(0,0,0,0.3);
 }
-.TactigoSample div.mxGlobalBoxDiv .mxGobanSvg .mxWholeRect
+.TactigoSample div.mxGlobal .mxGobanSvg .mxWholeRect
 {
 	fill:#e6bb7c;
 }
-.TactigoSample div.mxGlobalBoxDiv .mxGobanSvg .mxGobanLines
+.TactigoSample div.mxGlobal .mxGobanSvg .mxGobanLines
 {
 	stroke:#333;
 }
-.TactigoSample div.mxGlobalBoxDiv .mxGobanSvg .mxStars
+.TactigoSample div.mxGlobal .mxGobanSvg .mxStars
 {
 	stroke:#333;
 	fill:#333;
@@ -883,11 +979,13 @@ body.RulesSample iframe
 }
 .TsumegoSample main
 {
-	padding:0 0.125em;
+	container:mxTsumegoMain/inline-size;
+	padding:0 min(2.5vw,0.25em);
 }
 .TsumegoSample h1,
 .TsumegoSample .computedData,
-.TsumegoSample p.z
+.TsumegoSample p.z,
+.TsumegoSample div.mxGlobal
 {
 	font-family:"Helvetica Neue",Arial,sans-serif;
 	color:#666;
@@ -908,43 +1006,37 @@ body.RulesSample iframe
 {
 	font-family:"Helvetica Neue",Arial,sans-serif;
 	font-weight:300;
-	margin:2em auto;
+	margin:min(20vw,2em) auto;
 	border-radius:1em;
 	box-shadow:0.125em 0.125em 0.375em #ccc;
-	min-width:19em;
-}
-.TsumegoSample section:nth-of-type(1)
-{
-	max-width:calc(1em * 282 / 16 + 10em);
-}
-.TsumegoSample section:nth-of-type(2)
-{
-	max-width:calc(1em * 445 / 16 + 10em);
+	max-width:max-content;
 }
 .TsumegoSample section h2
 {
+	box-sizing:border-box;
+	display:flex;
+	flex-wrap:wrap;
+	gap:min(5vw,0.5em);
+	justify-content:center;
+	align-items:center;
+	width:100%;
 	font-size:1.5em;
 	background:var(--tsumegoBk);
 	border-radius:0.67em 0.67em 0 0;
 	margin:0;
-	padding:0.5em;
+	padding:min(5vw,0.5em);
 	text-align:center;
 	font-weight:300;
 	color:#fff;
 }
-.TsumegoSample section h2>span:first-of-type
-{
-	display:inline-block;
-	margin:0 0.5em;
-}
 .TsumegoSample section h2>span:last-of-type
 {
 	display:inline-block;
-	height:1.5em;
+	min-height:1.5em;
 	line-height:1.5em;
 	font-size:0.5em;
-	margin:0 1em;
-	padding:0 0.5em;
+	margin:0 min(5vw,1em);
+	padding:0 min(5vw,0.5em);
 	border-radius:0.75em;
 	background:#fff;
 	vertical-align:middle;
@@ -952,94 +1044,119 @@ body.RulesSample iframe
 .TsumegoSample section h2>span:last-of-type>span:first-of-type
 {
 	color:#ed0;
+	white-space:nowrap;
 }
 .TsumegoSample section h2>span:last-of-type>span:last-of-type
 {
 	color:#ddd;
+	white-space:nowrap;
 }
-.TsumegoSample div.mxGlobalBoxDiv
+.TsumegoSample div.mxGlobal
 {
 	display:grid;
-	grid-template-columns:auto 4em;
-	grid-template-rows:auto auto;
-	grid-column-gap:2em;
-	margin:0 auto;
-	padding:2em;
+	max-width:none;
+	margin:min(5vw,1em) 0;
+	padding:min(5vw,1em) min(5vw,2em);
 }
-.TsumegoSample div.mxGlobalBoxDiv.mxIn3d.mxIndicesOff
+.TsumegoSample div.mxGlobal .mxGobanBox svg
 {
-	--gobanMaxWidth:100%;
+	grid-row:1;
 }
-.TsumegoSample div.mxGlobalBoxDiv .mxGobanDiv
-{
-	grid-column:1 / 2;
-	grid-row:1 / 2;
-	box-shadow:0.125em 0.125em 0.375em #ccc;
-}
-.TsumegoSample div.mxGlobalBoxDiv .mxGobanDiv .mxMarkOnLast
-{
-	fill:#f00;
-}
-.TsumegoSample div.mxGlobalBoxDiv .mxGobanDiv .mxFocus rect
-{
-	stroke:#f00;
-	stroke-width:1.5px;
-}
-.TsumegoSample div.mxGlobalBoxDiv .mxCommentDiv
-{
-	padding-top:1em;
-	grid-column:1 / 2;
-	grid-row:2 / 3;
-}
-.TsumegoSample div.mxGlobalBoxDiv .mxSolveDiv
-{
-	grid-column:2 / 3;
-	grid-row:1 / 3;
-	display:flex;
-	flex-direction:column;
-	justify-content:center;
-	align-items:center;
-	gap:1em;
-}
-.TsumegoSample div.mxGlobalBoxDiv .mxSolveDiv button
-{
-	box-shadow:0.125em 0.125em 0.375em #ccc;
-	width:100%;
-	padding:20%;
-	margin:0;
-	background:#fff;
-}
-.TsumegoSample div.mxGlobalBoxDiv .mxSolveDiv button svg path
-{
-	fill:var(--tsumegoBk);
-}
-.TsumegoSample div.mxGlobalBoxDiv .mxSolveDiv button:focus:not([disabled]),
-.TsumegoSample div.mxGlobalBoxDiv .mxSolveDiv button:hover:not([disabled])
-{
-	background:var(--tsumegoBk);
-}
-.TsumegoSample div.mxGlobalBoxDiv .mxSolveDiv button:focus:not([disabled]) svg path,
-.TsumegoSample div.mxGlobalBoxDiv .mxSolveDiv button:hover:not([disabled]) svg path
-{
-	fill:#fff;
-}
-.TsumegoSample div.mxGlobalBoxDiv .mxSolveDiv button[disabled]
-{
-	box-shadow:0.125em 0.125em 0.375em #999;
-}
-.TsumegoSample div.mxGlobalBoxDiv .mxSolveDiv button[disabled] svg path
-{
-	fill:#000;
-}
-.TsumegoSample div.mxGlobalBoxDiv .mxVersionDiv
-{
-	display:none;
-}
-.TsumegoSample div.mxGlobalBoxDiv .mxGobanDiv svg
+.TsumegoSample div.mxGlobal .mxGobanBox svg
 {
 	background-image:url(../_img/bk/kaya-mini.jpg);
 	background-size:100% 100%;
 	background-repeat:no-repeat;
+}
+.TsumegoSample div.mxGlobal .mxGobanBox .mxMarkOnLast
+{
+	fill:#f00;
+}
+.TsumegoSample div.mxGlobal .mxGobanBox .mxFocus rect
+{
+	stroke:#f00;
+	stroke-width:1.5px;
+}
+.TsumegoSample div.mxGlobal .mxSolveBox
+{
+	grid-row:2;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	margin:min(5vw,1em) 0 0 0;
+	padding:0;
+	gap:min(5vw,1em);
+}
+.TsumegoSample div.mxGlobal .mxSolveBox button
+{
+	flex:1;
+	max-width:min(40vw,4em);
+	max-height:min(40vw,4em);
+	width:auto;
+	height:auto;
+	aspect-ratio:1;
+	margin:0;
+	padding:min(10vw,1em);
+	box-shadow:0.125em 0.125em 0.375em #ccc;
+	background:#fff;
+}
+.TsumegoSample div.mxGlobal .mxSolveBox button svg path
+{
+	fill:var(--tsumegoBk);
+}
+.TsumegoSample div.mxGlobal .mxSolveBox button:focus:not([disabled]),
+.TsumegoSample div.mxGlobal .mxSolveBox button:hover:not([disabled])
+{
+	background:var(--tsumegoBk);
+}
+.TsumegoSample div.mxGlobal .mxSolveBox button:focus:not([disabled]) svg path,
+.TsumegoSample div.mxGlobal .mxSolveBox button:hover:not([disabled]) svg path
+{
+	fill:#fff;
+}
+.TsumegoSample div.mxGlobal .mxSolveBox button[disabled]
+{
+	box-shadow:0.125em 0.125em 0.375em #999;
+}
+.TsumegoSample div.mxGlobal .mxSolveBox button[disabled] svg path
+{
+	fill:#000;
+}
+.TsumegoSample div.mxGlobal .mxCommentBox
+{
+	grid-row:3;
+	margin:min(5vw,1em) 0 0 0;
+	max-width:var(--gobanMaxWidth);
+}
+.TsumegoSample div.mxGlobal .mxCommentBox p
+{
+	margin:min(5vw,0.5em);
+}
+@container mxTsumegoMain (min-width:40em)
+{
+	.TsumegoSample div.mxGlobal
+	{
+		padding:1em 2em;
+	}
+	.TsumegoSample div.mxGlobal .mxCommentBox
+	{
+		grid-column:1;
+		grid-row:2;
+		margin:1em 0 0 0;
+	}
+	.TsumegoSample div.mxGlobal .mxGobanBox
+	{
+		grid-column:1;
+		grid-row:1;
+	}
+	.TsumegoSample div.mxGlobal .mxSolveBox
+	{
+		grid-column:2;
+		grid-row:1;
+		flex-direction:column;
+		margin:0 0 0 2em;
+		gap:1em;
+	}
 }
 <?php }?>
 <?php if (($sample=="Zanzibar")||($sample=="Mixed")) {?>
@@ -1049,27 +1166,27 @@ body.RulesSample iframe
 	background:#1eb63b;
 	padding-bottom:1px;
 }
-.ZanzibarSample div.mxGlobalBoxDiv .mxGobanDiv svg
+.ZanzibarSample div.mxGlobal .mxGobanBox svg
 {
 	background:#00a3dd;
 }
-.ZanzibarSample div.mxGlobalBoxDiv .mxGobanDiv svg radialGradient:nth-of-type(2) stop:nth-of-type(1)
+.ZanzibarSample div.mxGlobal .mxGobanBox svg radialGradient:nth-of-type(2) stop:nth-of-type(1)
 {
 	stop-color:#fcd117;
 }
-.ZanzibarSample div.mxGlobalBoxDiv .mxGobanDiv svg radialGradient:nth-of-type(2) stop:nth-of-type(2)
+.ZanzibarSample div.mxGlobal .mxGobanBox svg radialGradient:nth-of-type(2) stop:nth-of-type(2)
 {
 	stop-color:#cca117;
 }
-.ZanzibarSample div.mxGlobalBoxDiv .mxGobanDiv svg radialGradient:nth-of-type(2) stop:nth-of-type(3)
+.ZanzibarSample div.mxGlobal .mxGobanBox svg radialGradient:nth-of-type(2) stop:nth-of-type(3)
 {
 	stop-color:#3c1117;
 }
-.ZanzibarSample div.mxGlobalBoxDiv .mxGobanDiv svg .mxMarkOnLast.mxOnBlack
+.ZanzibarSample div.mxGlobal .mxGobanBox svg .mxMarkOnLast.mxOnBlack
 {
 	fill:#deb317;
 }
-.ZanzibarSample div.mxGlobalBoxDiv .mxGobanDiv svg .mxMarkOnLast.mxOnWhite
+.ZanzibarSample div.mxGlobal .mxGobanBox svg .mxMarkOnLast.mxOnWhite
 {
 	fill:#2d2d2d;
 }
@@ -1091,29 +1208,19 @@ themeMenu();
 ?>
 <?php if ($sample=="Fm") { ?>
 <ul class="banner">
-<li><img src="../_img/prints/1-1.gif"></li>
-<li><img src="../_img/prints/1-2.gif"></li>
-<li><img src="../_img/prints/1-3.gif"></li>
-<li><img src="../_img/prints/2-1.gif"></li>
-<li><img src="../_img/prints/2-2.gif"></li>
-<li><img src="../_img/prints/2-3.gif"></li>
-<li><img src="../_img/prints/3-1.gif"></li>
-<li><img src="../_img/prints/3-2.gif"></li>
-<li><img src="../_img/prints/3-3.gif"></li>
-<li><img src="../_img/prints/4-1.gif"></li>
-<li><img src="../_img/prints/4-2.gif"></li>
-<li><img src="../_img/prints/4-3.gif"></li>
-<li><img src="../_img/prints/5-1.gif"></li>
-<li><img src="../_img/prints/5-2.gif"></li>
-<li><img src="../_img/prints/5-3.gif"></li>
+<li><img width="200" height="300" src="../_img/prints/1.webp" alt=""></li>
+<li><img width="200" height="300" src="../_img/prints/2.webp" alt=""></li>
+<li><img width="200" height="300" src="../_img/prints/3.webp" alt=""></li>
+<li><img width="200" height="300" src="../_img/prints/4.webp" alt=""></li>
+<li><img width="200" height="300" src="../_img/prints/5.webp" alt=""></li>
 </ul>
 <?php } ?>
 </header>
 
 <?php if ($sample=="Tactigo") { ?>
-<h1 class="z"><a href="http://tactigo.free.fr/"><?=$title." - ".$subtitle?></a></h1>
+<h1 class="z" id="h1Content"><a href="http://tactigo.free.fr/"><?=$title." - ".$subtitle?></a></h1>
 <?php } else {?>
-<h1 class="z"><?=$title." - ".$subtitle?></h1>
+<h1 class="z" id="h1Content"><?=$title." - ".$subtitle?></h1>
 <?php }?>
 
 <main>
@@ -1247,9 +1354,7 @@ _sgf/problem/p3-<?=$lang?>.sgf
 </section>
 </section>
 <?php } else if ($sample=="Manuscript") { ?>
-<p class="z">Theme=Minimalist (<?=$modifiedLabel?>), config=Kifu</p>
-<section id="manuscript" class="sample">
-<section class="kifu">
+<p class="z">Theme = Minimalist (<?=$modifiedLabel?>), config = Kifu</p>
 <script src="<?=$scripts["Kifu"]?>"
 		data-maxigos-stretching="0,1,1,2"
 		data-maxigos-grid-padding="4"
@@ -1258,10 +1363,8 @@ _sgf/problem/p3-<?=$lang?>.sgf
 		data-maxigos-sgf="_sgf/game/blood-vomit-<?=$lang?>.sgf"
 >
 </script>
-</section>
-</section>
 <?php } else if ($sample=="Iframe") { ?>
-<p class="z">Theme=NeoClassic+Iframe</p>
+<p class="z">Theme = NeoClassic + Iframe</p>
 <?php
 $query="config=game";
 $query.="&theme=neo-classic";
@@ -1284,6 +1387,15 @@ $query.="&sgf=".urlencode("../_sgf/game/blood-vomit-".$lang.".sgf");
 <h2 class="z">Bordeaux</h2>
 <script
 	src="minimalist/_maker/basic.php"
+	data-maxigos-sgf="_sgf/game/blood-vomit-<?=$lang?>.sgf"
+>
+</script>
+</section>
+<section class="DarkSample">
+<h2 class="z">Dark</h2>
+<script
+	src="minimalist/_maker/basic.php"
+	data-maxigos-in3d-on="1"
 	data-maxigos-sgf="_sgf/game/blood-vomit-<?=$lang?>.sgf"
 >
 </script>
@@ -1315,34 +1427,34 @@ $query.="&sgf=".urlencode("../_sgf/game/blood-vomit-".$lang.".sgf");
 </section>
 </section>
 <?php } else if ($sample=="Multilang") { ?>
-<p class="z">Theme=Minimalist, config=Game</p>
+<p class="z">Theme = Minimalist, config = Game</p>
 <section class="MultilangSample">
 <section class="sample">
-<h2 lang="en" class="z">English (lang="en")</h2>
+<h2 lang="en" class="z">English (lang = "en")</h2>
 <script lang="en" src="minimalist/_maker/game.php"
 data-maxigos-sgf="_sgf/game/blood-vomit-en.sgf">
 </script>
 </section>
 <section class="sample">
-<h2 lang="fr" class="z">Français (lang="fr")</h2>
+<h2 lang="fr" class="z">Français (lang = "fr")</h2>
 <script lang="fr" src="minimalist/_maker/game.php"
 data-maxigos-sgf="_sgf/game/blood-vomit-fr.sgf">
 </script>
 </section>
 <section class="sample">
-<h2 lang="ja" class="z">日本語 (lang="ja")</h2>
+<h2 lang="ja" class="z">日本語 (lang = "ja")</h2>
 <script lang="ja" src="minimalist/_maker/game.php"
 data-maxigos-sgf="_sgf/game/blood-vomit-ja.sgf">
 </script>
 </section>
 <section class="sample">
-<h2 lang="zh-hans" class="z">中文～简化字 (lang="zh-hans")</h2>
+<h2 lang="zh-hans" class="z">中文～简化字 (lang = "zh-hans")</h2>
 <script lang="zh-hans" src="minimalist/_maker/game.php"
 data-maxigos-sgf="_sgf/game/blood-vomit-zh-hans.sgf">
 </script>
 </section>
 <section class="sample">
-<h2 lang="zh-hant" class="z">中文～正體字 (lang="zh-hant")</h2>
+<h2 lang="zh-hant" class="z">中文～正體字 (lang = "zh-hant")</h2>
 <script lang="zh-hant" src="minimalist/_maker/game.php"
 data-maxigos-sgf="_sgf/game/blood-vomit-zh-hant.sgf">
 </script>
@@ -1406,12 +1518,12 @@ data-maxigos-sgf="_sgf/game/blood-vomit-zh-hant.sgf">
 </section>
 </section>
 <?php } else if ($sample=="Rules") { ?>
-<p class="z">Theme=Minimalist, config=Diagram</p>
+<p class="z">Theme = Minimalist, config = Diagram</p>
 <section id="Rules" class="sample">
 <iframe src="rules/rules-<?=(($lang=="fr")?"fr":"en")?>.php"></iframe>
 </section>
 <?php } else if ($sample=="Tactigo") {?>
-<p class="z">Theme=Minimalist (<?=$modifiedLabel?>), config=Problem</p>
+<p class="z">Theme = Minimalist (<?=$modifiedLabel?>), config = Problem</p>
 <section id="tactigo" class="sample">
 <section class="problem">
 <script src="<?=$scripts["Problem"]?>"
@@ -1427,7 +1539,7 @@ data-maxigos-sgf="_sgf/game/blood-vomit-zh-hant.sgf">
 </section>
 </section>
 <?php } else if ($sample=="Tiger") {?>
-<p class="z">Theme=Tiger</p>
+<p class="z">Theme = Tiger</p>
 <section id="tiger" class="sample">
 <section class="comment">
 <h2 class="z">Comment</h2>
@@ -1450,7 +1562,7 @@ data-maxigos-sgf="_sgf/game/TV9x9-<?=(($lang=="fr")?"fr":"en")?>.sgf">
 </section>
 
 <?php } else if ($sample=="Tsumego") {?>
-<p class="z">Theme=Minimalist (<?=$modifiedLabel?>), config=Problem</p>
+<p class="z">Theme = Minimalist (<?=$modifiedLabel?>), config = Problem</p>
 <?php
 	if($lang=="ja") $tsumego="詰め碁";
 	else $tsumego="Tsumego";
@@ -1459,7 +1571,6 @@ data-maxigos-sgf="_sgf/game/TV9x9-<?=(($lang=="fr")?"fr":"en")?>.sgf">
 <h2><span><?=$tsumego?> 12x8</span><span><span>★★★</span><span>★★★</span></span></h2>
 <script src="<?=$scripts["Problem"]?>"
 		data-maxigos-in3d-on="1"
-		data-maxigos-points-num-max="0"
 		data-maxigos-stretching="0,1,1,2"
 		data-maxigos-sgf="_sgf/problem/p3-<?=$lang?>.sgf">
 </script>
@@ -1468,7 +1579,6 @@ data-maxigos-sgf="_sgf/game/TV9x9-<?=(($lang=="fr")?"fr":"en")?>.sgf">
 <h2><span><?=$tsumego?> 19x19</span><span><span>★★★</span><span>★★★</span></span></h2>
 <script src="<?=$scripts["Problem"]?>"
 		data-maxigos-in3d-on="1"
-		data-maxigos-points-num-max="0"
 		data-maxigos-sgf="_sgf/problem/tactigo-<?=$lang?>.sgf">
 </script>
 </section>
@@ -1479,22 +1589,22 @@ data-maxigos-sgf="_sgf/game/TV9x9-<?=(($lang=="fr")?"fr":"en")?>.sgf">
 
 <?php } else {?>
 <?php if (($sample=="Bamboo")||($sample=="Bordeaux")) {?>
-<p class="z">Theme=Minimalist (<?=$modifiedLabel?>)</p>
+<p class="z">Theme = Minimalist (<?=$modifiedLabel?>)</p>
 <?php }?>
 <?php if (($sample=="Eidogo")) {?>
-<p class="z">Theme=<a href="https://github.com/jkk/eidogo/tree/master">Eidogo</a>, code=<a href="https://github.com/parsimonhi/maxiGos">maxiGos</a></p>
+<p class="z">Theme = <a href="https://github.com/jkk/eidogo/tree/master">Eidogo</a>, code = <a href="https://github.com/parsimonhi/maxiGos">maxiGos</a></p>
 <?php }?>
 <?php if (($sample=="Forum")) {?>
-<p class="z">Theme=Forum (<a href="https://www.gludion.com/go/">Goswf</a>)</p>
+<p class="z">Theme = Forum (<a href="https://www.gludion.com/go/">Goswf</a>)</p>
 <?php }?>
 <?php if (($sample=="Iroha")) {?>
-<p class="z">Theme=Iroha</p>
+<p class="z">Theme = Iroha</p>
 <?php }?>
 <?php if (($sample=="Kifla")) {?>
-<p class="z">Theme=Kifla</p>
+<p class="z">Theme = Kifla</p>
 <?php }?>
 <?php if (($sample=="WGo")) {?>
-<p class="z">Theme=<a href="http://wgo.waltheri.net/">WGo</a>, code=<a href="https://github.com/parsimonhi/maxiGos">maxiGos</a></p>
+<p class="z">Theme = <a href="http://wgo.waltheri.net/">WGo</a>, code = <a href="https://github.com/parsimonhi/maxiGos">maxiGos</a></p>
 <?php }?>
 <?php if (file_exists($scripts["Basic"])) {?>
 <section id="basic" class="sample">
@@ -1518,16 +1628,6 @@ $sgf="_sgf/game/TV9x9-".(($lang=="fr")?"fr":"en").".sgf";
 oneScript($src,$params,$sgf);
 ?>
 </section>
-<section class="sampleBody">
-<h3 class="z">25x25</h3>
-<?php
-$src=$scripts["Basic"];
-$params="data-maxigos-points-num-max=\"0\"";
-if ($sample=="Bamboo") $params.=" data-maxigos-in3d-on=\"1\"";
-$sgf="_sgf/game/XY25x25.sgf";
-oneScript($src,$params,$sgf);
-?>
-</section>
 </section>
 <?php }?>
 
@@ -1539,8 +1639,7 @@ oneScript($src,$params,$sgf);
 <h3 class="z">19x19</h3>
 <?php
 $src=$scripts["Comment"];
-$params="data-maxigos-points-num-max=\"0\"";
-if ($sample=="Bamboo") $params="data-maxigos-in3d-on=\"1\"";else $params="";
+if ($sample=="Bamboo") $params="data-maxigos-in3d-on=\"1\""; else $params="";
 $sgf="_sgf/game/mn-bdg-".(($lang=="fr")?"fr":"en").".sgf";
 oneScript($src,$params,$sgf);
 ?>
@@ -1551,6 +1650,26 @@ oneScript($src,$params,$sgf);
 $src=$scripts["Comment"];
 if ($sample=="Bamboo") $params="data-maxigos-in3d-on=\"1\""; else $params="";
 $sgf="_sgf/game/TV9x9-".(($lang=="fr")?"fr":"en").".sgf";
+oneScript($src,$params,$sgf);
+?>
+</section>
+<section class="sampleBody">
+<h3 class="z">13x13</h3>
+<?php
+$src=$scripts["Comment"];
+$params="data-maxigos-indices-on=\"1\"";
+if ($sample=="Bamboo") $params.=" data-maxigos-in3d-on=\"1\"";
+$sgf="(;GM[1]FF[4]SZ[13])";
+oneScript($src,$params,$sgf);
+?>
+</section>
+<section class="sampleBody">
+<h3 class="z">52x19</h3>
+<?php
+$src=$scripts["Comment"];
+$params="data-maxigos-indices-on=\"1\"";
+if ($sample=="Bamboo") $params.=" data-maxigos-in3d-on=\"1\"";
+$sgf="_sgf/game/large.sgf";
 oneScript($src,$params,$sgf);
 ?>
 </section>
@@ -1574,10 +1693,8 @@ oneScript($src,$params,$sgf);
 <h3 class="z">Dia. 2</h3>
 <?php
 $src=$scripts["Diagram"];
-$params="data-maxigos-points-num-max=\"19\"";
-if ($sample=="Bamboo") $params.=" data-maxigos-in3d-on=\"1\"";
-if ($lang=="ja") $sgf="_sgf/joseki/j1-ja.sgf";
-else $sgf="_sgf/joseki/j1.sgf";
+if ($sample=="Bamboo") $params="data-maxigos-in3d-on=\"1\""; else $params="";
+$sgf="_sgf/joseki/j1.sgf";
 oneScript($src,$params,$sgf);
 ?>
 </section>
@@ -1585,7 +1702,8 @@ oneScript($src,$params,$sgf);
 <h3 class="z">Dia. 3</h3>
 <?php
 $src=$scripts["Diagram"];
-$params="data-maxigos-points-num-max=\"19\"";
+$params="data-maxigos-indices-on=\"1\"";
+$params.=" data-maxigos-numbering-on=\"1\"";
 if ($sample=="Bamboo") $params.=" data-maxigos-in3d-on=\"1\"";
 $sgf="_sgf/joseki/j2.sgf";
 oneScript($src,$params,$sgf);
@@ -1595,31 +1713,18 @@ oneScript($src,$params,$sgf);
 <h3 class="z">Dia. 4</h3>
 <?php
 $src=$scripts["Diagram"];
-$params="data-maxigos-indices-on=\"1\"";
-$params.=" data-maxigos-numbering-on=\"1\"";
-$params.=" data-maxigos-points-num-max=\"0\"";
-if ($sample=="Bamboo") $params.=" data-maxigos-in3d-on=\"1\"";
-$sgf="_sgf/joseki/j2.sgf";
-oneScript($src,$params,$sgf);
-?>
-</section>
-<section class="sampleBody">
-<h3 class="z">Dia. 5</h3>
-<?php
-$src=$scripts["Diagram"];
 $params="data-maxigos-indices-on=\"0\"";
-$params.=" data-maxigos-points-num-max=\"0\"";
 if ($sample=="Bamboo") $params.=" data-maxigos-in3d-on=\"1\"";
 if ($lang=="fr")
-	$sgf="\n(\n;FF[4]GM[1]SZ[19]\n;LB[jj:Centre][cc:Coin][jc:Bord][jq:Bord du bas]\n)";
+	$sgf="\n(\n;FF[4]GM[1]SZ[19]\n;LB[jj:Centre][cc:Coin][jc:Bord][qq:Coin en bas à droite]\n)";
 else if ($lang=="ja")
 	$sgf="\n(\n;FF[4]GM[1]SZ[19]\n;LB[jj:中央][cc:隅][jc:辺][qq:右下隅]\n)";
 else if ($lang=="zh-hans")
-	$sgf="\n(\n;FF[4]GM[1]SZ[19]\n;LB[jj:中心][cc:角][jc:辺]\n)";
+	$sgf="\n(\n;FF[4]GM[1]SZ[19]\n;LB[jj:中心][cc:角][jc:辺][qq:右下角]\n)";
 else if ($lang=="zh-hant")
-	$sgf="\n(\n;FF[4]GM[1]SZ[19]\n;LB[jj:中心][cc:角][jc:辺]\n)";
+	$sgf="\n(\n;FF[4]GM[1]SZ[19]\n;LB[jj:中心][cc:角][jc:辺][qq:右下角]\n)";
 else
-	$sgf="\n(\n;FF[4]GM[1]SZ[19]\n;LB[jj:Center][cc:Corner][jc:Edge][jq:Bottom edge]\n)";
+	$sgf="\n(\n;FF[4]GM[1]SZ[19]\n;LB[jj:Center][cc:Corner][jc:Edge][qq:Bottom right corner]\n)";
 oneScript($src,$params,$sgf);
 ?>
 </section>
@@ -1691,8 +1796,7 @@ oneScript($src,$params,$sgf);
 <h3 class="z">19x19</h3>
 <?php
 $src=$scripts["Lesson"];
-$params="data-maxigos-points-num-max=\"0\"";
-if ($sample=="Bamboo") $params.=" data-maxigos-in3d-on=\"1\"";
+if ($sample=="Bamboo") $params="data-maxigos-in3d-on=\"1\""; else $params="";
 $sgf="_sgf/game/mn-bdg-".(($lang=="fr")?"fr":"en").".sgf";
 oneScript($src,$params,$sgf);
 ?>
@@ -1744,6 +1848,15 @@ oneScript($src,$params,$sgf);
 $src=$scripts["Problem"];
 if ($sample=="Bamboo") $params="data-maxigos-in3d-on=\"1\""; else $params="";
 $sgf="_sgf/problem/p3-".$lang.".sgf";
+oneScript($src,$params,$sgf);
+?>
+</section>
+<section class="sampleBody">
+<h3 class="z">Prob. mini</h3>
+<?php
+$src=$scripts["Problem"];
+if ($sample=="Bamboo") $params="data-maxigos-in3d-on=\"1\""; else $params="";
+$sgf="(;GM[1]SZ[3:4](;B[bb])(;B[bc]))";
 oneScript($src,$params,$sgf);
 ?>
 </section>
@@ -1813,8 +1926,8 @@ if ($sample=="Bamboo") $params="data-maxigos-in3d-on=\"1\""; else $params="";
 $sgf="_sgf/game/TV9x9-".(($lang=="fr")?"fr":"en").".sgf";
 oneScript($src,$params,$sgf);
 ?>
-<?php if(kogo()){?>
 </section>
+<?php if(kogo()){?>
 <section class="sampleBody">
 <h3 class="z">Kogo</h3>
 <?php
@@ -1823,8 +1936,8 @@ if ($sample=="Bamboo") $params="data-maxigos-in3d-on=\"1\""; else $params="";
 $sgf=kogo();
 oneScript($src,$params,$sgf);
 ?>
-<?php }?>
 </section>
+<?php }?>
 </section>
 <?php }?>
 
@@ -1835,19 +1948,8 @@ oneScript($src,$params,$sgf);
 <section class="sampleBody">
 <h3 class="z">19x19</h3>
 <?php
-$src=$scripts["Zero"];
-if ($sample=="Bamboo") $params=" data-maxigos-in3d-on=\"1\""; else $params="";
-$sgf="_sgf/game/mn-bdg-".(($lang=="fr")?"fr":"en").".sgf";
-oneScript($src,$params,$sgf);
-?>
-</section>
-<section class="sampleBody">
-<h3 class="z">9x9</h3>
-<?php
-$src=$scripts["Zero"];
-if ($sample=="Bamboo") $params="data-maxigos-in3d-on=\"1\""; else $params="";
-$sgf="_sgf/game/TV9x9-".(($lang=="fr")?"fr":"en").".sgf";
-oneScript($src,$params,$sgf);
+$params=(($sample=="Bamboo")?" data-maxigos-in3d-on=\"1\"":"");
+oneScript($scripts["Zero"],$params,"_sgf/game/Hon-1941-1.sgf");
 ?>
 </section>
 </section>
@@ -1862,35 +1964,34 @@ oneScript($src,$params,$sgf);
 <?php }?>
 
 <?php if (($sample=="Classic")&&($lang=="fr")) {?>
-<a class="aloneLink" href="classic/classic-sample-fr.html"><?=$aloneScriptSample?></a>
+<a class="aloneLink" href="classic/classic-sample-fr.html"><?=$standaloneScriptSample?></a>
 <?php } else if ($sample=="Classic") {?>
-<a class="aloneLink" href="classic/classic-sample-en.html"><?=$aloneScriptSample?></a>
+<a class="aloneLink" href="classic/classic-sample-en.html"><?=$standaloneScriptSample?></a>
 <?php } else if (($sample=="Minimalist")&&($lang=="fr")) {?>
-<a class="aloneLink" href="minimalist/minimalist-sample-fr.html"><?=$aloneScriptSample?></a>
+<a class="aloneLink" href="minimalist/minimalist-sample-fr.html"><?=$standaloneScriptSample?></a>
 <?php } else if ($sample=="Minimalist") {?>
-<a class="aloneLink" href="minimalist/minimalist-sample-en.html"><?=$aloneScriptSample?></a>
+<a class="aloneLink" href="minimalist/minimalist-sample-en.html"><?=$standaloneScriptSample?></a>
 <?php } else if (($sample=="NeoClassic")&&($lang=="fr")) {?>
-<a class="aloneLink" href="neo-classic/neo-classic-sample-fr.html"><?=$aloneScriptSample?></a>
+<a class="aloneLink" href="neo-classic/neo-classic-sample-fr.html"><?=$standaloneScriptSample?></a>
 <?php } else if (($sample=="NeoClassic")) {?>
-<a class="aloneLink" href="neo-classic/neo-classic-sample-en.html"><?=$aloneScriptSample?></a>
+<a class="aloneLink" href="neo-classic/neo-classic-sample-en.html"><?=$standaloneScriptSample?></a>
 <?php } else if (($sample=="Rosewood")&&($lang=="fr")) {?>
-<a class="aloneLink" href="rosewood/rosewood-sample-fr.html"><?=$aloneScriptSample?></a>
+<a class="aloneLink" href="rosewood/rosewood-sample-fr.html"><?=$standaloneScriptSample?></a>
 <?php } else if ($sample=="Rosewood") {?>
-<a class="aloneLink" href="rosewood/rosewood-sample-en.html"><?=$aloneScriptSample?></a>
+<a class="aloneLink" href="rosewood/rosewood-sample-en.html"><?=$standaloneScriptSample?></a>
 <?php } else if (($sample=="Tatami")&&($lang=="fr")) {?>
-<a class="aloneLink" href="tatami/tatami-sample-fr.html"><?=$aloneScriptSample?></a>
+<a class="aloneLink" href="tatami/tatami-sample-fr.html"><?=$standaloneScriptSample?></a>
 <?php } else if ($sample=="Tatami") {?>
-<a class="aloneLink" href="tatami/tatami-sample-en.html"><?=$aloneScriptSample?></a>
+<a class="aloneLink" href="tatami/tatami-sample-en.html"><?=$standaloneScriptSample?></a>
 <?php } else if (($sample=="Troyes")&&($lang=="fr")) {?>
-<a class="aloneLink" href="troyes/troyes-sample-fr.html"><?=$aloneScriptSample?></a>
+<a class="aloneLink" href="troyes/troyes-sample-fr.html"><?=$standaloneScriptSample?></a>
 <?php } else if ($sample=="Troyes") {?>
-<a class="aloneLink" href="troyes/troyes-sample-en.html"><?=$aloneScriptSample?></a>
+<a class="aloneLink" href="troyes/troyes-sample-en.html"><?=$standaloneScriptSample?></a>
 <?php }?>
 
 <p class="z computedData">
 <?=$ExecutionTimeLabel?><span class="executionTime">0</span>, 
-<span class="maxigosNum">0</span><?=$maxigosNumLabel?>, 
-<?=$pageWidthLabel?><span class="pageWidth">0</span>
+<span class="maxigosNum">0</span><?=$maxigosNumLabel?>, <?=$pageWidthLabel?><span class="pageWidth">0</span>
 </p>
 </main>
 
@@ -1900,6 +2001,60 @@ themeMenu();
 langMenu();
 ?>
 </footer>
-
+<?php if (isset($_GET["Z1"])) {?>
+<script>
+(function()
+{
+	// check i18n
+	let a="",e;
+	for (const key in mxG.Z.fr)
+	{
+		if(key!="Help_Data")
+		{
+			a+="/ "+key;
+			if(mxG.Z.fr[key] instanceof Function) a+=" / function()<br>";
+			else
+			{
+				a+=" / "+mxG.Z.fr[key];
+				if(mxG.Z.ja) a+=" / "+((mxG.Z.ja[key]!==undefined)?"<span style=\"color:green;\">"+mxG.Z.ja[key]+"</span>":"<span style=\"color:red;\">Error</span>");
+				if(mxG.Z["zh-hans"]) a+=" / "+((mxG.Z["zh-hans"][key]!==undefined)?"<span style=\"color:green;\">"+mxG.Z["zh-hans"][key]+"</span>":"<span style=\"color:red;\">Error</span>");
+				if(mxG.Z["zh-hant"]) a+=" / "+((mxG.Z["zh-hant"][key]!==undefined)?"<span style=\"color:green;\">"+mxG.Z["zh-hant"][key]+"</span>":"<span style=\"color:red;\">Error</span>")+"<br>";
+			}
+		}
+	}
+	e=document.createElement("div");
+	e.style.padding="1em";
+	e.innerHTML=a;
+	document.body.appendChild(e);
+})();
+</script>
+<?php }?>
+<?php if (isset($_GET["Z2"])) {?>
+<script>
+window.addEventListener('load',function()
+{
+	// check how many html elements are in the page
+	function run()
+	{
+		let tn=[];
+		function getElementChildNum(e)
+		{
+			let n=0,list=e.children;
+			if(!list) return 0;
+			for(let k=0;k<list.length;k++)
+			{
+				let t=list[k].tagName;
+				tn[t]=tn[t]?tn[t]+1:1;
+				n+=getElementChildNum(list[k]);
+			}
+			return n+list.length;
+		}
+		console.log(getElementChildNum(document.querySelector('html')),tn);
+	}
+	run();
+	setTimeout(run,5000);
+});
+</script>
+<?php }?>
 </body>
 </html>

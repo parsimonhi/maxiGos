@@ -46,15 +46,14 @@ function printOneDownloadLine($theme,$config)
 	$d="../_sample/$theme/_alone";
 	$j="../$d/$s";
 	echo "<tr>";
+	echo "<th>$s</th>";
 	if($lang=="fr")
 	{
-		echo "<td>$s</td>";
 		echo "<td><a href='$j' download='$s'>Télécharger</a></td>\n";
 		echo "<td><a href='../../_sample/_php/aloneViewer.php?lang=$lang&amp;theme=$theme&amp;config=$config'>Exemple</a></td>\n";
 	}
 	else
 	{
-		echo "<td>$s</td>";
 		echo "<td><a href='$j' download='$s'>Download</a></td>\n";
 		echo "<td><a href='../../_sample/_php/aloneViewer.php?lang=$lang&&amp;theme=$theme&amp;config=$config'>Example</a></td>\n";
 	}

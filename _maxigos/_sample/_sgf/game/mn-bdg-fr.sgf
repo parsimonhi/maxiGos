@@ -20,35 +20,35 @@ RE[W+26.5]
 AN[Motoki Noguchi]
 AP[maxiGos:6.09b1]
 GC[Benjamin est classé 5k mais il est 2-3d en vrai. C'est un des jeunes qui montent, comme notre Guillaume de Tours...]
-;B[dp];W[pd];B[dd];W[pq];B[po];W[fc]LB[pl:B][pm:C][qo:A]C[6 : il est bien sûr possible de jouer A-B-C... il y a beaucoup de choix ici.];B[cf];W[jd]
-(;B[oq]LB[np:A][qq:B]C[9 : comme Blanc a fait tenuki dans ce coin, il est normal de le "sanctionner" ainsi. Noir en A ou B sont possibles aussi.];W[or];B[op];W[nq]
-(;B[nr]LB[pr:A]C[13 : c'est un joseki pour gagner des points dans le coin. Go Seigen adore cette séquence, qui existe de fait depuis le 17e siècle (si ma mémoire est bonne). Noir en A est possible aussi.];W[mr];B[pr];W[ns];B[qq];W[mo]LB[qm:B][np:A]C[18 : normalement, Blanc joue soit tenuki, soit A. J'ai testé ici ce coup, préféré de Fujisawa Shuko (il l'a joué plusieurs fois, par exemple à la première ronde du premier Kisei contre Hashimoto Utaro). Il vise B.];B[qf];W[qm]LB[nc:C][pm:A][fq:B]C[20 : je ne savais pas trop quoi répondre dans le coin nord-est donc j'ai commencé par ici, mais le résultat n'est guère satisfaisant pour Blanc. Blanc en C aurait été finalement meilleur.
+;B[dp];W[pd];B[dd];W[pq];B[po];W[fc]LB[pl:B][pm:C][qo:A]C[6 : il est bien sûr possible de jouer A-B-C... il y a beaucoup de choix ici.];B[cf];W[jd]
+(;B[oq]LB[np:A][qq:B]C[9 : comme Blanc a fait tenuki dans ce coin, il est normal de le "sanctionner" ainsi. Noir en A ou B sont possibles aussi.];W[or];B[op];W[nq]
+(;B[nr]LB[pr:A]C[13 : c'est un joseki pour gagner des points dans le coin. Go Seigen adore cette séquence, qui existe de fait depuis le 17e siècle (si ma mémoire est bonne). Noir en A est possible aussi.];W[mr];B[pr];W[ns];B[qq];W[mo]LB[qm:B][np:A]C[18 : normalement, Blanc joue soit tenuki, soit A. J'ai testé ici ce coup, préféré de Fujisawa Shuko (il l'a joué plusieurs fois, par exemple à la première ronde du premier Kisei contre Hashimoto Utaro). Il vise B.];B[qf];W[qm]LB[nc:C][pm:A][fq:B]C[20 : je ne savais pas trop quoi répondre dans le coin nord-est donc j'ai commencé par ici, mais le résultat n'est guère satisfaisant pour Blanc. Blanc en C aurait été finalement meilleur.
 
 **Question**
 Que Noir doit-il jouer ici ? A, B ou C ?]
-(;B[pm]LB[ro:A]C[21 : choix judicieux, il faut sortir et empêcher Blanc en A (qui menace la base de vie de Noir).];W[pl];B[om];W[qn];B[qo];W[qi]LB[qc:B][qd:A]C[**Question 2**
+(;B[pm]LB[ro:A]C[21 : choix judicieux, il faut sortir et empêcher Blanc en A (qui menace la base de vie de Noir).];W[pl];B[om];W[qn];B[qo];W[qi]LB[qc:B][qd:A]C[**Question 2**
 Que joue Noir ici ? A ou B ?]
-(;B[qd]LB[qc:A]C[27 : Noir en A est mieux. En principe l'invasion au san-san trompe rarement.];W[qc];B[rc];W[pc];B[re];W[pe];B[ph];W[qh]
+(;B[qd]LB[qc:A]C[27 : Noir en A est mieux. En principe l'invasion au san-san trompe rarement.];W[qc];B[rc];W[pc];B[re];W[pe];B[ph];W[qh]
 ;B[pf];W[qe];B[rd];W[rg];B[rf];W[ne];B[nf];W[mf]
-;B[ng];W[mg]LB[me:A]C[44 : un peu trop. A est meilleur.];B[mh];W[lh];B[mi];W[kg]TR[ph][qh][qi][nj][oj][nk][ok][nl][ol][pl][nm][om][pm][qm]SQ[mf][nf][kg][mg][ng][lh][mh][mi]C[Mais en tout cas la direction est bonne pour Blanc, qui pousse Noir vers une zone serrée, où personne ne peut rien construire (triangle). Si vous comparez l'efficacité des quatre pierres des deux couleurs (carré), vous comprendrez qui a tiré plus de profit.];B[hc]C[49 : bon timing.];W[hd]
+;B[ng];W[mg]LB[me:A]C[44 : un peu trop. A est meilleur.];B[mh];W[lh];B[mi];W[kg]TR[ph][qh][qi][nj][oj][nk][ok][nl][ol][pl][nm][om][pm][qm]SQ[mf][nf][kg][mg][ng][lh][mh][mi]C[Mais en tout cas la direction est bonne pour Blanc, qui pousse Noir vers une zone serrée, où personne ne peut rien construire (triangle). Si vous comparez l'efficacité des quatre pierres des deux couleurs (carré), vous comprendrez qui a tiré plus de profit.];B[hc]C[49 : bon timing.];W[hd]
 (;B[id]LB[ic:A]C[Noir en A est possible aussi.];W[ic]LB[gd:A][ie:B]C[**Question 3**
 À Noir de jouer, A ou B ?]
-(;B[gd]LB[ie:A]C[53 : mauvais, il faut absolument sortir en A. Le ponnuki est trop gros.];W[ie];B[gc];W[dc]C[Noir a déchiré Blanc mais il reste encore de l'aji dans le coin.];B[fd]
-(;W[ec]LB[cd:C][ck:A][cn:B]C[58 : Blanc en A ou B sont peut-être meilleurs. Localement, C est plus intéressant.]
+(;B[gd]LB[ie:A]C[53 : mauvais, il faut absolument sortir en A. Le ponnuki est trop gros.];W[ie];B[gc];W[dc]C[Noir a déchiré Blanc mais il reste encore de l'aji dans le coin.];B[fd]
+(;W[ec]LB[cd:C][ck:A][cn:B]C[58 : Blanc en A ou B sont peut-être meilleurs. Localement, C est plus intéressant.]
 (;B[ed]LB[cc:A]C[Noir en A, à la tête des trois pierres, est plus sévère.];W[cc]
-(;B[dj]C[61 : je jouerais plutôt Noir en A une fois ici (voir la variante).
+(;B[dj]C[61 : je jouerais plutôt Noir en A une fois ici (voir la variante).
 
 **Question 4**
 Que joue Blanc ici ? B ou C ?]LB[cd:A][be:B][fq:C]
-(;W[be]C[62 : ce coup est mine de rien énorme (et il est presque sente). Je pensais être en avance en jouant ici.];B[ce];W[bf];B[bg];W[cd];B[cg];W[fq]
-(;B[dn]LB[dq:A]C[69 : Noir étant en retard, j'aurais préféré à sa place jouer en A pour gagner le maximum de points.];W[cq];B[dq];W[dr]
+(;W[be]C[62 : ce coup est mine de rien énorme (et il est presque sente). Je pensais être en avance en jouant ici.];B[ce];W[bf];B[bg];W[cd];B[cg];W[fq]
+(;B[dn]LB[dq:A]C[69 : Noir étant en retard, j'aurais préféré à sa place jouer en A pour gagner le maximum de points.];W[cq];B[dq];W[dr]
 (;B[cp];W[br];B[bq];W[cr]
 (;B[go]LB[fj:B][hp:A]C[**Question 5** 
 À Blanc de jouer, A ou B ? Comptez bien !]
-(;W[hp]TR[eg][gg][ei][gi][ek][gk][em][gm]C[78 : je recomptais alors et pensais pouvoir gagner en cédant le bord ouest (triangle).];B[in];W[jo]C[Il n'y a plus de complication.];B[hh];W[ii];B[hi];W[ij];B[gk]
-;W[ge];B[hf];W[he];B[ff];W[bp]C[90 : le plus gros yose.];B[bo];W[aq];B[rb]
+(;W[hp]TR[eg][gg][ei][gi][ek][gk][em][gm]C[78 : je recomptais alors et pensais pouvoir gagner en cédant le bord ouest (triangle).];B[in];W[jo]C[Il n'y a plus de complication.];B[hh];W[ii];B[hi];W[ij];B[gk]
+;W[ge];B[hf];W[he];B[ff];W[bp]C[90 : le plus gros yose.];B[bo];W[aq];B[rb]
 ;W[qb];B[hb]
-(;W[jb]LB[ib:A]TR[ec][fc][ic][jd]C[96 : dans cette situation où deux territoires blancs se côtoient (on l'appelle "conflit de deux frères" en japonais), ce coup est meilleur que A.];B[il];W[ro];B[rp];W[ps];B[qr];W[rn]C[Blanc gagne de 26,5 points (si ma mémoire est bonne).
+(;W[jb]LB[ib:A]TR[ec][fc][ic][jd]C[96 : dans cette situation où deux territoires blancs se côtoient (on l'appelle "conflit de deux frères" en japonais), ce coup est meilleur que A.];B[il];W[ro];B[rp];W[ps];B[qr];W[rn]C[Blanc gagne de 26,5 points (si ma mémoire est bonne).
 Benjamin a terminé deuxième du championnat régional. Bravo à lui !])
 (;W[ib];B[ia];W[ja];B[ga];W[jb];B[ea]))
 (;W[fj]))

@@ -1,402 +1,403 @@
 .mxMinimalistTheme
 {
-	--gobanMaxWidth:calc(1em * 511 / 16);
-	--color:#000;
+	--gobanScale:1;
+	--gobanMaxWidth:calc(1em * var(--gobanScale) * var(--gobanIntrinsicWidth,445) / 16);
+	--navigationMaxWidth:calc(1em * 445 / 16);
+	--columnMaxWidth:max(var(--gobanMaxWidth),var(--navigationMaxWidth));
 	--border:1px solid #0007;
+	--color:#000;
 	--btnBk:#fff;
-	--btnBorder:var(--border);
-	--btnColor:var(--color);
+	--btnBorder:1px solid #0007;
+	--btnColor:#000;
 	--selectedBtnBk:#000;
 	--selectedBtnBorder:1px solid #000;
 	--selectedBtnColor:#fff;
 	text-align:left;
-	max-width:var(--gobanMaxWidth);
+	/* general */
+	& button,
+	& select,
+	& textarea {-webkit-appearance:none;-moz-appearance:none;}
+	& [disabled] {cursor:default;}
+	& input[type=file] {visibility:hidden;position:fixed;}
+	& [data-maxigos-disabled],
+	& [disabled] {opacity:0.5;}
+	& form,fieldset{border:0;margin:0;padding:0;}
+	& svg {display:block;width:100%;height:100%;}
+	&,
+	& input,
+	& select,
+	& meter,
+	& button {font-family:sans-serif;font-size:1em;}
+	& p:first-of-type {margin-top:0;}
+	/* do not style anything inside minimalist svg */
+	/* use svg attributes to get a convenient minimal result even if no style */
+	/* layout */
+	&
+	{
+		max-width:var(--columnMaxWidth);
+		margin:0 auto;
+	}
+	&.mxCommentConfig,
+	&.mxEditConfig,
+	&.mxLessonConfig,
+	&.mxTreeConfig
+	{
+		max-width:calc(var(--columnMaxWidth) * 2 + 0.25em + 4px);
+		display:flex;
+		flex-wrap:wrap;
+		justify-content:center;
+		align-items:stretch;
+		gap:0.25em;
+	}
+	&.mxCommentConfig>div,
+	&.mxEditConfig>div,
+	&.mxLessonConfig>div,
+	&.mxTreeConfig>div
+	{
+		flex:1 1 calc(var(--columnMaxWidth) + 2px);
+		max-width:min(100%,calc(var(--columnMaxWidth) + 2px));
+		display:flex;
+		flex-direction:column;
+	}
+	/* buttons, inputs */
+	& .mxSgfParent,
+	& .mxMenuBox
+	{
+		margin:0;
+		padding:min(2.5vw,0.25em);
+		text-align:center;
+	}
+	& .mxSgfParent>div
+	{
+		display:inline-block;
+		margin:0.25em 0;
+		padding:0;
+	}
+	& .mxSgfParent button,
+	& .mxMenuBox button,
+	& dialog button
+	{
+		box-sizing:border-box;
+		margin:min(2.5vw,0.25em);
+		padding:0 min(5vw,0.5em);
+		min-height:1.75em;
+		line-height:1.75em;
+	}
+	& .mxSgfParent button,
+	& .mxMenuBox button
+	{
+		border:var(--btnBorder);
+		background:var(--btnBk);
+		color:var(--btnColor);
+	}
+	& dialog button
+	{
+		border:1px solid #777;
+		background:#fff;
+		color:#000;
+	}
+	& dialog button[value="FileInput"]
+	{
+		min-height:1.75em;
+		height:auto;
+	}
+	& .mxSgfParent button.mxSelectedBtn
+	{
+		background:var(--selectedBtnBk);
+		border:var(--selectedBtnBorder);
+		color:var(--selectedBtnColor);
+	}
+	/* dialog */
+	& dialog,
+	& dialog *
+	{
+		box-sizing:border-box;
+	}
+	& dialog::backdrop
+	{
+	  background: #0007;
+	}
+	& dialog
+	{
+		max-width:calc(100% - 5vw);
+		border:0;
+		padding:0;
+	}
+	& dialog .mxContentFieldset
+	{
+		padding:min(2.5vw,0.5em);
+	}
+	& dialog.mxEditOptionsDialog .mxContentFieldset
+	{
+		line-height:1.5em;
+	}
+	& dialog .mxMenuFieldset
+	{
+		background:#eee;
+		min-height:3em;
+		line-height:3em;
+		text-align:center;
+	}
+	& dialog label:not([for])
+	{
+		display:block;
+	}
+	& dialog input[type=text],
+	& dialog select
+	{
+		border:var(--border);
+		background:#fff;
+	}
+	& dialog select
+	{
+		text-align:center;
+	}
+	& dialog a
+	{
+		color:#000;
+	}
+	& dialog img
+	{
+		display:block;
+		margin:0 auto;
+		max-width:100%;
+		height:auto;
+		border:0;
+	}
+	& dialog textarea
+	{
+		display:block;
+		width:100%;
+		border:var(--border);
+	}
+	& .mxEditSgfDialog
+	{
+		min-width:min(80%,var(--gobanMaxWidth));
+	}
+	& .mxEditSgfDialog textarea
+	{
+		font-family:monospace; /* for Safari? */
+		white-space:pre-wrap;
+		min-height:min(50vh,var(--gobanMaxWidth));
+	}
+	/* component specific */
+	/* comment */
+	&.mxCommentConfig .mxCommentBox,
+	&.mxTreeConfig .mxCommentBox
+	{
+		box-sizing:border-box;
+		border:var(--border);
+		height:8em;
+		overflow:auto;
+		padding:0.25em;
+		resize:vertical;
+	}
+	&.mxCommentConfig .mxCommentBox
+	{
+		/* do not flex:auto on .mxTreeConfig .mxCommentBox */
+		/* otherwise side effect when the user resizes .mxCommentBox or .mxTreeBox */
+		flex:auto;
+	}
+	/* goban */
+	& .mxGobanBox
+	{
+		flex:auto;
+		display:flex;
+		flex-direction:column;
+	}
+	&.mxCommentConfig .mxGobanBox,
+	&.mxEditConfig .mxGobanBox,
+	&.mxLessonConfig .mxGobanBox,
+	&.mxTreeConfig .mxGobanBox
+	{
+		box-sizing:border-box;
+		border:var(--border);
+	}
+	& .mxGobanContent
+	{
+		/* do not use --gobanMaxWidth on .mxGobanSvg since its font-size is 14 */
+		/* set width to 100% otherwise the svg doesn't grow above its intrinsic width */
+		max-width:var(--gobanMaxWidth);
+		width:100%;
+		margin:auto;
+	}
+	/* guess */
+	& meter
+	{
+		--meterGoodColor:#fff;
+		--meterBadColor:#0007;
+		display:block;
+		margin:1em;
+		padding:0;
+		width:calc(100% - 2em);
+		height:0.5em;
+		border:var(--border);
+		border-radius:0.25em;
+		overflow:hidden;
+		background:var(--meterBadColor);
+	}
+	/* 2024-01-26: @supports selector(::-webkit-meter-bar) not working on Safari */
+	& ::-webkit-meter-bar
+	{
+		width:100%;
+		height:0.5em;
+		border:0;
+		border-radius:0;
+		background:#0000;
+	}
+	& ::-webkit-meter-optimum-value {background:var(--meterGoodColor);}
+	@supports selector(::-moz-meter-bar)
+	{
+		& :-moz-meter-optimum::-moz-meter-bar {background:var(--meterGoodColor);}
+	}
+	/* header */
+	&.mxGameConfig .mxHeaderBox,
+	&.mxKifuConfig .mxHeaderBox,
+	&.mxReplayConfig .mxHeaderBox
+	{
+		padding:0 2.5%;
+		overflow:auto; /* may overflow when narrow screen and big zoom */
+	}
+	& .mxHeaderTitle
+	{
+		font-weight:bold;
+	}
+	/* navigation */
+	& .mxNavigationBox:not(:empty)
+	{
+		max-width:var(--navigationMaxWidth);
+		width:100%;
+		margin:0 auto;
+		display:flex;
+		justify-content:space-around;
+		align-items:center;
+		max-height:3em;
+	}
+	& .mxNavigationBox button
+	{
+		flex:1;
+		max-height:3em;
+		max-width:3em;
+		margin:0;
+		padding:0;
+		border:0;
+		background:none;
+	}
+	& .mxNavigationBox button svg
+	{
+		margin:20% auto;
+		max-width:60%;
+	}
+	& .mxAutoBtn[disabled],
+	& .mxPauseBtn[disabled]
+	{
+		display:none;
+	}
+	/* notSeen */
+	& .mxNotSeenBox:not(:empty)
+	{
+		max-width:var(--gobanMaxWidth);
+		margin:0.5em auto 0 auto;
+	}
+	/* speed */
+	& .mxSpeedBox [type=range]
+	{
+		--speedColor: #000;
+		display:block;
+		margin:0;
+		padding:0 1em;
+		width:calc(100% - 2em);
+		height:2.5em;
+		border:0;
+		border-radius:0;
+		background:#0000;
+		-webkit-appearance:none;
+	}
+	/* 2024-01-26: @supports selector(::-webkit-slider-thumb) not working on Safari? */
+	& .mxSpeedBox [type=range]::-webkit-slider-runnable-track
+	{
+		box-sizing:border-box;
+		height:0.5em;
+		border:0;
+		border-radius:0.25em;
+		background:var(--speedColor);
+	}
+	& .mxSpeedBox [type=range]::-webkit-slider-thumb
+	{
+		-webkit-appearance:none;
+		margin-top:-0.5em;
+		box-sizing:border-box;
+		width:1.5em;
+		height:1.5em;
+		border:0;
+		border-radius:50%;
+		background:var(--speedColor);
+	}
+	@supports selector(::-moz-range-track) and selector(::-moz-range-thumb)
+	{
+		& .mxSpeedBox [type=range]::-moz-range-track
+		{
+			box-sizing:border-box;
+			height:0.5em;
+			border:0;
+			border-radius:0.25em;
+			background:var(--speedColor);
+		}
+		& .mxSpeedBox [type=range]::-moz-range-thumb
+		{
+			box-sizing:border-box; 
+			width:1.5em;
+			height:1.5em;
+			border:0;
+			border-radius:50%;
+			background:var(--speedColor);
+		}
+	}
+	/* tree */
+	& .mxTreeBox
+	{
+		box-sizing:border-box;
+		flex:auto;
+		border:var(--border);
+		height:7em;
+		overflow:auto;
+		resize:vertical;
+		margin-top:0.25em;
+		max-width:100%;
+	}
+	& .mxTreeContent
+	{
+		width:calc(1em * var(--treeIntrinsicWidth) / 16);
+	}
+	& .mxTreeBox svg
+	{
+		width:100%;
+		height:auto;
+	}
+	/* version */
+	& .mxVersionBox
+	{
+		text-align:center;
+		min-height:3em;
+		line-height:3em;
+	}
+	/* focus, hover and cursor */
+	& .mxGobanSvg:not(:focus-visible) {outline:0;}
+	& .mxGobanSvg:not(:focus-visible) .mxFocus {display:none;}
+	& .mxBtn:focus-visible
+	{
+		position:relative;
+		z-index:10;
+	}
+	&:not(.mxDiagramConfig):not(.mxKifuConfig):not(.mxLoopConfig) .mxGobanBox svg,
+	& button:not([disabled]),
+	& input[type="range"]:not([disabled]),
+	& .mxTreeBox svg circle,
+	& .mxTreeBox svg polygon,
+	& .mxTreeBox svg rect,
+	& .mxTreeBox svg text {cursor:pointer;}
 }
-/* adapt --gobanMaxWidth to match the svg viewBox with its container size if(1em==16px) */
-.mxMinimalistTheme.mxIn3d {--gobanMaxWidth:calc(1em * 491 / 16);}
-.mxMinimalistTheme.mxIndicesOff {--gobanMaxWidth:calc(1em * 463 / 16);}
-.mxMinimalistTheme.mxIndicesOff.mxIn3d {--gobanMaxWidth:calc(1em * 445 / 16);}
-/* general */
-.mxMinimalistTheme button,
-.mxMinimalistTheme select,
-.mxMinimalistTheme textarea {-webkit-appearance:none;-moz-appearance:none;}
-.mxMinimalistTheme button[disabled] {cursor:default;}
-.mxMinimalistTheme input[type=file] {visibility:hidden;position:fixed;}
-.mxMinimalistTheme [data-maxigos-disabled],
-.mxMinimalistTheme [disabled] {opacity:0.5;}
-.mxMinimalistTheme fieldset{border:0;margin:0;padding:0;}
-.mxMinimalistTheme svg {display:block;width:100%;height:100%;}
-.mxMinimalistTheme,
-.mxMinimalistTheme button {font-family:sans-serif;}
-.mxMinimalistTheme p:first-of-type {margin-top:0;}
-/* do not style svg font-family here (already set using svg attributes) */
-/* layout */
-.mxMinimalistTheme.mxCommentConfig,
-.mxMinimalistTheme.mxEditConfig,
-.mxMinimalistTheme.mxLessonConfig,
-.mxMinimalistTheme.mxTreeConfig
-{
-	display:flex;
-	flex-wrap:wrap;
-	justify-content:center;
-	align-items:stretch;
-	gap:0.25em;
-	max-width:calc(var(--gobanMaxWidth) * 2 + 0.25em + 4px);
-}
-.mxMinimalistTheme.mxCommentConfig>div,
-.mxMinimalistTheme.mxEditConfig>div,
-.mxMinimalistTheme.mxLessonConfig>div,
-.mxMinimalistTheme.mxTreeConfig>div
-{
-	flex:1 1 calc(var(--gobanMaxWidth) + 2px);
-	max-width:calc(var(--gobanMaxWidth) + 2px);
-	display:flex;
-	flex-direction:column;
-}
-.mxMinimalistTheme:not(.mxProblemConfig):not(.mxScoreConfig) .mxCommentDiv,
-.mxMinimalistTheme .mxTreeDiv
-{
-	height:8em;
-	min-height:2em;
-	resize:vertical;
-	overflow:auto;
-	max-width:1px; /* minimize as much as possible (try narrow viewport and big zoom) */
-}
-.mxMinimalistTheme:not(.mxProblemConfig):not(.mxScoreConfig) .mxCommentDiv
-{
-	min-width:calc(100% - 0.5em - 2px);
-}
-.mxMinimalistTheme .mxTreeDiv
-{
-	min-width:calc(100% - 2px);
-}
-.mxMinimalistTheme.mxCommentConfig .mxCommentDiv,
-.mxMinimalistTheme .mxTreeDiv
-{
-	/* do not flex:auto on .mxTreeConfig .mxCommentDiv */
-	/* otherwise side effect when the user resizes .mxCommentDiv or .mxTreeDiv */
-	flex:auto;
-}
-.mxMinimalistTheme .mxGobanDiv
-{
-	flex:auto;
-	display:flex;
-	flex-direction:column;
-	max-width:var(--gobanMaxWidth);
-}
-.mxMinimalistTheme>div>.mxGobanDiv
-{
-	border:var(--border);
-}
-.mxMinimalistTheme .mxInnerGobanDiv
-{
-	margin:auto;
-}
-/* do not style anything inside minimalist svg */
-/* use svg attributes to get a convenient minimal result even if no style */
-/* buttons, inputs */
-.mxMinimalistTheme .mxSgfParentDiv,
-.mxMinimalistTheme .mxMenuDiv
-{
-	padding:0.25em;
-	text-align:center;
-}
-.mxMinimalistTheme.mxScoreConfig .mxSgfParentDiv
-{
-	margin-top:0.5em;
-}
-.mxMinimalistTheme .mxSgfParentDiv>div,
-.mxMinimalistTheme .mxMenuDiv>div
-{
-	display:inline-block;
-	margin:0.25em 0;
-}
-.mxMinimalistTheme .mxSgfParentDiv button,
-.mxMinimalistTheme .mxMenuDiv button,
-.mxMinimalistTheme dialog button
-{
-	box-sizing:border-box;
-	font-size:1em;
-	margin:0.125em;
-	padding:0 0.5em;
-	height:1.75em;
-	line-height:1.75em;
-	white-space:nowrap;
-}
-.mxMinimalistTheme .mxSgfParentDiv button,
-.mxMinimalistTheme .mxMenuDiv button
-{
-	border:var(--btnBorder);
-	background:var(--btnBk);
-	color:var(--btnColor);
-}
-.mxMinimalistTheme dialog button
-{
-	border:1px solid #777;
-	background:#fff;
-	color:#000;
-}
-.mxMinimalistTheme dialog button[value="FileInput"]
-{
-	min-height:1.75em;
-	height:auto;
-	white-space:normal;
-}
-.mxMinimalistTheme .mxSgfParentDiv button.mxSelectedBtn
-{
-	background:var(--selectedBtnBk);
-	border:var(--selectedBtnBorder);
-	color:var(--selectedBtnColor);
-}
-/* common */
-.mxMinimalistTheme .mxTitleP
-{
-	font-weight:bold;
-}
-/* dialog */
-.mxMinimalistTheme dialog,
-.mxMinimalistTheme dialog *
-{
-	box-sizing:border-box;
-}
-.mxMinimalistTheme dialog::backdrop
-{
-  background: #0007;
-}
-.mxMinimalistTheme dialog
-{
-	min-width:min(50vw,19em);
-	border:0;
-	text-align:left;
-	padding:0;
-}
-.mxMinimalistTheme dialog.mxEditSgfDialog,
-.mxMinimalistTheme dialog.mxShowHelpDialog,
-.mxMinimalistTheme dialog.mxShowPngDialog,
-.mxMinimalistTheme dialog.mxShowSvgDialog
-{
-	width:calc(var(--gobanMaxWidth) * 3 / 2);
-}
-.mxMinimalistTheme dialog form
-{
-	margin:0;
-	padding:0;
-}
-.mxMinimalistTheme dialog .mxContentFieldset
-{
-	padding:0.5em;
-	min-width:100%;
-}
-.mxMinimalistTheme dialog.mxEditOptionsDialog .mxContentFieldset
-{
-	line-height:1.5em;
-}
-.mxMinimalistTheme dialog .mxMenuFieldset
-{
-	background:#eee;
-	min-height:3em;
-	line-height:3em;
-	text-align:center;
-}
-.mxMinimalistTheme dialog label:not([for])
-{
-	display:block;
-}
-.mxMinimalistTheme dialog input[type=text]
-{
-	max-width:100%;
-}
-.mxMinimalistTheme dialog input[type=text],
-.mxMinimalistTheme dialog select
-{
-	font-size:1em;
-	border:var(--border);
-	background:#fff;
-}
-.mxMinimalistTheme dialog select
-{
-	text-align:center;
-}
-.mxMinimalistTheme dialog a
-{
-	color:#000;
-}
-.mxMinimalistTheme dialog img
-{
-	display:block;
-	margin:0 auto;
-	max-width:100%;
-	height:auto;
-	border:0;
-}
-.mxMinimalistTheme dialog textarea
-{
-	display:block;
-	width:100%;
-	border:var(--border);
-}
-.mxMinimalistTheme .mxEditSgfDialog textarea
-{
-	font-family:monospace; /* for Safari? */
-	white-space:pre-wrap;
-	min-height:var(--gobanMaxWidth);
-}
-/* comment */
-.mxMinimalistTheme:not(.mxProblemConfig):not(.mxScoreConfig) .mxCommentDiv
-{
-	border:var(--border);
-	margin:0 auto;
-	padding:0.25em;
-}
-/* guess */
-.mxMinimalistTheme meter
-{
-	display:block;
-	font-size:1em;
-	margin:1em;
-	padding:0;
-	width:calc(100% - 2em);
-	height:0.5em;
-	border:var(--border);
-	border-radius:0.25em;
-	overflow:hidden;
-	background:#0007; /* set "bad" color */
-}
-/* do not reunite ::-selectors below, otherwise error in webkit browsers */
-.mxMinimalistTheme ::-moz-meter-bar
-{
-	width:100%;
-    height:0.5em;
-    border:0;
-	background:#0000;
-}
-.mxMinimalistTheme ::-webkit-meter-bar
-{
-    width:100%;
-    height:0.5em;
-    border:0;
-	border-radius:0;
-    background:#0000;
-}
-/* set "good" color */
-.mxMinimalistTheme :-moz-meter-optimum::-moz-meter-bar {background:#fff;}
-.mxMinimalistTheme ::-webkit-meter-optimum-value {background:#fff;}
-/* header */
-.mxMinimalistTheme.mxGameConfig .mxHeaderDiv,
-.mxMinimalistTheme.mxKifuConfig .mxHeaderDiv,
-.mxMinimalistTheme.mxReplayConfig .mxHeaderDiv
-{
-	padding:0 2.5%;
-}
-/* navigation */
-.mxMinimalistTheme .mxNavigationDiv
-{
-	box-sizing:border-box;
-	display:flex;
-	justify-content:space-around;
-	align-items:center;
-	height:2.5em;
-}
-.mxMinimalistTheme .mxNavigationDiv:empty
-{
-	display:none;
-}
-.mxMinimalistTheme .mxNavigationDiv button
-{
-	flex:1;
-	font-size:1em;
-	border:0;
-	background:none;
-	height:2em;
-	padding:0.25em;
-}
-.mxMinimalistTheme .mxNavigationDiv button svg
-{
-	margin:auto;
-}
-.mxMinimalistTheme .mxAutoBtn[disabled],
-.mxMinimalistTheme .mxPauseBtn[disabled]
-{
-	display:none;
-}
-/* notSeen */
-.mxMinimalistTheme .mxNotSeenDiv>*:not(:empty)
-{
-	margin:0 auto;
-	padding:0.25em;
-}
-/* speed */
-.mxMinimalistTheme .mxSpeedDiv [type=range]
-{
-	--speedColor: #000;
-	display:block;
-	font-size:1em;
-	margin:0;
-	padding:0 1em;
-	width:calc(100% - 2em);
-	height:2.5em;
-	border:0;
-	border-radius:0;
-	background:#0000;
-}
-.mxMinimalistTheme .mxSpeedDiv [type=range],
-.mxMinimalistTheme .mxSpeedDiv [type=range]::-webkit-slider-thumb
-{
-	-webkit-appearance:none;
-}
-.mxMinimalistTheme .mxSpeedDiv [type=range]::-webkit-slider-runnable-track
-{
-	box-sizing:border-box;
-	height:0.5em;
-	border:0;
-	border-radius:0.25em;
-	background:var(--speedColor);
-}
-.mxMinimalistTheme .mxSpeedDiv [type=range]::-moz-range-track
-{
-	box-sizing:border-box;
-	height:0.5em;
-	border:0;
-	border-radius:0.25em;
-	background:var(--speedColor);
-}
-.mxMinimalistTheme .mxSpeedDiv [type=range]::-webkit-slider-thumb
-{
-	margin-top:-0.5em;
-	box-sizing:border-box;
-	width:1.5em;
-	height:1.5em;
-	border:0;
-	border-radius:50%;
-	background:var(--speedColor);
-}
-.mxMinimalistTheme .mxSpeedDiv [type=range]::-moz-range-thumb
-{
-	box-sizing:border-box;
-	width:1.5em;
-	height:1.5em;
-	border:0;
-	border-radius:50%;
-	background:var(--speedColor);
-}
-/* tree */
-.mxMinimalistTheme .mxTreeDiv
-{
-	border:var(--border);
-	margin:0.25em auto 0 auto;
-}
-.mxMinimalistTheme .mxTreeDiv svg
-{
-	width:unset;
-	height:unset;
-}
-/* version */
-.mxMinimalistTheme .mxVersionDiv
-{
-	text-align:center;
-	height:2.5em;
-	line-height:2.5em;
-}
+/* config specific */
 /* |edit config| */
 .mxMinimalistTheme.mxEditConfig
 {
@@ -412,325 +413,340 @@
 	--superSelectedToolBk:#0004;
 	--superSelectedToolBorder:var(--border);
 	--superSelectedToolColor:var(--color);
-}
-.mxMinimalistTheme.mxEditConfig.mxIn3d {--gobanMaxWidth:calc(1em * 511 / 16);}
-.mxMinimalistTheme.mxEditConfig.mxIndicesOff {--gobanMaxWidth:calc(1em * 511 / 16);}
-.mxMinimalistTheme.mxEditConfig.mxIndicesOff.mxIn3d {--gobanMaxWidth:calc(1em * 511 / 16);}
-.mxMinimalistTheme.mxEditConfig
-{
-	--gobanScale:1;
+	--gobanMaxWidth:calc(1em * 511 / 16);
 	max-width:calc(var(--gobanMaxWidth) * var(--gobanScale) * 2 + 0.25em + 4px);
-}
-.mxMinimalistTheme.mxEditConfig>div
-{
-	flex:1 1 calc(var(--gobanMaxWidth) * var(--gobanScale) + 2px);
-	max-width:calc(var(--gobanMaxWidth) * var(--gobanScale) + 2px);
-}
-.mxMinimalistTheme.mxEditConfig .mxGobanDiv
-{
-	margin:auto;
-	width:100%;
-	max-width:calc(var(--gobanMaxWidth) * var(--gobanScale));
-}
-.mxMinimalistTheme.mxEditConfig.mxIn3d .mxGobanDiv
-{
-	max-width:calc(var(--gobanMaxWidth) * var(--gobanScale) * 491 / 511);
-}
-.mxMinimalistTheme.mxEditConfig.mxIndicesOff .mxGobanDiv
-{
-	max-width:calc(var(--gobanMaxWidth) * var(--gobanScale) * 463 / 511);
-}
-.mxMinimalistTheme.mxEditConfig.mxIndicesOff.mxIn3d .mxGobanDiv
-{
-	max-width:calc(var(--gobanMaxWidth) * var(--gobanScale) * 445 / 511);
-}
-.mxMinimalistTheme.mxEditConfig .mxEditToolBarDiv
-{
-	display:grid;
-	grid-template-columns:repeat(auto-fit,minmax(2.25em,1fr));
-	gap:0.125em;
-}
-.mxMinimalistTheme.mxEditConfig .mxEditCommentToolDiv
-{
-	margin:0.25em 0 0 0;
-	flex:initial;
-}
-.mxMinimalistTheme.mxEditConfig .mxEditCommentToolDiv textarea
-{
-	display:block;
-	box-sizing:border-box;
-	resize:vertical;
-	height:7em;
-	width:100%;
-	background:transparent;
-	border:var(--border);
-}
-.mxMinimalistTheme.mxEditConfig .mxMenuDiv .mxOneMenuDiv
-{
-	text-align:left;
-}
-.mxMinimalistTheme.mxEditConfig .mxMenuDiv .mxSubMenuDiv
-{
-	position:absolute;
-	z-index:1;
-	display:none;
-	margin-top:0.125em;
-}
-.mxMinimalistTheme.mxEditConfig .mxMenuDiv .mxSubMenuDiv.mxSubMenuOpen
-{
-	display:flex;
-	flex-flow:column;
-}
-.mxMinimalistTheme.mxEditConfig .mxMenuDiv .mxSubMenuDiv button
-{
-	border:var(--subBtnBorder);
-	background:var(--subBtnBk);
-	color:var(--subBtnColor);
-	margin:0;
-	width:100%;
-	text-align:left;
-	border-bottom:0;
-}
-.mxMinimalistTheme.mxEditConfig .mxMenuDiv .mxSubMenuDiv button:last-of-type
-{
-	border-bottom:var(--subBtnBorder);
-}
-.mxMinimalistTheme.mxEditConfig .mxMenuDiv .mxSubMenuDiv button.mxCoched,
-.mxMinimalistTheme.mxEditConfig .mxMenuDiv .mxSubMenuDiv button.mxCochable
-{
-	padding-left:1.25em;
-}
-.mxMinimalistTheme.mxEditConfig .mxMenuDiv .mxSubMenuDiv button.mxCoched:before
-{
-	position:absolute;
-	left:0.375em;
-	content:"✓";
-}
-.mxMinimalistTheme.mxEditConfig .mxEditToolBarDiv>*
-{
-	display:block;
-	box-sizing:border-box;
-	font-size:1em;
-	padding:0.125em;
-	background:var(--toolBk);
-	border:var(--toolBorder);
-	border-radius:0;
-}
-.mxMinimalistTheme.mxEditConfig .mxEditToolBarDiv input
-{
-	text-align:center;
-}
-.mxMinimalistTheme.mxEditConfig .mxEditToolBarDiv>*
-{
-	color:var(--toolColor);
-}
-.mxMinimalistTheme.mxEditConfig .mxEditToolBarDiv button .mxFillable
-{
-	fill:var(--toolColor);
-}
-.mxMinimalistTheme.mxEditConfig .mxEditToolBarDiv button .mxStrokable
-{
-	stroke:var(--toolColor);
-}
-.mxMinimalistTheme.mxEditConfig.mxIn2d .mxEditToolBarDiv button circle.mxWhite
-{
-	fill:#fff;
-	stroke:var(--toolColor);
-}
-.mxMinimalistTheme.mxEditConfig.mxIn2d .mxEditToolBarDiv button circle.mxBlack
-{
-	fill:var(--toolColor);
-	stroke:var(--toolColor);
-}
-.mxMinimalistTheme.mxEditConfig.mxIn2d .mxEditToolBarDiv button circle.mxWhite+text
-{
-	fill:var(--toolColor);
-}
-.mxMinimalistTheme.mxEditConfig .mxEditToolBarDiv .mxSelectedEditTool
-{
-	background:var(--selectedToolBk);
-	border:var(--selectedToolBorder);
-	color:var(--selectedToolColor);
-}
-.mxMinimalistTheme.mxEditConfig .mxEditToolBarDiv .mxSelectedEditTool text
-{
-	fill:var(--selectedToolColor);
-	stroke:var(--selectedToolColor);
-}
-.mxMinimalistTheme.mxEditConfig .mxEditToolBarDiv .mxSuperSelectedEditTool
-{
-	background:var(--superSelectedToolBk);
-	border:var(--superSelectedToolBorder);
-	color:var(--superSelectedToolColor);
-}
-.mxMinimalistTheme.mxEditConfig .mxEditToolBarDiv .mxSuperSelectedEditTool text
-{
-	fill:var(--superSelectedToolColor);
-	stroke:var(--superSelectedToolColor);
-}
-.mxMinimalistTheme.mxEditConfig dialog.mxShowHelpDialog
-{
-	counter-reset:helpH2;
-}
-.mxMinimalistTheme.mxEditConfig dialog.mxShowHelpDialog h1
-{
-	font-size:2em;
-}
-.mxMinimalistTheme.mxEditConfig dialog.mxShowHelpDialog h2
-{
-	counter-reset:helpH3;
-}
-.mxMinimalistTheme.mxEditConfig dialog.mxShowHelpDialog h2:before {
-	counter-increment:helpH2;
-	content:counter(helpH2) ". ";
-}
-.mxMinimalistTheme.mxEditConfig dialog.mxShowHelpDialog h3:before {
-	counter-increment:helpH3;
-	content:counter(helpH2) "." counter(helpH3) ". ";
-}
-.mxMinimalistTheme.mxEditConfig dialog .mxFigureOrNotP+.mxTabNumberingP
-{
-	padding-left:2em;
-}
-.mxMinimalistTheme.mxEditConfig dialog.mxEditInfoDialog
-{
-	width:calc(var(--gobanMaxWidth) * 3 / 2);
-}
-.mxMinimalistTheme.mxEditConfig dialog.mxEditInfoDialog .mxContentFieldset
-{
-	display:grid;
-	grid-gap:0.5em;
-	grid-template-columns:repeat(auto-fit, minmax(9em,1fr));
-}
-.mxMinimalistTheme.mxEditConfig dialog div.mxResultDiv,
-.mxMinimalistTheme.mxEditConfig dialog label.mxGC,
-.mxMinimalistTheme.mxEditConfig dialog label.mxGN
-{
-	grid-column:1 / -1;
-}
-.mxMinimalistTheme.mxEditConfig dialog div.mxResultDiv
-{
-	display:flex;
-	flex-wrap:wrap;
-	justify-content:space-between;
-	gap:0.125em;
-}
-.mxMinimalistTheme.mxEditConfig dialog div.mxResultDiv label.mxSC
-{
-	white-space:nowrap;
-}
-
-.mxMinimalistTheme.mxEditConfig dialog.mxEditInfoDialog span,
-.mxMinimalistTheme.mxEditConfig dialog.mxEditInfoDialog span+input[type=text]
-{
-	display:block;
-	width:100%;
+	&>div
+	{
+		flex:1 1 calc(var(--gobanMaxWidth) * var(--gobanScale) + 2px);
+		max-width:min(100%,calc(var(--gobanMaxWidth) * var(--gobanScale) + 2px));
+	}
+	& .mxGobanBox
+	{
+		margin:auto;
+		width:100%;
+		max-width:min(100%,calc(var(--gobanMaxWidth) * var(--gobanScale) + 2px));
+	}
+	&.mxIn3d .mxGobanBox
+	{
+		max-width:min(100%,calc(var(--gobanMaxWidth) * var(--gobanScale) * 491 / 511 + 2px));
+	}
+	&.mxIndicesOff .mxGobanBox
+	{
+		max-width:min(100%,calc(var(--gobanMaxWidth) * var(--gobanScale) * 463 / 511 + 2px));
+	}
+	&.mxIndicesOff.mxIn3d .mxGobanBox
+	{
+		max-width:min(100%,calc(var(--gobanMaxWidth) * var(--gobanScale) * 445 / 511 + 2px));
+	}
+	& .mxGobanContent
+	{
+		max-width:calc(var(--gobanMaxWidth) * var(--gobanScale) * var(--gobanIntrinsicWidth) / 511);
+	}
+	& .mxEditToolbar
+	{
+		display:grid;
+		grid-template-columns:repeat(auto-fit,minmax(2.25em,1fr));
+		gap:0.125em;
+	}
+	& .mxEditCommentTool
+	{
+		flex:initial;
+		display:block;
+		box-sizing:border-box;
+		resize:vertical;
+		height:7em;
+		width:100%;
+		background:transparent;
+		margin:0.25em 0 0 0;
+		border:var(--border);
+	}
+	& .mxMenuBox,
+	& .mxMenuBox .mxSubMenu
+	{
+		list-style-type:none;
+	}
+	& .mxMenuBox
+	{
+		margin:0;
+		padding:0.25em;
+	}
+	& .mxMenuBox>li
+	{
+		display:inline-block;
+		text-align:left;
+		margin:0;
+		padding:0;
+	}
+	& .mxMenuBox .mxSubMenu
+	{
+		position:absolute;
+		z-index:1;
+		display:none;
+		margin:0.125em 0 0 0;
+		padding:0;
+	}
+	& .mxMenuBox .mxSubMenu li
+	{
+		margin:0;
+		padding:0;
+	}
+	& .mxMenuBox .mxSubMenu.mxSubMenuOpen
+	{
+		display:flex;
+		flex-flow:column;
+	}
+	& .mxMenuBox .mxSubMenu .mxBtn
+	{
+		border:var(--subBtnBorder);
+		background:var(--subBtnBk);
+		color:var(--subBtnColor);
+		margin:0;
+		width:100%;
+		text-align:left;
+		border-bottom:0;
+	}
+	& .mxMenuBox .mxSubMenu li:last-of-type button
+	{
+		border-bottom:var(--subBtnBorder);
+	}
+	& .mxMenuBox .mxSubMenu:has(.mxCochable,.mxCoched) button
+	{
+		padding-left:1.25em;
+	}
+	& .mxMenuBox .mxSubMenu .mxCoched:before
+	{
+		position:absolute;
+		left:0.375em;
+		content:"\2713";
+	}
+	& .mxEditToolbar>*
+	{
+		display:block;
+		box-sizing:border-box;
+		padding:0.125em;
+		background:var(--toolBk);
+		border:var(--toolBorder);
+		border-radius:0;
+	}
+	& .mxEditToolbar input
+	{
+		text-align:center;
+	}
+	& .mxEditToolbar>*
+	{
+		color:var(--toolColor);
+	}
+	& .mxEditToolbar button .mxFillable
+	{
+		fill:var(--toolColor);
+	}
+	& .mxEditToolbar button .mxStrokable
+	{
+		stroke:var(--toolColor);
+	}
+	&.mxIn2d .mxEditToolbar button circle.mxWhite
+	{
+		fill:#fff;
+		stroke:var(--toolColor);
+	}
+	&.mxIn2d .mxEditToolbar button circle.mxBlack
+	{
+		fill:var(--toolColor);
+		stroke:var(--toolColor);
+	}
+	&.mxIn2d .mxEditToolbar button circle.mxWhite+text
+	{
+		fill:var(--toolColor);
+	}
+	& .mxEditToolbar .mxSelectedEditTool
+	{
+		background:var(--selectedToolBk);
+		border:var(--selectedToolBorder);
+		color:var(--selectedToolColor);
+	}
+	& .mxEditToolbar .mxSelectedEditTool text
+	{
+		fill:var(--selectedToolColor);
+		stroke:var(--selectedToolColor);
+	}
+	& .mxEditToolbar .mxSuperSelectedEditTool
+	{
+		background:var(--superSelectedToolBk);
+		border:var(--superSelectedToolBorder);
+		color:var(--superSelectedToolColor);
+	}
+	& .mxEditToolbar .mxSuperSelectedEditTool text
+	{
+		fill:var(--superSelectedToolColor);
+		stroke:var(--superSelectedToolColor);
+	}
+	& dialog.mxShowHelpDialog
+	{
+		counter-reset:helpH2;
+	}
+	& dialog.mxShowHelpDialog h1
+	{
+		font-size:2em;
+	}
+	& dialog.mxShowHelpDialog h2
+	{
+		counter-reset:helpH3;
+	}
+	& dialog.mxShowHelpDialog h2:before {
+		counter-increment:helpH2;
+		content:counter(helpH2) ". ";
+	}
+	& dialog.mxShowHelpDialog h3:before {
+		counter-increment:helpH3;
+		content:counter(helpH2) "." counter(helpH3) ". ";
+	}
+	& dialog .mxFigureOrNotP+.mxTabNumberingP
+	{
+		padding-left:2em;
+	}
+	& dialog.mxEditInfoDialog
+	{
+		width:calc(var(--gobanMaxWidth) * 3 / 2);
+	}
+	& dialog.mxEditInfoDialog .mxContentFieldset
+	{
+		display:grid;
+		gap:min(2.5px,0.5em);
+		grid-template-columns:repeat(auto-fit, minmax(min(80%,9em),1fr));
+	}
+	& dialog.mxEditInfoDialog span,
+	& dialog.mxEditInfoDialog span+input[type=text],
+	& dialog.mxEditColorsDialog input[type=text],
+	& dialog.mxEditThicknessDialog input[type=text],
+	& dialog.mxSaveDialog input[type=text],
+	& dialog.mxSendDialog input[type=text]
+	{
+		/* need to set width instead of max-width? why? */
+		width:100%;
+		display:block;
+	}
+	& dialog .mxResult,
+	& dialog .mxGC,
+	& dialog .mxGN
+	{
+		grid-column:1 / -1;
+	}
+	& dialog .mxResult
+	{
+		display:flex;
+		flex-wrap:wrap;
+		justify-content:space-between;
+		gap:0.125em;
+	}
+	& dialog .mxResult .mxSC
+	{
+		white-space:nowrap;
+	}
 }
 /* |edit config| */
 /* |lesson config| */
-.mxMinimalistTheme.mxLessonConfig>div:first-of-type
+.mxMinimalistTheme.mxLessonConfig
 {
-	align-self:end;
-}
-.mxMinimalistTheme.mxLessonConfig .mxLessonDiv
-{
-	box-sizing:border-box;
-	position:relative;
-	margin:0 auto 0.25em auto;
-	width:100%;
-}
-.mxMinimalistTheme.mxLessonConfig .mxLessonDiv>:first-child
-{
-	position:absolute;
-	z-index:1;
-	bottom:120px;
-	left:10%;
-	right:10%;
-	border-radius:1.5em;
-	font-family:"Chalkboard SE","Comic Sans MS",sans-serif;
-	background-color:#fff;
-	text-align:center;
-}
-.mxMinimalistTheme.mxLessonConfig .mxLessonDiv>img
-{
-	display:block;
-	margin:0 auto;
-}
-.mxMinimalistTheme.mxLessonConfig .mxLessonDiv>:first-child:empty
-{
-	display:none;
-}
-.mxMinimalistTheme.mxLessonConfig.mxIn3d .mxLessonDiv>:first-child {padding:8px 8px 8px 12px;box-shadow:4px 4px 12px #0007;}
-.mxMinimalistTheme.mxLessonConfig.mxIn2d .mxLessonDiv>:first-child {padding:8px;border:var(--border);}
-.mxMinimalistTheme.mxLessonConfig .mxLessonDiv.mxTE>:first-child,
-.mxMinimalistTheme.mxLessonConfig .mxLessonDiv.mxBM>:first-child
-{
-	margin-left:2.25em;
-	min-height:2.25em;
-}
-.mxMinimalistTheme.mxLessonConfig .mxLessonDiv.mxTE>:first-child::before,
-.mxMinimalistTheme.mxLessonConfig .mxLessonDiv.mxBM>:first-child::before
-{
-	background-repeat:no-repeat;
-	background-position:left center;
-	background-size:2em;
-	display:block;
-	height:2em;
-	width:2em;
-	content:"";
-	position:absolute;
-	top:0.25em;
-	left:0.25em;
-}
-.mxMinimalistTheme.mxLessonConfig .mxLessonDiv.mxTE>:first-child::before
-{
-	background:url('data:image/svg+xml;utf8,<svg width="100%" height="100%" viewBox="0 0 128 128" version="1.1" xmlns="http://www.w3.org/2000/svg"><circle fill="none" stroke="black" stroke-width="4" cx="64" cy="64" r="48"/><circle fill="black" cx="48" cy="48" r="8"/><circle fill="black" cx="80" cy="48" r="8"/><path fill="none" stroke="black" stroke-width="4" d="M44,78A32 32 0 0 0 84,78"/></svg>');
-}
-.mxMinimalistTheme.mxLessonConfig .mxLessonDiv.mxBM>:first-child::before
-{
-	background:url('data:image/svg+xml;utf8,<svg width="100%" height="100%" viewBox="0 0 128 128" version="1.1" xmlns="http://www.w3.org/2000/svg"><circle fill="none" stroke="black" stroke-width="4" cx="64" cy="64" r="48"/><circle fill="black" cx="48" cy="48" r="8"/><circle fill="black" cx="80" cy="48" r="8"/><path fill="none" stroke="black" stroke-width="4" d="M44,86A32 32 0 0 1 84,86"/></svg>');
+	&>div:first-of-type
+	{
+		align-self:end;
+	}
+	& .mxLessonBox
+	{
+		box-sizing:border-box;
+		position:relative;
+		margin:0 auto 0.25em auto;
+		width:100%;
+	}
+	& .mxLessonBox>:first-child
+	{
+		position:absolute;
+		z-index:1;
+		bottom:120px;
+		left:10%;
+		right:10%;
+		border-radius:1.5em;
+		font-family:"Chalkboard SE","Comic Sans MS",sans-serif;
+		background-color:#fff;
+		text-align:center;
+	}
+	& .mxLessonBox>img
+	{
+		display:block;
+		margin:0 auto;
+		max-width:100%;
+	}
+	& .mxLessonBox>:first-child:empty
+	{
+		display:none;
+	}
+	&.mxIn3d .mxLessonBox>:first-child {padding:8px 8px 8px 12px;box-shadow:4px 4px 12px #0007;}
+	&.mxIn2d .mxLessonBox>:first-child {padding:8px;border:var(--border);}
+	& .mxLessonBox.mxTE>:first-child,
+	& .mxLessonBox.mxBM>:first-child
+	{
+		margin-left:2.25em;
+		min-height:2.25em;
+	}
+	& .mxLessonBox.mxTE>:first-child::before,
+	& .mxLessonBox.mxBM>:first-child::before
+	{
+		background-repeat:no-repeat;
+		background-position:left center;
+		background-size:2em;
+		display:block;
+		height:2em;
+		width:2em;
+		content:"";
+		position:absolute;
+		top:0.25em;
+		left:0.25em;
+	}
+	& .mxLessonBox.mxTE>:first-child::before
+	{
+		background:url('data:image/svg+xml;utf8,<svg width="100%" height="100%" viewBox="0 0 128 128" version="1.1" xmlns="http://www.w3.org/2000/svg"><circle fill="none" stroke="black" stroke-width="4" cx="64" cy="64" r="48"/><circle fill="black" cx="48" cy="48" r="8"/><circle fill="black" cx="80" cy="48" r="8"/><path fill="none" stroke="black" stroke-width="4" d="M44,78A32 32 0 0 0 84,78"/></svg>');
+	}
+	& .mxLessonBox.mxBM>:first-child::before
+	{
+		background:url('data:image/svg+xml;utf8,<svg width="100%" height="100%" viewBox="0 0 128 128" version="1.1" xmlns="http://www.w3.org/2000/svg"><circle fill="none" stroke="black" stroke-width="4" cx="64" cy="64" r="48"/><circle fill="black" cx="48" cy="48" r="8"/><circle fill="black" cx="80" cy="48" r="8"/><path fill="none" stroke="black" stroke-width="4" d="M44,86A32 32 0 0 1 84,86"/></svg>');
+	}
 }
 /* |lesson config| */
 /* |problem config| */
-.mxMinimalistTheme.mxProblemConfig .mxCommentDiv
+.mxMinimalistTheme.mxProblemConfig
 {
-	display:flex;
-	justify-content:center;
-	min-height:2.25em;
-}
-.mxMinimalistTheme.mxProblemConfig .mxCommentContentDiv p
-{
-	margin:0.5em;
-	padding:0;
-	line-height:1.25em;
-}
-.mxMinimalistTheme.mxProblemConfig .mxSolveDiv
-{
-	text-align:center;
-}
-.mxMinimalistTheme.mxProblemConfig button
-{
-	border:0;
-	background:none;
-	margin:0.125em 1em;
-	padding:0;
-	width:10%;
-	min-width:1cm;
-	height:auto;
+	& .mxSolveBox
+	{
+		text-align:center;
+	}
+	& .mxSolveBox button
+	{
+		width:min(33%,3.3em);
+		margin:min(6.6%,0.66em);
+		padding:0;
+		border:0;
+		background:none;
+	}
+	& .mxCommentBox
+	{
+		display:flex;
+		justify-content:center;
+		min-height:2.25em;
+	}
+	& .mxCommentContent p
+	{
+		margin:0.5em;
+		padding:0;
+		line-height:1.25em;
+	}
 }
 /* |problem config| */
-/* focus, hover and cursor */
-.mxMinimalistTheme .mxGobanSvg:not(:focus-visible) {outline:0;}
-.mxMinimalistTheme .mxGobanSvg:not(:focus-visible) .mxFocus {display:none;}
-.mxMinimalistTheme button:focus-visible
+/* |score config| */
+.mxMinimalistTheme.mxScoreConfig
 {
-	position:relative;
-	z-index:10;
+	& .mxSgfParent
+	{
+		margin-top:0.5em;
+	}
 }
-.mxMinimalistTheme button,
-.mxMinimalistTheme:not(.mxDiagramConfig):not(.mxKifuConfig):not(.mxLoopConfig) .mxGobanDiv svg,
-.mxMinimalistTheme [type=range],
-.mxMinimalistTheme .mxTreeDiv svg circle,
-.mxMinimalistTheme .mxTreeDiv svg polygon,
-.mxMinimalistTheme .mxTreeDiv svg rect,
-.mxMinimalistTheme .mxTreeDiv svg text {cursor:pointer;}
+/* |score config| */

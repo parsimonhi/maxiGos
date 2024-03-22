@@ -1,391 +1,337 @@
 .mxFmTheme
 {
-	--gobanMaxWidth:30em;
-	--gobanMinWidth:15em;
+	--gobanMaxWidth:calc(1em * var(--gobanIntrinsicWidth,445) / 16);
+	--columnMaxWidth:max(var(--gobanMaxWidth),calc(1em * 445 / 16));
 	text-align:left;
-}
-/* general */
-.mxFmTheme button {-webkit-appearance:none;-moz-appearance:none;}
-.mxFmTheme text {cursor:default;}
-.mxFmTheme input[type=text][disabled],
-.mxFmTheme button[disabled] {cursor:default;}
-.mxFmTheme fieldset{border:0;margin:0;padding:0;}
-.mxFmTheme svg {display:block;}
-.mxFmTheme,
-.mxFmTheme button {font-family:sans-serif;}
-/* layout */
-.mxFmTheme
-{
-	box-sizing:border-box;
-	max-width:var(--gobanMaxWidth);
-	min-width:var(--gobanMinWidth);
 	margin:0 auto;
+	/* general */
+	& text {cursor:default;}
+	& [disabled] {cursor:default;opacity:0.3;}
+	& form,fieldset{border:0;margin:0;padding:0;}
+	& svg {display:block;width:100%;height:100%;}
+	&,
+	& button {font-family:sans-serif;font-size:1em;}
+	/* layout */
+	&
+	{
+		box-sizing:border-box;
+		max-width:var(--columnMaxWidth);
+	}
+	&.mxGameConfig,
+	&.mxProblemConfig
+	{
+		background-color:#0001;
+	}
+	&.mxGameConfig
+	{
+		display:flex;
+		flex-wrap:wrap;
+		justify-content:center;
+		max-width:calc(var(--columnMaxWidth) * 7 / 4);
+	}
+	&.mxGameConfig .mxGobanParent
+	{
+		box-sizing:border-box;
+		max-width:var(--columnMaxWidth);
+		flex:4 1 var(--columnMaxWidth);
+		display:flex;
+		flex-direction:column;
+		justify-content:center;
+		align-items:center;
+		gap:0.5em;
+	}
+	&.mxGameConfig .mxHeaderParent
+	{
+		box-sizing:border-box;
+		/* when vertical layout, both columns have the same width */
+		max-width:var(--columnMaxWidth);
+		width:100%;
+		/* when horizontal layout, 2nd column is narrower */
+		flex:3 1 calc(var(--columnMaxWidth) * 3 / 4);
+		display:flex;
+		flex-direction:column;
+		justify-content:space-between;
+		padding:min(5vw,0.5em);
+	}
+	&.mxGameConfig .mxSgfParent
+	{
+		text-align:center;
+	}
+	&.mxGameConfig .mxSgfParent button
+	{
+		margin:0.25em;
+	}
+	& .mxVersionBox
+	{
+		text-align:center;
+		min-height:2.5em;
+		line-height:2.5em;
+	}
+	/* common */
+	&.mxGameConfig .mxGobanBox
+	{
+		display:flex;
+		width:100%;
+	}
+	& .mxGobanContent
+	{
+		max-width:var(--gobanMaxWidth);
+		margin:auto;
+	}
+	&.mxGameConfig .mxGobanContent
+	{
+		max-width:100%;
+		width:100%;
+	}
+	&.mxIn3d .mxGobanContent
+	{
+		box-shadow:0 0.25em 0.5em rgba(0,0,0,0.3);
+	}
+	& .mxGobanBox svg .mxWholeRect
+	{
+		fill:#fc9;
+	}
+	& text
+	{
+		stroke-width:0.5px;
+		stroke:#000;
+	}
+	& text.mxOnBlack,
+	& .mxBlack+text
+	{
+		stroke:#fff;
+	}
+	& .mxHeaderTitle
+	{
+		color:#900;
+		font-weight:bold;
+		text-align:center;
+	}
+	& p
+	{
+		margin:0;
+		padding:0;
+	}
+	& p:not(:first-child)
+	{
+		padding-top:0.5em;
+	}
+	/* diagram */
+	& .mxNotSeenBox:not(:empty)
+	{
+		max-width:var(--gobanMaxWidth);
+		margin:0.5em auto 0 auto;
+	}
+	/* game */
+	&.mxGameConfig .mxHeaderBox
+	{
+		padding:min(2.5vw,0.25em);
+		margin-bottom:0.5em;
+		max-width:100%;
+		overflow-wrap:anywhere;
+	}
+	&.mxGameConfig .mxGuessBox
+	{
+		flex:0;
+		width:100%;
+		min-height:2.5em;
+		display:flex;
+		align-items:center;
+	}
+	&.mxGameConfig meter
+	{
+		--meterGoodColor:#090;
+		--meterBadColor:#900;
+		--meterBorder:0;
+		display:block;
+		font-size:1em;
+		margin:0 auto;
+		padding:0;
+		width:calc(100% - 4vw);
+		height:0.5em;
+		border:0;
+		border-radius:0.25em;
+		overflow:hidden;
+		background:var(--meterBadColor);
+	}
+	/* do not reunite ::-selectors below, otherwise error in webkit browsers */
+	&.mxGameConfig ::-webkit-meter-bar
+	{
+		width:100%;
+		height:0.5em;
+		border:0;
+		border-radius:0;
+		background:#0000;
+	}
+	&.mxGameConfig .mxGuessBox ::-webkit-meter-optimum-value
+	{
+		background:var(--meterGoodColor);
+	}
+	@supports selector(::-moz-meter-bar)
+	{
+		&.mxGameConfig .mxGuessBox :-moz-meter-optimum::-moz-meter-bar
+		{
+			background:var(--meterGoodColor);
+		}
+	}
+	/* problem */
+	&.mxProblemConfig .mxCommentBox
+	{
+		margin:0 auto 0.5em auto;
+		text-align:center;
+		min-height:1.5em;
+		line-height:1.5em;
+	}
+	&.mxProblemConfig .mxCommentContent
+	{
+		display:inline-block;
+		text-align:justify;
+	}
+	&.mxProblemConfig .mxCommentContent p
+	{
+		margin:0;
+	}
+	/* comment */
+	&.mxProblemConfig .mxCommentBox
+	{
+		padding:0.5em;
+	}
+	/* dialog */
+	& dialog,
+	& dialog *
+	{
+		box-sizing:border-box;
+	}
+	& dialog::backdrop
+	{
+	  background: #0007;
+	}
+	& dialog
+	{
+		max-width:calc(100% - 5vw);
+		border:0;
+		padding:0;
+	}
+	& dialog form
+	{
+		background-color:#eeb;
+	}
+	& dialog .mxContentFieldset
+	{
+		padding:min(5vw,0.5em);
+	}
+	& dialog .mxMenuFieldset
+	{
+		background:#0001;
+		min-height:3em;
+		line-height:3em;
+		text-align:center;
+	}
+	& dialog h1
+	{
+		color:#900;
+	}
+	& dialog label:not([for])
+	{
+		display:block;
+	}
+	& dialog input[type=text]
+	{
+		max-width:100%;
+	}
+	& dialog img
+	{
+		display:block;
+		margin:0 auto;
+		max-width:100%;
+		height:auto;
+		border:0;
+	}
+	& dialog.mxShowSgfDialog .mxContentFieldset
+	{
+		font-family:monospace;
+		white-space:pre-wrap;
+	}
+	/* options */
+	& .mxOptionsBox
+	{
+		line-height:1.5em;
+		max-width:100%;
+		overflow-wrap:anywhere;
+	}
+	& .mxOptionsBox label:not([for])
+	{
+		display:block;
+	}
+	& .mxNumberingOnCheckbox:not(:checked)~span
+	{
+		display:none;
+	}
+	& a
+	{
+		color:#000;
+	}
+	/* navigation */
+	& .mxNavigationBox
+	{
+		margin-top:1em;
+		width:100%;
+		height:2em;
+		box-sizing:border-box;
+		display:flex;
+		justify-content:space-between;
+		align-items:center;
+	}
+	& .mxNavigationBox button
+	{
+		flex:1;
+		border:0;
+		background:transparent;
+		margin:min(1%,0.25em);
+		padding:0;
+		display:flex;
+		justify-content:center;
+		align-items:center;
+	}
+	& .mxNavigationBox button svg
+	{
+		flex:1;
+		max-width:60%;
+		max-height:80%;
+		margin:auto;
+	}
+	& .mxNavigationBox button.mxAutoBtn[disabled],
+	& .mxNavigationBox button.mxPauseBtn[disabled]
+	{
+		display:none;
+	}
+	/* solve */
+	& .mxSolveBox
+	{
+		text-align:center;
+	}
+	& .mxSolveBox button
+	{
+		width:min(33%,3.3em);
+		margin:min(6.6%,0.66em);
+		padding:0;
+		border:0;
+		background:none;
+	}
+	/* speed */
+	& .mxSpeedBox
+	{
+		width:calc(100% - 4vw);
+		margin:0.5em auto;
+	}
+	& .mxSpeedBox input
+	{
+		width:100%;
+	}
+	/* focus, hover and cursor */
+	& :not(:focus-visible) {outline:none;}
+	& .mxGobanSvg:not(:focus-visible) .mxFocus {display:none;}
+	& button:not([disabled]),
+	& input[type=range]:not([disabled]),
+	&:not(.mxDiagramConfig) .mxGobanBox svg {cursor:pointer;}
 }
-.mxFmTheme>:not(dialog)
-{
-	margin:0.5em;
-}
-.mxFmTheme.mxGameConfig
-{
-	display:flex;
-	flex-wrap:wrap;
-	justify-content:center;
-	align-items:center;
-	max-width:calc((var(--gobanMaxWidth) * 7 / 4) + 2em);
-}
-.mxFmTheme.mxGameConfig .mxGobanParentDiv
-{
-	box-sizing:border-box;
-	max-width:var(--gobanMaxWidth);
-	flex:4 1 var(--gobanMaxWidth);
-	display:flex;
-	flex-direction:column;
-	justify-content:center;
-	align-items:center;
-}
-.mxFmTheme.mxGameConfig .mxHeaderParentDiv
-{
-	box-sizing:border-box;
-	/* when vertical layout, both columns have the same width */
-	max-width:var(--gobanMaxWidth);
-	/* when horizontal layout, 2nd column is narrower */
-	flex:3 1 calc(var(--gobanMaxWidth) * 3 / 4);
-	display:flex;
-	flex-direction:column;
-	justify-content:space-between;
-}
-.mxFmTheme.mxGameConfig .mxGobanDiv
-{
-	margin:auto;
-	width:100%;
-	background:#0f09;
-}
-.mxFmTheme.mxGameConfig .mxSgfParentDiv
-{
-	text-align:center;
-}
-.mxFmTheme.mxGameConfig .mxSgfParentDiv>div
-{
-	display:inline-block;
-}
-.mxFmTheme .mxVersionDiv
-{
-	box-sizing:border-box;
-	text-align:center;
-	height:2.5em;
-	line-height:2.5em;
-}
-/* common */
-.mxFmTheme .mxInnerGobanDiv
-{
-	margin:0 auto;
-}
-.mxFmTheme.mxIn3d .mxInnerGobanDiv
-{
-	box-shadow:0 0.25em 0.5em rgba(0,0,0,0.3);
-}
-.mxFmTheme .mxGobanDiv svg
-{
-	box-sizing:border-box;
-	width:100%;
-	height:100%;
-	/* set goban background below */
-	background:#fc9;
-}
-.mxFmTheme text
-{
-	stroke-width:0.5px;
-	stroke:#000;
-}
-.mxFmTheme text.mxOnBlack,
-.mxFmTheme .mxBlack+text
-{
-	stroke:#fff;
-}
-.mxFmTheme .mxTitleP
-{
-	color:#900;
-	font-weight:bold;
-	text-align:center;
-}
-.mxFmTheme p
-{
-	margin:0;
-	padding:0;
-}
-.mxFmTheme p:not(:first-child)
-{
-	padding-top:0.5em;
-}
-/* diagram */
-.mxFmTheme.mxDiagramConfig .mxInnerNotSeenDiv
-{
-	margin:0 auto;
-	padding:0.25em 0;
-	display:flex;
-	flex-wrap:wrap;
-	justify-content:center;
-}
-.mxFmTheme.mxDiagramConfig .mxInnerNotSeenDiv:empty
-{
-	display:none;
-}
-.mxFmTheme.mxDiagramConfig .mxInnerNotSeenDiv svg
-{
-	width:100%;
-	height:100%;
-	margin:0.125em 0;
-}
-/* game */
-.mxFmTheme.mxGameConfig .mxHeaderDiv
-{
-	padding:0.25em 0.25em 0.25em 0.75em;
-	margin-bottom:0.25em;
-}
-.mxFmTheme.mxGameConfig .mxGuessDiv
-{
-	width:100%;
-	margin:0.5em;
-}
-.mxFmTheme.mxGameConfig meter
-{
-	display:block;
-	font-size:1em;
-	margin:0;
-	padding:0;
-	width:100%;
-	height:0.5em;
-	border:0;
-	border-radius:0.25em;
-	overflow:hidden;
-	background:#900; /* set "bad" color */
-}
-/* do not reunite ::-selectors below, otherwise error in webkit browsers */
-.mxFmTheme.mxGameConfig ::-moz-meter-bar
-{
-	width:100%;
-    height:0.5em;
-    border:0;
-	background:#0000;
-}
-.mxFmTheme.mxGameConfig ::-webkit-meter-bar
-{
-    width:100%;
-    height:0.5em;
-    border:0;
-	border-radius:0;
-    background:#0000;
-}
-.mxFmTheme.mxGameConfig .mxGuessDiv :-moz-meter-optimum::-moz-meter-bar {background:#090;}
-.mxFmTheme.mxGameConfig .mxGuessDiv ::-webkit-meter-optimum-value {background:#090;}
-/* problem */
-.mxFmTheme.mxProblemConfig .mxCommentDiv
-{
-	margin:0 auto 0.5em auto;
-	text-align:center;
-	min-height:1.5em;
-	line-height:1.5em;
-}
-.mxFmTheme.mxProblemConfig .mxCommentContentDiv
-{
-	display:inline-block;
-	text-align:justify;
-}
-.mxFmTheme.mxProblemConfig .mxCommentContentDiv p
-{
-	margin:0;
-}
-/* buttons and inputs */
-.mxFmTheme input[type=text][disabled],
-.mxFmTheme button[disabled] {opacity:0.3;}
-.mxFmTheme button 
-{
-	box-sizing:border-box;
-	font-size:1em;
-	border:1px solid rgba(0,0,0,0.3);
-	border-radius:0.25em;
-	background:#fff;
-	margin:0.125em;
-	padding-top:0;
-	padding-bottom:0;
-	height:1.5em;
-	line-height:1.5em;
-}
-/* comment */
-.mxFmTheme.mxProblemConfig .mxCommentDiv
-{
-	padding:0.5em;
-}
-/* dialog */
-.mxFmTheme dialog,
-.mxFmTheme dialog *
-{
-	box-sizing:border-box;
-}
-.mxFmTheme dialog::backdrop
-{
-  background: rgba(0,0,0,0.5);
-}
-.mxFmTheme dialog
-{
-	min-width:min(50vw,19em);
-	border:1px solid #000;
-	background:#fff;
-	text-align:left;
-	padding:0;
-}
-.mxFmTheme dialog.mxShowSgfDialog,
-.mxFmTheme dialog.mxShowSvgDialog
-{
-	width:calc(var(--gobanMaxWidth) * 3 / 2);
-}
-.mxFmTheme dialog form
-{
-	margin:0;
-	padding:0;
-	min-width:var(--gobanMinWidth);
-}
-.mxFmTheme dialog .mxContentFieldset
-{
-	padding:0.5em;
-	min-width:100%;
-}
-.mxFmTheme dialog .mxMenuFieldset
-{
-	background:#f3f3f3;
-	min-height:3em;
-	line-height:3em;
-	text-align:center;
-}
-.mxFmTheme dialog label:not([for])
-{
-	display:block;
-}
-.mxFmTheme dialog input[type=text]
-{
-	max-width:100%;
-}
-.mxFmTheme dialog img
-{
-	display:block;
-	margin:0 auto;
-	max-width:100%;
-	height:auto;
-	border:0;
-}
-.mxFmTheme dialog.mxShowSgfDialog .mxContentFieldset
-{
-	font-family:monospace; /* for Safari? */
-	white-space:pre-wrap;
-	min-height:var(--gobanMaxWidth);
-}
-/* options */
-.mxFmTheme .mxOptionsDiv
-{
-	line-height:1.5em;
-}
-.mxFmTheme .mxOptionsDiv label:not([for])
-{
-	display:block;
-}
-.mxFmTheme .mxNumFromTextSpan,
-.mxFmTheme .mxNumWithTextSpan
-{
-	position:relative;
-	left:2em;
-	white-space:nowrap;
-}
-.mxFmTheme .mxNumFromTextSpan:before
-{
-	content:"\a";
-	white-space:pre-line;
-}
-.mxFmTheme input:not(:checked)~.mxNumFromTextSpan,
-.mxFmTheme input:not(:checked)~.mxNumWithTextSpan
-{
-	display:none;
-}
-.mxFmTheme a
-{
-	color:#000;
-}
-/* navigation */
-.mxFmTheme .mxNavigationDiv
-{
-	margin-top:0.5em;
-	width:100%;
-	height:2em;
-	box-sizing:border-box;
-	display:flex;
-	justify-content:space-between;
-	align-items:center;
-}
-.mxFmTheme .mxNavigationDiv button
-{
-	flex:1;
-	font-size:1em;
-	border:0;
-	background:transparent;
-	margin:min(1%,0.25em);
-	padding:0;
-	display:flex;
-	justify-content:center;
-	align-items:center;
-}
-.mxFmTheme .mxNavigationDiv button svg
-{
-	flex:1;
-	max-width:60%;
-	max-height:80%;
-	width:100%;
-	height:100%;
-	margin:auto;
-}
-.mxFmTheme .mxNavigationDiv button.mxAutoBtn[disabled],
-.mxFmTheme .mxNavigationDiv button.mxPauseBtn[disabled]
-{
-	display:none;
-}
-/* solve */
-.mxFmTheme .mxSolveDiv
-{
-	margin:0.5em auto;
-	text-align:center;
-}
-.mxFmTheme .mxSolveDiv button
-{
-	font-size:1em;
-	margin:0.125em 1em;
-	padding:0.25em;
-	border:0;
-	background:none;
-	width:10%;
-	min-width:1.5cm;
-	min-height:1.5cm;
-}
-.mxFmTheme .mxSolveDiv button svg
-{
-	width:100%;
-	height:100%;
-}
-/* speed */
-.mxFmTheme .mxSpeedDiv
-{
-	display:flex;
-	align-items:center;
-	margin:0.5em 0;
-}
-.mxFmTheme .mxSpeedDiv input
-{
-	flex:1;
-}
-/* focus, hover and cursor */
-.mxFmTheme .mxGobanSvg:not(:focus-visible) .mxFocus {display:none;}
-.mxFmTheme button,
-.mxFmTheme [type=range],
-.mxFmTheme:not(.mxDiagramConfig) .mxGobanDiv svg,
-.mxFmTheme .mxTreeDiv svg circle,
-.mxFmTheme .mxTreeDiv svg polygon,
-.mxFmTheme .mxTreeDiv svg rect,
-.mxFmTheme .mxTreeDiv svg text {cursor:pointer;}
-

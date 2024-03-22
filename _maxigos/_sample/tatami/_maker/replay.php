@@ -19,7 +19,7 @@ include "../../../_js/mgosGoto.js";
 include "../../../_js/mgosSpeed.js";
 include "../../../_js/mgosOptions.js";
 include "../../../_js/mgosHeader.js";
-include "../../../_js/mgosCut.js";
+include "../../../_js/mgosRemove.js";
 include "../../../_js/mgosPass.js";
 include "../../../_js/mgosImage.js";
 include "../../../_js/mgosGuess.js";
@@ -33,7 +33,7 @@ mxG.B=[["WhiteCartouche","Goban","AnimatedStone","BlackCartouche"],
 	   "Guess",
 	   "Goto",
 	   "Speed",
-	   ["Options","Header","Image","Cut","Pass"],
+	   ["Options","Header","Png","Svg","Remove","Pass"],
 	   "Version"
 	];
 mxG.D[mxG.K]=new mxG.G(mxG.K,mxG.B);
@@ -49,11 +49,9 @@ mxG.D[mxG.K].a.allowFileAsSource=1; // (0,1) default 1
 // mxG.D[mxG.K].a.sourceFilter=""; // (str) default ""
 mxG.D[mxG.K].a.initMethod="last"; // ("first","loop","last") default "first"
 // guessing variations is not very interesting in general
-// so one chooses to ignore them here
-// since canPlaceGuess=1, canPlaceVariation=0 and no Options component
+// so one chooses to ignore them
 mxG.D[mxG.K].a.sgfLoadMainOnly=1; // (0,1) default 0
 // Goban
-mxG.D[mxG.K].a.pointsNumMax=19; // (positive integer) default 0
 mxG.D[mxG.K].a.stoneShadowOn=0; // (0,1) default 0 (require in3dOn=1)
 mxG.D[mxG.K].a.specialStoneOn=0; // (0,1) default 0 (require in3dOn=1)
 mxG.D[mxG.K].a.stretching="0,1,1,2"; // (list) default "0,0,1,1"
@@ -75,8 +73,6 @@ mxG.D[mxG.K].a.animatedStoneOn=1; // (0,1) default 0
 // Cartouche
 mxG.D[mxG.K].a.cartoucheBoxOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.bowlOn=1; // (0,1) default 0
-// Cut
-mxG.D[mxG.K].a.cutBtnOn=1; // (0,1) default 0
 // Goto
 mxG.D[mxG.K].a.gotoBoxOn=1; // (0,1) default 0
 // Guess
@@ -84,7 +80,6 @@ mxG.D[mxG.K].a.guessBoxOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.canPlaceGuess=1; // (0,1) default 0
 // Header
 mxG.D[mxG.K].a.headerBtnOn=1; // (0,1) default 0
-mxG.D[mxG.K].a.hideInHeader="NumOfMovesLabel"; // (set) default ""
 mxG.D[mxG.K].a.concatInHeader="NumOfMovesToResult"; // (set) default ""
 // Image
 mxG.D[mxG.K].a.pngBtnOn=1; // (0,1) default 0
@@ -93,9 +88,11 @@ mxG.D[mxG.K].a.svgBtnOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.loopTime=1000; // (positive integer) default 1000
 // Navigation
 mxG.D[mxG.K].a.navigations="First,TenPred,Pred,Loop,Next,TenNext,Last"; // (set) default "First,TenPred,Pred,Next,TenNext,Last"
-// options
+// Options
 mxG.D[mxG.K].a.optionsBtnOn=1; // (0,1) default 0
 mxG.D[mxG.K].a.hideInOptions="In3dOn,IndicesOn,SiblingsOn"; // (set) default ""
+// Remove
+mxG.D[mxG.K].a.removeBtnOn=1; // (0,1) default 0
 // Pass
 mxG.D[mxG.K].a.passBtnOn=1; // (0,1) default 0
 // Variation

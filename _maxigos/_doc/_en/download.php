@@ -7,48 +7,81 @@
 <?php include "../../_php/version.php";?>
 <title>Download page for MaxiGos v<?=$v?></title>
 <style>
+body
+{
+	hyphens:auto;
+	overflow-wrap:anywhere;
+}
+nav a {display:inline-block;margin:0.25em;}
+nav a img {padding-right:0.25em}
 .flag
 {
-	margin-left:1em;
-	margin-right:0.5em;
 	vertical-align:middle;
 	width:1.8em;
 	height:auto;
 }
 .menu a {padding-right:1em;vertical-align:middle;}
-code
+pre
 {
-	display:block;
-	padding:0.5rem;
-	margin:0.5rem 0;
-	color:#e3e3e3;
+	color:red;
+	font-family:monaco;
+	font-size:1em;
 	background:#3e3e3e;
-}
-code
-{
-	display:block;
-	padding:0.5rem;
-	margin:0.5rem 0;
 	color:#e3e3e3;
-	background:#3e3e3e;
+	padding:1em;
+	white-space:pre-wrap;
+	text-align:left;
 }
 .themeTable
 {
 	border-collapse:collapse;
 }
+.themeTable th,
 .themeTable td
 {
 	border: 1px solid #000;
 	padding:0.5rem;
 }
+@media (max-width:38em)
+{
+	table,tr,th,td
+	{
+		display:block;
+	}
+	.themeTable th,
+	.themeTable td:not(:last-of-type)
+	{
+		border-bottom:0;
+	}
+	.themeTable td:last-of-type
+	{
+		margin-bottom:0.5em;
+	}
+	ul,li
+	{
+		margin:0;
+		padding:0;
+	}
+	:not(li)>ul,li
+	{
+		padding-left:min(10vw,0.5em);
+	}
+}
+@media (max-width:19em)
+{
+	nav a
+	{
+		display:block;
+	}
+}
 </style>
 </head>
 <body>
-<nav class="menu">
-<?=(file_exists("../../../index.php")?"<a href=\"../../../index.php?lang=en\">Home</a>":"")?>
+<nav class="menu"><?=(file_exists("../../../index.php")?"\n<a href=\"../../../index.php?lang=en\">Home</a>\n":"")?>
 <?="<a href=\"documentation.php\">Documentation</a>"?>
-<a href="<?=str_replace("/_fr/","/_en/",$_SERVER["SCRIPT_NAME"])?>"><img class="flag" src="../../_img/flag/en.svg"> English</a>
-<a href="<?=str_replace("/_en/","/_fr/",$_SERVER["SCRIPT_NAME"])?>"><img class="flag" src="../../_img/flag/fr.svg"> Fran&ccedil;ais</a></nav>
+<a href="<?=str_replace("/_fr/","/_en/",$_SERVER["SCRIPT_NAME"])?>"><img class="flag" src="../../_img/flag/en.svg">English</a>
+<a href="<?=str_replace("/_en/","/_fr/",$_SERVER["SCRIPT_NAME"])?>"><img class="flag" src="../../_img/flag/fr.svg">Français</a>
+</nav>
 <h1>MaxiGos v<?=$v.".".$r?> download page</h1>
 <p><em>Copyright 1998-<?=date("Y")?> - FM&SH</em></p>
 <p>
@@ -82,26 +115,20 @@ before the first maxiGos script.</p>
 <p>For instance:</p>
 <ul>
 <li>To set the language to english (download "maxigos-neo-classic-game.js")
-<code><pre>
-&lt;script lang="en" src="path/maxigos-neo-classic-game.js"&gt;
+<pre><code>&lt;script lang="en" src="path/maxigos-neo-classic-game.js"&gt;
 path-to-a-sgf-file/a-sgf-file.sgf
-&lt;/script&gt;
-</pre></code>
+&lt;/script&gt;</code></pre>
 </li>
 <li>To set the language to french (download "maxigos-neo-classic-game.js")
-<code><pre>
-&lt;script lang="fr" src="path-to-a-maxigos-script/maxigos-neo-classic-game.js"&gt;
+<pre><code>&lt;script lang="fr" src="path-to-a-maxigos-script/maxigos-neo-classic-game.js"&gt;
 path-to-a-sgf-file/a-sgf-file.sgf
-&lt;/script&gt;
-</pre></code>
+&lt;/script&gt;</code></pre>
 </li>
 <li>To set the language to japanese (download "maxigos-i18n-ja.js" and "maxigos-neo-classic-game.js")
-<code><pre>
-&lt;script src="path/maxigos-i18n-ja.js"&gt;&lt;/script&gt;
+<pre><code>&lt;script src="path/maxigos-i18n-ja.js"&gt;&lt;/script&gt;
 &lt;script lang="ja" src="path/maxigos-neo-classic-game.js"&gt;
 path-to-a-sgf-file/a-sgf-file.sgf
-&lt;/script&gt;
-</pre></code>
+&lt;/script&gt;</code></pre>
 </li>
 </ul>
 <p>See the <a href="documentation.php#internationalization">Internationalization</a>
@@ -132,10 +159,36 @@ chapter of the documentation for more details.</p>
 <?=printOneInternationalizationScriptLine('zh-hans')?>
 <?=printOneInternationalizationScriptLine('zh-hant')?>
 </ul>
+<h2>What is new in the 8.03 version?</h2>
+<ul>
+<li>Removed the "BoxDiv" suffix from the global box.</li>
+<li>Removed the "Div" suffix from grouping parent boxes.</li>
+<li>Removed the "div" tag around components that contain only a button.
+The component box becomes the button itself.</li>
+<li>Removed the "div.innerNotSeenDiv" and "div.EditCommentDiv" tags.</li>
+<li>Replaced the suffix in class names and identifiers of components that are not form elements to "Box".</li>
+<li>Changed "CommentContentDiv" to "CommentContent", "EditToolBarDiv" to "EditToolbar", "InnerGobanDiv" to "GobanContent", "TreeContentDiv" to "TreeContent".</li>
+<li>Improved information read by screen readers.</li>
+<li>Added Audouard coordinates for screen readers (enable/disable with the "A" key when the goban has the focus).</li>
+<li>Added --gobanIntrinsicWidth and --gobanIntrinsicHeight css variables to the global box,
+removed the "pointsNumMax" parameter and modify the style sheets accordingly.</li>
+<li>Added css variables --moveInfoIntrinsicWidth, --moveInfoIntrinsicHeight,
+--treeIntrinsicWidth and --treeIntrinsicHeight to the global box.</li>
+<li>Changed tags and classes of the "Cartouche" component.</li>
+<li>Added the "yaOn" parameter.</li>
+<li>Removed the "commentCaptionOn", "treeCaptionOn", "canCommentFocus", canHeaderFocus, "canTreeFocus" and "menuTimeout" parameters.</li>
+<li>Improved tree drawing.</li>
+<li>Rewrote the "Menu" component.</li>
+<li>Changed the name of the "Cut" component to "Remove".</li>
+<li>Fixed a bug in maxigos-eidogo-problem.js that crashed on startup.</li>
+<li>Emission of a sound in addition to flashing the goban in case of user error.</li>
+<li>Lots of changes in style sheets, especially to improve the display for narrow windows.</li>
+<li>Various minor changes.</li>
+</ul>
 <h2>What is new in the 8.02 version?</h2>
 <ul>
-<li>Improved the functioning of tooltips, and texts by screen readers.</li>
-<li>Changing key combinations to navigate the move tree
+<li>Improved the functioning of tooltips and information read by screen readers.</li>
+<li>Changed key combinations to navigate the move tree
 (you must now press the "Shift" key instead of the "Option" or "Alt" key while pressing one of the keyboard arrows to navigate in the move tree).</li>
 <li>Simplification of tags and classes of the "Header" component.</li>
 <li>Various minor changes.</li>
@@ -155,12 +208,12 @@ Inserting a sgf between &lt;script&gt; and &lt;/script&gt; tags still works but 
 <li>Reduced code size.</li>
 <li>Improved processing speed.</li>
 <li>Improved goban lines sharpness.</li>
-<li>Add a description of the goban content for screen readers.</li>
+<li>Added a description of the goban content for screen readers.</li>
 <li>Simplified internal html (such as button content).</li>
 <li>Made significant css changes.</li>
 <li>Automatically cut css in several parts for a given theme to reduce code size.
 Done for "Edit", "Lesson" and "Problem" configs.</li>
-<li>Improve tree blocks display (in particular when the tree container is very hight).
+<li>Improved tree blocks display (in particular when the tree container is very hight).
 Always add enough blocks to cover the part of the tree that the user can see
 excepting when style is disabled in the browser.
 In this case, when the tree is very high, the user has to click on the tree
@@ -239,10 +292,10 @@ to display in full with firefox.</li>
 <li>New set of samples.</li>
 <li>Various other optimizations and corrections.</li>
 </ul>
-
-<nav class="menu"><?=(file_exists("../../index.php")?"<a href=\"../../index.php?lang=en\">Home</a>":"")?><!--
---><a href="documentation.php">Documentation</a><!--
---><a href="<?=str_replace("/fr/","/en/",$_SERVER["SCRIPT_NAME"])?>"><img class="flag" src="../../_img/flag/en.svg"> English</a><!--
---><a href="<?=str_replace("/en/","/fr/",$_SERVER["SCRIPT_NAME"])?>"><img class="flag" src="../../_img/flag/fr.svg"> Fran&ccedil;ais</a></nav>
+<nav class="menu"><?=(file_exists("../../../index.php")?"\n<a href=\"../../../index.php?lang=en\">Home</a>\n":"")?>
+<?="<a href=\"documentation.php\">Documentation</a>"?>
+<a href="<?=str_replace("/_fr/","/_en/",$_SERVER["SCRIPT_NAME"])?>"><img class="flag" src="../../_img/flag/en.svg">English</a>
+<a href="<?=str_replace("/_en/","/_fr/",$_SERVER["SCRIPT_NAME"])?>"><img class="flag" src="../../_img/flag/fr.svg">Français</a>
+</nav>
 </body>
 </html>

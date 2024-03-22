@@ -1,312 +1,325 @@
 .mxJdgTheme
 {
-	--gobanMaxWidth:calc(1em * 491 / 16);
-	--gobanMinWidth:6em;
+	--gobanScale:1;
+	--gobanMaxWidth:calc(1em * var(--gobanScale) * var(--gobanIntrinsicWidth,445) / 16);
+	--gobanMaxHeight:calc(1em * var(--gobanScale) * var(--gobanIntrinsicHeight,463) / 16);
+	--navigationMaxWidth:max(var(--gobanMaxWidth),calc(1em * var(--gobanScale) * 169 / 16));
+	--columnMaxWidth:var(--navigationMaxWidth);
 	--fontFamily:"Avenir Next","Segoe UI",Arial,sans-serif;
 	--fontWeight:500;
 	--gobanBk:#ecbe69;
 	--bk:#eee;
-	--color:#444;
 	--focusBk:#ddd;
 	--focusColor:#f00;
 	text-align:left;
+	/* general */
+	& button {-webkit-appearance:none;-moz-appearance:none;}
+	& button {cursor:pointer;}
+	& button[disabled] {cursor:default;opacity:0.5;}
+	& svg {display:block;width:100%;height:100%;}
+	& p:first-of-type {margin-top:0;}
+	& p:last-of-type {margin-bottom:0;}
+	/* font */
+	&,
+	& button {font-family:var(--fontFamily);font-size:1em;}
+	& svg
+	{
+		font-family:var(--fontFamily);
+		font-weight:var(--fontWeight);
+	}
+	/* layout */
+	&
+	{
+		max-width:var(--columnMaxWidth);
+		margin:1em auto;
+	}
+	&.mxDiagramConfig
+	{
+		margin:1em 0;
+	}
+	&.mxCommentConfig,
+	&.mxProblemConfig,
+	&.mxTreeConfig
+	{
+		max-width:calc(var(--columnMaxWidth) * 2 + 0.25em);
+		display:flex;
+		flex-wrap:wrap;
+		justify-content:center;
+		align-items:stretch;
+		gap:0.25em;
+	}
+	&.mxCommentConfig>div,
+	&.mxProblemConfig>div,
+	&.mxTreeConfig>div
+	{
+		flex:1 1 var(--columnMaxWidth);
+		max-width:min(100%,var(--columnMaxWidth));
+		display:flex;
+		flex-direction:column;
+	}
+	&.mxCommentConfig .mxCommentBox,
+	&.mxTreeConfig .mxCommentBox,
+	&.mxProblemConfig .mxCommentBox,
+	& .mxTreeBox
+	{
+		line-height:1.5em;
+		overflow:auto;
+		resize:vertical;
+		/* avoid display:flex as it speeds up the vertical shrinkage of large elements */
+		/* a bit too much when resizing */
+	}
+	&.mxCommentConfig .mxCommentBox,
+	&.mxProblemConfig .mxCommentBox
+	{
+		flex:auto;
+		height:7.5em;
+	}
+	&.mxTreeConfig .mxCommentBox
+	{
+		height:7.5em;
+		/* do not flex:auto on .mxTreeConfig .mxCommentBox */
+		/* otherwise side effect when the user resizes .mxCommentBox or .mxTreeBox */
+	}
+	& .mxTreeBox
+	{
+		flex:auto;
+		height:7.5em;
+		margin-top:0.25em;
+	}
+	& .mxVersionBox
+	{
+		display:flex; /* flex, otherwise overflow if problemConfig and narrow viewport? */
+		justify-content:center;
+		align-items:center;
+		text-align:center; /* since mxGlobal has text-align:left */
+		min-height:3em;
+	}
+	/* common */
+	&:not(.mxDiagramConfig) .mxGobanBox
+	{
+		background:#eee;
+		flex:1;
+		display:flex;
+	}
+	& .mxGobanContent
+	{
+		flex:auto; /* otherwise the goban does not get a convenient width */
+		max-width:var(--gobanMaxWidth);
+		margin:auto;
+	}
+	& .mxGobanBox svg
+	{
+		/* background:url(kaya-mini.jpg); */
+		background:url("data:image/jpeg;base64,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");
+		background-size:100% 100%;
+		background-repeat:no-repeat;
+	}
+	& .mxBlackRadialGradient stop:nth-of-type(1)
+	{
+		stop-color:#666;
+	}
+	& .mxBlackRadialGradient stop:nth-of-type(2)
+	{
+		stop-color:#222;
+	}
+	& .mxBlackRadialGradient stop:nth-of-type(3)
+	{
+		stop-color:#000;
+	}
+	& .mxWhiteRadialGradient stop:nth-of-type(1)
+	{
+		stop-color:#fff;
+	}
+	& .mxWhiteRadialGradient stop:nth-of-type(2)
+	{
+		stop-color:#ddd;
+	}
+	& .mxWhiteRadialGradient stop:nth-of-type(3)
+	{
+		stop-color:#999;
+	}
+	&.mxIn2d .mxBlack,
+	&.mxIn2d .mxWhite
+	{
+		stroke:rgba(0,0,0,1);
+	}
+	& text
+	{
+		stroke-width:0.25px;
+		stroke:#000;
+	}
+	& text.mxOnBlack,
+	& .mxBlack+text
+	{
+		stroke:#fff;
+	}
+	& .mxGobanBox .mxVariation.mxOnFocus.mxMark:not(.mxPointBackground)
+	{
+		fill:none;
+		stroke:#f00;
+	}
+	& .mxGobanBox .mxVariation.mxOnFocus:not(.mxMark):not(.mxPointBackground)
+	{
+		fill:#f00;
+		stroke:#f00;
+	}
+	& .mxPointBackground
+	{
+		fill:none;
+		stroke:none;
+	}
+	& .mxMarkOnLast
+	{
+		fill:#f00;
+		stroke:#f00;
+	}
+	& .mxFocusMark
+	{
+		fill:none;
+		stroke:#f00;
+		stroke-width:1px;
+	}
+	& .mxHeaderTitle
+	{
+		font-weight:bold;
+	}
+	/* comment, problem and tree */
+	& .mxCommentBox
+	{
+		box-sizing:border-box;
+		padding:0.5em;
+		background:var(--bk);
+	}
+	&.mxProblemConfig .mxCommentContent
+	{
+		display:flex;
+		flex-direction:column;
+		height:100%;
+	}
+	&.mxProblemConfig .mxCommentContent>*
+	{
+		display:block;
+		margin:0.5em auto;
+	}
+	&.mxProblemConfig .mxCommentContent>*:first-child
+	{
+		margin-top:auto;
+	}
+	&.mxProblemConfig .mxCommentContent>*:last-child
+	{
+		margin-bottom:auto;
+	}
+	& .mxTreeBox
+	{
+		background:var(--bk);
+		margin-top:0.25em;
+	}
+	& .mxTreeContent
+	{
+		width:calc(1em * var(--treeIntrinsicWidth) / 16);
+	}
+	& .mxTreeBox svg
+	{
+		width:100%;
+		height:auto;
+	}
+	&.mxTreeConfig .mxTreeBox svg .mxFocus
+	{
+		fill:#f00;
+		opacity:1;
+	}
+	/* diagram */
+	& .mxNotSeenBox:not(:empty)
+	{
+		max-width:var(--gobanMaxWidth);
+		margin:0.5em auto 0 auto;
+	}
+	/* game */
+	&.mxGameConfig .mxHeaderBox
+	{
+		box-sizing:border-box;
+		padding:0.5em;
+		background:var(--bk);
+		max-height:var(--gobanMaxHeight);
+		overflow:auto;
+		resize:vertical;
+	}
+	/* navigation and solve*/
+	& .mxNavigationBox
+	{
+		container:mxJdgNavigationBox/inline-size;
+	}
+	& .mxNavigationBox:not(:empty),
+	& .mxSolveBox
+	{
+		/* mxSolveBox should be similar to mxNavigationBox in jdgTheme */
+		/* since the problem config is similar to the comment config */
+		/* and both need to fit the versionBox on the right */
+		display:flex;
+		align-items:center;
+		min-height:3em;
+	}
+	& .mxNavigationBox:not(:empty)
+	{
+		justify-content:space-between;
+	}
+	& .mxNavigationBox button
+	{
+		flex:1;
+		margin:0;
+		padding:0;
+		border:0;
+		background:none;
+		max-height:3em;
+		max-width:3em;
+	}
+	& .mxNavigationBox button svg
+	{
+		margin:20% auto;
+		max-width:60%;
+	}
+	& .mxSolveBox
+	{
+		justify-content:center;
+		gap:min(10%,1em);
+	}
+	& .mxSolveBox button
+	{
+		border:0;
+		background:none;
+		margin:0;
+		padding:0;
+		width:min(30%,3em); /* must be 3em since versionBox height is 3em too */
+		height:auto;
+		aspect-ratio:1;
+	}
+	@container mxJdgNavigationBox (max-width:19em)
+	{
+		& .mxTenPredBtn,
+		& .mxTenNextBtn
+		{
+			display:none;
+		}
+	}
+	/* focus, hover and cursor */
+	& *:focus {outline:none;}
+	& .mxGobanSvg:not(:focus-visible) .mxFocus {display:none;}
+	& .mxGobanSvg:focus-visible {filter:brightness(1.1);}
+	& .mxCommentBox:focus-visible,
+	& .mxHeaderBox:focus-visible,
+	& .mxTreeBox:focus-visible
+	{
+		background:var(--focusBk);
+	}
+	& .mxNavigationBox button:focus svg,
+	& .mxSolveBox button:focus svg
+	{
+		fill:var(--focusColor);
+	}
+	& button,
+	&:not(.mxDiagramConfig) .mxGobanBox svg,
+	& .mxTreeBox svg circle,
+	& .mxTreeBox svg polygon,
+	& .mxTreeBox svg rect,
+	& .mxTreeBox svg text {cursor:pointer;}
 }
-.mxJdgTheme.mxIndicesOff {--gobanMaxWidth:calc(1em * 445 / 16);}
-/* general */
-.mxJdgTheme button {-webkit-appearance:none;-moz-appearance:none;}
-.mxJdgTheme button {cursor:pointer;}
-.mxJdgTheme button[disabled] {cursor:default;opacity:0.5;}
-.mxJdgTheme svg {display:block;width:100%;height:100%;}
-.mxJdgTheme p:first-of-type {margin-top:0;}
-.mxJdgTheme p:last-of-type {margin-bottom:0;}
-/* font */
-.mxJdgTheme,
-.mxJdgTheme button
-{
-	font-family:var(--fontFamily);
-}
-.mxJdgTheme svg
-{
-	font-family:var(--fontFamily);
-	font-weight:var(--fontWeight);
-}
-/* layout */
-.mxJdgTheme
-{
-	max-width:var(--gobanMaxWidth);
-	min-width:var(--gobanMinWidth);
-	margin:0 auto;
-}
-.mxJdgTheme.mxCommentConfig,
-.mxJdgTheme.mxProblemConfig,
-.mxJdgTheme.mxTreeConfig
-{
-	display:flex;
-	flex-wrap:wrap;
-	justify-content:center;
-	align-items:stretch;
-	gap:0.25em;
-	max-width:calc(var(--gobanMaxWidth) * 2 + 0.25em);
-}
-.mxJdgTheme>*
-{
-	max-width:var(--gobanMaxWidth);
-}
-.mxJdgTheme.mxCommentConfig>div,
-.mxJdgTheme.mxProblemConfig>div,
-.mxJdgTheme.mxTreeConfig>div
-{
-	box-sizing:border-box;
-	flex:1 1 var(--gobanMaxWidth);
-	display:flex;
-	flex-direction:column;
-}
-.mxJdgTheme.mxCommentConfig .mxGobanGrandParentDiv,
-.mxJdgTheme.mxProblemConfig .mxGobanGrandParentDiv,
-.mxJdgTheme.mxTreeConfig .mxGobanGrandParentDiv,
-.mxJdgTheme.mxCommentConfig .mxCommentParentDiv,
-.mxJdgTheme.mxProblemConfig .mxCommentParentDiv,
-.mxJdgTheme.mxTreeConfig .mxCommentParentDiv
-{
-	display:flex;
-	flex-direction:column;
-	justify-content:space-between;
-}
-.mxJdgTheme.mxCommentConfig .mxGobanParentDiv,
-.mxJdgTheme.mxProblemConfig .mxGobanParentDiv,
-.mxJdgTheme.mxTreeConfig .mxGobanParentDiv
-{
-	flex:1;
-	display:flex;
-	flex-direction:column;
-}
-.mxJdgTheme.mxCommentConfig .mxGobanDiv,
-.mxJdgTheme.mxProblemConfig .mxGobanDiv,
-.mxJdgTheme.mxTreeConfig .mxGobanDiv
-{
-	margin:auto;
-	width:100%;
-}
-/* no resize property, since one want mxCommentDiv and mxTreeDiv of the same size */
-/* if resize is used, bug when one tries to resize mxCommentDiv or mxTreeDiv */
-.mxJdgTheme .mxCommentDiv,
-.mxJdgTheme .mxTreeDiv
-{
-	box-sizing:border-box;
-	min-height:2em;
-	height:8em;
-	overflow:auto;
-	flex:auto;
-	min-width:min(100%,99vw); /* has priority to max-width */
-	max-width:1px; /* minimize as much as possible (try narrow viewport and big zoom) */
-}
-.mxJdgTheme .mxVersionDiv
-{
-	text-align:center;
-	height:3em;
-	line-height:3em;
-}
-/* common */
-.mxJdgTheme
-{
-	color:var(--color);
-}
-.mxJdgTheme .mxInnerGobanDiv
-{
-	margin:0 auto;
-}
-.mxJdgTheme .mxGobanDiv svg
-{
-	/* background:url(kaya-mini.jpg); */
-	background:url("data:image/jpeg;base64,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");
-	background-size:100% 100%;
-	background-repeat:no-repeat;
-}
-.mxJdgTheme .mxBlackRadialGradient stop:nth-of-type(1)
-{
-	stop-color:#666;
-}
-.mxJdgTheme .mxBlackRadialGradient stop:nth-of-type(2)
-{
-	stop-color:#222;
-}
-.mxJdgTheme .mxBlackRadialGradient stop:nth-of-type(3)
-{
-	stop-color:#000;
-}
-.mxJdgTheme .mxWhiteRadialGradient stop:nth-of-type(1)
-{
-	stop-color:#fff;
-}
-.mxJdgTheme .mxWhiteRadialGradient stop:nth-of-type(2)
-{
-	stop-color:#ddd;
-}
-.mxJdgTheme .mxWhiteRadialGradient stop:nth-of-type(3)
-{
-	stop-color:#999;
-}
-.mxJdgTheme.mxIn2d .mxBlack,
-.mxJdgTheme.mxIn2d .mxWhite
-{
-	stroke:rgba(0,0,0,1);
-}
-.mxJdgTheme text
-{
-	stroke-width:0.25px;
-	stroke:#000;
-}
-.mxJdgTheme text.mxOnBlack,
-.mxJdgTheme .mxBlack+text
-{
-	stroke:#fff;
-}
-.mxJdgTheme .mxGobanDiv .mxVariation.mxOnFocus.mxMark:not(.mxPointBackground)
-{
-	fill:none;
-	stroke:#f00;
-}
-.mxJdgTheme .mxGobanDiv .mxVariation.mxOnFocus:not(.mxMark):not(.mxPointBackground)
-{
-	fill:#f00;
-	stroke:#f00;
-}
-.mxJdgTheme .mxPointBackground
-{
-	fill:none;
-	stroke:none;
-}
-.mxJdgTheme .mxMarkOnLast
-{
-	fill:#f00;
-	stroke:#f00;
-}
-.mxJdgTheme .mxFocusMark
-{
-	fill:none;
-	stroke:#f00;
-	stroke-width:1px;
-}
-.mxJdgTheme .mxTitleP
-{
-	font-weight:bold;
-}
-/* comment, problem and tree */
-.mxJdgTheme.mxProblemConfig .mxCommentContentDiv {margin:auto;}
-.mxJdgTheme .mxCommentDiv,
-.mxJdgTheme .mxTreeDiv
-{
-	overflow:auto;
-}
-.mxJdgTheme .mxCommentDiv
-{
-	padding:0.5em;
-	background:var(--bk);
-}
-.mxJdgTheme.mxProblemConfig .mxCommentDiv
-{
-	height:unset;
-	display:flex;
-	line-height:1.5em;
-	min-height:2.5em;
-}
-.mxJdgTheme .mxTreeDiv
-{
-	background:var(--bk);
-	margin-top:0.25em;
-}
-.mxJdgTheme .mxTreeDiv svg
-{
-	width:unset;
-	height:unset;
-}
-.mxJdgTheme.mxTreeConfig .mxTreeDiv svg .mxFocus
-{
-	fill:#f00;
-	opacity:1;
-}
-/* diagram */
-.mxJdgTheme .mxInnerNotSeenDiv:not(:empty)
-{
-	margin:0.5em auto 0 auto;
-}
-/* game */
-.mxJdgTheme.mxGameConfig .mxHeaderDiv
-{
-	padding:0.5em;
-	background:var(--bk);
-}
-/* navigation and solve*/
-.mxJdgTheme .mxNavigationDiv
-{
-	display:flex;
-	justify-content:space-around;
-	align-items:center;
-	height:3em;
-}
-.mxJdgTheme .mxNavigationDiv:empty
-{
-	display:none;
-}
-.mxJdgTheme .mxNavigationDiv button
-{
-	font-size:1em;
-	flex:1;
-	background:transparent;
-	border:0;
-	margin:0 2%;
-	padding:0;
-	height:3em;
-	width:3em;
-}
-.mxJdgTheme .mxNavigationDiv button svg
-{
-	margin:0 auto;
-	width:100%;
-	max-width:100%;
-	height:1.5em;
-	fill:var(--color);
-}
-.mxJdgTheme .mxSolveDiv
-{
-	text-align:center;
-	height:3em;
-}
-.mxJdgTheme .mxSolveDiv:empty
-{
-	display:none;
-}
-.mxJdgTheme .mxSolveDiv button
-{
-	font-size:1em;
-	border:0;
-	background:transparent;
-	margin:0 1em;
-	padding:0;
-	width:3em;
-	height:3em;
-}
-.mxJdgTheme .mxSolveDiv button svg
-{
-	fill:var(--color);
-}
-/* focus, hover and cursor */
-.mxJdgTheme *:focus {outline:none;}
-.mxJdgTheme .mxGobanSvg:not(:focus-visible) .mxFocus {display:none;}
-.mxJdgTheme .mxGobanSvg:focus-visible {filter:brightness(1.1);}
-.mxJdgTheme .mxCommentDiv:focus-visible,
-.mxJdgTheme .mxTreeDiv:focus-visible
-{
-	background:var(--focusBk);
-}
-.mxJdgTheme .mxNavigationDiv button:focus svg,
-.mxJdgTheme .mxSolveDiv button:focus svg
-{
-	fill:var(--focusColor);
-}
-.mxJdgTheme button,
-.mxJdgTheme:not(.mxDiagramConfig) .mxGobanDiv svg,
-.mxJdgTheme .mxTreeDiv svg circle,
-.mxJdgTheme .mxTreeDiv svg polygon,
-.mxJdgTheme .mxTreeDiv svg rect,
-.mxJdgTheme .mxTreeDiv svg text {cursor:pointer;}
